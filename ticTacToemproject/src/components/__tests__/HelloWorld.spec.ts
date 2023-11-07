@@ -25,4 +25,8 @@ describe('move', ()=>{
   test('add piece to board illegally', ()=>{
     expect(() => move(0, 0, 2)).toThrowError('This piece cannot go there')
   })
+
+  test('add piece outside of board', ()=>{
+    expect(() => move(3, 3, 1)).toThrowError('Piece is outside of board')
+  })
 })
