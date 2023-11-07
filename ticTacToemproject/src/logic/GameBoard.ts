@@ -1,4 +1,4 @@
-import type { PlayerNumber } from "./PlayerNumber"
+import type { PlayerNumber } from './PlayerNumber'
 
 export class GameBoard {
   state: number[][]
@@ -34,13 +34,13 @@ export class GameBoard {
 
 function symbol(field: number): FieldType {
   if (field == 1) {
-    return 1;
+    return 1
   } else if (field == 2) {
     return 2
   } else if (field == 0) {
-    return " ";
+    return ' '
   }
-  throw new Error("Unexpected player in field found.");
+  throw new Error('Unexpected player in field found.')
 }
 
-type FieldType = PlayerNumber | " "
+type FieldType = PlayerNumber | ' '

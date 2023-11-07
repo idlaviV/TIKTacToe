@@ -19,3 +19,7 @@ function addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber):
   }
   throw new Error('This piece cannot go there')
 }
+
+export function getGameBoard(): GameBoard {
+  return gameBoard
+}
