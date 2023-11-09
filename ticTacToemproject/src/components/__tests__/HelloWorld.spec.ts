@@ -12,21 +12,35 @@ describe('HelloWorld', () => {
   })
 })
 
-describe('move', ()=>{
-  test('add piece to board legally', ()=>{
+describe('move', () => {
+  test('add piece to board legally', () => {
     move(0, 0, 1)
-    expect(getGameBoard()).toEqual(new GameBoard([
-      [1, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0]
-    ]))
+    expect(getGameBoard()).toEqual(
+      new GameBoard([
+        [1, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ])
+    )
   })
 
-  test('add piece to board illegally', ()=>{
+  test('add piece to board illegally', () => {
     expect(() => move(0, 0, 2)).toThrowError('This piece cannot go there')
   })
 
-  test('add piece outside of board', ()=>{
+  test('add piece outside of board', () => {
     expect(() => move(3, 3, 1)).toThrowError('Piece is outside of board')
+  })
+
+  test('add piece to board legally, old gameboard should not change', () => {
+    const oldBoard = getGameBoard()
+    move(0, 0, 1)
+    expect(oldBoard).toEqual(
+      new GameBoard([
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ])
+    )
   })
 })
