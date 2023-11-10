@@ -23,6 +23,8 @@ describe('move', () => {
       ])
     )
   })
+  
+  
 
   test('add piece to board illegally', () => {
     expect(() => move(0, 0, 2)).toThrowError('This piece cannot go there')
