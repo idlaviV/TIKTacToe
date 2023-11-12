@@ -26,21 +26,34 @@ tba
 %Erklären warum unsere Software cool ist (Stichwort: Einsatz)
 \section{Funktionalitäten}% Kriterien: (vollständige) Definition der Software
 tba
-%Block1
-%Tic-Tac-Toe-Brett und Regeln
-%History-Stack
-%Visualisierung der nachfolgenden Konfigurationen
-%Visualisierung einer einfachen KI (Elimination)
-%Block2
-%Ein- und Ausschalten von KI-Zügen
-%Spielereinfluss auf Gewichte?
-%%%Spätestens hier beginnt Wunschdenken
-%Auswahl mehrerer KIs
-%Implementierung von komplexerer KI (gewichtet Pfad)
-%Implementierung von fehlerloser KI
-%automatisches Trainieren
-%%%Absolutes Wunschdenken
-%Interface für andere Spiele als Tic-Tac-Toe anbieten
+\subsection{Mindestfunktionalitäten}
+	%Block1
+		\begin{itemize}
+			\item Ein 3x3-Spielbrett wird auf einer HTML und Javascipt basierten Webseite angezeigt und auf diesem ist Tic-Tac-Toe spielbar.
+			\item Die Felder des Spielfeldes können genau nach den Regeln von Tic-Tac-Toe besetzt werden.
+			\item Die vorherigen Konfigurationen des Spielfeldes können in einem History-Stack gespeichert und in einem Baum angezeigt werden.
+			\item Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden (bis auf semantisch äquivalente Situationen?).
+			\item In dem Baum der möglichen Konfigurationen können den Pfaden Gewichte zugeordnet werden.
+			\item Eine einfache KI kann auf Basis der Gewichte einen Zug auswählen.
+			\item Die KI kann ein- und ausgeschaltet werden.
+			\item Um die KI zu trainieren können die Gewichte der Pfade verändert werden.
+		\end{itemize}
+	%Tic-Tac-Toe-Brett und Regeln
+	%History-Stack
+	%Visualisierung der nachfolgenden Konfigurationen
+	%Visualisierung einer einfachen KI (Elimination)
+	%Block2
+	%Ein- und Ausschalten von KI-Zügen
+	%Spielereinfluss auf Gewichte?
+\subsection{Weitere (optionale) Funktionalitäten}
+	tba
+	%%%Spätestens hier beginnt Wunschdenken
+	%Auswahl mehrerer KIs
+	%Implementierung von komplexerer KI (gewichtet Pfad)
+	%Implementierung von fehlerloser KI
+	%automatisches Trainieren
+	%%%Absolutes Wunschdenken
+	%Interface für andere Spiele als Tic-Tac-Toe anbieten
 \section{Definition of Done}%Checkliste zur Überprüfung, ob ein Increment fertig ist
 tba
 %%%Beispiele
