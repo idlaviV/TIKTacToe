@@ -1,16 +1,6 @@
 import { getGameBoard, move } from '../../logic/GameBoardHandler'
 import { GameBoard } from '../../logic/GameBoard'
-import { describe, it, expect, test } from 'vitest'
-
-import { mount } from '@vue/test-utils'
-import HelloWorld from '../HelloWorld.vue'
-
-describe('HelloWorld', () => {
-  it('renders properly', () => {
-    const wrapper = mount(HelloWorld, { props: { msg: 'Hello Vitest' } })
-    expect(wrapper.text()).toContain('Hello Vitest')
-  })
-})
+import { describe, expect, test } from 'vitest'
 
 describe('move', () => {
   test('add piece to board legally', () => {
@@ -33,16 +23,18 @@ describe('move', () => {
   /*test('add piece outside of board', () => {
     expect(() => move(3, 3, 1)).toThrowError('Piece is outside of board')
   })*/
+})
 
+describe('getGameBoard', () => {
   test('add piece to board legally, old gameboard should not change', () => {
-    const oldBoard = getGameBoard()
-    move(1, 1, 2)
-    expect(oldBoard).toEqual(
-      new GameBoard([
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-  })
+  const oldBoard = getGameBoard()
+  move(1, 1, 2)
+  expect(oldBoard).toEqual(
+    new GameBoard([
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ])
+  )
+})
 })
