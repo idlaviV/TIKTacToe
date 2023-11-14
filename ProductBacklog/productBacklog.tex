@@ -35,13 +35,12 @@ Dabei erfahren sie in diesem einfachen Setting spielerisch das Konzept eines Bru
 
 Die geplanten Funktionalitäten erlauben einen Einsatz im Unterricht nach einer Heranführung durch die Lehrkraft.
 Wir gehen davon aus, dass den Schülerinnen und Schülern die Hexapawn-Variante HER bereits bekannt ist.
-Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI erkunden, selber gegen sie spielen oder zwei KIs gegeneinander trainieren lassen.
+Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI erkunden, selbst gegen sie spielen oder zwei KIs gegeneinander trainieren lassen.
 
 
 
 %Erklären warum unsere Software cool ist (Stichwort: Einsatz)
 \section{Funktionalitäten}% Kriterien: (vollständige) Definition der Software
-tba
 \subsection{Mindestfunktionalitäten}
 	%Block1
 		\begin{itemize}
@@ -52,7 +51,7 @@ tba
 			\item In dem Baum der möglichen Konfigurationen können den Pfaden Gewichte zugeordnet werden.
 			\item Eine einfache KI kann auf Basis der Gewichte einen Zug auswählen.
 			\item Die KI kann ein- und ausgeschaltet werden.
-			\item Um die KI zu trainieren können die Gewichte der Pfade verändert werden.
+			\item Um die KI zu trainieren können durch Belohnungsstrategien die Gewichte der Pfade verändert werden.
 		\end{itemize}
 	%Tic-Tac-Toe-Brett und Regeln
 	%History-Stack
@@ -70,8 +69,15 @@ tba
 	%automatisches Trainieren
 	%%%Absolutes Wunschdenken
 	%Interface für andere Spiele als Tic-Tac-Toe anbieten
+\subsection{Abgrenzungskriterien}
+	\begin{itemize}
+		\item Die Gewichte der KI können nicht manuell angepasst werden
+	\end{itemize}
 \section{Definition of Done}%Checkliste zur Überprüfung, ob ein Increment fertig ist
-tba
+\begin{itemize}
+	\item Unsere UnitTests laufen alle durch
+	\item 
+\end{itemize}
 %%%Beispiele
 %UnitTests laufen
 %run dev läuft
