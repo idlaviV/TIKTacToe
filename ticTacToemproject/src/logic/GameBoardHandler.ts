@@ -2,14 +2,14 @@ import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
 import {printGameboard} from './GameBoardConsolePrinter'
 
-let gameBoard: GameBoard = new GameBoard([
+const gameBoard: GameBoard = new GameBoard([
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0]
 ])
 
-export function move(x: number, y: number, player: PlayerNumber): void {
-  gameBoard = addPiece(x, y, gameBoard, player)
+export function move(x: number, y: number, player: PlayerNumber, board: GameBoard = gameBoard): GameBoard {
+  return board = addPiece(x, y, board, player)
 }
 
 function addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
