@@ -41,17 +41,17 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 
 %Erklären warum unsere Software cool ist (Stichwort: Einsatz)
 \section{Funktionalitäten}% Kriterien: (vollständige) Definition der Software
-\subsection{Mindestfunktionalitäten}
+\subsection{Muss-Kriterien}
 	%Block1
-		\begin{itemize}
-			\item[M100] Die Felder des Spielfeldes können genau nach den Regeln von Tic-Tac-Toe besetzt werden.
-			\item Die vorherigen Konfigurationen des Spielfeldes können in einem History-Stack gespeichert und in einem Baum angezeigt werden.
-			\item Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden, bis auf semantisch äquivalente Situationen.
-			\item In dem Baum der möglichen Konfigurationen können den Pfaden Gewichte zugeordnet werden.
-			\item Eine einfache KI kann auf Basis der Gewichte einen Zug auswählen.
-			\item Die KI kann ein- und ausgeschaltet werden.
-			\item Um die KI zu trainieren können durch Belohnungsstrategien die Gewichte der Pfade verändert werden.
-		\end{itemize}
+	\begin{itemize}
+		\item[M100] Ein 3x3-TicTacToe-Spielfeld wird angezeigt.
+		\item[M200] Die Felder des Spielfeldes können genau nach den Regeln von Tic-Tac-Toe besetzt werden.
+		\item[M300] Die vorherigen Konfigurationen des Spielfeldes können in einem History-Stack gespeichert und in einem Baum angezeigt werden.
+		\item[M400] Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden, bis auf semantisch äquivalente Situationen.
+		\item[M600] Eine einfache KI kann auf Basis von Gewichten einen Zug auswählen.
+		\item[M700] Die KI kann ein- und ausgeschaltet werden.
+		\item[M800] Um die KI zu trainieren können durch veschiedene Belohnungsstrategien die Gewichte der Pfade verändert werden.
+	\end{itemize}
 	%Tic-Tac-Toe-Brett und Regeln
 	%History-Stack
 	%Visualisierung der nachfolgenden Konfigurationen
@@ -59,8 +59,17 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 	%Block2
 	%Ein- und Ausschalten von KI-Zügen
 	%Spielereinfluss auf Gewichte?
-\subsection{Weitere (optionale) Funktionalitäten}
-	tba
+\subsection{Soll-Kriterien}
+	\begin{itemize}
+		\item[S100]
+		\item[S200]
+	\end{itemize}
+
+\subsection{Kann-Kriterien}
+	\begin{itemize}
+		\item[K100]
+		\item[K200]
+	\end{itemize}
 	%%%Spätestens hier beginnt Wunschdenken
 	%Auswahl mehrerer KIs
 	%Implementierung von komplexerer KI (gewichtet Pfad)
@@ -68,9 +77,10 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 	%automatisches Trainieren
 	%%%Absolutes Wunschdenken
 	%Interface für andere Spiele als Tic-Tac-Toe anbieten
+	
 \subsection{Abgrenzungskriterien}
 	\begin{itemize}
-		\item Die Gewichte der KI können nicht manuell angepasst werden
+		\item[A100] Die Gewichte der KI können nicht manuell angepasst werden
 	\end{itemize}
 \section{Definition of Done}%Checkliste zur Überprüfung, ob ein Increment fertig ist
 \begin{itemize}
