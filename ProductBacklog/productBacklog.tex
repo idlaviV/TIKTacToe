@@ -59,16 +59,23 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 	%Block2
 	%Ein- und Ausschalten von KI-Zügen
 	%Spielereinfluss auf Gewichte?
-\subsection{Soll-Kriterien}
+	\subsection{Soll-Kriterien}
 	\begin{itemize}
-		\item[S100]
-		\item[S200]
+		\item[S100] Es gibt die Möglichkeit, zwei KIs als Kontrahenten auszuwählen. Sie trainnieren sich so gegenseitig.
+		\item[S200] Die Zuggeschwindigkeit der KI kann festgelegt werden.
+		\item[S300] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel gestartet wird.
+		\item[S400] Der Nutzer kann einstellen, dass nach beenden eines Spiels die Start-Reihenfolge der Spieler getauscht wird.
+		\item[S500] Es gibt zu jedem Zeitpunkt die Möglichkeit, das aktuelle Spiel abzubrechen. Dabei werden die Gewichte der aktuell trainnierten KI nicht gelöscht.
+		\item[S600] Falls das Spiel abgebrochen wurde und die KI-Gewichte noch nicht gelöscht wurden, so besteht dann die Möglichkeit die Gewichte der trainnierte(n) KI(s) jeweils einzeln zu reseten.
+		\item[S700] Die Belohnungsstrategien können am Ende eines Spiels vom Nutzer angepasst werden. Zur Auswahl stehen Elimination des letzten Zuges bei Verlust des Spiels, eine Umgewichtung des letzten Zuges (wobei hier die Umgewichtung jeweils bei Gewinnen, Unentschieden und Verlust einzeln festgelegt werden können) und eine vereinfachte Version der Backpropagation (hier wird jeweils für Gewinnen, Unentschieden und Verlust für jeden einzelnen gemachten Zug einzeln das Gewicht um den vom Nutzer eingestellten Wert verändert).
+		\item[S800] Falls nicht die Option aktiviert ist, dass am Ende eines Spiels direkt das nächste Spiel gestartet wird, wird der Pfad des Spiels mit seinen Zwischenständen dargestellt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
 	\end{itemize}
 
 \subsection{Kann-Kriterien}
 	\begin{itemize}
-		\item[K100]
-		\item[K200]
+		\item[K100] Es ist eine fehlerlose KI implementiert. Bei Start des Spiels kann diese fehlerlose KI anstatt eines Spielers oder einer anderen KI ausgewählt werden.
+		\item[K200] Es gibt solange das Spiel still steht die Möglichkeit, die aktuell trainnierte(n) KI(s) zu exportieren. Die exportierten Gewichte können solange das Spiel still steht, importiert werden und überschreiben dann die aktuellen Gewichte der ausgewählten KI.
+		\item[K300] Die Entscheidungsbaum-Struktur ist so aufgebaut, dass das Tic Tac Toe Spiel durch ein anderes einfaches Brettspiel ersetzt werden kann und die Entscheidungsbaum-Struktur weiterhin ihren Zweck erfüllt.
 	\end{itemize}
 	%%%Spätestens hier beginnt Wunschdenken
 	%Auswahl mehrerer KIs
