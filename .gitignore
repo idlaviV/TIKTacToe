@@ -62,3 +62,6 @@ coverage
 
 ## Output file
 *.pdf
+
+##
+privat/*.*
