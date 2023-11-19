@@ -41,46 +41,57 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 \subsection{Muss-Kriterien}
 	%Block1
 	\begin{itemize}
-		\item[M100] Ein 3x3-Tic-Tac-Toe-Spielfeld wird angezeigt.
+		\item[M100] Während des Spiels wird ein 3x3-Tic-Tac-Toe-Spielfeld angezeigt.
 		\item[M200] Die Felder des Spielfeldes können genau nach den Regeln von Tic-Tac-Toe besetzt werden.
-		\item[M300] Die vorherigen Konfigurationen des Spielfeldes können in einem History-Stack gespeichert und in einem Baum angezeigt werden.
-		\item[M400] Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden, bis auf semantisch äquivalente Situationen.
-		\item[M600] Eine einfache KI kann auf Basis von Gewichten einen Zug auswählen.
+		\item[M300] Die vorherigen Konfigurationen des Spielfeldes werden gespeichert und in einem Baum visualisiert.
+		\item[M310] Die bisher ausgeführten Züge können rückgängig gemacht werden.%%Neu Soll das später kommen?
+		\item[M400] Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden (bis auf semantisch äquivalente Situationen).
+		\item[M600] Eine einfache KI wählt auf Basis von Gewichten einen Zug aus.
 		\item[M700] Um die KI zu trainieren werden durch Belohnungsstrategien die Gewichte der Pfade verändert.
+		\item[M710] Es gibt mindestens eine Belohnungsstrategie.
+		\item[M800] Der Nutzer kann die gegen die KI Tic-Tac-Toe spielen.%%Neu
 	\end{itemize}
 
 
 	\subsection{Soll-Kriterien}
 	\begin{itemize}
 		\item[S100] Automatisches Ziehen der KI kann an- und abgewählt werden.
-		\item[S110] Einzelne Züge der KI können ausgelöst werden.
-		\item[S200] Es gibt die Möglichkeit, zwei KIs als Kontrahenten auszuwählen. Sie trainieren sich so gegenseitig.
+		\item[S110] Ist das automatische Ziehen deaktiviert, so gibt es die Möglichkeit einzelne Züge der KI auszulösen.
+		\item[S200] Es gibt die Möglichkeit, zwei KIs als Spieler auszuwählen.
 		\item[S300] Die Zuggeschwindigkeit der KI kann festgelegt werden.
-		\item[S400] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel gestartet wird.
-		\item[S500] Zwischen zwei Spielen besteht die Möglichkeit, die Gewichte der trainierte(n) KI(s) jeweils einzeln zu reseten.
-		\item[S600] Die Belohnungsstrategien können am Ende eines Spiels in eigener Ansicht vom Nutzer angepasst werden.
+		\item[S400] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel mit den gleichen Einstellungen gestartet wird.
+		\item[S500] Zwischen zwei Spielen besteht die Möglichkeit, die Gewichte der trainierte(n) KI(s) einzeln zurückzusetzen.
+		\item[S600] Es gibt eine Ansicht, in der am Ende des Spiels die Belohnungsstrategie vom Nutzer angepasst werden kann.
 		\item[S610] Eine Belohnungsstrategie ist die Elimination des letzten Zuges bei Verlust des Spiels.
-		\item[S620] Eine Belohnungsstrategie ist Fehlerrückführung. Für Gewinnen, Unentschieden und Verlust werden die Gewichte der ausgeführten Züge individuell angepasst.
-		\item[S700] Während der Auswahl der Belohnungsstrategie wird der gesamte Gewichte-Graph angezeigt.
+		\item[S620] Eine Belohnungsstrategie ist Fehlerrückführung.
+				Für Gewinnen, Unentschieden und Verlust werden die Gewichte der ausgeführten Züge individuell angepasst.
+		\item[S630] Der Nutzer kann auswählen, dass die konfigurierte Belohnungsstrategie in Zukunft automatisch angewendet wird. %%Hat noch gefehlt
+		\item[S700] Während der Auswahl der Belohnungsstrategie wird der Gewichte-Graph angezeigt.
 		\item[S710] Der Spielverlauf wird im Gewichte-Graph hervorgehoben.
 	\end{itemize}
 
 \subsection{Kann-Kriterien}
 	\begin{itemize}
 		\item[K100] Bei der Belohnungsstrategie Fehlerrückführung ist eine Aufschlüsselung der Belohnungen nach Spielstadium möglich.
+				Das heißt, dass die Gewichte in der frühen Phase des Spiels anders angepasst werden können als die in der späteren Phase.
+		\item[K110] Bei der Konfiguration der Belohnungsstrategie kann der Nutzer auswählen, dass die KI auch die Gewichte der Züge des Gegners anpasst.%Neu
 		\item[K200] Es ist eine Ansicht aufrufbar, in der der gesamte Gewichte-Graph angezeigt wird.
-		\item[K300] Es ist eine fehlerlose KI implementiert. Bei Start des Spiels kann diese fehlerlose KI anstelle des Nutzers oder einer anderen KI ausgewählt werden.
-		\item[K400] Es gibt zu jedem Zeitpunkt die Möglichkeit, das aktuelle Spiel abzubrechen. Dabei werden die Gewichte der aktuell trainierten KI nicht gelöscht.
-		\item[K500] Es gibt, solange das Spiel still steht die Möglichkeit, die aktuell trainierte(n) KI(s) zu exportieren. Die exportierten Gewichte können solange das Spiel still steht, importiert werden und überschreiben dann die aktuellen Gewichte der ausgewählten KI.
+		\item[K300] Es ist eine perfekt spielende KI implementiert.
+				Bei Start des Spiels kann diese fehlerlose KI anstelle des Nutzers oder einer anderen KI ausgewählt werden.
+		\item[K400] Es gibt zu jedem Zeitpunkt die Möglichkeit, das aktuelle Spiel abzubrechen.
+				Dabei werden die Gewichte der aktuell trainierten KI nicht geändert.
+		\item[K500] Es gibt, solange das Spiel still steht, die Möglichkeit, die aktuell trainierte(n) KI(s) zu exportieren.
+				Solange das Spiel still steht können Gewichte importiert werden, die dann die aktuellen Gewichte der ausgewählten KI überschreiben.
 		\item[K600] Der Nutzer kann einstellen, dass nach Beenden eines Spiels die Start-Reihenfolge der Spieler automatisch getauscht wird.
-		\item[K700] Die Entscheidungsbaum-Struktur ist so aufgebaut, dass das Tic-Tac-Toe-Spiel durch ein anderes einfaches Brettspiel ersetzt werden kann und die Entscheidungsbaum-Struktur weiterhin ihren Zweck erfüllt.
+		\item[K700] Statt Tic-Tac-Toe kann auch ein einfaches Brettspiel gespielt werden, für das die KI mit einer ähnlichen Entscheidungsbaum-Struktur trainiert wird.%Umformuliert, damit überprüfbar
+		%\item[K700] Die Entscheidungsbaum-Struktur ist so aufgebaut, dass das Tic-Tac-Toe-Spiel durch ein anderes einfaches Brettspiel ersetzt werden kann und die Entscheidungsbaum-Struktur weiterhin ihren Zweck erfüllt.
 
 	\end{itemize}
 
 	
 \subsection{Abgrenzungskriterien}
 	\begin{itemize}
-		\item[A100] Die Gewichte der KI können nicht manuell angepasst werden.
+		\item[A100] Die Gewichte der KI können nur über vorgegebene Belohnungsstrategien angepasst werden.
 		\item[A200] Die Entscheidungen der KI basieren nur auf der aktuellen Spielsituation, nicht auf dem Spielverlauf.
 	\end{itemize}
 	
@@ -90,10 +101,11 @@ Falls folgende Eigenschaften auf unser Projekt zutreffen, erklären wir das Feat
 \begin{itemize}
 	\item UnitTests aller bisher implementierten Features laufen durch.
 	\item Der Code des Features ist in den \texttt{main}-Branch gemergt.
-	\item Eine relevante Änderung am produktiven Code wird nur in den Mainbranch gemergt, wenn sie von einer zweiten Person gereviewt wurde.
+	\item Eine relevante Änderung am produktiven Code wird nur in den \texttt{main}-Branch gemergt, wenn sie von einer zweiten Person gereviewt wurde.
 	\item Wichtige Funktionalitäten des Features sind mit UnitTests versehen.
 	\item \texttt{run dev} läuft durch.
-	\item Trello-Tickets des Features sind auf "`Abgeschlossen"'.
+	\item Für das neue Feature wurde nach dem Merge ein Integrationstest durchgeführt.
+	\item Trello-Tickets des Features haben den Status "`Abgeschlossen"'.
 \end{itemize}
 
 \section{Definition of Fun}%Vereinbarungen über Zusammenarbeit
@@ -101,10 +113,10 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 \begin{itemize}
 	\item Wir treffen uns vor jedem Dienstagstreffen 15 min vorher zur Koordination.
 	\item Wir treffen uns jede Woche Freitags um 08:00 Uhr via Discord.
-	\item Zu unseren Treffen bemühen wir uns pünktlich und vorbereitet zu kommen.
-	\item Wenn wir auf Probleme stoßen (Implementierung, Setup, Zeitprobleme...), so kommunizieren wir diese offen.
+	\item Zu unseren Treffen kommen wir pünktlich und vorbereitet.%Wenns Spaß machen soll sollten wir das auch tun
+	\item Wenn wir auf Probleme stoßen (Implementierung, Setup, Zeitprobleme...), so kommunizieren wir diese offen und zeitnah.
 	\item Wir dokumentieren unseren Fortschritt auf Trello.
-	\item Wir behalten im Blick, dass neuer Code so früh abgeschlossen werden muss, dass ein Review noch möglich ist.
+	\item Wir behalten im Blick, dass neuer Code so früh abgeschlossen werden muss, dass ein Review noch vor der Abgabe möglich ist.
 	\item Wir berichten im Discord über unseren Arbeitsfortschritt.
 \end{itemize}
 
@@ -133,17 +145,26 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 \section{Epic}
 %Epic über die Benutzung des TicTacToeamprojekts:
 
-Ein Schüler öffnet die Website zum ersten Mal und sieht einen Bildschirm, auf dem für Spieler 1 (Sp1) und Spieler 2 
-(Sp2) ausgewählt werden kann, ob eine KI oder der Schüler den Zug übernimmt.
-Der Schüler wählt aus, dass ein Spieler (Sp1) gegen eine KI (Sp2) spielt und startet das Spiel per Knopfdruck.
-Er setzt den ersten Stein auf ein Feld seiner Wahl und schaut sich an der Seite alle möglichen nächsten Züge von Sp2 an. Er drückt auf den „next“-Knopf, um den Sp2 ziehen zu lassen.
-Nach seinem nächsten Zug aktiviert er den „Start“-Knopf, um Sp2 automatisch ziehen zu lassen.
-Nachdem das Spiel fertig gespielt ist, trägt er den von ihm gewünschten Belohnungsalgorithmus in das aufgekommene Fenster ein.
+Ein Schüler öffnet die Website zum ersten Mal und sieht den Startbildschirm.
+Auf diesem kann für Spieler 1 (Sp1) und Spieler 2 (Sp2) ausgewählt werden kann, ob eine KI oder der Schüler die Züge übernimmt.
+Der Schüler wählt aus, dass er selbst (Sp1) gegen eine KI (Sp2) spielt und startet das Spiel per Knopfdruck.
+Er setzt den ersten Stein auf ein Feld seiner Wahl und schaut sich an der Seite alle möglichen nächsten Züge von Sp2 an.
+Er drückt auf einen Knopf, damit die KI für Sp2 zieht.
+Nach seinem nächsten Zug wählt er aus, dass die KI die Züge ab jetzt automatisch spielt.
+Im Folgenden macht die KI ihre Züge jetzt sobald der Schüler für Sp1 gezogen hat.
+Nachdem das Spiel fertig gespielt ist wählt er die Belohnungsstrategie aus.
+Dadurch werden die Gewichte der KI entsprechend angepasst.
+Dies kann der Schüler im angezeigten Gewichte-Graph nachvollziehen.
 
-Dann startet er das Spiel per Knopfdruck neu, wodurch er wieder auf den ersten Bildschirm kommt.
-Er entscheidet sich weiterhin gegen die gleiche KI zu spielen, um sie zu trainieren und schaltet dafür ein, dass der erste Bildschirm nicht wieder angezeigt wird.
-Da er auch mit dem Belohnungsalgorithmus zufrieden ist stellt er auch ein, dass der Belohnungsbildschirm nicht mehr angezeigt wird und erhöht die Geschwindigkeit, in der Sp2 einen Zug macht.
+Dann startet er das Spiel per Knopfdruck neu, wodurch er wieder auf den Startbildschirm kommt.
+Er entscheidet sich gegen die gleiche KI erneut zu spielen, um sie weiter zu trainieren.
+Er schaltet ein, dass der Startbildschirm nicht wieder angezeigt wird.
+Da er auch mit dem Belohnungsalgorithmus zufrieden ist stellt er auch ein, dass der Belohnungsbildschirm nicht mehr angezeigt wird und erhöht die Geschwindigkeit, in der die KI einen Zug macht.
 
-Nachdem er die KI nach seinen Wünschen trainiert hat stellt er ein, dass er wieder in den Startbildschirm kommt und löscht den Lernfortschritt der KI um sie diesmal mit einem anderen Belohnungsalgorithmus zu trainieren.
+Im Folgenden spielt der Schüler gegen die KI mehrere Spiele, ohne dass der Startbildschirm oder der Belohnungsbildschirm angezeigt werden.
+Die Gewichte der KI werden trotzdem nach jedem Spiel angepasst.
+
+Nachdem er die KI nach seinen Wünschen trainiert hat, stellt er ein, dass er wieder in den Startbildschirm kommt.
+Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnungsalgorithmus zu trainieren.
 
 \end{document}
