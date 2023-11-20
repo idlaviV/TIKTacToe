@@ -46,10 +46,10 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 		\item[M300] Die vorherigen Konfigurationen des Spielfeldes werden gespeichert und in einem Baum visualisiert.
 		\item[M310] Die bisher ausgeführten Züge können rückgängig gemacht werden.%%Neu Soll das später kommen?
 		\item[M400] Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden (bis auf semantisch äquivalente Situationen).
-		\item[M600] Eine einfache KI wählt auf Basis von Gewichten einen Zug aus.
-		\item[M700] Um die KI zu trainieren werden durch Belohnungsstrategien die Gewichte der Pfade verändert.
-		\item[M710] Es gibt mindestens eine Belohnungsstrategie.
-		\item[M800] Der Nutzer kann die gegen die KI Tic-Tac-Toe spielen.%%Neu
+		\item[M500] Eine einfache KI wählt auf Basis von Gewichten einen Zug aus.
+		\item[M600] Um die KI zu trainieren werden durch Belohnungsstrategien die Gewichte der Pfade verändert.
+		\item[M610] Es gibt mindestens eine Belohnungsstrategie.
+		\item[M700] Der Nutzer kann die gegen die KI Tic-Tac-Toe spielen.%%Neu
 	\end{itemize}
 
 
@@ -75,15 +75,16 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 		\item[K100] Bei der Belohnungsstrategie Fehlerrückführung ist eine Aufschlüsselung der Belohnungen nach Spielstadium möglich.
 				Das heißt, dass die Gewichte in der frühen Phase des Spiels anders angepasst werden können als die in der späteren Phase.
 		\item[K110] Bei der Konfiguration der Belohnungsstrategie kann der Nutzer auswählen, dass die KI auch die Gewichte der Züge des Gegners anpasst.%Neu
-		\item[K200] Es ist eine Ansicht aufrufbar, in der der gesamte Gewichte-Graph angezeigt wird.
-		\item[K300] Es ist eine perfekt spielende KI implementiert.
+		\item[K200] Die bisher ausgeführten Züge können rückgängig gemacht werden.
+		\item[K300] Es ist eine Ansicht aufrufbar, in der der gesamte Gewichte-Graph angezeigt wird.
+		\item[K400] Es ist eine perfekt spielende KI implementiert.
 				Bei Start des Spiels kann diese fehlerlose KI anstelle des Nutzers oder einer anderen KI ausgewählt werden.
-		\item[K400] Es gibt zu jedem Zeitpunkt die Möglichkeit, das aktuelle Spiel abzubrechen.
+		\item[K500] Es gibt zu jedem Zeitpunkt die Möglichkeit, das aktuelle Spiel abzubrechen.
 				Dabei werden die Gewichte der aktuell trainierten KI nicht geändert.
-		\item[K500] Es gibt, solange das Spiel still steht, die Möglichkeit, die aktuell trainierte(n) KI(s) zu exportieren.
+		\item[K600] Es gibt, solange das Spiel still steht, die Möglichkeit, die aktuell trainierte(n) KI(s) zu exportieren.
 				Solange das Spiel still steht können Gewichte importiert werden, die dann die aktuellen Gewichte der ausgewählten KI überschreiben.
-		\item[K600] Der Nutzer kann einstellen, dass nach Beenden eines Spiels die Start-Reihenfolge der Spieler automatisch getauscht wird.
-		\item[K700] Statt Tic-Tac-Toe kann auch ein einfaches Brettspiel gespielt werden, für das die KI mit einer ähnlichen Entscheidungsbaum-Struktur trainiert wird.%Umformuliert, damit überprüfbar
+		\item[K700] Der Nutzer kann einstellen, dass nach Beenden eines Spiels die Start-Reihenfolge der Spieler automatisch getauscht wird.
+		\item[K800] Statt Tic-Tac-Toe kann auch ein einfaches Brettspiel gespielt werden, für das die KI mit einer ähnlichen Entscheidungsbaum-Struktur trainiert wird.%Umformuliert, damit überprüfbar
 		%\item[K700] Die Entscheidungsbaum-Struktur ist so aufgebaut, dass das Tic-Tac-Toe-Spiel durch ein anderes einfaches Brettspiel ersetzt werden kann und die Entscheidungsbaum-Struktur weiterhin ihren Zweck erfüllt.
 
 	\end{itemize}
