@@ -110,11 +110,14 @@ Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI 
 	
 \section{Definition of Done}%Checkliste zur Überprüfung, ob ein Increment fertig ist
 Ein Increment besteht aus einem oder mehreren Features.
+Jedes Feature wird immer auf einem geeignetem \texttt{feature}-Branch implementiert.
 Falls folgende Eigenschaften auf unser Projekt zutreffen, erklären wir das Feature für abgeschlossen:
 \begin{itemize}
 	\item Wichtige Funktionalitäten des Features sind mit UnitTests versehen.
-	\item Zunächst wird der \texttt{main}-Branch in den feature-Branch gemergt. Der jeweilige Entwickler des Codes ist dafür verantwortlich auf seinem Branch einen Integrationstest durchzuführen.
-	\item Eine relevante Änderung am produktiven Code wird nur in den \texttt{main}-Branch gemergt, wenn sie von einer zweiten Person gereviewt wurde. Ein Review wurde durchgeführt, sobald der Reviewer Fragen zum Code beantworten kann und den Code für zufriedenstellend befunden hat. Der Reviewer ist dafür verantwortlich den feature-Branch in den \texttt{main}-Branch zu mergen und auf dem \texttt{main}-Branch einen erneuten Integrationstest durchzuführen.
+	\item Der jeweilige Entwickler des Codes ist dafür verantwortlich auf seinem Branch einen Integrationstest durchzuführen.
+	\item Eine relevante Änderung am produktiven Code wird nur in den \texttt{main}-Branch gemergt, wenn sie von einer zweiten Person gereviewt wurde.
+			Ein Review wurde durchgeführt, sobald der Reviewer Fragen zum Code beantworten könnte und den Code für zufriedenstellend befunden hat.
+			Der Reviewer ist dafür verantwortlich sicherzustellen, dass der \texttt{feature}-Branch auf aktuellem Stand ist und einen erneuten Integrationstest durchzuführen.
 	\item Der Code des Features ist nach Review in den \texttt{main}-Branch gemergt.
 	\item Unter Integrationstest verstehen wir, dass nach merge mit dem \texttt{main}-Branch der Kommandozeilen-Befehl \texttt{run test:unit} keine Fehlermeldungen ausgibt und der Kommandozeilen-Befehl \texttt{run dev} die Website mit den bereits implementierten Features erzeugt.
 	\item Trello-Tickets des Features haben den Status "`Abgeschlossen"'.
