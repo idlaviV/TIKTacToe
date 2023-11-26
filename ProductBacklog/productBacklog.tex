@@ -112,15 +112,23 @@ Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachv
 	
 \section{Definition of Done}%Checkliste zur Überprüfung, ob ein Increment fertig ist
 Ein Increment besteht aus einem oder mehreren Features.
+Jedes Feature wird immer auf einem geeignetem \texttt{feature}-Branch implementiert.
 Falls folgende Eigenschaften auf unser Projekt zutreffen, erklären wir das Feature für abgeschlossen:
 \begin{itemize}
-	\item UnitTests aller bisher implementierten Features laufen durch.
-	\item Der Code des Features ist in den \texttt{main}-Branch gemergt.
-	\item Eine relevante Änderung am produktiven Code wird nur in den \texttt{main}-Branch gemergt, wenn sie von einer zweiten Person gereviewt wurde.
 	\item Wichtige Funktionalitäten des Features sind mit UnitTests versehen.
-	\item \texttt{run dev} läuft durch.
-	\item Für das neue Feature wurde nach dem Merge ein Integrationstest durchgeführt.
+	\item Der jeweilige Entwickler des Codes ist dafür verantwortlich auf seinem Branch einen Integrationstest durchzuführen.
+	\item Eine relevante Änderung am produktiven Code wird nur in den \texttt{main}-Branch gemergt, wenn sie von einer zweiten Person gereviewt wurde.
+			Ein Review wurde durchgeführt, sobald der Reviewer Fragen zum Code beantworten könnte und den Code für zufriedenstellend befunden hat.
+			Der Reviewer ist dafür verantwortlich sicherzustellen, dass der \texttt{feature}-Branch auf aktuellem Stand ist und einen erneuten Integrationstest durchzuführen.
+	\item Der Code des Features ist nach Review in den \texttt{main}-Branch gemergt.
+	\item Unter Integrationstest verstehen wir, dass nach merge mit dem \texttt{main}-Branch der Kommandozeilen-Befehl \texttt{run test:unit} keine Fehlermeldungen ausgibt und der Kommandozeilen-Befehl \texttt{run dev} die Website mit den bereits implementierten Features erzeugt.
 	\item Trello-Tickets des Features haben den Status "`Abgeschlossen"'.
+\end{itemize}
+Falls zusätzlich folgende Eigenschaften auf unser Projekt zutreffen, erklären wir das Increment für abgeschlossen:
+\begin{itemize}
+	\item Alle für das Increment geplanten Features wurden implementiert. Falls geplante Funktionalitäten nicht implementiert werden konnten, so wurde das mit den Product Ownern abgesprochen.
+	\item Es wurde ein Release des aktuellen \texttt{main}-Branches erstellt.
+	\item Der Kommandozeilen-Befehl \texttt{run test:unit} (Ausführen aller UnitTests) gibt keine Fehlermeldungen aus und der Kommandozeilen-Befehl \texttt{run dev} erzeugt die Website mit den bereits implementierten Features. %Frage: Muss hier npm run test:unit und npm run dev hin zur einfacheren Lesbarkeit für Ahnungslose?
 \end{itemize}
 
 \section{Definition of Fun}%Vereinbarungen über Zusammenarbeit
