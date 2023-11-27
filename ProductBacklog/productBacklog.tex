@@ -49,7 +49,11 @@ Wir gehen davon aus, dass den SuS die Hexapawn-Variante HER bereits bekannt ist.
 Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI erkunden, selbst gegen sie spielen oder zwei KIs gegeneinander trainieren lassen.
 Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachvollzogen und können diese als "`Gedächtnis"' des Systems benennen, welches den Lernprozess abbildet.%Das kann man bestimmt noch besser schreiben
 
-
+\section{Didaktische Überlegungen}
+Dieses Projekt und das Produkt "`\TicTacToe"' sind für den Informatikunterricht oder Informatik-AGs in der 7. bis 9. Klasse gedacht. Sie soll jedoch auch für interessierte Schülerinnen und Schüler der Oberstufe spannend und informativ sein.
+Schüler, die sich mit diesem Tool beschäftigen, sollen nach beendigen einer von einem Lehrer mitbetreuten Lerneinheit nennen können, wie eine KI, welche Brettspiele spielen kann mit Hilfe von Gewichten lernen und trainiert werden kann.
+Außerdem sollen sie auch in der Lage sein den Gewichte-Graphen als Gedächtnis der KI zu benennen und die Entscheidungen anhand dieses Graphen nachvollziehen zu können. Ältere und schnellere Schüler können weiterhin beobachten und benennen,
+wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI auswirken und können diese aufgrund ihrer Beobachtungen auch bewerten.
 
 %Erklären warum unsere Software cool ist (Stichwort: Einsatz)
 \section{Funktionalitäten}% Kriterien: (vollständige) Definition der Software
@@ -59,7 +63,7 @@ Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachv
 		\item[M100] Während des Spiels wird ein 3x3-Tic-Tac-Toe-Spielfeld angezeigt.
 		\item[M200] Die Felder des Spielfeldes können genau nach den Regeln von Tic-Tac-Toe besetzt werden.
 		\item[M300] Die vorherigen Konfigurationen des Spielfeldes werden gespeichert und in einem Baum visualisiert.
-		\item[M400] Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden (bis auf semantisch äquivalente Situationen).
+		\item[M400] Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden (bis auf äquivalente Situationen).
 		\item[M500] Eine einfache KI wählt auf Basis von Gewichten einen Zug aus.
 		\item[M600] Um die KI zu trainieren werden durch Belohnungsstrategien die Gewichte der Pfade verändert.
 		\item[M610] Es gibt mindestens eine Belohnungsstrategie.
@@ -72,7 +76,7 @@ Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachv
 		\item[S100] Automatisches Ziehen der KI kann an- und abgewählt werden.
 		\item[S110] Ist das automatische Ziehen deaktiviert, so gibt es die Möglichkeit einzelne Züge der KI auszulösen.
 		\item[S200] Es gibt die Möglichkeit, zwei KIs als Spieler auszuwählen.
-		\item[S300] Die Zuggeschwindigkeit der KI kann festgelegt werden.
+		\item[S300] Die Zuggeschwindigkeit der KI kann festgelegt werden. %Frage: Wie didaktisch sinnvoll ist das gegen schnell vs langsam?
 		\item[S400] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel mit den gleichen Einstellungen gestartet wird.
 		\item[S500] Zwischen zwei Spielen besteht die Möglichkeit, die Gewichte der trainierte(n) KI(s) einzeln zurückzusetzen.
 		\item[S600] Es gibt eine Ansicht, in der am Ende des Spiels die Belohnungsstrategie vom Nutzer angepasst werden kann.
@@ -80,7 +84,7 @@ Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachv
 		\item[S620] Eine Belohnungsstrategie ist Fehlerrückführung.
 				Für Gewinnen, Unentschieden und Verlust werden die Gewichte der ausgeführten Züge individuell angepasst.
 		\item[S630] Der Nutzer kann auswählen, dass die konfigurierte Belohnungsstrategie in Zukunft automatisch angewendet wird.
-		\item[S700] Während der Auswahl der Belohnungsstrategie wird der Gewichte-Graph angezeigt.
+		\item[S700] Während der Auswahl der Belohnungsstrategie wird der Gewichte-Graph angezeigt. %Frage: Weiteres Scaffolding notwendig?
 		\item[S710] Der Spielverlauf wird im Gewichte-Graph hervorgehoben.
 	\end{itemize}
 
@@ -88,7 +92,7 @@ Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachv
 	\begin{itemize}
 		\item[K100] Bei der Belohnungsstrategie Fehlerrückführung ist eine Aufschlüsselung der Belohnungen nach Spielstadium möglich.
 				Das heißt, dass die Gewichte in der frühen Phase des Spiels anders angepasst werden können als die in der späteren Phase.
-		\item[K110] Bei der Konfiguration der Belohnungsstrategie kann der Nutzer auswählen, dass die KI auch die Gewichte der Züge des Gegners anpasst.
+		\item[K110] Bei der Konfiguration der Belohnungsstrategie kann der Nutzer auswählen, dass die KI auch die Gewichte der Züge des Gegners anpasst. %Frage: Zu kompliziert für Zielgruppe?
 		\item[K200] Die bisher ausgeführten Züge können rückgängig gemacht werden.
 		\item[K300] Es ist eine Ansicht aufrufbar, in der der gesamte Gewichte-Graph angezeigt wird.
 		\item[K400] Es ist eine perfekt spielende KI implementiert.
@@ -98,7 +102,7 @@ Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachv
 		\item[K600] Es gibt, solange das Spiel still steht, die Möglichkeit, die aktuell trainierte(n) KI(s) zu exportieren.
 				Solange das Spiel still steht können Gewichte importiert werden, die dann die aktuellen Gewichte der ausgewählten KI überschreiben.
 		\item[K700] Der Nutzer kann einstellen, dass nach Beenden eines Spiels die Start-Reihenfolge der Spieler automatisch getauscht wird.
-		\item[K800] Statt Tic-Tac-Toe kann auch ein einfaches Brettspiel gespielt werden, für das die KI mit einer ähnlichen Entscheidungsbaum-Struktur trainiert wird.
+		\item[K800] Statt Tic-Tac-Toe kann auch ein einfaches Brettspiel gespielt werden, für das die KI mit einer ähnlichen Entscheidungsbaum-Struktur trainiert wird. %einfaches --> anderes?
 
 
 	\end{itemize}
@@ -191,7 +195,7 @@ Nachdem er die KI nach seinen Wünschen trainiert hat, stellt er ein, dass er wi
 Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnungsalgorithmus zu trainieren.
 
 \section{GUI-Entwurf}
-\begin{figure}[h]
+\begin{figure}[ht]
 \includegraphics[width=\textwidth]{tictactoe_startansicht.png}
 \caption{Ein erster Entwurf der Startansicht der Website, in welcher die Spielereinstellungen vorgenommen werden und ein Spiel gestartet werden kann.}
 \end{figure}
