@@ -29,14 +29,14 @@ describe('move', () => {
   })*/
 
   test('add piece to board legally, old gameboard should not change', () => {
-    const oldBoard = getGameBoard()
-    move(1, 1, 2, oldBoard)
-    expect(oldBoard).toEqual(
-      new GameBoard([
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-  })
+      const oldBoard = getGameBoard()
+      move(1, 1, 2, oldBoard)
+      expect(oldBoard).toEqual(
+        new GameBoard([
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]
+        ])
+      )
+    })
 })

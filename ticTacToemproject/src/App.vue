@@ -1,85 +1,81 @@
 <script setup lang="ts">
+import { GameBoard } from './logic/GameBoard'
+import type { PlayerNumber } from './logic/PlayerNumber'
+import { move } from './logic/GameBoardHandler'
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, computed } from 'vue'
+
+const player = ref<PlayerNumber>(1);
+const board = ref(new GameBoard([[0, 0 , 0], [0, 0, 0], [0, 0, 0]]))
+
+const CalculateWinner = (squares: string[]) => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+
+const winner = computed(() => CalculateWinner(board.value.flat()))
+
+// const MakeMove = (x: number, y: number) => {
+//   if (winner.value) return
+
+//   if (board.value[x][y] !== '') return
+
+//   board.value[x][y] = player.value
+
+//   player.value = player.value === 'X' ? 'O' : 'X'
+// }
+
+const ResetGame = () => {
+  board.value = new GameBoard([[0, 0 , 0], [0, 0, 0], [0, 0, 0]])
+  player.value = 1
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <main class="pt-8 text-center dark:bg-gray-800 min-h-screen dark:text-white">
+    <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <h3 class="text-xl mb-4">Player {{ player }}'s turn</h3>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <div class="flex flex-col items-center mb-8">
+      <div
+        v-for="(row, x) in board"
+        :key="x"
+        class="flex">
+
+        <div 
+          v-for="(cell, y) in row"
+          :key="y"
+          @click="move(x, y, player)"
+          :class="`border border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${ cell === 'X' ? 'text-pink-500' : 'text-blue-500' }`">
+          {{ cell === 'X' ? 'X' : cell === 'O' ? 'O' : '' }}
+        </div>
+      </div>
     </div>
-  </header>
 
-  <RouterView />
+    <h2 v-if="winner" class="text-6xl dond-bold mb-8">Player '{{ winner }}' wins!</h2>
+    <RouterLink to="/about" v-if="winner">Bewertung</RouterLink>
+
+    <button @click="ResetGame" class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300">Reset Game</button>
+
+    <RouterView />
+  </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
+<style>
 </style>
