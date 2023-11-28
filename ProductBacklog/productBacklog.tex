@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphics}
 \usepackage{graphicx}
+\usepackage{tikz}
 
 \titlehead{Wintersemester 2023/24}
 \title{\TicTacToe}
@@ -212,4 +213,18 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 \caption{Ein erster Entwurf der Bewertungsansicht der Website, in welcher eingestellt wird, wie die Gewichtungen der KI nach einem Spiel anpasst werden.}
 \end{figure}
 
+\section{Burn-up-Chart}
+\begin{figure}[ht]\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+	%Achsen
+	\draw[->] (0,0) -- (9.5,0);
+	\draw[->] (0,0) -- (0,8);
+	\draw (-1,7.5) node[]{Aufwand};
+	\draw (9,-1) node[]{Zeit};
+	%Ticks
+	\draw (3,0) ++(0,-0.1) --node[below]{\(1\)} ++(0,.2);
+	\draw (6,0) ++(0,-0.1) --node[below]{\(2\)} ++(0,.2);
+	\draw (9,0) ++(0,-0.1) --node[below]{\(3\)} ++(0,.2);
+\end{tikzpicture}
+\end{figure}
 \end{document}
