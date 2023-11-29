@@ -26,7 +26,7 @@ export class GameBoard {
       [0, 0, 0],
       [0, 0, 0],
     ]
-    this.code = -1
+    this.code = 0
   }
 
   toString(): String {
