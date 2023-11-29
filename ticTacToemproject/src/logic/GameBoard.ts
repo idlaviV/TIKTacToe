@@ -20,6 +20,15 @@ export class GameBoard {
     }
   }
 
+  reset() {
+    this.state = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ]
+    this.code = -1
+  }
+
   toString(): String {
     let string = ''
     for (const line of this.state) {

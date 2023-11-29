@@ -1,6 +1,6 @@
 import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
-import {printGameboard} from './GameBoardConsolePrinter'
+import { printGameboard } from './GameBoardConsolePrinter'
 
 const gameBoard: GameBoard = new GameBoard([
   [0, 0, 0],
@@ -8,8 +8,8 @@ const gameBoard: GameBoard = new GameBoard([
   [0, 0, 0]
 ])
 
-export function move(x: number, y: number, player: PlayerNumber, board: GameBoard = gameBoard): GameBoard {
-  return board = addPiece(x, y, board, player)
+export function move(x: number, y: number, player: PlayerNumber) {
+  addPiece(x, y, gameBoard, player)
 }
 
 function addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
@@ -24,4 +24,8 @@ function addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber):
 
 export function getGameBoard(): GameBoard {
   return gameBoard
+}
+
+export function resetGameBoard(): void {
+  gameBoard.reset()
 }
