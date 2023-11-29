@@ -5,6 +5,9 @@
 \usepackage{graphics}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usetikzlibrary{shapes.misc}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={2pt}}
 
 \titlehead{Wintersemester 2023/24}
 \title{\TicTacToe}
@@ -48,7 +51,7 @@ Sie lernen in diesem einfachen Setting das Konzept eines Brute-Force-Ansatzes so
 Die geplanten Funktionalitäten erlauben einen Einsatz im Unterricht nach einer Heranführung durch die Lehrkraft.
 Wir gehen davon aus, dass den SuS die Hexapawn-Variante HER bereits bekannt ist.
 Im Webinterface von "`\TicTacToe"' können die SuS den Entscheidungsbaum der KI erkunden, selbst gegen sie spielen oder zwei KIs gegeneinander trainieren lassen.
-Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachvollzogen und können diese als "`Gedächtnis"' des Systems benennen, welches den Lernprozess abbildet.%Das kann man bestimmt noch besser schreiben
+Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachvollzogen und können diese als "`Gedächtnis"' des Systems benennen, welches den Lernprozess abbildet.
 
 \section{Didaktische Überlegungen}
 Dieses Projekt und das Produkt "`\TicTacToe"' sind für den Informatikunterricht oder Informatik-AGs in der 7. bis 9. Klasse gedacht.
@@ -225,6 +228,13 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 	\draw (3,0) ++(0,-0.1) --node[below]{\(1\)} ++(0,.2);
 	\draw (6,0) ++(0,-0.1) --node[below]{\(2\)} ++(0,.2);
 	\draw (9,0) ++(0,-0.1) --node[below]{\(3\)} ++(0,.2);
+		%Graph
+	\draw[very thick] (0,0) -- (1,0);%
+										% -- (2,?)							
+															%
+	%Ziele
+	\draw(3,7) node[cross]{};
+	\draw[dashed] (1,0) -- (2,5) -- (3,6);
 \end{tikzpicture}
 \end{figure}
 \end{document}
