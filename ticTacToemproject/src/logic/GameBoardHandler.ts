@@ -27,5 +27,9 @@ export function getGameBoard(): GameBoard {
 }
 
 export function resetGameBoard(): void {
-  gameBoard.reset();
+  gameBoard = new GameBoard([
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+  ])
 }

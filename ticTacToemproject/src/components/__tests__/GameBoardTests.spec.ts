@@ -1,9 +1,22 @@
 import { getGameBoard, move, resetGameBoard } from '../../logic/GameBoardHandler'
 import { GameBoard } from '../../logic/GameBoard'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { afterEach, beforeAll, describe, expect, test } from 'vitest'
+
+describe('resetGameBoard', () => {
+  test('reset', () => {
+    move(0, 0, 1)
+    const oldBoard = getGameBoard()
+    resetGameBoard()
+    expect(getGameBoard()).not.toEqual(oldBoard)
+  })
+})
 
 describe('move', () => {
-  beforeEach(() => {
+  beforeAll(() => {
+    resetGameBoard()
+  })
+
+  afterEach(() => {
     resetGameBoard()
   })
 
@@ -23,8 +36,9 @@ describe('move', () => {
     move(0, 0, 1)
     expect(() => move(0, 0, 2)).toThrowError('This piece cannot go there')
   })
-  
+})
 
+describe('getGameBoard', () => {
   test('add piece to board legally, old gameboard should not change', () => {
     const oldBoard = getGameBoard()
     move(1, 1, 2)
