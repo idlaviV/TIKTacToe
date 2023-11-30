@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { GameBoard } from './logic/GameBoard'
 import type { PlayerNumber } from './logic/PlayerNumber'
-import { RouterLink, RouterView } from 'vue-router'
+import { move, calculateWinner } from './logic/GameBoardHandler'
+// import { RouterLink, RouterView } from 'vue-router'
 import { ref, computed } from 'vue'
-import { moveHandler } from './logic/ViewModel'
-import { calculateWinner } from './logic/GameBoardHandler'
 
 const player = ref<PlayerNumber>(1);
-const board = ref(new GameBoard([[0, 0 , 0], [0, 0, 0], [0, 0, 0]]))
+const board = ref(new GameBoard([[0, 0, 0], [0, 0, 0], [0, 0, 0]]))
 
 // const CalculateWinner = (squares: string[]) => {
 //   const lines = [
@@ -42,7 +41,7 @@ const winner = computed(() => calculateWinner(board.value.flat()))
 // }
 
 const ResetGame = () => {
-  board.value = new GameBoard([[0, 0 , 0], [0, 0, 0], [0, 0, 0]])
+  board.value = new GameBoard([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
   player.value = 1
 }
 </script>
@@ -55,26 +54,26 @@ const ResetGame = () => {
 
     <div class="flex flex-col items-center mb-8">
       <div
-        v-for="(row, x) in board"
+        v-for="(row, x) in board.getState()"
         :key="x"
         class="flex">
 
         <div 
           v-for="(cell, y) in row"
           :key="y"
-          @click="moveHandler(x, y, player)"
-          :class="`border border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${ cell === 'X' ? 'text-pink-500' : 'text-blue-500' }`">
-          {{ cell === 'X' ? 'X' : cell === 'O' ? 'O' : '' }}
+          @click="move(x, y, player)"
+          :class="`border border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${ cell === 1 ? 'text-pink-500' : 'text-blue-500' }`">
+          {{ cell === 1 ? 'X' : cell === 2 ? 'O' : '' }}
         </div>
       </div>
     </div>
 
     <h2 v-if="winner" class="text-6xl dond-bold mb-8">Player '{{ winner }}' wins!</h2>
-    <RouterLink to="/about" v-if="winner">Bewertung</RouterLink>
+    <!-- <RouterLink to="/about" v-if="winner">Bewertung</RouterLink> -->
 
     <button @click="ResetGame" class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300">Reset Game</button>
 
-    <RouterView />
+    <!-- <RouterView /> -->
   </main>
 </template>
 

@@ -40,6 +40,10 @@ export class GameBoard {
     return string
   }
 
+  getState(): number[][] {
+    return this.state
+  }
+
   clone(): number[][] {
     return structuredClone(this.state);
   }
