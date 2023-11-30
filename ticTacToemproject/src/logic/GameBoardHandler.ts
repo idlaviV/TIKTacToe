@@ -1,6 +1,6 @@
 import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
-import {printGameboard} from './GameBoardConsolePrinter'
+import { printGameboard } from './GameBoardConsolePrinter'
 
 let gameBoard: GameBoard = new GameBoard([
   [0, 0, 0],
@@ -24,4 +24,8 @@ function addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber):
 
 export function getGameBoard(): GameBoard {
   return gameBoard
+}
+
+export function resetGameBoard(): void {
+  gameBoard.reset();
 }
