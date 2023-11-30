@@ -1,34 +1,35 @@
 <script setup lang="ts">
 import { GameBoard } from './logic/GameBoard'
 import type { PlayerNumber } from './logic/PlayerNumber'
-import { move } from './logic/GameBoardHandler'
 import { RouterLink, RouterView } from 'vue-router'
 import { ref, computed } from 'vue'
+import { moveHandler } from './logic/ViewModel'
+import { calculateWinner } from './logic/GameBoardHandler'
 
 const player = ref<PlayerNumber>(1);
 const board = ref(new GameBoard([[0, 0 , 0], [0, 0, 0], [0, 0, 0]]))
 
-const CalculateWinner = (squares: string[]) => {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
+// const CalculateWinner = (squares: string[]) => {
+//   const lines = [
+//     [0, 1, 2],
+//     [3, 4, 5],
+//     [6, 7, 8],
+//     [0, 3, 6],
+//     [1, 4, 7],
+//     [2, 5, 8],
+//     [0, 4, 8],
+//     [2, 4, 6],
+//   ];
+//   for (let i = 0; i < lines.length; i++) {
+//     const [a, b, c] = lines[i];
+//     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+//       return squares[a];
+//     }
+//   }
+//   return null;
+// }
 
-const winner = computed(() => CalculateWinner(board.value.flat()))
+const winner = computed(() => calculateWinner(board.value.flat()))
 
 // const MakeMove = (x: number, y: number) => {
 //   if (winner.value) return
@@ -61,7 +62,7 @@ const ResetGame = () => {
         <div 
           v-for="(cell, y) in row"
           :key="y"
-          @click="move(x, y, player)"
+          @click="moveHandler(x, y, player)"
           :class="`border border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${ cell === 'X' ? 'text-pink-500' : 'text-blue-500' }`">
           {{ cell === 'X' ? 'X' : cell === 'O' ? 'O' : '' }}
         </div>

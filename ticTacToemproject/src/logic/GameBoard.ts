@@ -43,6 +43,10 @@ export class GameBoard {
   clone(): number[][] {
     return structuredClone(this.state);
   }
+
+  flat(): number[] {
+    return this.state.flat()
+  }
 }
 
 function symbol(field: number): FieldType {
