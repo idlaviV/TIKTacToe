@@ -219,12 +219,13 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 
 \section{Burn-up-Chart}
 \begin{figure}[ht]\centering
-\begin{tikzpicture}[x=1cm, y=1cm]
+\begin{tikzpicture}[x=1cm, y=.2cm]
+\newcommand{\ymax}{70}
 	%Achsen
 	\draw[->] (0,0) -- (9.5,0);
-	\draw[->] (0,0) -- (0,8);
-	\draw (-1,7.5) node[]{Aufwand};
-	\draw (9,-1) node[]{Zeit};
+	\draw[->] (0,0) -- (0,\ymax);
+	\draw (-1,\ymax) ++ (0,-.5) node[]{Aufwand};
+	\draw (9,0) ++(0,-.7cm) node[]{Zeit};
 	%Ticks
 	\draw (3,0) ++(0,-0.1) --node[below]{\(1\)} ++(0,.2);
 	\draw (6,0) ++(0,-0.1) --node[below]{\(2\)} ++(0,.2);
@@ -234,7 +235,7 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 										% -- (2,?)							
 															%
 	%Ziele
-	\draw(3,7) node[cross]{};
+	\draw(3,7.5) node[cross]{};
 	\draw[dashed] (1,0) -- (2,5) -- (3,6);
 \end{tikzpicture}
 \end{figure}
