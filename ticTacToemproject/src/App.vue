@@ -3,7 +3,7 @@ import type { PlayerNumber } from './logic/PlayerNumber'
 import { move, calculateWinner, getGameBoard, resetGameBoard } from './logic/GameBoardHandler'
 import { ref, computed } from 'vue'
 
-const player = ref<PlayerNumber>(1);
+const player = ref<PlayerNumber>(1)
 const board = ref(getGameBoard())
 
 const winner = computed(() => calculateWinner(board.value.state.flat()))
