@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{shapes.misc}
+\usepackage{placeins}
 
 \tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={2pt}}
 
@@ -217,6 +218,7 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 \caption{Ein erster Entwurf der Bewertungsansicht der Website, in welcher eingestellt wird, wie die Gewichtungen der KI nach einem Spiel anpasst werden.}
 \end{figure}
 
+\FloatBarrier
 \section{Burn-up-Chart}
 \begin{figure}[ht]\centering
 \begin{tikzpicture}[x=1cm, y=.2cm]
@@ -235,8 +237,10 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 										% -- (2,?)							
 															%
 	%Ziele
-	\draw(3,7.5) node[cross]{};
-	\draw[dashed] (1,0) -- (2,5) -- (3,6);
+	\draw(3,7.5) node[cross]{};%Sprint 1
+	\draw (6,34.5) node[cross, color=lightgray]{};%Sprint 2?
+	\draw (9,64) node[cross, color=lightgray]{};%Sprint 3?
+	%\draw[dashed] (1,0) -- (2,5) -- (3,6);
 \end{tikzpicture}
 \end{figure}
 \end{document}
