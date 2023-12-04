@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { GameBoard } from './logic/GameBoard'
+// import { GameBoard } from './logic/GameBoard'
 import type { PlayerNumber } from './logic/PlayerNumber'
-import { move, calculateWinner } from './logic/GameBoardHandler'
+import { move, calculateWinner, getGameBoard, resetGameBoard } from './logic/GameBoardHandler'
 // import { RouterLink, RouterView } from 'vue-router'
 import { ref, computed } from 'vue'
 
 const player = ref<PlayerNumber>(1);
-const board = ref(new GameBoard([[0, 0, 0], [0, 0, 0], [0, 0, 0]]))
+const board = ref(getGameBoard())
 
 // const CalculateWinner = (squares: string[]) => {
 //   const lines = [
@@ -29,6 +29,7 @@ const board = ref(new GameBoard([[0, 0, 0], [0, 0, 0], [0, 0, 0]]))
 // }
 
 const winner = computed(() => calculateWinner(board.value.flat()))
+const boardState = computed(() => board.value.getState())
 
 // const MakeMove = (x: number, y: number) => {
 //   if (winner.value) return
@@ -40,10 +41,14 @@ const winner = computed(() => calculateWinner(board.value.flat()))
 //   player.value = player.value === 'X' ? 'O' : 'X'
 // }
 
-const ResetGame = () => {
-  board.value = new GameBoard([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
-  player.value = 1
-}
+// const ResetGame = () => {
+//   board.value.setState([
+//     [0, 0, 0],
+//     [0, 0, 0],
+//     [0, 0, 0]
+//   ])
+//   player.value = 1
+// }
 </script>
 
 <template>
@@ -54,7 +59,7 @@ const ResetGame = () => {
 
     <div class="flex flex-col items-center mb-8">
       <div
-        v-for="(row, x) in board.getState()"
+        v-for="(row, x) in boardState"
         :key="x"
         class="flex">
 
@@ -71,7 +76,7 @@ const ResetGame = () => {
     <h2 v-if="winner" class="text-6xl dond-bold mb-8">Player '{{ winner }}' wins!</h2>
     <!-- <RouterLink to="/about" v-if="winner">Bewertung</RouterLink> -->
 
-    <button @click="ResetGame" class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300">Reset Game</button>
+    <button @click="resetGameBoard" class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300">Reset Game</button>
 
     <!-- <RouterView /> -->
   </main>

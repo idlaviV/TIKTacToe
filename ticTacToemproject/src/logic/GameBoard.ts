@@ -20,15 +20,6 @@ export class GameBoard {
     }
   }
 
-  reset() {
-    this.state = [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-    ]
-    this.code = 0
-  }
-
   toString(): String {
     let string = ''
     for (const line of this.state) {
@@ -42,6 +33,18 @@ export class GameBoard {
 
   getState(): number[][] {
     return this.state
+  }
+
+  setState(state: number[][]): void { 
+    this.state = state
+  }
+
+  getCode(): number {
+    return this.code
+  }
+
+  setCode(code: number): void {
+    this.code = code
   }
 
   clone(): number[][] {
