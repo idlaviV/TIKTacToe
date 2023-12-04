@@ -3,9 +3,9 @@ import { GameBoard } from './GameBoard'
 import { printGameboard } from './GameBoardConsolePrinter'
 
 let gameBoard: GameBoard = new GameBoard([
-  [' ', ' ', ' '],
-  [' ', ' ', ' '],
-  [' ', ' ', ' ']
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0]
 ])
 
 export function move(x: number, y: number, player: PlayerNumber) {
@@ -13,15 +13,9 @@ export function move(x: number, y: number, player: PlayerNumber) {
 }
 
 function addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
-  if (board.state[x][y] == ' ') {
-    const newState: string[][] = board.clone();
-    if (player == 1) {
-      newState[x][y] = 'X';
-    } else if (player == 2){
-      newState[x][y] = 'O';
-    } else {
-      newState[x][y] = ' ';
-    }
+  if (board.state[x][y] == 0) {
+    const newState: number[][] = board.clone();
+    newState[x][y] = player;
     return new GameBoard(newState);
   }
   printGameboard();
@@ -33,15 +27,15 @@ export function getGameBoard(): GameBoard {
 }
 
 export function resetGameBoard(): void {
-  gameBoard.setState([
-    [' ', ' ', ' '],
-    [' ', ' ', ' '],
-    [' ', ' ', ' ']
+  gameBoard.state = ([
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
   ])
-  gameBoard.setCode(0)
+  gameBoard.code = 0
 }
 
-export function calculateWinner(squares: string[]) {
+export function calculateWinner(squares: number[]) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -54,7 +48,7 @@ export function calculateWinner(squares: string[]) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (squares[a] !== ' ' && squares[a] === squares[b] && squares[a] === squares[c]) {
+    if (squares[a] !== 0 && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
   }
