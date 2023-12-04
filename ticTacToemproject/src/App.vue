@@ -28,8 +28,7 @@ const board = ref(getGameBoard())
 //   return null;
 // }
 
-const winner = computed(() => calculateWinner(board.value.flat()))
-const boardState = computed(() => board.value.getState())
+const winner = computed(() => calculateWinner(board.value.state.flat()))
 
 // const MakeMove = (x: number, y: number) => {
 //   if (winner.value) return
@@ -40,6 +39,11 @@ const boardState = computed(() => board.value.getState())
 
 //   player.value = player.value === 'X' ? 'O' : 'X'
 // }
+
+const MakeMove = (x: number, y: number) => {
+  move(x, y, player.value)
+  player.value = player.value === 1 ? 2 : 1
+}
 
 // const ResetGame = () => {
 //   board.value.setState([
@@ -59,16 +63,16 @@ const boardState = computed(() => board.value.getState())
 
     <div class="flex flex-col items-center mb-8">
       <div
-        v-for="(row, x) in boardState"
+        v-for="(row, x) in board.state"
         :key="x"
         class="flex">
 
         <div 
           v-for="(cell, y) in row"
           :key="y"
-          @click="move(x, y, player)"
-          :class="`border border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${ cell === 1 ? 'text-pink-500' : 'text-blue-500' }`">
-          {{ cell === 1 ? 'X' : cell === 2 ? 'O' : '' }}
+          @click="MakeMove(x, y)"
+          :class="`border border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${ cell === 'X' ? 'text-pink-500' : 'text-blue-500' }`">
+          {{ cell === 'X' ? 'X' : cell === 'O' ? 'O' : '' }}
         </div>
       </div>
     </div>

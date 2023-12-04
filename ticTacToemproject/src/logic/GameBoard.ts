@@ -1,41 +1,41 @@
 import type { PlayerNumber } from './PlayerNumber'
 
 export class GameBoard {
-  state: number[][]
+  state: string[][]
   code: number = -1
 
-  constructor(state: number[][]) {
+  constructor(state: string[][]) {
     this.state = state
-    this.calculateCode()
+    // this.calculateCode()
   }
 
-  calculateCode() {
-    this.code = 0
-    let base: number = 1
-    for (const line of this.state) {
-      for (const entry of line) {
-        this.code += base * entry
-        base += 10
-      }
-    }
-  }
+  // calculateCode() {
+  //   this.code = 0
+  //   let base: number = 1
+  //   for (const line of this.state) {
+  //     for (const entry of line) {
+  //       this.code += base * entry
+  //       base += 10
+  //     }
+  //   }
+  // }
 
   toString(): String {
     let string = ''
     for (const line of this.state) {
       for (const entry of line) {
-        string += '|' + symbol(entry)
+        string += '|' + entry
       }
       string += '|\n'
     }
     return string
   }
 
-  getState(): number[][] {
+  getState(): string[][] {
     return this.state
   }
 
-  setState(state: number[][]): void { 
+  setState(state: string[][]): void { 
     this.state = state
   }
 
@@ -47,11 +47,11 @@ export class GameBoard {
     this.code = code
   }
 
-  clone(): number[][] {
+  clone(): string[][] {
     return structuredClone(this.state);
   }
 
-  flat(): number[] {
+  flat(): string[] {
     return this.state.flat()
   }
 }

@@ -11,9 +11,9 @@ describe('move', () => {
     move(0, 0, 1)
     expect(getGameBoard()).toEqual(
       new GameBoard([
-        [1, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
+        ['X', ' ', ' '],
+        [' ', ' ', ' '],
+        [' ', ' ', ' ']
       ])
     )
   })
@@ -28,9 +28,9 @@ describe('move', () => {
     move(1, 1, 2)
     expect(oldBoard).toEqual(
       new GameBoard([
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
+        [' ', ' ', ' '],
+        [' ', ' ', ' '],
+        [' ', ' ', ' ']
       ])
     )
   })
