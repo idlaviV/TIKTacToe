@@ -157,13 +157,16 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 
 \section{Wichtige Entscheidungen}
 \begin{itemize}
-\item Ein 3x3-Spielbrett wird auf einer HTML und Javascript basierten Webseite angezeigt und auf diesem ist Tic-Tac-Toe spielbar.
+	\item Ein 3x3-Spielbrett wird auf einer HTML und Javascript basierten Webseite angezeigt und auf diesem ist Tic-Tac-Toe spielbar.
+	\item Die KI benutzt den reduzierten Konfigurationsgraph, d.\,h.\ äquivalente Spielsituationen werden als identische Situationen betrachtet.
+	\item Im Graph-Interface werden auch nur die Äquivalenzklassen angezeigt und nicht alle möglichen 9 Kinder.
 \end{itemize}
 
 \section{Offene Fragen}
 \begin{itemize}
 	\item Wo werden die Gewichte im Baum visualisiert? An den Kanten oder Knoten?
 	\item Kann der gesamte Graph der Gewichte überhaupt sinnvoll und kompakt visualisiert werden?
+	\item Wird in der Graphvisualisierung in den Knoten der aktuelle Spielstand abgebildet oder sein Äquivalenzklassenvertreter?
 \end{itemize}
 
 
