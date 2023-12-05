@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import type { PlayerNumber } from './logic/PlayerNumber'
-import { move, calculateWinner, getGameBoard, resetGameBoard } from './logic/GameBoardHandler'
+import { move, calculateWinner, getGameBoard, resetGameBoard, getWinner } from './logic/GameBoardHandler'
 import { ref, computed } from 'vue'
 
 const player = ref<PlayerNumber>(1)
 const board = ref(getGameBoard())
 
-const winner = computed(() => calculateWinner(board.value.state.flat()))
+const winner = ref(getWinner());
 
 const MakeMove = (x: number, y: number) => {
   move(x, y, player.value);
   board.value = getGameBoard()
+  winner.value = getWinner()
   player.value = player.value === 1 ? 2 : 1
 };
 

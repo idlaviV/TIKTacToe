@@ -8,17 +8,26 @@ let gameBoard: GameBoard = new GameBoard([
   [0, 0, 0]
 ])
 
+let winner: number | null = null
+
+export function getWinner() {
+  return winner
+}
+
 export function move(x: number, y: number, player: PlayerNumber) {
   gameBoard = addPiece(x, y, gameBoard, player)
+  console.log('New state:\n')
+  console.log(gameBoard.toString())
+  winner = calculateWinner()
 }
 
 function addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
   if (board.state[x][y] == 0) {
-    const newState: number[][] = board.clone();
-    newState[x][y] = player;
-    return new GameBoard(newState);
+    const newState: number[][] = board.clone()
+    newState[x][y] = player
+    return new GameBoard(newState)
   }
-  printGameboard();
+  printGameboard()
   throw new Error('This piece cannot go there')
 }
 
@@ -27,15 +36,15 @@ export function getGameBoard(): GameBoard {
 }
 
 export function resetGameBoard(): void {
-  gameBoard.state = ([
+  gameBoard.state = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0]
-  ])
+  ]
   gameBoard.code = 0
 }
 
-export function calculateWinner(squares: number[]) {
+export function calculateWinner() {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -44,13 +53,15 @@ export function calculateWinner(squares: number[]) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6],
-  ];
+    [2, 4, 6]
+  ]
+  const squares = gameBoard.state.flat()
   for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+    const [a, b, c] = lines[i]
     if (squares[a] !== 0 && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      console.log('gbh noticed winner %d', squares[a])
+      return squares[a]
     }
   }
-  return null;
+  return null
 }
