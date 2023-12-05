@@ -224,22 +224,32 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 \begin{tikzpicture}[x=1cm, y=.2cm]
 \newcommand{\ymax}{70}
 	%Achsen
-	\draw[->] (0,0) -- (9.5,0);
+	\draw[->] (0,0) -- (10.5,0);
 	\draw[->] (0,0) -- (0,\ymax);
 	\draw (-1,\ymax) ++ (0,-.5) node[]{Aufwand};
-	\draw (9,0) ++(0,-.7cm) node[]{Zeit};
-	%Ticks
-	\draw (3,0) ++(0,-0.1) --node[below]{\(1\)} ++(0,.2);
-	\draw (6,0) ++(0,-0.1) --node[below]{\(2\)} ++(0,.2);
-	\draw (9,0) ++(0,-0.1) --node[below]{\(3\)} ++(0,.2);
-		%Graph
+	\draw (11,0) ++(0,0) node[]{Zeit};
+	%Ticks x-Achse
+	\draw (4,0)  ++(0,-0.5) --++(0,1);
+	\draw (7,0)  ++(0,-0.5) --++(0,1);
+	\draw (10,0) ++(0,-0.5) --++(0,1);
+	%x-Achse Labels
+	\draw (2,0) node[below]{Sprint \(1\)};
+	\draw (5.5,0) node[below]{Sprint \(2\)};
+	\draw (8.5,0) node[below]{Sprint \(3\)};
+	%y-Achse Ticks
+	\foreach \y in {10,20,...,60} {
+		\draw (0,\y) ++(-.1,0) --++(.2,0);
+		\draw (0,\y) ++(0,-5) ++(-.05,0) --++(.1,0);
+		\draw (0,\y) ++(0,5) ++(-.05,0) --++(.1,0);
+	}
+	%Graph
 	\draw[very thick] (0,0) -- (1,0)%
 										 -- (2,5);%Tickets M100 und M200 geschafft						
 															%
 	%Ziele
-	\draw(3,7.5) node[cross]{};%Sprint 1
-	\draw (6,34.5) node[cross, color=lightgray]{};%Sprint 2?
-	\draw (9,64) node[cross, color=lightgray]{};%Sprint 3?
+	\draw(4,7.5) node[cross]{};%Sprint 1
+	\draw (7,34.5) node[cross, color=lightgray]{};%Sprint 2?
+	\draw (10,64) node[cross, color=lightgray]{};%Sprint 3?
 	%\draw[dashed] (1,0) -- (2,5) -- (3,6);
 \end{tikzpicture}
 \end{figure}
