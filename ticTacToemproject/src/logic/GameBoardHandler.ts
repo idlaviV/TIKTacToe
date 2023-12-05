@@ -70,11 +70,3 @@ export class GameBoardHandler {
     return null
   }
 }
-
-export function resetGameBoard(): void {
-  gameBoard = new GameBoard([
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0]
-  ])
-}
