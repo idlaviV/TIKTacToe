@@ -18,11 +18,13 @@ describe('move', () => {
         [0, 0, 0]
       ])
     )
+    expect(handler.history.length == 2)
   })
 
   test('add piece to board illegally', () => {
     handler.move(0, 0, 1)
     expect(() => handler.move(0, 0, 2)).toThrowError('This piece cannot go there')
+    expect(handler.history.length == 1)
   })
 
   test('add piece to board legally, old gameboard should not change', () => {

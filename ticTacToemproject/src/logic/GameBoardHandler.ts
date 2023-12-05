@@ -9,6 +9,8 @@ export class GameBoardHandler {
     [0, 0, 0]
   ])
 
+  history: GameBoard[] = [this.gameBoard]
+
   winner: number | null = null
 
   getWinner() {
@@ -17,6 +19,7 @@ export class GameBoardHandler {
 
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard = this.addPiece(x, y, this.gameBoard, player)
+    this.history.push(this.gameBoard);
     this.winner = this.calculateWinner()
   }
 
@@ -42,6 +45,7 @@ export class GameBoardHandler {
     ]
     this.gameBoard.code = 0
     this.winner = null
+    this.history = [this.gameBoard]
   }
 
   calculateWinner() {
