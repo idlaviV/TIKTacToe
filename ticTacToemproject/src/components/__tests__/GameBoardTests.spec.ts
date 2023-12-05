@@ -2,11 +2,11 @@ import { GameBoardHandler } from '../../logic/GameBoardHandler'
 import { GameBoard } from '../../logic/GameBoard'
 import { describe, expect, test, beforeEach } from 'vitest'
 
-let handler : GameBoardHandler
+let handler: GameBoardHandler
 
 describe('move', () => {
   beforeEach(() => {
-    handler = new GameBoardHandler();
+    handler = new GameBoardHandler()
   })
 
   test('add piece to board legally', () => {

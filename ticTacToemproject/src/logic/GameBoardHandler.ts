@@ -19,7 +19,7 @@ export class GameBoardHandler {
 
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard = this.addPiece(x, y, this.gameBoard, player)
-    this.history.push(this.gameBoard);
+    this.history.push(this.gameBoard)
     this.winner = this.calculateWinner()
   }
 
