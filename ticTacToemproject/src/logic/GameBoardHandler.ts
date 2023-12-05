@@ -3,11 +3,7 @@ import { GameBoard } from './GameBoard'
 import { printGameboard } from './GameBoardConsolePrinter'
 
 export class GameBoardHandler {
-  gameBoard: GameBoard = new GameBoard([
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0]
-  ])
+  gameBoard: GameBoard = new GameBoard()
 
   history: GameBoard[] = [this.gameBoard]
 
@@ -37,13 +33,8 @@ export class GameBoardHandler {
     return this.gameBoard
   }
 
-  resetGameBoard(): void {
-    this.gameBoard.state = [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0]
-    ]
-    this.gameBoard.code = 0
+  resetGame(): void {
+    this.gameBoard = new GameBoard()
     this.winner = null
     this.history = [this.gameBoard]
   }

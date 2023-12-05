@@ -4,7 +4,7 @@ export class GameBoard {
   state: number[][]
   code: number = -1
 
-  constructor(state: number[][]) {
+  constructor(state: number[][] = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]) {
     this.state = state
     this.calculateCode()
   }

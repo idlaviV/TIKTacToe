@@ -12,7 +12,7 @@ const MakeMove = (x: number, y: number) => {
 }
 
 const ResetGame = () => {
-  handler.value.resetGameBoard()
+  handler.value.resetGame()
   player.value = 1
 }
 </script>
