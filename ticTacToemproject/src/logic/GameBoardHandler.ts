@@ -2,7 +2,7 @@ import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
 import { printGameboard } from './GameBoardConsolePrinter'
 
-let gameBoard: GameBoard = new GameBoard([
+export let gameBoard: GameBoard = new GameBoard([
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0]
