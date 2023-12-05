@@ -1,15 +1,17 @@
-import { getGameBoard, move, resetGameBoard } from '../../logic/GameBoardHandler'
+import { GameBoardHandler } from '../../logic/GameBoardHandler'
 import { GameBoard } from '../../logic/GameBoard'
 import { describe, expect, test, beforeEach } from 'vitest'
 
+let handler : GameBoardHandler
+
 describe('move', () => {
   beforeEach(() => {
-    resetGameBoard()
+    handler = new GameBoardHandler();
   })
 
   test('add piece to board legally', () => {
-    move(0, 0, 1)
-    expect(getGameBoard()).toEqual(
+    handler.move(0, 0, 1)
+    expect(handler.getGameBoard()).toEqual(
       new GameBoard([
         [1, 0, 0],
         [0, 0, 0],
@@ -19,13 +21,13 @@ describe('move', () => {
   })
 
   test('add piece to board illegally', () => {
-    move(0, 0, 1)
-    expect(() => move(0, 0, 2)).toThrowError('This piece cannot go there')
+    handler.move(0, 0, 1)
+    expect(() => handler.move(0, 0, 2)).toThrowError('This piece cannot go there')
   })
 
   test('add piece to board legally, old gameboard should not change', () => {
-    const oldBoard = getGameBoard()
-    move(1, 1, 2)
+    const oldBoard = handler.getGameBoard()
+    handler.move(1, 1, 2)
     expect(oldBoard).toEqual(
       new GameBoard([
         [0, 0, 0],

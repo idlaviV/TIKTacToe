@@ -1,24 +1,18 @@
 <script setup lang="ts">
 import type { PlayerNumber } from './logic/PlayerNumber'
-import { move, getGameBoard, resetGameBoard, getWinner, gameBoard} from './logic/GameBoardHandler'
-import { ref, computed} from 'vue'
+import { GameBoardHandler} from './logic/GameBoardHandler'
+import { ref} from 'vue'
 
 const player = ref<PlayerNumber>(1)
-const board = ref(gameBoard)
-
-const winner = computed(() => {
-  console.log("calculate winner from app")
-  return getWinner()});
+const handler = ref(new GameBoardHandler())
 
 const MakeMove = (x: number, y: number) => {
-  move(x, y, player.value);
-  board.value = getGameBoard()
+  handler.value.move(x, y, player.value);
   player.value = player.value === 1 ? 2 : 1
 };
 
 const ResetGame = () => {
-  resetGameBoard()
-  board.value = getGameBoard()
+  handler.value.resetGameBoard()
   player.value = 1
 }
 </script>
@@ -31,7 +25,7 @@ const ResetGame = () => {
 
     <div class="flex flex-col items-center mb-8">
       <div
-        v-for="(row, x) in board.state"
+        v-for="(row, x) in handler.gameBoard.state"
         :key="x"
         class="flex">
 
@@ -45,7 +39,7 @@ const ResetGame = () => {
       </div>
     </div>
 
-    <h2 v-if="winner" class="text-6xl dond-bold mb-8">Player {{ winner }} wins!</h2>
+    <h2 v-if="handler.winner" class="text-6xl dond-bold mb-8">Player {{ handler.winner }} wins!</h2>
 
     <button @click="ResetGame" class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300">Reset Game</button>
 

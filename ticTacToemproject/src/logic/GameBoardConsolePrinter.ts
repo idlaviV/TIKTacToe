@@ -1,5 +1,5 @@
-import { getGameBoard } from './GameBoardHandler'
+import { GameBoard } from './GameBoard'
 
-export function printGameboard(): void {
-  console.log(getGameBoard().toString())
+export function printGameboard( gameBoard:GameBoard): void {
+  console.log(gameBoard.toString())
 }
