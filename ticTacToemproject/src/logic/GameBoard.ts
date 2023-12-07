@@ -15,7 +15,7 @@ export class GameBoard {
     for (const line of this.state) {
       for (const entry of line) {
         this.code += base * entry
-        base += 10
+        base *= 10
       }
     }
   }
