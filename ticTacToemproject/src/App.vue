@@ -38,7 +38,8 @@ const ResetGame = () => {
       </div>
     </div>
 
-    <h2 v-if="handler.winner" class="text-6xl dond-bold mb-8">Player {{ handler.winner }} wins!</h2>
+    <h2 v-if="handler.winner === -1" class="text-6xl dond-bold mb-8">Draw!</h2>
+    <h2 v-else-if="handler.winner" class="text-6xl dond-bold mb-8">Player {{ handler.winner }} wins!</h2>
 
     <button
       @click="ResetGame"

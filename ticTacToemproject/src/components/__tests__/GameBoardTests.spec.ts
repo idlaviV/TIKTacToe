@@ -77,7 +77,6 @@ describe('getWinner', () => {
     expect(handler.getWinner()).toEqual(2)
   })
 
-  //TODO: fix this test
   test('draw', () => {
     handler.move(0, 0, 1)
     handler.move(1, 0, 2)

@@ -58,6 +58,11 @@ export class GameBoardHandler {
         return squares[a]
       }
     }
-    return null
+    for (const cell in squares) {
+      if (squares[cell] == 0) {
+        return null
+      }
+    }
+    return -1
   }
 }
