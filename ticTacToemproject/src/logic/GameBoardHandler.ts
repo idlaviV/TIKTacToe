@@ -1,13 +1,14 @@
 import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
 import { printGameboard } from './GameBoardConsolePrinter'
+import { drawStatus, type WinnerStatus } from './WinnerStatus'
 
 export class GameBoardHandler {
   gameBoard: GameBoard = new GameBoard()
 
   history: GameBoard[] = [this.gameBoard]
 
-  winner: number | null = null
+  winner: WinnerStatus = null
 
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard = this.addPiece(x, y, this.gameBoard, player)
@@ -31,7 +32,7 @@ export class GameBoardHandler {
     this.history = [this.gameBoard]
   }
 
-  calculateWinner() {
+  calculateWinner(): WinnerStatus {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -46,7 +47,9 @@ export class GameBoardHandler {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i]
       if (squares[a] !== 0 && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a]
+        if (squares[a] === 1) {
+          return 1
+        } else return 2
       }
     }
     for (const cell in squares) {
@@ -54,14 +57,14 @@ export class GameBoardHandler {
         return null
       }
     }
-    return -1
+    return drawStatus
   }
 
   getGameBoard(): GameBoard {
     return this.gameBoard
   }
 
-  getWinner() {
+  getWinner(): WinnerStatus {
     return this.winner
   }
 }

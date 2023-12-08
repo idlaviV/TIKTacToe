@@ -2,6 +2,7 @@
 import type { PlayerNumber } from './logic/PlayerNumber'
 import { GameBoardHandler } from './logic/GameBoardHandler'
 import { ref } from 'vue'
+import { drawStatus } from './logic/WinnerStatus'
 
 const player = ref<PlayerNumber>(1)
 const handler = ref(new GameBoardHandler())
@@ -38,7 +39,7 @@ const ResetGame = () => {
       </div>
     </div>
 
-    <h2 v-if="handler.getWinner() === -1" class="text-6xl dond-bold mb-8">Draw!</h2>
+    <h2 v-if="handler.getWinner() === drawStatus" class="text-6xl dond-bold mb-8">Draw!</h2>
     <h2 v-else-if="handler.getWinner()" class="text-6xl dond-bold mb-8">
       Player {{ handler.getWinner() }} wins!
     </h2>

@@ -1,6 +1,7 @@
 import { GameBoardHandler } from '../../logic/GameBoardHandler'
 import { GameBoard } from '../../logic/GameBoard'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { drawStatus } from '@/logic/WinnerStatus'
 
 let handler: GameBoardHandler = new GameBoardHandler()
 
@@ -83,7 +84,7 @@ describe('getWinner', () => {
     handler.move(1, 2, 1)
     handler.move(2, 1, 2)
     handler.move(2, 2, 1)
-    expect(handler.getWinner()).toEqual(-1)
+    expect(handler.getWinner()).toEqual(drawStatus)
 
     test('game not over', () => {
       handler.move(0, 0, 1)
