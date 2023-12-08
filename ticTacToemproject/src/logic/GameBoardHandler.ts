@@ -9,10 +9,6 @@ export class GameBoardHandler {
 
   winner: number | null = null
 
-  getWinner() {
-    return this.winner
-  }
-
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard = this.addPiece(x, y, this.gameBoard, player)
     this.history.push(this.gameBoard)
@@ -27,10 +23,6 @@ export class GameBoardHandler {
     }
     printGameboard(this.gameBoard)
     throw new Error('This piece cannot go there')
-  }
-
-  getGameBoard(): GameBoard {
-    return this.gameBoard
   }
 
   resetGame(): void {
@@ -54,7 +46,6 @@ export class GameBoardHandler {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i]
       if (squares[a] !== 0 && squares[a] === squares[b] && squares[a] === squares[c]) {
-        console.log('gbh noticed winner %d', squares[a])
         return squares[a]
       }
     }
@@ -64,5 +55,13 @@ export class GameBoardHandler {
       }
     }
     return -1
+  }
+
+  getGameBoard(): GameBoard {
+    return this.gameBoard
+  }
+
+  getWinner() {
+    return this.winner
   }
 }
