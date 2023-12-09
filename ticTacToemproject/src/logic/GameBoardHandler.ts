@@ -1,5 +1,6 @@
 import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
+import type { FieldType } from './GameBoard'
 import { printGameboard } from './GameBoardConsolePrinter'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
 
@@ -18,7 +19,7 @@ export class GameBoardHandler {
 
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
     if (board.state[x][y] == 0) {
-      const newState: number[][] = board.clone()
+      const newState: FieldType[][] = board.clone()
       newState[x][y] = player
       return new GameBoard(newState)
     }

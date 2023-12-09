@@ -1,11 +1,11 @@
 import type { PlayerNumber } from './PlayerNumber'
 
 export class GameBoard {
-  state: number[][]
+  state: FieldType[][]
   code: number = -1
 
   constructor(
-    state: number[][] = [
+    state: FieldType[][] = [
       [0, 0, 0],
       [0, 0, 0],
       [0, 0, 0]
@@ -37,7 +37,7 @@ export class GameBoard {
     return string
   }
 
-  clone(): number[][] {
+  clone(): FieldType[][] {
     const state = this.state
     return [
       [state[0][0], state[0][1], state[0][2]],
@@ -47,15 +47,15 @@ export class GameBoard {
   }
 }
 
-function symbol(field: number): FieldType {
+function symbol(field: FieldType): String {
   if (field == 1) {
-    return 1
+    return '1'
   } else if (field == 2) {
-    return 2
+    return '2'
   } else if (field == 0) {
     return ' '
   }
   throw new Error('Unexpected player in field found.')
 }
 
-type FieldType = PlayerNumber | ' '
+export type FieldType = PlayerNumber | 0
