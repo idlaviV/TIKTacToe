@@ -17,7 +17,7 @@ describe('resetGame', () => {
   })
 })
 
-describe('getWinner', () => {
+describe('calculation of winner', () => {
   test('player 1 win', () => {
     handler.performTurn(0, 0)
     handler.performTurn(1, 0)
@@ -25,6 +25,8 @@ describe('getWinner', () => {
     handler.performTurn(1, 1)
     handler.performTurn(0, 2)
     expect(handler.getWinner()).toEqual(1)
+    handler.performTurn(2, 2)
+    expect(handler.gBHandler.gameBoard.state[2][2]).toEqual(0)
   })
 
   test('player 2 win', () => {

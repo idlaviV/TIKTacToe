@@ -8,12 +8,14 @@ export class GameHandler {
   winner: WinnerStatus = null
 
   performTurn(x: number, y: number) {
-    this.gBHandler.move(x, y, this.playerOnTurn)
-    this.winner = this.gBHandler.calculateWinner()
-    if (this.playerOnTurn === 1) {
-      this.playerOnTurn = 2
-    } else {
-      this.playerOnTurn = 1
+    if (this.winner == null) {
+      this.gBHandler.move(x, y, this.playerOnTurn)
+      this.winner = this.gBHandler.calculateWinner()
+      if (this.playerOnTurn === 1) {
+        this.playerOnTurn = 2
+      } else {
+        this.playerOnTurn = 1
+      }
     }
   }
 

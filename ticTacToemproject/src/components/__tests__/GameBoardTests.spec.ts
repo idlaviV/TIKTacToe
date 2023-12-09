@@ -1,7 +1,6 @@
 import { GameBoardHandler } from '../../logic/GameBoardHandler'
 import { GameBoard } from '../../logic/GameBoard'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { drawStatus } from '@/logic/WinnerStatus'
 
 let handler: GameBoardHandler = new GameBoardHandler()
 
