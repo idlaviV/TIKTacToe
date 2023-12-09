@@ -9,12 +9,9 @@ export class GameBoardHandler {
 
   history: GameBoard[] = [this.gameBoard]
 
-  winner: WinnerStatus = null
-
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard = this.addPiece(x, y, this.gameBoard, player)
     this.history.push(this.gameBoard)
-    this.winner = this.calculateWinner()
   }
 
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
@@ -29,7 +26,6 @@ export class GameBoardHandler {
 
   resetGameBoard(): void {
     this.gameBoard = new GameBoard()
-    this.winner = null
     this.history = [this.gameBoard]
   }
 
@@ -63,9 +59,5 @@ export class GameBoardHandler {
 
   getGameBoard(): GameBoard {
     return this.gameBoard
-  }
-
-  getWinner(): WinnerStatus {
-    return this.winner
   }
 }
