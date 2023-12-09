@@ -26,7 +26,7 @@ export class GameBoardHandler {
     throw new Error('This piece cannot go there')
   }
 
-  resetGame(): void {
+  resetGameBoard(): void {
     this.gameBoard = new GameBoard()
     this.winner = null
     this.history = [this.gameBoard]

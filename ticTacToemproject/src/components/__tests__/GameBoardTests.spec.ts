@@ -13,7 +13,7 @@ describe('resetGame', () => {
   test('reset', () => {
     handler.move(0, 0, 1)
     const oldBoard = handler.getGameBoard()
-    handler.resetGame()
+    handler.resetGameBoard()
     expect(handler.getGameBoard()).not.toEqual(oldBoard)
     expect(handler.winner).toEqual(null)
     expect(handler.history.length == 1)
