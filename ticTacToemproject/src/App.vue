@@ -5,13 +5,21 @@ import graph from './components/graph.vue'
 </script>
 
 <template>
-  <main class="pt-8 text-center bg-gray-800 min-h-screen text-white">
-    <gameBoard />
-
-    <div></div>
-    
-    <graph />
+  <main class="pt-8 bg-gray-800 text-center min-h-screen text-white">
+    <div class="row flex-col">
+      <div class="column">
+        <gameBoard />
+      </div>
+      <div class="column">
+        <graph />
+      </div>
+    </div>
   </main>
 </template>
 
-<style></style>
+<style>
+.column {
+  float: left;
+  width: 50%;
+}
+</style>
