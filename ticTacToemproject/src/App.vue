@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import gameBoard from './components/gameBoard.vue'
-import graph from './components/graph.vue'
+import gameBoard from './components/GameBoard.vue'
+import graph from './components/GraphPanel.vue'
 </script>
 
 <template>
