@@ -1,7 +1,5 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <div>Ich bin der Graph</div>
+  <div>Ich bin der Graph</div>
 </template>

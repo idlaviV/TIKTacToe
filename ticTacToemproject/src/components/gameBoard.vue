@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { drawStatus } from '../logic/WinnerStatus'
 import { GameHandler } from '../logic/GameHandler'
 
-
 const gameHandler = ref(new GameHandler())
 const gBHandler = ref(gameHandler.value.getGBHandler())
 
@@ -15,7 +14,6 @@ const ResetGame = () => {
   gameHandler.value.resetGame()
   gameHandler.value.getPlayerOnTurn()
 }
-
 </script>
 
 <template>
