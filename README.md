@@ -1,4 +1,8 @@
-# ticTacToemproject
+# KIT Tac Toe
+Luis Zeyer, Jonas Stelzer, Leonid Grau
+Teamprojekt im Wintersemester 2023/24
+am Karlsruher Institut für Technologie (KIT)
+betreut von Annika Vielsack
 
 Die App „KIT Tac Toe“ soll einen Beitrag für den sanften Einstieg in das Thema KI
 leisten. Schülerinnen und Schüler können mit wenigen Klicks ein regelbasiertes Expertensystem
@@ -16,29 +20,30 @@ trainieren lassen. Am Ende einer Lerneinheit haben die SuS das Konzept von Gewic
 nachvollzogen und können diese als „Gedächtnis“ des Systems benennen, welches
 den Lernprozess abbildet.
 
-## Recommended IDE Setup
+## Releases
+[Abschluss Sprint "Anforderung"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v0.1-anforderung)
+[Abschluss Sprint "Entwurf"](tba)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Empfohlenes IDE-Setup
 
-## Project Setup
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (Vetur deaktivieren) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+Die folgenden Befehle müssen im Unterordner `ticTacToemproject` ausgeführt werden.
+
+### Projekt-Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Kompilieren für die Entwicklung
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Unit Tests mit [Vitest](https://vitest.dev/) ausführen
 
 ```sh
 npm run test:unit
