@@ -5,7 +5,7 @@
 \usepackage{graphics}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.misc, positioning, shapes.multipart}
 \usepackage{placeins}
 
 \tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={2pt}}
@@ -214,10 +214,10 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 \subsection{Klassendiagramme}
 \begin{figure}[ht]
 \includegraphics[width=\textwidth]{Klassendiagramme/Aktuell.png}
-\caption{Klassendiagramm für das aktuelle Release}
+\caption{Klassendiagramm für Release 1 (Entwurf)}
 \end{figure}
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{Klassendiagramme/Planung.png}
+\includegraphics[height=\textheight]{Klassendiagramme/Planung.png}
 \caption{Klassendiagramm als Planungsgrundlage}
 \end{figure}
 
@@ -229,7 +229,7 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 	%Achsen
 	\draw[->] (0,0) -- (10.5,0);
 	\draw[->] (0,0) -- (0,\ymax);
-	\draw (-1,\ymax) ++ (0,-.5) node[]{Aufwand};
+	\draw (-1,\ymax) ++ (0,-.5) node[]{\begin{tabular}{c}Aufwand\\~[h]\end{tabular}};
 	\draw (11,0) ++(0,0) node[]{Zeit};
 	%Ticks x-Achse
 	\draw (4,0)  ++(0,-0.5) --++(0,1);
@@ -245,13 +245,17 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 		\draw (0,\y) ++(0,-5) ++(-.05,0) --++(.1,0);
 		\draw (0,\y) ++(0,5) ++(-.05,0) --++(.1,0);
 	}
+	%y-Achse Labels
+		\draw (0,20) node[left]{\(20\)};
+		\draw (0,40) node[left]{\(40\)};
+		\draw (0,60) node[left]{\(60\)};
 	%Graph
 	\draw[very thick] (0,0) -- (1,0)%
-										 -- (2,1.5)%Tickets M100 und M200 geschafft		
-										 -- (3,5);%keine neuen Tickets
-															%
+										 -- (2,1.5)%Ticket M100 geschafft		
+										 -- (3,5)%Ticket M200 geschafft		
+										 -- (4,5);%Keine neuen Tickets wegen gojs >:-(
 	%Ziele
-	\draw(4,7.5) node[cross]{};%Sprint 1
+	\draw(4,7.5) node[cross, color=red]{};%Sprint 1
 	\draw (7,34.5) node[cross, color=lightgray]{};%Sprint 2?
 	\draw (10,64) node[cross, color=lightgray]{};%Sprint 3?
 	%\draw[dashed] (1,0) -- (2,5) -- (3,6);
