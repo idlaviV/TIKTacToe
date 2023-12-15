@@ -1,28 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { drawStatus } from '../logic/WinnerStatus'
 import { GameHandler } from '../logic/GameHandler'
+import { GameBoardHandler } from '@/logic/GameBoardHandler'
 
-const gameHandler = ref(new GameHandler())
-const gBHandler = ref(gameHandler.value.getGBHandler())
+const props = defineProps({
+  gameHandler: GameHandler,
+  gBHandler: GameBoardHandler
+})
 
 const MakeMove = (x: number, y: number) => {
-  gameHandler.value.performTurn(x, y)
+  props.gameHandler?.performTurn(x, y)
 }
 
 const ResetGame = () => {
-  gameHandler.value.resetGame()
-  gameHandler.value.getPlayerOnTurn()
+  props.gameHandler?.resetGame()
+  props.gameHandler?.getPlayerOnTurn()
 }
 </script>
 
 <template>
   <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
 
-  <h3 class="text-xl mb-4">Player {{ gameHandler.getPlayerOnTurn() }}'s turn</h3>
+  <h3 class="text-xl mb-4">Player {{ props.gameHandler?.getPlayerOnTurn() }}'s turn</h3>
 
   <div class="flex flex-col items-center mb-8">
-    <div v-for="(row, x) in gBHandler.gameBoard.state" :key="x" class="flex">
+    <div v-for="(row, x) in props.gBHandler?.gameBoard.state" :key="x" class="flex">
       <div
         v-for="(cell, y) in row"
         :key="y"
@@ -36,9 +38,11 @@ const ResetGame = () => {
     </div>
   </div>
 
-  <h2 v-if="gameHandler.getWinner() === drawStatus" class="text-6xl dond-bold mb-8">Draw!</h2>
-  <h2 v-else-if="gameHandler.getWinner()" class="text-6xl dond-bold mb-8">
-    Player {{ gameHandler.getWinner() }} wins!
+  <h2 v-if="props.gameHandler?.getWinner() === drawStatus" class="text-6xl dond-bold mb-8">
+    Draw!
+  </h2>
+  <h2 v-else-if="props.gameHandler?.getWinner()" class="text-6xl dond-bold mb-8">
+    Player {{ props.gameHandler.getWinner() }} wins!
   </h2>
 
   <button
