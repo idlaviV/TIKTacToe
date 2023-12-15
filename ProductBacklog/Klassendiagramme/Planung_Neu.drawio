@@ -98,12 +98,6 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="52" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="45" target="21" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="325" y="1695" as="sourcePoint"/>
-                        <mxPoint x="485" y="1695" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="53" value="«enumeration»&#10;WinnerStatus" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=38;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontFamily=Helvetica;fontSize=11;fontColor=default;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
                     <mxGeometry x="375" y="1585.5" width="160" height="124" as="geometry"/>
                 </mxCell>
@@ -123,13 +117,6 @@
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="325" y="1695" as="sourcePoint"/>
                         <mxPoint x="485" y="1695" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="62" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=1;labelBackgroundColor=default;strokeColor=default;fontFamily=Helvetica;fontSize=11;fontColor=default;shape=connector;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="53" target="21" edge="1">
-                    <mxGeometry x="-0.4167" width="160" relative="1" as="geometry">
-                        <mxPoint x="325" y="1695" as="sourcePoint"/>
-                        <mxPoint x="485" y="1695" as="targetPoint"/>
-                        <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="78" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=1;labelBackgroundColor=default;strokeColor=default;fontFamily=Helvetica;fontSize=11;fontColor=default;shape=connector;edgeStyle=elbowEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="173" target="10" edge="1">
@@ -559,6 +546,18 @@
                             <mxPoint x="610" y="1900"/>
                             <mxPoint x="610" y="806"/>
                         </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="200" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="53" target="21">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="410" y="1660" as="sourcePoint"/>
+                        <mxPoint x="570" y="1660" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="202" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="45" target="21">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="530" y="1550" as="sourcePoint"/>
+                        <mxPoint x="690" y="1550" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
             </root>
