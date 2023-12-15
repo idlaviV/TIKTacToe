@@ -45,6 +45,10 @@ export class GameBoard {
       [state[2][0], state[2][1], state[2][2]]
     ]
   }
+
+  getCode(): number {
+    return this.code
+  }
 }
 
 function symbol(field: FieldType): String {
