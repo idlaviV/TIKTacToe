@@ -20,8 +20,9 @@ trainieren lassen. Am Ende einer Lerneinheit haben die SuS das Konzept von Gewic
 nachvollzogen und können diese als „Gedächtnis“ des Systems benennen, welches
 den Lernprozess abbildet.
 
-## Vorherige Releases
+## Releases
 * [Abschluss Sprint "Anforderung"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v0.1-anforderung)
+* [Abschluss Sprint "Entwurf"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v1.0-entwurf)
 
 ## Empfohlenes IDE-Setup
 
