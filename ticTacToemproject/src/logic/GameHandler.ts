@@ -1,3 +1,4 @@
+import { HistoryExport } from '@/export/HistoryExport'
 import { GameBoardHandler } from './GameBoardHandler'
 import type { PlayerNumber } from './PlayerNumber'
 import type { WinnerStatus } from './WinnerStatus'
@@ -6,6 +7,7 @@ export class GameHandler {
   playerOnTurn: PlayerNumber = 1
   gBHandler: GameBoardHandler = new GameBoardHandler()
   winner: WinnerStatus = null
+  historyExport : HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
 
   performTurn(x: number, y: number) {
     if (this.winner == null) {
@@ -16,6 +18,7 @@ export class GameHandler {
       } else {
         this.playerOnTurn = 1
       }
+      this.historyExport.updateHistory(this.gBHandler.getGameBoard())
     }
   }
 
@@ -35,5 +38,9 @@ export class GameHandler {
 
   getWinner(): WinnerStatus {
     return this.winner
+  }
+
+  getHistoryExport() : HistoryExport {
+    return this.historyExport
   }
 }

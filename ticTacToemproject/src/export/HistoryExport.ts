@@ -8,12 +8,12 @@ export class HistoryExport {
 
   constructor(gameBoard: GameBoard) {
     this.lastCode = gameBoard.getCode().toString()
-    this.nodes[this.lastCode] = { gameBoard }
+    this.nodes[this.lastCode] = { name: this.lastCode, boardState: gameBoard.state }
   }
 
   updateHistory(gameBoard: GameBoard) {
     const newCode: string = gameBoard.getCode().toString()
-    this.nodes[newCode] = { gameBoard }
+    this.nodes[newCode] = { name: newCode, boardState: gameBoard.state }
     const key: string = this.lastCode + '#' + newCode
     this.edges[key] = { source: this.lastCode, target: newCode }
     this.lastCode = newCode

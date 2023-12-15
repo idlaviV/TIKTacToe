@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import gameBoard from './components/GameBoard.vue'
+import GameBoard from './components/GameBoard.vue'
 import { GameHandler } from './logic/GameHandler'
-import graph from './components/GraphPanel.vue'
+import GraphPanel from './components/GraphPanel.vue'
 const gameHandler = ref(new GameHandler())
 const gBHandler = ref(gameHandler.value.getGBHandler())
 </script>
@@ -11,10 +11,10 @@ const gBHandler = ref(gameHandler.value.getGBHandler())
   <main class="pt-8 bg-gray-800 text-center min-h-screen text-white">
     <div class="row flex-col">
       <div class="column">
-        <gameBoard :game-handler="gameHandler" :g-b-handler="gBHandler" />
+        <GameBoard :game-handler="gameHandler" :g-b-handler="gBHandler" />
       </div>
       <div class="column">
-        <graph />
+        <GraphPanel :nodes="gameHandler.getHistoryExport().nodes" :edges="gameHandler.getHistoryExport().edges"/>
       </div>
     </div>
   </main>
