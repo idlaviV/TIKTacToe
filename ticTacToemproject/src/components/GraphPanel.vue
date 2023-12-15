@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import {  type Nodes, type Edges, VNetworkGraph } from "v-network-graph"
-import { reactive, ref } from "vue";
-
-
-const nodeSize = 40
 
 const props = defineProps<{nodes:Nodes, edges:Edges}>()
-
 
 
 </script>
 
 <template>
-
   <v-network-graph
+    ref="graph"
+    class="graph"
     :nodes="props.nodes"
     :edges="props.edges">
 
