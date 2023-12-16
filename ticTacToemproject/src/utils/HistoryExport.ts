@@ -4,11 +4,10 @@ import { type Nodes, type Edges } from 'v-network-graph'
 export class HistoryExport {
   nodes: Nodes = {}
   edges: Edges = {}
-  lastCode: string
+  lastCode: string = 'NotInitialized'
 
   constructor(gameBoard: GameBoard) {
-    this.lastCode = gameBoard.getCode().toString()
-    this.nodes[this.lastCode] = { name: this.lastCode, boardState: gameBoard.state }
+    this.initializeHistory(gameBoard)
   }
 
   updateHistory(gameBoard: GameBoard) {
@@ -17,6 +16,21 @@ export class HistoryExport {
     const key: string = this.lastCode + '#' + newCode
     this.edges[key] = { source: this.lastCode, target: newCode }
     this.lastCode = newCode
+  }
+
+  initializeHistory(gameBoard: GameBoard) {
+    this.lastCode = gameBoard.getCode().toString()
+    this.nodes[this.lastCode] = { name: this.lastCode, boardState: gameBoard.state }
+  }
+
+  resetHistory(gameBoard: GameBoard) {
+    Object.keys(this.nodes).forEach((element) => {
+      delete this.nodes[element]
+    })
+    Object.keys(this.edges).forEach((element) => {
+      delete this.edges[element]
+    })
+    this.initializeHistory(gameBoard)
   }
 }
 

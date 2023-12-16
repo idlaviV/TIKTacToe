@@ -76,8 +76,6 @@ watch(nodes, updateLayout)
       </template>
     </template>
   </v-network-graph>
-
-  Hallo
 </template>
 
 <style>

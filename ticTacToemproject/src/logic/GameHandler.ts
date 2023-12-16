@@ -26,6 +26,7 @@ export class GameHandler {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn = 1
     this.winner = null
+    this.historyExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
   getGBHandler(): GameBoardHandler {
