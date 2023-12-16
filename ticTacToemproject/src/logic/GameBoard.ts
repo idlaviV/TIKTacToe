@@ -51,11 +51,11 @@ export class GameBoard {
   }
 }
 
-function symbol(field: FieldType): String {
+export function symbol(field: FieldType): string {
   if (field == 1) {
-    return '1'
+    return 'X'
   } else if (field == 2) {
-    return '2'
+    return '0'
   } else if (field == 0) {
     return ' '
   }

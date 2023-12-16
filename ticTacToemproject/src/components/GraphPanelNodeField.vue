@@ -1,14 +1,14 @@
 <script setup lang="ts">
-    const props = defineProps<{x:number, y:number, boardState:number[][]}>()
+    import {symbol, type FieldType} from '../logic/GameBoard'
+    const props = defineProps<{x:number, y:number, fieldType:FieldType}>()
     const x = props.x
     const y = props.y
-    const label: string = props.boardState[y][x].toString()
+    const label: string = symbol(props.fieldType)
     const xOffsetRect : number = -30
     const yOffsetRect : number = -30
     const xOffsetText : number = -20
     const yOffsetText : number = -15
     const rectSize : number = 20
-    const textDistance: number = 20
     const xTextAnchor : number = 10
     const yTextAnchor : number = 20
 
@@ -16,6 +16,8 @@
     const recty : number = yOffsetRect + y * rectSize
     const textx : number = xOffsetText + x * rectSize
     const texty : number = yOffsetText + y * rectSize
+
+
 </script>
 
 <template>
