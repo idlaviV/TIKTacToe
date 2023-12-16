@@ -14,7 +14,10 @@ const gBHandler = ref(gameHandler.value.getGBHandler())
         <GameBoard :game-handler="gameHandler" :g-b-handler="gBHandler" />
       </div>
       <div class="column">
-        <GraphPanel :nodes="gameHandler.getHistoryExport().nodes" :edges="gameHandler.getHistoryExport().edges"/>
+        <GraphPanel
+          :nodes="gameHandler.getHistoryExport().nodes"
+          :edges="gameHandler.getHistoryExport().edges"
+        />
       </div>
     </div>
   </main>
