@@ -34,6 +34,4 @@ export function layout(nodes: Nodes, edges: Edges, layouts: Layouts) {
     const y = g.node(nodeId).y
     layouts.nodes[nodeId] = { x, y }
   })
-  console.log('layout wurde aufgerufen')
-  console.log(Object.entries(nodes).length.toString())
 }

@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import { type Nodes, type Edges, VNetworkGraph, type Layouts, defineConfigs } from 'v-network-graph'
+import {
+  type Nodes,
+  type Edges,
+  VNetworkGraph,
+  type Layouts,
+  defineConfigs,
+  type VNetworkGraphInstance,
+  type UserConfigs
+} from 'v-network-graph'
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import { layout } from '../utils/useGraphLayout'
 
 const props = defineProps<{ nodes: Nodes; edges: Edges }>()
@@ -9,18 +17,26 @@ const range = [0, 1, 2]
 const nodes: Nodes = props.nodes
 const edges: Edges = props.edges
 
-const layouts: Layouts = { nodes: {} }
+const layouts: Layouts = {
+  nodes: {
+    '0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
+  }
+}
+
+const graph = ref<VNetworkGraphInstance>()
 
 function updateLayout() {
   layout(nodes, edges, layouts)
+  graph.value?.panBy({ x: 0, y: -120 }) //Moves the whole canvas 120 to the top, the distance of two nodes
 }
 
-const configs = defineConfigs({
+const configs: UserConfigs = defineConfigs({
   view: {
-    panEnabled: true, //false,
-    zoomEnabled: true, //false,
+    panEnabled: true,
+    zoomEnabled: false,
     scalingObjects: true,
-    autoPanAndZoomOnLoad: 'fit-content',
+    autoPanAndZoomOnLoad: 'center-zero',
+    autoPanOnResize: false,
     onBeforeInitialDisplay: updateLayout
   },
   node: {
