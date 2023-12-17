@@ -26,8 +26,15 @@ const layouts: Layouts = {
 const graph = ref<VNetworkGraphInstance>()
 
 function updateLayout() {
-  layout(nodes, edges, layouts)
-  graph.value?.panBy({ x: 0, y: -120 }) //Moves the whole canvas 120 to the top, the distance of two nodes
+  const activeNode = layout(nodes, edges, layouts)
+  const height = graph.value?.getSizes().height
+  const width = graph.value?.getSizes().width
+  if (activeNode !== undefined && height !== undefined && width !== undefined) {
+    const x = layouts.nodes[activeNode].x
+    const y = layouts.nodes[activeNode].y
+  graph.value?.panTo({x:x, y:-y}) //Moves to the current node
+  graph.value?.panBy({x:width/2-20, y:height/2+20}) // Move current node to center
+  }
 }
 
 const configs: UserConfigs = defineConfigs({

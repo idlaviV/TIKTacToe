@@ -1,9 +1,10 @@
 import dagre from '@dagrejs/dagre'
-import type { Edges, Layouts, Nodes } from 'v-network-graph'
+import type { Edges, Layouts, Nodes, Node } from 'v-network-graph'
 
 const nodeSize = 40
 
-export function layout(nodes: Nodes, edges: Edges, layouts: Layouts) {
+export function layout(nodes: Nodes, edges: Edges, layouts: Layouts) : string {
+  let activeNode : string = "0"
   const g = new dagre.graphlib.Graph()
   g.setGraph({
     rankdir: 'TB',
@@ -19,6 +20,9 @@ export function layout(nodes: Nodes, edges: Edges, layouts: Layouts) {
   // our nodes.
   Object.entries(nodes).forEach(([nodeId, node]) => {
     g.setNode(nodeId, { label: node.name, width: nodeSize, height: nodeSize })
+    if (node.active && node.name !== undefined) {
+      activeNode = node.name
+    }
   })
 
   // Add edges to the graph.
@@ -34,4 +38,5 @@ export function layout(nodes: Nodes, edges: Edges, layouts: Layouts) {
     const y = g.node(nodeId).y
     layouts.nodes[nodeId] = { x, y }
   })
+  return activeNode
 }
