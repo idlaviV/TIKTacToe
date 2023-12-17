@@ -13,7 +13,7 @@ export class HistoryExport {
   updateHistory(gameBoard: GameBoard) {
     this.nodes[this.lastCode].active = false
     const newCode: string = gameBoard.getCode().toString()
-    this.nodes[newCode] = { name: newCode, boardState: gameBoard.state , active:true}
+    this.nodes[newCode] = { name: newCode, boardState: gameBoard.state, active: true }
     const key: string = this.lastCode + '#' + newCode
     this.edges[key] = { source: this.lastCode, target: newCode }
     this.lastCode = newCode
@@ -21,7 +21,7 @@ export class HistoryExport {
 
   initializeHistory(gameBoard: GameBoard) {
     this.lastCode = gameBoard.getCode().toString()
-    this.nodes[this.lastCode] = { name: this.lastCode, boardState: gameBoard.state, active:true }
+    this.nodes[this.lastCode] = { name: this.lastCode, boardState: gameBoard.state, active: true }
   }
 
   resetHistory(gameBoard: GameBoard) {

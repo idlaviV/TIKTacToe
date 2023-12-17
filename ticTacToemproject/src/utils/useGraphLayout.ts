@@ -1,10 +1,10 @@
 import dagre from '@dagrejs/dagre'
-import type { Edges, Layouts, Nodes, Node } from 'v-network-graph'
+import type { Edges, Layouts, Nodes } from 'v-network-graph'
 
 const nodeSize = 40
 
-export function layout(nodes: Nodes, edges: Edges, layouts: Layouts) : string {
-  let activeNode : string = "0"
+export function layout(nodes: Nodes, edges: Edges, layouts: Layouts): string {
+  let activeNode: string = '0'
   const g = new dagre.graphlib.Graph()
   g.setGraph({
     rankdir: 'TB',
