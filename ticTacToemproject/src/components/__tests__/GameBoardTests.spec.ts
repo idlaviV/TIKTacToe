@@ -1,5 +1,5 @@
-import { GameBoardHandler } from '../../logic/GameBoardHandler'
-import { GameBoard } from '../../logic/GameBoard'
+import { GameBoardHandler } from '@/logic/GameBoardHandler'
+import { GameBoard } from '@/logic/GameBoard'
 import { beforeEach, describe, expect, test } from 'vitest'
 
 let handler: GameBoardHandler = new GameBoardHandler()
