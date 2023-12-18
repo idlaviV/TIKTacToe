@@ -2,15 +2,14 @@ import { GameBoard } from '@/logic/GameBoard'
 import { HistoryExport } from '@/utils/HistoryExport'
 import { beforeEach, describe, expect, test } from 'vitest'
 
-let historyExport: HistoryExport = new HistoryExport(new GameBoard())
+let historyExport: HistoryExport
 
 beforeEach(() => {
-  historyExport.resetHistory(new GameBoard())
+  historyExport = new HistoryExport(new GameBoard())
 })
 
 describe('constructor', () => {
   test('standard constructor use', () => {
-    historyExport = new HistoryExport(new GameBoard())
     expect(historyExport.nodes).toEqual({
       '0': {
         name: '0',
@@ -77,7 +76,7 @@ describe('updateHistory', () => {
         target: '21'
       }
     })
-    expect(historyExport.lastCode).toEqual('21q')
+    expect(historyExport.lastCode).toEqual('21')
   })
 
   test('update multiple times', () => {
