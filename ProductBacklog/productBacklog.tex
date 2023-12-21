@@ -147,14 +147,26 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 	\item Ein 3x3-Spielbrett wird auf einer HTML und Javascript basierten Webseite angezeigt und auf diesem ist Tic-Tac-Toe spielbar.
 	\item Die KI benutzt den reduzierten Konfigurationsgraph, d.\,h.\ äquivalente Spielsituationen werden als identische Situationen betrachtet.
 	\item Im Graph-Interface werden auch nur die Äquivalenzklassen angezeigt und nicht alle möglichen 9 Kinder.
+	\item Wir wollen nicht erkennen können, ob die aktuelle Spielsituation zwingend zu Unentschieden führt.
 \end{itemize}
 
+% Nach Spielebeendigung wird der "akutelle Spieler" noch angezeigt, obwohl das Spiel vorbei ist.
+% Equals Methode für GameBoard
 \section{Offene Fragen}
 \begin{itemize}
 	\item Wo werden die Gewichte im Baum visualisiert? An den Kanten oder Knoten?
 	\item Kann der gesamte Graph der Gewichte überhaupt sinnvoll und kompakt visualisiert werden?
-	\item Wird in der Graphvisualisierung in den Knoten der aktuelle Spielstand abgebildet oder sein Äquivalenzklassenvertreter?
+	\item Wird in der Graphvisualisierung in den Knoten der aktuelle Spielstand abgebildet, oder sein Äquivalenzklassenvertreter, oder ein Cluster an Spielständen (nur beim hovern)?
 	\item Werden die Gewichte in absoluten Zahlen, oder in Wahrscheinlichkeiten angezeigt? Sollte es umschaltbar sein?
+	\item Was machen wir mit mobilen Geräten? Wie einfach ist die Website auf einem Tablet o.ä. bedienbar zu machen?
+	\item Wie machen wir den Graphen im Backend?
+	\begin{itemize}
+		\item Graph wie bisher (Knoten und Kanten als eigene Klassen)
+		\item Graph nur in AI mit berechnung von anzuzeigendem immer ad hoc
+		\item Graph lazy, oder nicht?
+	\end{itemize}
+	\item Wollen wir verschieden Iso-Gruppen um den Graphen verschieden darstellen können?
+	\item Wie machen wir die Player Klassen?
 \end{itemize}
 
 
