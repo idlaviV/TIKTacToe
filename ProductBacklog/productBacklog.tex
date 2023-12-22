@@ -148,10 +148,11 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 	\item Die KI benutzt den reduzierten Konfigurationsgraph, d.\,h.\ äquivalente Spielsituationen werden als identische Situationen betrachtet.
 	\item Im Graph-Interface werden auch nur die Äquivalenzklassen angezeigt und nicht alle möglichen 9 Kinder.
 	\item Wir wollen nicht erkennen können, ob die aktuelle Spielsituation zwingend zu Unentschieden führt.
+	\item In der Visualisierung des Graphens ist die Rolle der Iso-Klasse nicht austauschbar.
+	\item Vorerst implementieren wir kein Event-Handling für die User-Player.
+	\item Der Graph wird nur lazy aus GameBoards berechnet und nicht als eigenes Objekt gespeichert.
 \end{itemize}
 
-% Nach Spielebeendigung wird der "akutelle Spieler" noch angezeigt, obwohl das Spiel vorbei ist.
-% Equals Methode für GameBoard
 \section{Offene Fragen}
 \begin{itemize}
 	\item Wo werden die Gewichte im Baum visualisiert? An den Kanten oder Knoten?
@@ -159,15 +160,8 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 	\item Wird in der Graphvisualisierung in den Knoten der aktuelle Spielstand abgebildet, oder sein Äquivalenzklassenvertreter, oder ein Cluster an Spielständen (nur beim hovern)?
 	\item Werden die Gewichte in absoluten Zahlen, oder in Wahrscheinlichkeiten angezeigt? Sollte es umschaltbar sein?
 	\item Was machen wir mit mobilen Geräten? Wie einfach ist die Website auf einem Tablet o.ä. bedienbar zu machen?
-	\item Wie machen wir den Graphen im Backend?
-	\begin{itemize}
-		\item Graph wie bisher (Knoten und Kanten als eigene Klassen)
-		\item Graph nur in AI mit Berechnung von anzuzeigenden Knoten immer ad hoc
-		\item Graph lazy berechnen oder nicht?
-	\end{itemize}
-	\item Wollen wir die Isomorphismus-Klasse austauschbar machen, sodass der Graph in unterschiedlichen Settings unterschiedlich dargestellt werden kann?
-	\item Wie ist die Player Klasse strukturiert / tut UserPlayer irgendetwas?
 	\item Wie exklusiv sind unsere GameBoard-Objekte und unsere GameBoardEquivClasses?
+	\item Wie wird der aktuelle Spieler angezeigt?
 \end{itemize}
 
 
