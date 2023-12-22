@@ -23,6 +23,8 @@ den Lernprozess abbildet.
 ## Releases
 * [Abschluss Sprint "Anforderung"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v0.1-anforderung)
 * [Abschluss Sprint "Entwurf"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v1.0-entwurf)
+* [Abschluss Sprint "Qualitätskontrolle"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v2.0-qualitaetskontrolle)
+* [Abschluss Sprint "Projektabschluss"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v3.0-projektabschluss)
 
 ## Empfohlenes IDE-Setup
 
