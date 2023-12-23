@@ -44,9 +44,7 @@ export class GameBoardHandler {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i]
       if (squares[a] !== 0 && squares[a] === squares[b] && squares[a] === squares[c]) {
-        if (squares[a] === 1) {
-          return 1
-        } else return 2
+        return squares[a] === 1 ? 1 : 2
       }
     }
     for (const cell in squares) {
@@ -55,6 +53,25 @@ export class GameBoardHandler {
       }
     }
     return drawStatus
+  }
+
+  getPossibleNextPositions(
+    currentPlayer: PlayerNumber,
+    gameBoard: GameBoard = this.gameBoard
+  ): GameBoard[] {
+    const possibleNextPositions: GameBoard[] = []
+    if (this.calculateWinner() === null) {
+      for (let i = 0; i < gameBoard.state.length; i++) {
+        for (let j = 0; j < gameBoard.state[i].length; j++) {
+          if (gameBoard.state[i][j] === 0) {
+            const newBoard: FieldType[][] = gameBoard.clone()
+            newBoard[i][j] = currentPlayer === 1 ? 1 : 2
+            possibleNextPositions.push(new GameBoard(newBoard))
+          }
+        }
+      }
+    }
+    return possibleNextPositions
   }
 
   getGameBoard(): GameBoard {
