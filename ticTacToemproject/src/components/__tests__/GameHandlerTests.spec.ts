@@ -66,11 +66,53 @@ describe('nextTurns', () => {
   test('first turn', () => {
     nextTurns = handler.getPossibleNextPositions()
     expect(nextTurns.length).toEqual(9)
-    for (const turn of nextTurns) {
-      expect(turn).toEqual(new GameBoard())
-    }
+    expect(nextTurns[0].state).toEqual([
+      [1, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[1].state).toEqual([
+      [0, 1, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[2].state).toEqual([
+      [0, 0, 1],
+      [0, 0, 0],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[3].state).toEqual([
+      [0, 0, 0],
+      [1, 0, 0],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[4].state).toEqual([
+      [0, 0, 0],
+      [0, 1, 0],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[5].state).toEqual([
+      [0, 0, 0],
+      [0, 0, 1],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[6].state).toEqual([
+      [0, 0, 0],
+      [0, 0, 0],
+      [1, 0, 0]
+    ])
+    expect(nextTurns[7].state).toEqual([
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 1, 0]
+    ])
+    expect(nextTurns[8].state).toEqual([
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 1]
+    ])
   })
-  
+
   test('later turn', () => {
     handler.performTurn(0, 0)
     handler.performTurn(1, 0)
@@ -78,11 +120,31 @@ describe('nextTurns', () => {
     handler.performTurn(1, 1)
     nextTurns = handler.getPossibleNextPositions()
     expect(nextTurns.length).toEqual(5)
-    expect(nextTurns[0].state).toEqual([[1,1,1], [2,2,0], [0,0,0]])
-    expect(nextTurns[1].state).toEqual([[1,1,0], [2,2,1], [0,0,0]])
-    expect(nextTurns[2].state).toEqual([[1,1,0], [2,2,0], [1,0,0]])
-    expect(nextTurns[3].state).toEqual([[1,1,0], [2,2,0], [0,1,0]])
-    expect(nextTurns[4].state).toEqual([[1,1,0], [2,2,0], [0,0,1]])
+    expect(nextTurns[0].state).toEqual([
+      [1, 1, 1],
+      [2, 2, 0],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[1].state).toEqual([
+      [1, 1, 0],
+      [2, 2, 1],
+      [0, 0, 0]
+    ])
+    expect(nextTurns[2].state).toEqual([
+      [1, 1, 0],
+      [2, 2, 0],
+      [1, 0, 0]
+    ])
+    expect(nextTurns[3].state).toEqual([
+      [1, 1, 0],
+      [2, 2, 0],
+      [0, 1, 0]
+    ])
+    expect(nextTurns[4].state).toEqual([
+      [1, 1, 0],
+      [2, 2, 0],
+      [0, 0, 1]
+    ])
   })
 
   test('player won', () => {
