@@ -1,8 +1,10 @@
+import { IsomorphismGroup } from './IsomorphismGroup'
 import type { PlayerNumber } from './PlayerNumber'
 
 export class GameBoard {
   state: FieldType[][]
   code: number = -1
+  normalForm: number = -1
 
   constructor(
     state: FieldType[][] = [
@@ -33,6 +35,13 @@ export class GameBoard {
       [state[1][0], state[1][1], state[1][2]],
       [state[2][0], state[2][1], state[2][2]]
     ]
+  }
+
+  getNormalForm(): number {
+    if (this.normalForm == -1) {
+      this.normalForm = IsomorphismGroup.getNormalFormOfGameBoard(this)
+    }
+    return this.normalForm
   }
 
   getCode(): number {
