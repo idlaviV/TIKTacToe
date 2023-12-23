@@ -12,18 +12,7 @@ export class GameBoard {
     ]
   ) {
     this.state = state
-    this.calculateCode()
-  }
-
-  calculateCode() {
-    this.code = 0
-    let base: number = 1
-    for (const line of this.state) {
-      for (const entry of line) {
-        this.code += base * entry
-        base *= 10
-      }
-    }
+    this.code = calculateCode(state)
   }
 
   toString(): String {
@@ -60,6 +49,18 @@ export function symbol(field: FieldType): string {
     return ' '
   }
   throw new Error('Unexpected player in field found.')
+}
+
+export function calculateCode(state: number[][]): number {
+  let code = 0
+  let base: number = 1
+  for (const line of state) {
+    for (const entry of line) {
+      code += base * entry
+      base *= 10
+    }
+  }
+  return code
 }
 
 export type FieldType = PlayerNumber | 0
