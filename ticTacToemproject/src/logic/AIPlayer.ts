@@ -1,9 +1,11 @@
 import { GameBoard } from './GameBoard'
 import type { GameHandler } from './GameHandler'
 import type { Player } from './IPlayer'
+import { Randomizer } from './Randomizer'
 export class AIPlayer implements Player {
   weights: Map<number, Map<number, number>> = new Map()
   gameHandler: GameHandler
+  randomzier: Randomizer = new Randomizer()
 
   constructor(gHandler: GameHandler) {
     this.gameHandler = gHandler
@@ -24,23 +26,25 @@ export class AIPlayer implements Player {
     let sum: number = 0
     for (const pair of vertexMap.entries()) {
         sum += pair[1]
-        weightedEntries.push({code : pair[0], index:sum})
+        weightedEntries.push({code : pair[0], index: sum})
     }
     if(sum == 0) {
-        for (const index in weightedEntries) {
-            weightedEntries[index].index = index
+        for (let i=0; i<weightedEntries.length; i++) {
+            weightedEntries[i].index = i+1
             sum = weightedEntries.length
         }
     }
-    const randomIndex = this.randomInteger(1, sum)
+    const randomIndex = this.randomzier.randomInteger(1, sum)
     for (const entry of weightedEntries) {
         if (entry.index >= randomIndex) {
-            const nextBoard: GameBoard = this.gameHandler.getPossibleNextPositions().find(
-                (gameBoard) => gameBoard.getNormalForm() == entry.index)!
+            const options: GameBoard[] = this.gameHandler.getPossibleNextPositions().filter(
+                (gameBoard) => gameBoard.getNormalForm() == entry.code)!
+            const min = Math.min(...options.map(item => item.code))
+            const newBoard = options.find((gameBoard) => gameBoard.getCode() == min)!
             const currentBoard : GameBoard = this.gameHandler.getGBHandler().getGameBoard()
             for (const y of [0,1,2]) {
                 for (const x of [0,1,2]) {
-                    if(nextBoard.state[y][x] !== currentBoard.state[y][x]) {
+                    if(newBoard.state[x][y] !== currentBoard.state[x][y]) {
                         this.gameHandler.performTurn(x,y)
                         return
                     }
@@ -49,6 +53,7 @@ export class AIPlayer implements Player {
             
         }
     }
+    throw new Error('No legal move could be calculated.')
   }
 
   private calculateNextNFs(): Set<number> {
@@ -60,7 +65,7 @@ export class AIPlayer implements Player {
     return nextNFs
   }
 
-  private initializeWeights(code: number): void {
+  initializeWeights(code: number): void {
     const nextNFs: Set<number> = this.calculateNextNFs()
     const vertexMap = new Map<number, number>()
     this.weights.set(code, vertexMap)
@@ -69,8 +74,6 @@ export class AIPlayer implements Player {
     }
   }
 
-  randomInteger(min:number, max:number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  
 }
 
