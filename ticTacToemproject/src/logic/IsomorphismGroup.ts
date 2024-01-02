@@ -183,10 +183,10 @@ export class IsomorphismGroup {
   }
 
   static getNormalFormOfGameBoard(gameBoard: GameBoard): number {
-    return this.getNormalFormOfGameBoards(Array.from(this.getGameBoardEquiv(gameBoard)))
+    return this.getNormalFormOfGameBoards(...this.getGameBoardEquiv(gameBoard))
   }
 
-  static getNormalFormOfGameBoards(gameBoards: number[]): number {
+  static getNormalFormOfGameBoards(...gameBoards: number[]): number {
     return Math.min(...gameBoards)
   }
 }
