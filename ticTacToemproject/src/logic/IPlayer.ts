@@ -1,4 +1,4 @@
 export interface Player {
-    isAI() : boolean
-    makeMove(): void
+  isAI(): boolean
+  makeMove(): void
 }

@@ -194,7 +194,6 @@ describe('perform turn on empty board without options', () => {
     player.weights.get(0)?.set(1, 0)
     player.weights.get(0)?.set(10, 0)
     player.weights.get(0)?.set(10000, 0)
-    
   })
   test('option1', () => {
     randomNumber = 1
