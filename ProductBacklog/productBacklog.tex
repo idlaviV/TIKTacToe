@@ -7,6 +7,7 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes.misc, positioning, shapes.multipart}
 \usepackage{placeins}
+\usepackage[dvipsnames]{xcolor}
 
 \tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={2pt}}
 
@@ -148,9 +149,10 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 	\item Die KI benutzt den reduzierten Konfigurationsgraph, d.\,h.\ äquivalente Spielsituationen werden als identische Situationen betrachtet.
 	\item Im Graph-Interface werden auch nur die Äquivalenzklassen angezeigt und nicht alle möglichen 9 Kinder.
 	\item Wir wollen nicht erkennen können, ob die aktuelle Spielsituation zwingend zu Unentschieden führt.
-	\item In der Visualisierung des Graphens ist die Rolle der Iso-Klasse nicht austauschbar.
+	\item In der Visualisierung des Graphen ist die Rolle der Iso-Klasse nicht austauschbar.
 	\item Vorerst implementieren wir kein Event-Handling für die User-Player.
 	\item Der Graph wird nur lazy aus GameBoards berechnet und nicht als eigenes Objekt gespeichert.
+	\item Der Nutzer kann im Belohnungsbildschirm die Parameter der Belohnungsstrategie anpassen. Die Belohnungsstrategie selbst wird beim Generieren der KI festgelegt.
 \end{itemize}
 
 \section{Offene Fragen}
@@ -240,12 +242,12 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 	\draw (11,0) ++(0,0) node[]{Zeit};
 	%Ticks x-Achse
 	\draw (4,0)  ++(0,-0.5) --++(0,1);
-	\draw (7,0)  ++(0,-0.5) --++(0,1);
-	\draw (10,0) ++(0,-0.5) --++(0,1);
+	\draw (8,0)  ++(0,-0.5) --++(0,1);
+	\draw (11,0) ++(0,-0.5) --++(0,1);
 	%x-Achse Labels
 	\draw (2,0) node[below]{Sprint \(1\)};
-	\draw (5.5,0) node[below]{Sprint \(2\)};
-	\draw (8.5,0) node[below]{Sprint \(3\)};
+	\draw (6,0) node[below]{Sprint \(2\)};
+	\draw (9,0) node[below]{Sprint \(3\)};
 	%y-Achse Ticks
 	\foreach \y in {10,20,...,60} {
 		\draw (0,\y) ++(-.1,0) --++(.2,0);
@@ -261,10 +263,16 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 										 -- (2,1.5)%Ticket M100 geschafft		
 										 -- (3,3.5)%Ticket M200 geschafft		
 										 -- (4,7.5);%Mit heftiger Arbeit gerade noch M300 geschafft
+	\draw[very thick, ForestGreen] (4,7.5) -- (5,7.5);%In den zwei Wochen Weihnachtsferien wurde kein Feature abgeschlossen
+	\draw[very thick] (5,7.5) -- (5,7.5);%Was wird die Zukunft bringen?
+	\draw[dotted] plot [smooth] coordinates {(0,0) (4,7.5) (8,34.5) (11,64)};
 	%Ziele
-	\draw(4,7.5) node[cross, color=green]{};%Sprint 1
-	\draw (7,34.5) node[cross, color=lightgray]{};%Sprint 2?
-	\draw (10,64) node[cross, color=lightgray]{};%Sprint 3?
+	\draw(4,7.5) node[cross, color=ForestGreen]{};%Sprint 1
+	\draw (8,34.5) node[cross, color=lightgray]{};%Sprint 2?
+	\draw (11,64) node[cross, color=lightgray]{};%Sprint 3?
+	%konservativere Ziele
+	\draw (8,28) node[cross, color=gray]{};%Sprint 2?
+	\draw (11,48) node[cross, color=gray]{};%Sprint 2?
 	%\draw[dashed] (1,0) -- (2,5) -- (3,6);
 \end{tikzpicture}
 \end{figure}

@@ -3,6 +3,10 @@ export class IsomorphismGroup {
   static Isomorphism = class {
     transformation: number[][][]
 
+    constructor(transformation: number[][][]) {
+      this.transformation = transformation
+    }
+
     apply(state: number[][]): number[][] {
       const trafo = this.transformation
       const result = [new Array(3), new Array(3), new Array(3)]
@@ -12,10 +16,6 @@ export class IsomorphismGroup {
         }
       }
       return result
-    }
-
-    constructor(transformation: number[][][]) {
-      this.transformation = transformation
     }
   }
 
@@ -180,5 +180,14 @@ export class IsomorphismGroup {
       equivs.add(calculateCode(iso.apply(gameBoard.state)))
     }
     return equivs
+  }
+
+  static getNormalFormOfGameBoard(gameBoard: GameBoard): number {
+    return this.getRepresentativeOfGameBoards(...this.getGameBoardEquiv(gameBoard))
+  }
+
+  //This function only gives meaningful results if all gameBoards are equivalent
+  static getRepresentativeOfGameBoards(...gameBoards: number[]): number {
+    return Math.min(...gameBoards)
   }
 }

@@ -1,6 +1,6 @@
 import { GameBoard, calculateCode } from '@/logic/GameBoard'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
-import { describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test } from 'vitest'
 
 describe('getGameBoardEquiv', () => {
   test('Empty board', () => {
@@ -162,5 +162,53 @@ describe('getGameBoardEquiv', () => {
     const equivs = IsomorphismGroup.getGameBoardEquiv(gameBoard)
     expect(equivs.size).toEqual(1)
     expect(equivs.has(expectedCode)).toEqual(true)
+  })
+})
+
+describe('SingleNormalForm', () => {
+  let gameBoard: GameBoard
+  beforeEach(() => {
+    gameBoard = new GameBoard()
+  })
+
+  test('Empty board', () => {
+    const normalForm = IsomorphismGroup.getNormalFormOfGameBoard(gameBoard)
+    expect(normalForm).toEqual(0)
+  })
+
+  test('Already in normal form', () => {
+    gameBoard.state = [
+      [1, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ]
+    const normalForm = IsomorphismGroup.getNormalFormOfGameBoard(gameBoard)
+    expect(normalForm).toEqual(1)
+  })
+
+  test('Not in normal form', () => {
+    gameBoard.state = [
+      [0, 0, 1],
+      [0, 0, 0],
+      [0, 0, 0]
+    ]
+    const normalForm = IsomorphismGroup.getNormalFormOfGameBoard(gameBoard)
+    expect(normalForm).toEqual(1)
+  })
+})
+
+describe('getRepresentativeOfGameBoards', () => {
+  let boards = []
+  let representative = -1
+  test('One Element', () => {
+    boards = [1]
+    representative = IsomorphismGroup.getRepresentativeOfGameBoards(...boards)
+    expect(representative).toEqual(1)
+  })
+
+  test('Multiple Elements', () => {
+    boards = [1, 100, 1000000, 100000000]
+    representative = IsomorphismGroup.getRepresentativeOfGameBoards(...boards)
+    expect(representative).toEqual(1)
   })
 })
