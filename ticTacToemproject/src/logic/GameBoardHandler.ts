@@ -64,9 +64,8 @@ export class GameBoardHandler {
       for (let i = 0; i < gameBoard.state.length; i++) {
         for (let j = 0; j < gameBoard.state[i].length; j++) {
           if (gameBoard.state[i][j] === 0) {
-            const newBoard: FieldType[][] = gameBoard.clone() // Warum nicht addPiece benutzen?
-            newBoard[i][j] = currentPlayer === 1 ? 1 : 2 // Warum wird hier nicht direkt currentPlayer reingepackt?
-            possibleNextPositions.push(new GameBoard(newBoard))
+            const newBoard: GameBoard = this.addPiece(i, j, gameBoard, currentPlayer)
+            possibleNextPositions.push(newBoard)
           }
         }
       }
