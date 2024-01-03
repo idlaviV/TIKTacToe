@@ -52,8 +52,8 @@ const ResetGame = () => {
     &#9655;
   </button>
 
-  <br>
-  <br>
+  <br />
+  <br />
 
   <button
     @click="ResetGame"

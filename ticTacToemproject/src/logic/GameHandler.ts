@@ -1,4 +1,5 @@
 import { HistoryExport } from '../utils/HistoryExport'
+import { AIPlayer } from './AIPlayer'
 import type { GameBoard } from './GameBoard'
 import { GameBoardHandler } from './GameBoardHandler'
 import type { PlayerNumber } from './PlayerNumber'
@@ -9,6 +10,7 @@ export class GameHandler {
   gBHandler: GameBoardHandler = new GameBoardHandler()
   winner: WinnerStatus = null
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
+  ai: AIPlayer = new AIPlayer(this) // This is temporary
 
   performTurn(x: number, y: number) {
     if (this.winner == null) {
@@ -24,7 +26,7 @@ export class GameHandler {
   }
 
   performAiTurn() {
-    
+    this.ai.makeMove()
   }
 
   resetGame() {
