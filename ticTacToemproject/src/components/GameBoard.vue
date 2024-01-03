@@ -46,10 +46,10 @@ const ResetGame = () => {
   </h2>
 
   <button
-    @click="props.gameHandler?.performTurn(0, 0)"
+    @click="props.gameHandler?.performAiTurn()"
     class="text-4xl hover:text-green-700 duration-300"
   >
-    &#9655
+    &#9655;
   </button>
 
   <br>

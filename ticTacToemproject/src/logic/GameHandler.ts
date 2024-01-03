@@ -22,6 +22,10 @@ export class GameHandler {
     }
   }
 
+  performAiTurn() {
+    
+  }
+
   resetGame() {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn = 1
