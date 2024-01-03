@@ -46,6 +46,16 @@ const ResetGame = () => {
   </h2>
 
   <button
+    @click="props.gameHandler?.performAiTurn()"
+    class="text-4xl hover:text-green-700 duration-300"
+  >
+    &#9655;
+  </button>
+
+  <br>
+  <br>
+
+  <button
     @click="ResetGame"
     class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300"
   >
