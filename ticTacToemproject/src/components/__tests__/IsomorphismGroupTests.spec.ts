@@ -196,3 +196,19 @@ describe('SingleNormalForm', () => {
     expect(normalForm).toEqual(1)
   })
 })
+
+describe('getRepresentativeOfGameBoards', () => {
+  let boards = []
+  let representative = -1
+  test('One Element', () => {
+    boards = [1]
+    representative = IsomorphismGroup.getRepresentativeOfGameBoards(...boards)
+    expect(representative).toEqual(1)
+  })
+
+  test('Multiple Elements', () => {
+    boards = [1, 100, 1000000, 100000000]
+    representative = IsomorphismGroup.getRepresentativeOfGameBoards(...boards)
+    expect(representative).toEqual(1)
+  })
+})
