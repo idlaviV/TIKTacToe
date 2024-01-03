@@ -183,10 +183,11 @@ export class IsomorphismGroup {
   }
 
   static getNormalFormOfGameBoard(gameBoard: GameBoard): number {
-    return this.getNormalFormOfGameBoards(...this.getGameBoardEquiv(gameBoard))
+    return this.getRepresentativeOfGameBoards(...this.getGameBoardEquiv(gameBoard))
   }
 
-  static getNormalFormOfGameBoards(...gameBoards: number[]): number { // Ungenaue Bennung der Funktion. Eigentlich bestimmt sie doch nicht die Normal Form raus, sondern den Repräsentanten, oder?
+  //This function only gives meaningful results if all gameBoards are equivalent
+  static getRepresentativeOfGameBoards(...gameBoards: number[]): number {
     return Math.min(...gameBoards)
   }
 }
