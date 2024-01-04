@@ -1,16 +1,19 @@
 import { HistoryExport } from '../utils/HistoryExport'
-import { AIPlayer } from './AIPlayer'
 import type { GameBoard } from './GameBoard'
 import { GameBoardHandler } from './GameBoardHandler'
+import { GameSettings } from './GameSettings'
 import type { PlayerNumber } from './PlayerNumber'
 import type { WinnerStatus } from './WinnerStatus'
+import { AIPlayer } from './AIPlayer'
+import { UserPlayer } from './UserPlayer'
+
 
 export class GameHandler {
   playerOnTurn: PlayerNumber = 1
-  gBHandler: GameBoardHandler = new GameBoardHandler()
   winner: WinnerStatus = null
+  gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  ai: AIPlayer = new AIPlayer(this) // This is temporary
+  settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer(this))
 
   performTurn(x: number, y: number) {
     if (this.winner == null) {
@@ -26,7 +29,15 @@ export class GameHandler {
   }
 
   performAiTurn() {
-    this.ai.makeMove()
+    if (this.winner == null) {
+      this.settings.getPlayer(this.playerOnTurn).makeMove()
+    }
+  }
+
+  performTurnFromUserInput(x: number, y: number) {
+    if (!this.settings.getPlayer(this.playerOnTurn).isAI()) {
+      this.performTurn(x, y)
+    }
   }
 
   resetGame() {

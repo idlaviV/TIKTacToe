@@ -9,7 +9,7 @@ const props = defineProps({
 })
 
 const MakeMove = (x: number, y: number) => {
-  props.gameHandler?.performTurn(x, y)
+  props.gameHandler?.performTurnFromUserInput(x, y)
 }
 
 const ResetGame = () => {
