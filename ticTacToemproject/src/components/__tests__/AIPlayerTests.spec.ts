@@ -3,7 +3,6 @@ import { GameBoard } from '@/logic/GameBoard'
 import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import { Randomizer } from '@/logic/Randomizer'
-import { debug } from 'console'
 import { beforeEach, describe, expect, test } from 'vitest'
 
 let gameHandler: GameHandler
