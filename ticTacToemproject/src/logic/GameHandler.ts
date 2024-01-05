@@ -7,7 +7,6 @@ import type { WinnerStatus } from './WinnerStatus'
 import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 
-
 export class GameHandler {
   playerOnTurn: PlayerNumber = 1
   winner: WinnerStatus = null

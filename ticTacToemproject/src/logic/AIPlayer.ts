@@ -57,13 +57,13 @@ export class AIPlayer implements Player {
 
   /**
    * Calculate all possible next boards and structure them as blocks in an array
-   * @example for input [(children, weight)] = [(a,1), (b,2), (c,1), (d,0), (e,3)] we obtain 
+   * @example for input [(children, weight)] = [(a,1), (b,2), (c,1), (d,0), (e,3)] we obtain
    * | 1 | 2 | 3 | 4 | 5 | 6 | 7 | index
    * | a |   b   | c |     e     | list of blocks, weight is the width of each block
    *                 ^
    *                 |
    *       d lies between c and e with width 0
-   * 
+   *
    * If we pick a random index in [1..7], we obtain a random element, weighted by weight
    * This is implemented as an array, where each element is annotated with the last index it covers.
    * This would be a->1, b->3, c->4, d->4 and e->7.
