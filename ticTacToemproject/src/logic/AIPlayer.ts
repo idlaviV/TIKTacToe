@@ -1,6 +1,6 @@
 import { GameBoard } from './GameBoard'
 import type { GameHandler } from './GameHandler'
-import type { Player } from './IPlayer'
+import type { Player } from './Player'
 import { Randomizer } from './Randomizer'
 export class AIPlayer implements Player {
   weights: Map<number, Map<number, number>> = new Map()
@@ -57,9 +57,17 @@ export class AIPlayer implements Player {
 
   /**
    * Calculate all possible next boards and structure them as blocks in an array
-   * |--node1--|node2|----node3----|
-   * The size of each block corresponds to the weighted propability.
-   * @returns The entries of the array specify a child node and the corresponding block width.
+   * @example for input [(children, weight)] = [(a,1), (b,2), (c,1), (d,0), (e,3)] we obtain 
+   * | 1 | 2 | 3 | 4 | 5 | 6 | 7 | index
+   * | a |   b   | c |     e     | list of blocks, weight is the width of each block
+   *                 ^
+   *                 |
+   *       d lies between c and e with width 0
+   * 
+   * If we pick a random index in [1..7], we obtain a random element, weighted by weight
+   * This is implemented as an array, where each element is annotated with the last index it covers.
+   * This would be a->1, b->3, c->4, d->4 and e->7.
+   * @returns The entries of the array specify a child node and the corresponding index.
    */
   private prepareWeightedEntries(): { code: number; index: number }[] {
     const vertexMap: Map<number, number> = this.getVertexMap()
@@ -69,6 +77,7 @@ export class AIPlayer implements Player {
       sum += pair[1]
       weightedEntries.push({ code: pair[0], index: sum })
     }
+
     /**
      * If sum == 0, all weights are 0 and the AI has already lost.
      * We then simulate the weights to be all 1 and perform a random move.
@@ -76,15 +85,14 @@ export class AIPlayer implements Player {
     if (sum == 0) {
       for (let i = 0; i < weightedEntries.length; i++) {
         weightedEntries[i].index = i + 1
-        sum = weightedEntries.length
       }
     }
     return weightedEntries
   }
 
   /**
-   *
-   * @returns Extract the weights of the outgoing edges of the current board configuration
+   * Extract the weights of the outgoing edges of the current board configuration
+   * @returns map of weights
    */
   private getVertexMap(): Map<number, number> {
     const currentNF: number = this.gameHandler.getGBHandler().getGameBoard().getNormalForm()
