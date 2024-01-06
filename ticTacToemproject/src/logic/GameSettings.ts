@@ -1,4 +1,4 @@
-import type { Player } from './IPlayer'
+import type { Player } from './Player'
 import type { PlayerNumber } from './PlayerNumber'
 export class GameSettings {
   player1: Player

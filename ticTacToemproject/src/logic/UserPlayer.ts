@@ -1,4 +1,4 @@
-import type { Player } from './IPlayer'
+import type { Player } from './Player'
 export class UserPlayer implements Player {
   isAI(): boolean {
     return false
