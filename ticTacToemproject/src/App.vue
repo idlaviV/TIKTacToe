@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import LeftPanel from './components/LeftPanel.vue'
+import GameBoard from './components/GameBoard.vue'
 import { GameHandler } from './logic/GameHandler'
 import GraphPanel from './components/GraphPanel.vue'
 const gameHandler = ref(new GameHandler())
