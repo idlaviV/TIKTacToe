@@ -3,31 +3,24 @@ import { GameBoard } from '@/logic/GameBoard';
 import { GameBoardHandler } from '@/logic/GameBoardHandler';
 import { GameHandler } from '@/logic/GameHandler';
 import PlayerSelectionPanel from './PlayerSelectionPanel.vue';
+import { ref } from 'vue';
 
-const props = defineProps({
+defineProps({
   gameHandler: GameHandler,
   gBHandler: GameBoardHandler
 })
-let gameIsRunning=false
+let gameIsRunning=ref(false)
 
 function startGame() {
     console.log("Start Game")
-    gameIsRunning =  true
-}
-
-function getGameHandler() {
-    return props.gameHandler
-}
-
-function getGBHandler() {
-    return props.gBHandler
+    gameIsRunning.value =  true
 }
 
 </script>
 
 <template>
 <div>
-    <GameBoard v-if=gameIsRunning :game-handler="getGameHandler" :g-b-handler="getGBHandler"/>
-    <PlayerSelectionPanel v-else @start-game="startGame"/>
+    <GameBoard v-if=gameIsRunning :game-handler=gameHandler :g-b-handler=gBHandler />
+    <PlayerSelectionPanel v-else @start-game="startGame" />
 </div>
 </template>
