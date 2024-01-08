@@ -46,8 +46,17 @@ export class GameHandler {
     this.historyExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
-  getPossibleNextPositions(): GameBoard[] {
+  getPossibleNextPositions(): (readonly [GameBoard, [number, number]])[] {
     return this.gBHandler.getPossibleNextPositions(this.playerOnTurn)
+  }
+
+  getOnlyPossibleNextPositions(): GameBoard[] {
+    const boards: GameBoard[] = []
+    const possibleNextPositions = this.getPossibleNextPositions()
+    for (const position of possibleNextPositions) {
+      boards.push(position[0])
+    }
+    return boards
   }
 
   getGBHandler(): GameBoardHandler {

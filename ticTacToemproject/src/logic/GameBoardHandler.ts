@@ -58,14 +58,14 @@ export class GameBoardHandler {
   getPossibleNextPositions(
     currentPlayer: PlayerNumber,
     gameBoard: GameBoard = this.gameBoard
-  ): GameBoard[] {
-    const possibleNextPositions: GameBoard[] = []
+  ): (readonly [GameBoard, [number, number]])[] {
+    const possibleNextPositions: (readonly [GameBoard, [number, number]])[] = []
     if (this.calculateWinner() === null) {
       for (let i = 0; i < gameBoard.state.length; i++) {
         for (let j = 0; j < gameBoard.state[i].length; j++) {
           if (gameBoard.state[i][j] === 0) {
             const newBoard: GameBoard = this.addPiece(i, j, gameBoard, currentPlayer)
-            possibleNextPositions.push(newBoard)
+            possibleNextPositions.push([newBoard, [i, j]])
           }
         }
       }

@@ -21,27 +21,19 @@ export class AIPlayer implements Player {
    */
   makeMove(): void {
     const newNormalForm: number = this.pickChildNode()
-    const options: GameBoard[] = this.gameHandler
+    const options: (readonly [GameBoard, [number, number]])[] = this.gameHandler
       .getPossibleNextPositions()
-      .filter((gameBoard) => gameBoard.getNormalForm() == newNormalForm)!
-    const min = Math.min(...options.map((item) => item.code))
-    const newBoard = options.find((gameBoard) => gameBoard.getCode() == min)!
-    const currentBoard: GameBoard = this.gameHandler.getGBHandler().getGameBoard()
-    for (const y of [0, 1, 2]) {
-      for (const x of [0, 1, 2]) {
-        if (newBoard.state[x][y] !== currentBoard.state[x][y]) {
-          this.gameHandler.performTurn(x, y)
-          return
-        }
-      }
-    }
+      .filter((gameBoard) => gameBoard[0].getNormalForm() == newNormalForm)!
+    const min = Math.min(...options.map((item) => item[0].code))
+    const newBoard = options.findIndex((gameBoard) => gameBoard[0].getCode() == min)!
+    this.gameHandler.performTurn(options[newBoard][1][0], options[newBoard][1][1])
   }
 
   /**
    * Choose a suitable next gameboard, by weights
    * @returns the normal form of the next gameboard
    */
-   pickChildNode(): number {
+  pickChildNode(): number {
     const weightedEntries = this.prepareWeightedEntries()
     const randomIndex = this.randomzier.randomInteger(
       1,
@@ -69,7 +61,7 @@ export class AIPlayer implements Player {
    * This would be a->1, b->3, c->4, d->4 and e->7.
    * @returns The entries of the array specify a child node and the corresponding index.
    */
-   prepareWeightedEntries(): { code: number; index: number }[] {
+  prepareWeightedEntries(): { code: number; index: number }[] {
     const vertexMap: Map<number, number> = this.getVertexMap()
     const weightedEntries = new Array()
     let sum: number = 0
@@ -94,7 +86,7 @@ export class AIPlayer implements Player {
    * Extract the weights of the outgoing edges of the current board configuration
    * @returns map of weights
    */
-   getVertexMap(): Map<number, number> {
+  getVertexMap(): Map<number, number> {
     const currentNF: number = this.gameHandler.getGBHandler().getGameBoard().getNormalForm()
     if (!this.weights.has(currentNF) || this.weights.get(currentNF) === undefined) {
       this.initializeWeights(currentNF)
@@ -120,9 +112,9 @@ export class AIPlayer implements Player {
    * Calculate the normal forms of the positions following the current gameboard.
    * @returns a set containing all normal forms
    */
-   calculateNextNFs(): Set<number> {
+  calculateNextNFs(): Set<number> {
     const nextNFs: Set<number> = new Set()
-    const nextPositions: GameBoard[] = this.gameHandler.getPossibleNextPositions()
+    const nextPositions: GameBoard[] = this.gameHandler.getOnlyPossibleNextPositions()
     for (const board of nextPositions) {
       nextNFs.add(board.getNormalForm())
     }
