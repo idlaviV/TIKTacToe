@@ -3,6 +3,7 @@ import { GameBoard } from './GameBoard'
 import type { FieldType } from './GameBoard'
 import { printGameboard } from './GameBoardConsolePrinter'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
+import type { GameBoardWithPrevMove } from './Moves'
 
 export class GameBoardHandler {
   gameBoard: GameBoard = new GameBoard()
@@ -58,8 +59,8 @@ export class GameBoardHandler {
   getPossibleNextPositions(
     currentPlayer: PlayerNumber,
     gameBoard: GameBoard = this.gameBoard
-  ): (readonly [GameBoard, [number, number]])[] {
-    const possibleNextPositions: (readonly [GameBoard, [number, number]])[] = []
+  ): GameBoardWithPrevMove[] {
+    const possibleNextPositions: GameBoardWithPrevMove[] = []
     if (this.calculateWinner() === null) {
       for (let i = 0; i < gameBoard.state.length; i++) {
         for (let j = 0; j < gameBoard.state[i].length; j++) {

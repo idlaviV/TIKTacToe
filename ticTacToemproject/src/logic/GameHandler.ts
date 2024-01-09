@@ -6,6 +6,7 @@ import type { PlayerNumber } from './PlayerNumber'
 import type { WinnerStatus } from './WinnerStatus'
 import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
+import type { GameBoardWithPrevMove } from './Moves'
 
 export class GameHandler {
   playerOnTurn: PlayerNumber = 1
@@ -46,13 +47,13 @@ export class GameHandler {
     this.historyExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
-  getPossibleNextPositionsWithMoves(): (readonly [GameBoard, [number, number]])[] {
+  getPossibleNextPositionsWithMoves(): GameBoardWithPrevMove[] {
     return this.gBHandler.getPossibleNextPositions(this.playerOnTurn)
   }
 
   getPossibleNextPositions(): GameBoard[] {
     const boards: GameBoard[] = []
-    const possibleNextPositions = this.getPossibleNextPositionsWithMoves()
+    const possibleNextPositions: GameBoardWithPrevMove[] = this.getPossibleNextPositionsWithMoves()
     for (const position of possibleNextPositions) {
       boards.push(position[0])
     }
