@@ -3,15 +3,17 @@ import { GameBoard } from './GameBoard'
 import type { FieldType } from './GameBoard'
 import { printGameboard } from './GameBoardConsolePrinter'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
+import { EventEmitter } from 'stream'
 
 export class GameBoardHandler {
   gameBoard: GameBoard = new GameBoard()
-
   history: GameBoard[] = [this.gameBoard]
+  emitter:EventEmitter = new EventEmitter()
 
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard = this.addPiece(x, y, this.gameBoard, player)
     this.history.push(this.gameBoard)
+    this.emitter.emit('gameBoardChange')
   }
 
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
@@ -76,4 +78,9 @@ export class GameBoardHandler {
   getGameBoard(): GameBoard {
     return this.gameBoard
   }
+
+  getEmitter() {
+    return this.emitter
+  }
+
 }

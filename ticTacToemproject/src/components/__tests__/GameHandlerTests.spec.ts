@@ -2,11 +2,13 @@ import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { resetGameHandler } from './TestUtil'
 
-let handler: GameHandler = new GameHandler()
+let handler: GameHandler
 
 beforeEach(() => {
-  handler = new GameHandler()
+  resetGameHandler()
+  handler = GameHandler.getInstance()
 })
 
 describe('resetGame', () => {

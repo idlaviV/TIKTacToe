@@ -1,30 +1,29 @@
 <script setup lang="ts">
 import { drawStatus } from '../logic/WinnerStatus'
 import { GameHandler } from '../logic/GameHandler'
-import { GameBoardHandler } from '@/logic/GameBoardHandler'
 
-const props = defineProps({
-  gameHandler: GameHandler,
-  gBHandler: GameBoardHandler
-})
+const gameHandler:GameHandler = GameHandler.getInstance()
+gameHandler.getGBHandler().getEmitter().on('gameBoardChange',() =>{
+  console.log("Something changed")})
+
 
 const MakeMove = (x: number, y: number) => {
-  props.gameHandler?.performTurnFromUserInput(x, y)
+  gameHandler.performTurnFromUserInput(x, y)
 }
 
 const ResetGame = () => {
-  props.gameHandler?.resetGame()
-  props.gameHandler?.getPlayerOnTurn()
+  gameHandler.resetGame()
+  gameHandler.getPlayerOnTurn()
 }
 </script>
 
 <template>
   <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
 
-  <h3 class="text-xl mb-4">Player {{ props.gameHandler?.getPlayerOnTurn() }}'s turn</h3>
+  <h3 class="text-xl mb-4">Player {{ gameHandler.getPlayerOnTurn() }}'s turn</h3>
 
   <div class="flex flex-col items-center mb-8">
-    <div v-for="(row, x) in props.gBHandler?.gameBoard.state" :key="x" class="flex">
+    <div v-for="(row, x) in gameHandler.getGBHandler().gameBoard.state" :key="x" class="flex">
       <div
         v-for="(cell, y) in row"
         :key="y"
@@ -38,14 +37,14 @@ const ResetGame = () => {
     </div>
   </div>
 
-  <h2 v-if="props.gameHandler?.getWinner() === drawStatus" class="text-6xl dond-bold mb-8">
+  <h2 v-if="gameHandler.getWinner() === drawStatus" class="text-6xl dond-bold mb-8">
     Draw!
   </h2>
-  <h2 v-else-if="props.gameHandler?.getWinner()" class="text-6xl dond-bold mb-8">
-    Player {{ props.gameHandler.getWinner() }} wins!
+  <h2 v-else-if="gameHandler.getWinner()" class="text-6xl dond-bold mb-8">
+    Player {{ gameHandler.getWinner() }} wins!
   </h2>
 
-  <v-btn @click="props.gameHandler?.performAiTurn()"> &#9655; </v-btn>
+  <v-btn @click="gameHandler.performAiTurn()"> &#9655; </v-btn>
 
   <br />
   <br />
