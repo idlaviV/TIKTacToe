@@ -64,7 +64,7 @@ describe('calculation of winner', () => {
 describe('nextTurns', () => {
   let nextTurns: (readonly [GameBoard, [number, number]])[] = []
   test('first turn', () => {
-    nextTurns = handler.getPossibleNextPositions()
+    nextTurns = handler.getPossibleNextPositionsWithMoves()
     expect(nextTurns.length).toEqual(9)
     expect(nextTurns[0][0].state).toEqual([
       [1, 0, 0],
@@ -127,7 +127,7 @@ describe('nextTurns', () => {
     handler.performTurn(1, 0)
     handler.performTurn(0, 1)
     handler.performTurn(1, 1)
-    nextTurns = handler.getPossibleNextPositions()
+    nextTurns = handler.getPossibleNextPositionsWithMoves()
     expect(nextTurns.length).toEqual(5)
     expect(nextTurns[0][0].state).toEqual([
       [1, 1, 1],
@@ -167,7 +167,7 @@ describe('nextTurns', () => {
     handler.performTurn(0, 1)
     handler.performTurn(1, 1)
     handler.performTurn(0, 2)
-    nextTurns = handler.getPossibleNextPositions()
+    nextTurns = handler.getPossibleNextPositionsWithMoves()
     expect(nextTurns.length).toEqual(0)
   })
 
@@ -181,7 +181,7 @@ describe('nextTurns', () => {
     handler.performTurn(1, 2)
     handler.performTurn(2, 1)
     handler.performTurn(2, 2)
-    nextTurns = handler.getPossibleNextPositions()
+    nextTurns = handler.getPossibleNextPositionsWithMoves()
     expect(nextTurns.length).toEqual(0)
   })
 })

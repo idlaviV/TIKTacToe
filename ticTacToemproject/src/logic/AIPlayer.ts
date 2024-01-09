@@ -22,7 +22,7 @@ export class AIPlayer implements Player {
   makeMove(): void {
     const newNormalForm: number = this.pickChildNode()
     const options: (readonly [GameBoard, [number, number]])[] = this.gameHandler
-      .getPossibleNextPositions()
+      .getPossibleNextPositionsWithMoves()
       .filter((gameBoard) => gameBoard[0].getNormalForm() == newNormalForm)!
     const min = Math.min(...options.map((item) => item[0].code))
     const newBoard = options.findIndex((gameBoard) => gameBoard[0].getCode() == min)!
@@ -114,7 +114,7 @@ export class AIPlayer implements Player {
    */
   calculateNextNFs(): Set<number> {
     const nextNFs: Set<number> = new Set()
-    const nextPositions: GameBoard[] = this.gameHandler.getOnlyPossibleNextPositions()
+    const nextPositions: GameBoard[] = this.gameHandler.getPossibleNextPositions()
     for (const board of nextPositions) {
       nextNFs.add(board.getNormalForm())
     }
