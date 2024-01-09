@@ -1,5 +1,5 @@
-import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
+import type { GameBoardWithPrevMove } from '@/logic/Moves'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
 
@@ -62,7 +62,7 @@ describe('calculation of winner', () => {
 })
 
 describe('nextTurns', () => {
-  let nextTurns: (readonly [GameBoard, [number, number]])[] = []
+  let nextTurns: GameBoardWithPrevMove[] = []
   test('first turn', () => {
     nextTurns = handler.getPossibleNextPositionsWithMoves()
     expect(nextTurns.length).toEqual(9)
