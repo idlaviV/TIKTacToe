@@ -19,7 +19,7 @@ const ResetGame = () => {
 </script>
 
 <template>
-<h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
+  <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
 
   <h3 class="text-xl mb-4">Player {{ props.gameHandler?.getPlayerOnTurn() }}'s turn</h3>
 
@@ -45,19 +45,10 @@ const ResetGame = () => {
     Player {{ props.gameHandler.getWinner() }} wins!
   </h2>
 
-  <v-btn
-    @click="props.gameHandler?.performAiTurn()"
-  >
-    &#9655;
-  </v-btn>
-  <!--class="text-4xl hover:text-green-700 duration-300"-->
+  <v-btn @click="props.gameHandler?.performAiTurn()"> &#9655; </v-btn>
 
   <br />
   <br />
 
-  <v-btn
-    @click="ResetGame"  >
-    Reset Game
-</v-btn>
-<!-- class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300" -->
+  <v-btn @click="ResetGame"> Reset Game </v-btn>
 </template>
