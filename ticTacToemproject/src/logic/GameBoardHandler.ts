@@ -56,6 +56,12 @@ export class GameBoardHandler {
     return drawStatus
   }
 
+  /**
+   * This method calculates all possible next positions from a given gameboard. It does this by trying to add a piece to every empty cell. It does not account for gameboards possibly being equivalent.
+   * @param currentPlayer The player that is currently on turn.
+   * @param gameBoard A gameboard to calculate the possible next positions from. If not provided, the current gameboard is used.
+   * @returns An array of possible next positions, each containing a gameboard and the move that was made to get to it.
+   */
   getPossibleNextPositions(
     currentPlayer: PlayerNumber,
     gameBoard: GameBoard = this.gameBoard
