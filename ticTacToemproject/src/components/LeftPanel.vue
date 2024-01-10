@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { GameBoard } from '@/logic/GameBoard';
-import { GameBoardHandler } from '@/logic/GameBoardHandler';
-import { GameHandler } from '@/logic/GameHandler';
+import GameBoard from '@/components/GameBoard.vue';
 import PlayerSelectionPanel from './PlayerSelectionPanel.vue';
 import { ref } from 'vue';
 
-defineProps({
-  gameHandler: GameHandler,
-  gBHandler: GameBoardHandler
-})
 let gameIsRunning=ref(false)
 
 function startGame() {
@@ -20,7 +14,7 @@ function startGame() {
 
 <template>
 <div>
-    <GameBoard v-if=gameIsRunning :game-handler=gameHandler :g-b-handler=gBHandler />
+    <GameBoard v-if="gameIsRunning"/>
     <PlayerSelectionPanel v-else @start-game="startGame" />
 </div>
 </template>
