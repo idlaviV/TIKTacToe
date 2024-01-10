@@ -1,5 +1,6 @@
 import { GameBoard } from './GameBoard'
 import type { GameHandler } from './GameHandler'
+import type { GameBoardWithPrevMove } from './Moves'
 import type { Player } from './Player'
 import { Randomizer } from './Randomizer'
 export class AIPlayer implements Player {
@@ -21,7 +22,7 @@ export class AIPlayer implements Player {
    */
   makeMove(): void {
     const newNormalForm: number = this.pickChildNode()
-    const options: (readonly [GameBoard, [number, number]])[] = this.gameHandler
+    const options: GameBoardWithPrevMove[] = this.gameHandler
       .getPossibleNextPositionsWithMoves()
       .filter((gameBoard) => gameBoard[0].getNormalForm() == newNormalForm)!
     const min = Math.min(...options.map((item) => item[0].code))
