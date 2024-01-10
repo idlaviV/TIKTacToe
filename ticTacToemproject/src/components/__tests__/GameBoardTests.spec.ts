@@ -55,13 +55,13 @@ describe('getGameBoard', () => {
 describe('calculateCode', () => {
   test('calculate easy code', () => {
     handler.move(0, 0, 1)
-    expect(handler.gameBoard.code).toEqual(1)
+    expect(handler.getGameBoard().code).toEqual(1)
   })
 
   test('calculate complex code', () => {
     handler.move(0, 0, 1)
     handler.move(1, 2, 2)
     handler.move(2, 1, 1)
-    expect(handler.gameBoard.code).toEqual(10200001)
+    expect(handler.getGameBoard().code).toEqual(10200001)
   })
 })

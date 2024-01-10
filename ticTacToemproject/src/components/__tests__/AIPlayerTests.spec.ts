@@ -4,6 +4,7 @@ import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import { Randomizer } from '@/logic/Randomizer'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { resetGameHandler } from './TestUtil'
 
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
@@ -13,9 +14,9 @@ let debugRandomizer: Randomizer
 let maxFromAI: number
 
 beforeEach(() => {
-  gameHandler = new GameHandler()
-  gBHandler = gameHandler.getGBHandler()
-  player = new AIPlayer(gameHandler)
+  resetGameHandler()
+  gameHandler = GameHandler.getInstance()
+  player = new AIPlayer()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   debugRandomizer = {
     randomInteger(min: number, max: number) {
@@ -240,7 +241,7 @@ describe('perform turn on empty board without options', () => {
 
 describe('perform turn on complicated board', () => {
   beforeEach(() => {
-    gBHandler.gameBoard = new GameBoard([
+    gBHandler.gameBoard.value = new GameBoard([
       [2, 0, 2],
       [2, 1, 1],
       [1, 0, 0]
