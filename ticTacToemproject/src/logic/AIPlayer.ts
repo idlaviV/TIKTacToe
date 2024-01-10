@@ -1,5 +1,6 @@
 import { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
+import type { GameBoardWithPrevMove } from './Moves'
 import type { Player } from './Player'
 import { Randomizer } from './Randomizer'
 export class AIPlayer implements Player {
@@ -16,20 +17,12 @@ export class AIPlayer implements Player {
    */
   makeMove(): void {
     const newNormalForm: number = this.pickChildNode()
-    const options: GameBoard[] = GameHandler.getInstance()
-      .getPossibleNextPositions()
-      .filter((gameBoard) => gameBoard.getNormalForm() == newNormalForm)!
-    const min = Math.min(...options.map((item) => item.code))
-    const newBoard = options.find((gameBoard) => gameBoard.getCode() == min)!
-    const currentBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
-    for (const y of [0, 1, 2]) {
-      for (const x of [0, 1, 2]) {
-        if (newBoard.state[x][y] !== currentBoard.state[x][y]) {
-          GameHandler.getInstance().performTurn(x, y)
-          return
-        }
-      }
-    }
+    const options: GameBoardWithPrevMove[] = GameHandler.getInstance()
+      .getPossibleNextPositionsWithMoves()
+      .filter((gameBoard) => gameBoard[0].getNormalForm() == newNormalForm)!
+    const min = Math.min(...options.map((item) => item[0].code))
+    const newBoard = options.findIndex((gameBoard) => gameBoard[0].getCode() == min)!
+    GameHandler.getInstance().performTurn(options[newBoard][1][0], options[newBoard][1][1])
   }
 
   /**

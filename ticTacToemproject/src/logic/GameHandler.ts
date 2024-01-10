@@ -6,6 +6,7 @@ import type { PlayerNumber } from './PlayerNumber'
 import type { WinnerStatus } from './WinnerStatus'
 import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
+import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 
 export class GameHandler {
@@ -58,8 +59,17 @@ export class GameHandler {
     this.historyExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
-  getPossibleNextPositions(): GameBoard[] {
+  getPossibleNextPositionsWithMoves(): GameBoardWithPrevMove[] {
     return this.gBHandler.getPossibleNextPositions(this.playerOnTurn.value)
+  }
+
+  getPossibleNextPositions(): GameBoard[] {
+    const boards: GameBoard[] = []
+    const possibleNextPositions: GameBoardWithPrevMove[] = this.getPossibleNextPositionsWithMoves()
+    for (const position of possibleNextPositions) {
+      boards.push(position[0])
+    }
+    return boards
   }
 
   getGBHandler(): GameBoardHandler {
