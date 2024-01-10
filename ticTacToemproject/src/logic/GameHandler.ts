@@ -15,7 +15,7 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer(this))
+  settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer())
 
   private constructor() {}
 
