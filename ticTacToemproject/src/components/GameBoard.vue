@@ -3,8 +3,6 @@ import { drawStatus } from '../logic/WinnerStatus'
 import { GameHandler } from '../logic/GameHandler'
 
 const gameHandler:GameHandler = GameHandler.getInstance()
-gameHandler.getGBHandler().getEmitter().on('gameBoardChange',() =>{
-  console.log("Something changed")})
 
 
 const MakeMove = (x: number, y: number) => {
