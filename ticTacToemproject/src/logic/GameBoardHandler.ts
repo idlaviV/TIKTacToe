@@ -15,7 +15,7 @@ export class GameBoardHandler {
   }
 
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
-    if (board.state[x][y] == 0) {
+    if (board.state[x][y] == 0 && 0 <= x && x <= 2 && 0 <= y && y <= 2) {
       const newState: FieldType[][] = board.clone()
       newState[x][y] = player
       return new GameBoard(newState)
