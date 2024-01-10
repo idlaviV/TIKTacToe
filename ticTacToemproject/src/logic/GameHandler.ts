@@ -6,18 +6,17 @@ import type { PlayerNumber } from './PlayerNumber'
 import type { WinnerStatus } from './WinnerStatus'
 import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
-import { EventEmitter } from 'stream'
+import { ref, type Ref } from 'vue'
 
 export class GameHandler {
   private static instance: GameHandler
 
-  playerOnTurn: PlayerNumber = 1
-  winner: WinnerStatus = null
+  playerOnTurn : Ref<PlayerNumber> = ref(1)
+  winner : Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer(this))
-  emitter: EventEmitter = new EventEmitter()
-
+  
   private constructor() {}
 
   public static getInstance():GameHandler {
@@ -28,51 +27,53 @@ export class GameHandler {
   }
 
   performTurn(x: number, y: number) {
-    if (this.winner == null) {
-      this.gBHandler.move(x, y, this.playerOnTurn)
-      this.winner = this.gBHandler.calculateWinner()
-      if (this.playerOnTurn === 1) {
-        this.playerOnTurn = 2
+    if (this.winner.value == null) {
+      this.gBHandler.move(x, y, this.playerOnTurn.value)
+      this.winner.value = this.gBHandler.calculateWinner()
+      if (this.playerOnTurn.value === 1) {
+        this.playerOnTurn.value = 2
       } else {
-        this.playerOnTurn = 1
+        this.playerOnTurn.value = 1
       }
       this.historyExport.updateHistory(this.gBHandler.getGameBoard())
-      this.emitter.emit('gameBoardChange')
     }
   }
 
   performAiTurn() {
-    if (this.winner == null) {
-      this.settings.getPlayer(this.playerOnTurn).makeMove()
+    if (this.winner.value == null) {
+      this.settings.getPlayer(this.playerOnTurn.value).makeMove()
     }
+    console.log("Ai turn")
   }
 
   performTurnFromUserInput(x: number, y: number) {
-    if (!this.settings.getPlayer(this.playerOnTurn).isAI()) {
+    if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
     }
+    console.log("User klick")
+    console.log(this.gBHandler.getGameBoard().state)
   }
 
   resetGame() {
     this.gBHandler.resetGameBoard()
-    this.playerOnTurn = 1
-    this.winner = null
+    this.playerOnTurn.value = 1
+    this.winner.value = null
     this.historyExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
   getPossibleNextPositions(): GameBoard[] {
-    return this.gBHandler.getPossibleNextPositions(this.playerOnTurn)
+    return this.gBHandler.getPossibleNextPositions(this.playerOnTurn.value)
   }
 
   getGBHandler(): GameBoardHandler {
     return this.gBHandler
   }
 
-  getPlayerOnTurn(): PlayerNumber {
+  getPlayerOnTurn(): Ref<PlayerNumber> {
     return this.playerOnTurn
   }
 
-  getWinner(): WinnerStatus {
+  getWinner(): Ref<WinnerStatus> {
     return this.winner
   }
 
@@ -80,9 +81,6 @@ export class GameHandler {
     return this.historyExport
   }
 
-  getEventEmitter() {
-    return this.emitter
-  }
 
   /**
    * Only for debug purpose

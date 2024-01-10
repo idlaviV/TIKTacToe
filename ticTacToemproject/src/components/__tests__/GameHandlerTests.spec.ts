@@ -15,7 +15,7 @@ describe('resetGame', () => {
   test('reset', () => {
     handler.performTurn(0, 0)
     handler.resetGame()
-    expect(handler.winner).toEqual(null)
+    expect(handler.getWinner()).toEqual(null)
     expect(handler.getPlayerOnTurn()).toEqual(1)
   })
 })
@@ -29,7 +29,7 @@ describe('calculation of winner', () => {
     handler.performTurn(0, 2)
     expect(handler.getWinner()).toEqual(1)
     handler.performTurn(2, 2)
-    expect(handler.gBHandler.gameBoard.state[2][2]).toEqual(0)
+    expect(handler.gBHandler.getGameBoard().state[2][2]).toEqual(0)
   })
 
   test('player 2 win', () => {

@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import GameBoard from './components/GameBoard.vue'
 import GraphPanel from './components/GraphPanel.vue'
-import { GameHandler } from './logic/GameHandler';
-
-const gameHandler : GameHandler = GameHandler.getInstance()
-
 </script>
 
 <template>
@@ -14,10 +10,7 @@ const gameHandler : GameHandler = GameHandler.getInstance()
         <GameBoard/>
       </div>
       <div class="column">
-        <GraphPanel
-          :nodes="gameHandler.getHistoryExport().nodes"
-          :edges="gameHandler.getHistoryExport().edges"
-        />
+        <GraphPanel/>
       </div>
     </div>
   </main>

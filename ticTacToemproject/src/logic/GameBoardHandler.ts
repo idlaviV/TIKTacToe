@@ -1,16 +1,16 @@
 import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
 import type { FieldType } from './GameBoard'
-import { printGameboard } from './GameBoardConsolePrinter'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
+import { ref, type Ref } from 'vue'
 
 export class GameBoardHandler {
-  gameBoard: GameBoard = new GameBoard()
-  history: GameBoard[] = [this.gameBoard]
+  gameBoard:Ref<GameBoard> = ref(new GameBoard())
+  history: GameBoard[] = [this.gameBoard.value]
 
   move(x: number, y: number, player: PlayerNumber) {
-    this.gameBoard = this.addPiece(x, y, this.gameBoard, player)
-    this.history.push(this.gameBoard)
+    this.gameBoard.value = this.addPiece(x, y, this.gameBoard.value, player)
+    this.history.push(this.gameBoard.value)
   }
 
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
@@ -19,13 +19,12 @@ export class GameBoardHandler {
       newState[x][y] = player
       return new GameBoard(newState)
     }
-    printGameboard(this.gameBoard)
     throw new Error('This piece cannot go there')
   }
 
   resetGameBoard(): void {
-    this.gameBoard = new GameBoard()
-    this.history = [this.gameBoard]
+    this.gameBoard.value = new GameBoard()
+    this.history = [this.gameBoard.value]
   }
 
   calculateWinner(): WinnerStatus {
@@ -39,7 +38,7 @@ export class GameBoardHandler {
       [0, 4, 8],
       [2, 4, 6]
     ]
-    const squares = this.gameBoard.state.flat()
+    const squares = this.gameBoard.value.state.flat()
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i]
       if (squares[a] !== 0 && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -56,14 +55,14 @@ export class GameBoardHandler {
 
   getPossibleNextPositions(
     currentPlayer: PlayerNumber,
-    gameBoard: GameBoard = this.gameBoard
+    gameBoard: GameBoard = this.gameBoard.value
   ): GameBoard[] {
     const possibleNextPositions: GameBoard[] = []
     if (this.calculateWinner() === null) {
       for (let i = 0; i < gameBoard.state.length; i++) {
         for (let j = 0; j < gameBoard.state[i].length; j++) {
           if (gameBoard.state[i][j] === 0) {
-            const newBoard: GameBoard = this.addPiece(i, j, gameBoard, currentPlayer)
+            const newBoard: GameBoard = this.addPiece(i, j, gameBoard,currentPlayer)
             possibleNextPositions.push(newBoard)
           }
         }
@@ -73,6 +72,10 @@ export class GameBoardHandler {
   }
 
   getGameBoard(): GameBoard {
+    return this.gameBoard.value
+  }
+
+  getGameBoardExport() {
     return this.gameBoard
   }
 
