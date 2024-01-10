@@ -34,6 +34,15 @@ export class HistoryExport {
     })
     this.initializeHistory(gameBoard)
   }
+
+  getNodes():Ref<Nodes> {
+    return this.nodes
+  }
+
+  getEdges():Ref<Edges> {
+    return this.edges
+  }
+
 }
 
 export function convertFieldType(fieldType: FieldType): string {

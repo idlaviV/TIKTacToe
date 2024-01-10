@@ -15,8 +15,8 @@ describe('resetGame', () => {
   test('reset', () => {
     handler.performTurn(0, 0)
     handler.resetGame()
-    expect(handler.getWinner()).toEqual(null)
-    expect(handler.getPlayerOnTurn()).toEqual(1)
+    expect(handler.getWinner().value).toEqual(null)
+    expect(handler.getPlayerOnTurn().value).toEqual(1)
   })
 })
 
@@ -27,7 +27,7 @@ describe('calculation of winner', () => {
     handler.performTurn(0, 1)
     handler.performTurn(1, 1)
     handler.performTurn(0, 2)
-    expect(handler.getWinner()).toEqual(1)
+    expect(handler.getWinner().value).toEqual(1)
     handler.performTurn(2, 2)
     expect(handler.gBHandler.getGameBoard().state[2][2]).toEqual(0)
   })
@@ -39,7 +39,7 @@ describe('calculation of winner', () => {
     handler.performTurn(1, 1)
     handler.performTurn(2, 2)
     handler.performTurn(1, 2)
-    expect(handler.getWinner()).toEqual(2)
+    expect(handler.getWinner().value).toEqual(2)
   })
 
   test('draw', () => {
@@ -52,14 +52,14 @@ describe('calculation of winner', () => {
     handler.performTurn(1, 2)
     handler.performTurn(2, 1)
     handler.performTurn(2, 2)
-    expect(handler.getWinner()).toEqual(drawStatus)
+    expect(handler.getWinner().value).toEqual(drawStatus)
   })
 
   test('game not over', () => {
     handler.performTurn(0, 0)
     handler.performTurn(1, 0)
     handler.performTurn(2, 0)
-    expect(handler.getWinner()).toEqual(null)
+    expect(handler.getWinner().value).toEqual(null)
   })
 })
 

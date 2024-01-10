@@ -241,7 +241,7 @@ describe('perform turn on empty board without options', () => {
 
 describe('perform turn on complicated board', () => {
   beforeEach(() => {
-    gBHandler.gameBoard = new GameBoard([
+    gBHandler.gameBoard.value = new GameBoard([
       [2, 0, 2],
       [2, 1, 1],
       [1, 0, 0]

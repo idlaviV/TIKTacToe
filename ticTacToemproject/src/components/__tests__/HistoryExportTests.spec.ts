@@ -10,14 +10,14 @@ beforeEach(() => {
 
 describe('constructor', () => {
   test('standard constructor use', () => {
-    expect(historyExport.nodes).toEqual({
+    expect(historyExport.nodes.value).toEqual({
       '0': {
         name: '0',
         boardState: new GameBoard().state,
         active: true
       }
     })
-    expect(historyExport.edges).toEqual({})
+    expect(historyExport.edges.value).toEqual({})
     expect(historyExport.lastCode).toEqual('0')
   })
 
@@ -29,7 +29,7 @@ describe('constructor', () => {
         [0, 0, 0]
       ])
     )
-    expect(historyExport.nodes).toEqual({
+    expect(historyExport.nodes.value).toEqual({
       '21': {
         name: '21',
         boardState: [
@@ -40,7 +40,7 @@ describe('constructor', () => {
         active: true
       }
     })
-    expect(historyExport.edges).toEqual({})
+    expect(historyExport.edges.value).toEqual({})
     expect(historyExport.lastCode).toEqual('21')
   })
 })
@@ -54,7 +54,7 @@ describe('updateHistory', () => {
         [0, 0, 0]
       ])
     )
-    expect(historyExport.nodes).toEqual({
+    expect(historyExport.nodes.value).toEqual({
       '21': {
         name: '21',
         boardState: [
@@ -70,7 +70,7 @@ describe('updateHistory', () => {
         active: false
       }
     })
-    expect(historyExport.edges).toEqual({
+    expect(historyExport.edges.value).toEqual({
       '0#21': {
         source: '0',
         target: '21'
@@ -94,7 +94,7 @@ describe('updateHistory', () => {
         [0, 0, 0]
       ])
     )
-    expect(historyExport.nodes).toEqual({
+    expect(historyExport.nodes.value).toEqual({
       '21': {
         name: '21',
         boardState: [
@@ -119,7 +119,7 @@ describe('updateHistory', () => {
         active: true
       }
     })
-    expect(historyExport.edges).toEqual({
+    expect(historyExport.edges.value).toEqual({
       '0#21': {
         source: '0',
         target: '21'
@@ -143,14 +143,14 @@ describe('resetHistory', () => {
       ])
     )
     historyExport.resetHistory(new GameBoard())
-    expect(historyExport.nodes).toEqual({
+    expect(historyExport.nodes.value).toEqual({
       '0': {
         name: '0',
         boardState: new GameBoard().state,
         active: true
       }
     })
-    expect(historyExport.edges).toEqual({})
+    expect(historyExport.edges.value).toEqual({})
     expect(historyExport.lastCode).toEqual('0')
   })
 })
