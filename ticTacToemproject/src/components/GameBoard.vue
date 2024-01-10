@@ -45,20 +45,10 @@ const ResetGame = () => {
     Player {{ props.gameHandler.getWinner() }} wins!
   </h2>
 
-  <button
-    @click="props.gameHandler?.performAiTurn()"
-    class="text-4xl hover:text-green-700 duration-300"
-  >
-    &#9655;
-  </button>
+  <v-btn @click="props.gameHandler?.performAiTurn()"> &#9655; </v-btn>
 
   <br />
   <br />
 
-  <button
-    @click="ResetGame"
-    class="px-4 py-2 bg-pink-500 rounded uppercase font-bold hover:bg-pink-600 duration-300"
-  >
-    Reset Game
-  </button>
+  <v-btn @click="ResetGame"> Reset Game </v-btn>
 </template>

@@ -19,11 +19,11 @@ beforeEach(() => {
   }
 })
 
-describe('User input is only used if userplayer is on turn', ()=>{
-  test('UserPlayer as player1, AIPlayer as player2', ()=>{
-    gameHandler.performTurnFromUserInput(0,0)
+describe('User input is only used if userplayer is on turn', () => {
+  test('UserPlayer as player1, AIPlayer as player2', () => {
+    gameHandler.performTurnFromUserInput(0, 0)
     expect(gBHandler.getGameBoard().getCode()).toEqual(1)
-    gameHandler.performTurnFromUserInput(0,0)
+    gameHandler.performTurnFromUserInput(0, 0)
     expect(gBHandler.getGameBoard().getCode()).toEqual(1)
   })
 })
