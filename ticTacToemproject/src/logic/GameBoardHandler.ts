@@ -5,7 +5,7 @@ import { drawStatus, type WinnerStatus } from './WinnerStatus'
 import { ref, type Ref } from 'vue'
 
 export class GameBoardHandler {
-  gameBoard:Ref<GameBoard> = ref(new GameBoard())
+  gameBoard: Ref<GameBoard> = ref(new GameBoard())
   history: GameBoard[] = [this.gameBoard.value]
 
   move(x: number, y: number, player: PlayerNumber) {
@@ -62,7 +62,7 @@ export class GameBoardHandler {
       for (let i = 0; i < gameBoard.state.length; i++) {
         for (let j = 0; j < gameBoard.state[i].length; j++) {
           if (gameBoard.state[i][j] === 0) {
-            const newBoard: GameBoard = this.addPiece(i, j, gameBoard,currentPlayer)
+            const newBoard: GameBoard = this.addPiece(i, j, gameBoard, currentPlayer)
             possibleNextPositions.push(newBoard)
           }
         }
@@ -78,6 +78,4 @@ export class GameBoardHandler {
   getGameBoardExport() {
     return this.gameBoard
   }
-
-
 }

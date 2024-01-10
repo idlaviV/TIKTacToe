@@ -7,10 +7,10 @@ import GraphPanel from './components/GraphPanel.vue'
   <main class="pt-8 bg-gray-800 text-center min-h-screen text-white">
     <div class="row flex-col">
       <div class="column">
-        <GameBoard/>
+        <GameBoard />
       </div>
       <div class="column">
-        <GraphPanel/>
+        <GraphPanel />
       </div>
     </div>
   </main>

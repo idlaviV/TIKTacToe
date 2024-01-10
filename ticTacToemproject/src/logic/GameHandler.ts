@@ -11,16 +11,16 @@ import { ref, type Ref } from 'vue'
 export class GameHandler {
   private static instance: GameHandler
 
-  playerOnTurn : Ref<PlayerNumber> = ref(1)
-  winner : Ref<WinnerStatus> = ref(null)
+  playerOnTurn: Ref<PlayerNumber> = ref(1)
+  winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer(this))
-  
+
   private constructor() {}
 
-  public static getInstance():GameHandler {
-    if(!GameHandler.instance) {
+  public static getInstance(): GameHandler {
+    if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
     }
     return GameHandler.instance
@@ -43,15 +43,12 @@ export class GameHandler {
     if (this.winner.value == null) {
       this.settings.getPlayer(this.playerOnTurn.value).makeMove()
     }
-    console.log("Ai turn")
   }
 
   performTurnFromUserInput(x: number, y: number) {
     if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
     }
-    console.log("User klick")
-    console.log(this.gBHandler.getGameBoard().state)
   }
 
   resetGame() {
@@ -81,11 +78,10 @@ export class GameHandler {
     return this.historyExport
   }
 
-
   /**
    * Only for debug purpose
    */
-  destroySingleton():void {
+  destroySingleton(): void {
     GameHandler.instance = new GameHandler()
   }
 }

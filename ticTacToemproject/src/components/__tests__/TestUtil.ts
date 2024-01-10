@@ -1,5 +1,5 @@
-import { GameHandler } from "@/logic/GameHandler";
+import { GameHandler } from '@/logic/GameHandler'
 
 export function resetGameHandler() {
-    GameHandler.getInstance().destroySingleton()
+  GameHandler.getInstance().destroySingleton()
 }

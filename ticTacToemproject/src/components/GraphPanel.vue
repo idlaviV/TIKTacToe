@@ -11,23 +11,22 @@ import {
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
-import { GameHandler } from '@/logic/GameHandler';
+import { GameHandler } from '@/logic/GameHandler'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const range = [0, 1, 2]
-const nodes:Ref<Nodes> = gameHandler.getHistoryExport().getNodes()
-const edges:Ref<Edges> = gameHandler.getHistoryExport().getEdges()
+const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getNodes()
+const edges: Ref<Edges> = gameHandler.getHistoryExport().getEdges()
 
-const layouts:Ref<Layouts> = ref({ 
+const layouts: Ref<Layouts> = ref({
   nodes: {
     //'0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
-  } 
+  }
 })
 
 const graph = ref<VNetworkGraphInstance>()
 
 function updateLayout() {
-  console.log("UpdateLayout")
   const activeNode = layout(nodes.value, edges.value, layouts.value)
   const height = graph.value?.getSizes().height
   const width = graph.value?.getSizes().width

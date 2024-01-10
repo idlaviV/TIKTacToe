@@ -22,7 +22,11 @@ export class HistoryExport {
 
   initializeHistory(gameBoard: GameBoard) {
     this.lastCode = gameBoard.getCode().toString()
-    this.nodes.value[this.lastCode] = { name: this.lastCode, boardState: gameBoard.state, active: true }
+    this.nodes.value[this.lastCode] = {
+      name: this.lastCode,
+      boardState: gameBoard.state,
+      active: true
+    }
   }
 
   resetHistory(gameBoard: GameBoard) {
@@ -35,14 +39,13 @@ export class HistoryExport {
     this.initializeHistory(gameBoard)
   }
 
-  getNodes():Ref<Nodes> {
+  getNodes(): Ref<Nodes> {
     return this.nodes
   }
 
-  getEdges():Ref<Edges> {
+  getEdges(): Ref<Edges> {
     return this.edges
   }
-
 }
 
 export function convertFieldType(fieldType: FieldType): string {

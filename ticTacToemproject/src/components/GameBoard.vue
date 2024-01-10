@@ -2,12 +2,10 @@
 import { drawStatus } from '../logic/WinnerStatus'
 import { GameHandler } from '../logic/GameHandler'
 
-const gameHandler:GameHandler = GameHandler.getInstance()
+const gameHandler: GameHandler = GameHandler.getInstance()
 const gameBoard = gameHandler.getGBHandler().getGameBoardExport()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
-
-
 
 const MakeMove = (x: number, y: number) => {
   gameHandler.performTurnFromUserInput(x, y)
@@ -39,12 +37,8 @@ const ResetGame = () => {
     </div>
   </div>
 
-  <h2 v-if="winner === drawStatus" class="text-6xl dond-bold mb-8">
-    Draw!
-  </h2>
-  <h2 v-else-if="winner" class="text-6xl dond-bold mb-8">
-    Player {{ winner }} wins!
-  </h2>
+  <h2 v-if="winner === drawStatus" class="text-6xl dond-bold mb-8">Draw!</h2>
+  <h2 v-else-if="winner" class="text-6xl dond-bold mb-8">Player {{ winner }} wins!</h2>
 
   <v-btn @click="gameHandler.performAiTurn()"> &#9655; </v-btn>
 
