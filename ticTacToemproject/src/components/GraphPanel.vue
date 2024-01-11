@@ -9,29 +9,30 @@ import {
   type UserConfigs
 } from 'v-network-graph'
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
+import { GameHandler } from '@/logic/GameHandler'
 
-const props = defineProps<{ nodes: Nodes; edges: Edges }>()
+const gameHandler: GameHandler = GameHandler.getInstance()
 const range = [0, 1, 2]
-const nodes: Nodes = props.nodes
-const edges: Edges = props.edges
+const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getNodes()
+const edges: Ref<Edges> = gameHandler.getHistoryExport().getEdges()
 
-const layouts: Layouts = {
+const layouts: Ref<Layouts> = ref({
   nodes: {
-    '0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
+    //'0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
   }
-}
+})
 
 const graph = ref<VNetworkGraphInstance>()
 
 function updateLayout() {
-  const activeNode = layout(nodes, edges, layouts)
+  const activeNode = layout(nodes.value, edges.value, layouts.value)
   const height = graph.value?.getSizes().height
   const width = graph.value?.getSizes().width
   if (activeNode !== undefined && height !== undefined && width !== undefined) {
-    const x = layouts.nodes[activeNode].x
-    const y = layouts.nodes[activeNode].y
+    const x = layouts.value.nodes[activeNode].x
+    const y = layouts.value.nodes[activeNode].y
     graph.value?.panTo({ x: x, y: -y }) //Moves to the current node
     graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
   }
@@ -75,7 +76,7 @@ const configs: UserConfigs = defineConfigs({
   }
 })
 
-watch(nodes, updateLayout)
+watch(nodes.value, updateLayout)
 </script>
 
 <template>

@@ -2,12 +2,14 @@ import { AIPlayer } from '@/logic/AIPlayer'
 import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { resetGameHandler } from './TestUtil'
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 
 beforeEach(() => {
   //Later: Setup should set AI on slot 2, UserPlayer on slot 1
-  gameHandler = new GameHandler()
+  resetGameHandler()
+  gameHandler = GameHandler.getInstance()
   gBHandler = gameHandler.getGBHandler()
   //Remove randomization
   const ai: AIPlayer = gameHandler.settings.player2 as AIPlayer

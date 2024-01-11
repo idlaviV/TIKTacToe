@@ -1,15 +1,11 @@
 import { GameBoard } from './GameBoard'
-import type { GameHandler } from './GameHandler'
+import { GameHandler } from './GameHandler'
+import type { GameBoardWithPrevMove } from './Moves'
 import type { Player } from './Player'
 import { Randomizer } from './Randomizer'
 export class AIPlayer implements Player {
   weights: Map<number, Map<number, number>> = new Map()
-  gameHandler: GameHandler
   randomzier: Randomizer = new Randomizer()
-
-  constructor(gHandler: GameHandler) {
-    this.gameHandler = gHandler
-  }
 
   isAI(): boolean {
     return true
@@ -21,20 +17,12 @@ export class AIPlayer implements Player {
    */
   makeMove(): void {
     const newNormalForm: number = this.pickChildNode()
-    const options: GameBoard[] = this.gameHandler
-      .getPossibleNextPositions()
-      .filter((gameBoard) => gameBoard.getNormalForm() == newNormalForm)!
-    const min = Math.min(...options.map((item) => item.code))
-    const newBoard = options.find((gameBoard) => gameBoard.getCode() == min)!
-    const currentBoard: GameBoard = this.gameHandler.getGBHandler().getGameBoard()
-    for (const y of [0, 1, 2]) {
-      for (const x of [0, 1, 2]) {
-        if (newBoard.state[x][y] !== currentBoard.state[x][y]) {
-          this.gameHandler.performTurn(x, y)
-          return
-        }
-      }
-    }
+    const options: GameBoardWithPrevMove[] = GameHandler.getInstance()
+      .getPossibleNextPositionsWithMoves()
+      .filter((gameBoard) => gameBoard[0].getNormalForm() == newNormalForm)!
+    const min = Math.min(...options.map((item) => item[0].code))
+    const newBoard = options.findIndex((gameBoard) => gameBoard[0].getCode() == min)!
+    GameHandler.getInstance().performTurn(options[newBoard][1][0], options[newBoard][1][1])
   }
 
   /**
@@ -95,7 +83,7 @@ export class AIPlayer implements Player {
    * @returns map of weights
    */
   getVertexMap(): Map<number, number> {
-    const currentNF: number = this.gameHandler.getGBHandler().getGameBoard().getNormalForm()
+    const currentNF: number = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
     if (!this.weights.has(currentNF) || this.weights.get(currentNF) === undefined) {
       this.initializeWeights(currentNF)
     }
@@ -122,7 +110,7 @@ export class AIPlayer implements Player {
    */
   calculateNextNFs(): Set<number> {
     const nextNFs: Set<number> = new Set()
-    const nextPositions: GameBoard[] = this.gameHandler.getPossibleNextPositions()
+    const nextPositions: GameBoard[] = GameHandler.getInstance().getPossibleNextPositions()
     for (const board of nextPositions) {
       nextNFs.add(board.getNormalForm())
     }
