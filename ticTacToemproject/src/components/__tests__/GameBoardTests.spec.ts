@@ -65,3 +65,16 @@ describe('calculateCode', () => {
     expect(handler.gameBoard.code).toEqual(10200001)
   })
 })
+
+describe('getNormalForm', () => {
+  test('easy normal form', () => {
+    handler.move(0, 0, 1)
+    expect(handler.gameBoard.getNormalForm()).toEqual(1)
+  })
+
+  test('more complex normal form', () => {
+    handler.move(0, 2, 1)
+    handler.move(0, 0, 2)
+    expect(handler.gameBoard.getNormalForm()).toEqual(102)
+  })
+})
