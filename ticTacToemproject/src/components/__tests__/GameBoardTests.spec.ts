@@ -69,12 +69,12 @@ describe('calculateCode', () => {
 describe('getNormalForm', () => {
   test('easy normal form', () => {
     handler.move(0, 0, 1)
-    expect(handler.gameBoard.getNormalForm()).toEqual(1)
+    expect(handler.getGameBoard().getNormalForm()).toEqual(1)
   })
 
   test('more complex normal form', () => {
     handler.move(0, 2, 1)
     handler.move(0, 0, 2)
-    expect(handler.gameBoard.getNormalForm()).toEqual(102)
+    expect(handler.getGameBoard().getNormalForm()).toEqual(102)
   })
 })

@@ -83,7 +83,10 @@ export class AIPlayer implements Player {
    * @returns map of weights
    */
   getVertexMap(): Map<number, number> {
-    const currentNF: number = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
+    const currentNF: number = GameHandler.getInstance()
+      .getGBHandler()
+      .getGameBoard()
+      .getNormalForm()
     if (!this.weights.has(currentNF) || this.weights.get(currentNF) === undefined) {
       this.initializeWeights(currentNF)
     }
