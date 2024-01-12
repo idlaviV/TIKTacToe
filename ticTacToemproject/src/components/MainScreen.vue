@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import GameBoard from './MainScreenBoard.vue';
-import PlayerSelectionPanel from './PlayerSelectionPanel.vue';
+import MainScreenBoard from './MainScreenBoard.vue';
+import StartScreen from './StartScreen.vue';
 import { ref } from 'vue';
 
 let gameIsRunning=ref(false)
 
 function startGame() {
-    console.log("Start Game")
+    console.log("Game started (and your configuration was intentionally ignored)")
     gameIsRunning.value =  true
 }
 
@@ -14,7 +14,7 @@ function startGame() {
 
 <template>
 <div>
-    <GameBoard v-if="gameIsRunning"/>
-    <PlayerSelectionPanel v-else @start-game="startGame" />
+    <MainScreenBoard v-if="gameIsRunning"/>
+    <StartScreen v-else @start-game="startGame" />
 </div>
 </template>
