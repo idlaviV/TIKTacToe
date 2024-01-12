@@ -1,3 +1,4 @@
+import type { EvaluationPolicy } from './EvaluationPolicy'
 import { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
 import type { GameBoardWithPrevMove } from './Moves'
@@ -6,6 +7,11 @@ import { Randomizer } from './Randomizer'
 export class AIPlayer implements Player {
   weights: Map<number, Map<number, number>> = new Map()
   randomzier: Randomizer = new Randomizer()
+  policy: EvaluationPolicy
+
+  constructor(policy: EvaluationPolicy) {
+    this.policy = policy
+  }
 
   isAI(): boolean {
     return true
@@ -66,7 +72,7 @@ export class AIPlayer implements Player {
       weightedEntries.push({ code: pair[0], index: sum })
     }
 
-    /**
+    /*
      * If sum == 0, all weights are 0 and the AI has already lost.
      * We then simulate the weights to be all 1 and perform a random move.
      */
@@ -83,7 +89,10 @@ export class AIPlayer implements Player {
    * @returns map of weights
    */
   getVertexMap(): Map<number, number> {
-    const currentNF: number = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
+    const currentNF: number = GameHandler.getInstance()
+      .getGBHandler()
+      .getGameBoard()
+      .getNormalForm()
     if (!this.weights.has(currentNF) || this.weights.get(currentNF) === undefined) {
       this.initializeWeights(currentNF)
     }
