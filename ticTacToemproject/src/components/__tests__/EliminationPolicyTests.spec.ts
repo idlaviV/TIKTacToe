@@ -4,11 +4,40 @@ import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { ref } from 'vue'
 
 const handler = GameHandler.getInstance()
 const settings = handler.getSettings()
-const weights = new Map([[0, new Map([[1, 1], [10, 1], [10000, 1]])]])
+const weights = new Map()
+weights.set(
+  0,
+  new Map([
+    [1, 1],
+    [10, 1],
+    [10000, 1]
+  ])
+)
+weights.set(10, new Map([[12, 1]]))
+weights.set(
+  12,
+  new Map([
+    [10012, 1],
+    [122, 1]
+  ])
+)
+weights.set(
+  10012,
+  new Map([
+    [12210, 1],
+    [112200, 0]
+  ])
+)
+weights.set(
+  12210,
+  new Map([
+    [2111020, 1],
+    [12211, 1]
+  ])
+)
 
 let policy: EliminationPolicy
 let aI: AIPlayer
@@ -19,7 +48,35 @@ beforeEach(() => {
   aI = new AIPlayer(policy)
   settings.player1 = new AIPlayer(policy)
   settings.player2 = aI
-  history = [new GameBoard(), new GameBoard([[1, 0, 0], [0, 0, 0], [0, 0, 0]])]
+  history = [
+    new GameBoard(),
+    new GameBoard([
+      [0, 0, 0],
+      [1, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 1, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 1, 0],
+      [0, 2, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 1, 1],
+      [0, 2, 0]
+    ])
+  ]
+  aI.weights = weights
 })
 
 describe('getInitialWeight', () => {
@@ -32,33 +89,45 @@ describe('getInitialWeight', () => {
 
 describe('applyPolicy', () => {
   test('should not change weights if game is not over', () => {
-    handler.winner = ref(null)
-    aI.weights = weights
+    handler.winner.value = null
     policy.applyPolicy(aI, history)
-    expect(aI.weights).toEqual(0)
+    expect(aI.weights).toEqual(weights)
   })
 
   test('should not change weights if game results in draw', () => {
-    handler.winner = ref(drawStatus)
-    const weights = new Map([[0, new Map([[1, 1], [10, 1], [10000, 1]])]])
-    aI.weights = weights
+    handler.winner.value = drawStatus
     policy.applyPolicy(aI, history)
     expect(aI.weights).toEqual(weights)
   })
 
   test('should not change weights if AI won', () => {
-    handler.winner = ref(2)
-    const weights = new Map([[0, new Map([[1, 1], [10, 1], [10000, 1]])]])
-    aI.weights = weights
+    handler.winner.value = 2
     policy.applyPolicy(aI, history)
     expect(aI.weights).toEqual(weights)
   })
 
   test('should set weights of last move to 0 if AI did not win', () => {
-    handler.winner = ref(2)
-    const weights = new Map([[0, new Map([[1, 1], [10, 1], [10000, 1]])]])
-    aI.weights = weights
+    handler.winner.value = 1
     policy.applyPolicy(aI, history)
-    expect(aI.weights.get(0)?.get(10000)).toEqual(0)
+    expect(
+      aI.weights
+        .get(history[history.length - 3].getNormalForm())
+        ?.get(history[history.length - 2].getNormalForm())
+    ).toEqual(0)
+  })
+
+  test('should set weights of last and second to last move to 0 if AI did not win', () => {
+    handler.winner.value = 1
+    policy.applyPolicy(aI, history)
+    expect(
+      aI.weights
+        .get(history[history.length - 3].getNormalForm())
+        ?.get(history[history.length - 2].getNormalForm())
+    ).toEqual(0)
+    expect(
+      aI.weights
+        .get(history[history.length - 5].getNormalForm())
+        ?.get(history[history.length - 4].getNormalForm())
+    ).toEqual(0)
   })
 })
