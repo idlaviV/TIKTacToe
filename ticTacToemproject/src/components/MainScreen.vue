@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GameBoard from '@/components/GameBoard.vue';
+import GameBoard from './MainScreenBoard.vue';
 import PlayerSelectionPanel from './PlayerSelectionPanel.vue';
 import { ref } from 'vue';
 

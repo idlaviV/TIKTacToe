@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import LeftPanel from './components/LeftPanel.vue'
-import GameBoard from './components/GameBoard.vue'
+import LeftPanel from './components/MainScreen.vue'
+import GameBoard from './components/MainScreenBoard.vue'
 import GraphPanel from './components/GraphPanel.vue'
 </script>
 
