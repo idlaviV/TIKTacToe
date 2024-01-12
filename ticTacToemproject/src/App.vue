@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import LeftPanel from './components/MainScreen.vue'
-import GameBoard from './components/MainScreenBoard.vue'
+import MainScreen from './components/MainScreen.vue'
 import GraphPanel from './components/GraphPanel.vue'
 </script>
 
@@ -9,7 +7,7 @@ import GraphPanel from './components/GraphPanel.vue'
   <main class="pt-8 bg-gray-800 text-center min-h-screen text-white">
     <div class="row flex-col">
       <div class="column">
-        <LeftPanel/>
+        <MainScreen/>
       </div>
       <div class="column">
         <GraphPanel />
