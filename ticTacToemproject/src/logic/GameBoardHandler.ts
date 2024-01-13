@@ -1,6 +1,6 @@
 import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
-import type { FieldType } from './GameBoard'
+import type { FieldType } from './FieldType'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
