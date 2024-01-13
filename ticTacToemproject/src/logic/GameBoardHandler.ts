@@ -5,15 +5,33 @@ import { drawStatus, type WinnerStatus } from './WinnerStatus'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 
+/**
+ * This class handles the gameboard. It keeps track of the current gameboard and the history of the gameboard.
+ * It also provides methods to add pieces to the gameboard and to calculate the winner.
+ */
 export class GameBoardHandler {
   gameBoard: Ref<GameBoard> = ref(new GameBoard())
   history: GameBoard[] = [this.gameBoard.value]
 
+  /**
+   * This method adds a piece to the gameboard and updates the history.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   * @param player the player that made the move
+   */
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard.value = this.addPiece(x, y, this.gameBoard.value, player)
     this.history.push(this.gameBoard.value)
   }
 
+  /**
+   * This method adds a piece to a gameboard.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   * @param board the board to add the piece to
+   * @param player the player that made the move
+   * @returns the updated gameboard
+   */
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
     if (board.state[x][y] == 0) {
       const newState: FieldType[][] = board.clone()
@@ -23,6 +41,9 @@ export class GameBoardHandler {
     throw new Error('This piece cannot go there')
   }
 
+  /**
+   * This method resets the gameboard to an empty gameboard and resets the history.
+   */
   resetGameBoard(): void {
     this.gameBoard.value = new GameBoard()
     this.history = [this.gameBoard.value]
