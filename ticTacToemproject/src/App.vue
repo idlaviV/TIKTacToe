@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MainScreen from './components/MainScreen.vue'
+import LeftPanel from './components/LeftPanel.vue'
 import GraphPanel from './components/GraphPanel.vue'
 </script>
 
@@ -7,7 +7,7 @@ import GraphPanel from './components/GraphPanel.vue'
   <main class="pt-8 bg-gray-800 text-center min-h-screen text-white">
     <div class="row flex-col">
       <div class="column">
-        <MainScreen />
+        <LeftPanel />
       </div>
       <div class="column">
         <GraphPanel />
