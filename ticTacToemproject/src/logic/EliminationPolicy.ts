@@ -6,12 +6,25 @@ import { GameSettings } from './GameSettings'
 import type { PlayerNumber } from './PlayerNumber'
 import { drawStatus } from './WinnerStatus'
 
+/**
+ * This class implements the {@link EvaluationPolicy} interface. It contains a policy that eliminates the moves that lead to a loss as well as moves that only lead to moves that lead to a loss.
+ */
 export class EliminationPolicy implements EvaluationPolicy {
+  /**
+   * @inheritdoc
+   * @override
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getInitialWeight(height: number): number {
     return 1
   }
 
+  /**
+   * This method applies the elimination policy to the given AIPlayer. It sets the probability to reach all moves that lead to a loss,
+   * as well as moves that only lead to moves that lead to a loss to zero.
+   * @inheritdoc
+   * @override
+   */
   applyPolicy(aI: AIPlayer, history: GameBoard[]): void {
     const handler: GameHandler = GameHandler.getInstance()
     const settings: GameSettings = handler.getSettings()
@@ -31,11 +44,15 @@ export class EliminationPolicy implements EvaluationPolicy {
           if (value !== 0) {
             return
           }
+
         }
         aI.weights
           .get(history[index - 2].getNormalForm())
           ?.set(history[index - 1].getNormalForm(), 0)
       }
+
     }
+
   }
+
 }
