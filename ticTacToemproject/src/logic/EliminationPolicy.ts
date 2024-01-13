@@ -44,15 +44,11 @@ export class EliminationPolicy implements EvaluationPolicy {
           if (value !== 0) {
             return
           }
-
         }
         aI.weights
           .get(history[index - 2].getNormalForm())
           ?.set(history[index - 1].getNormalForm(), 0)
       }
-
     }
-
   }
-
 }
