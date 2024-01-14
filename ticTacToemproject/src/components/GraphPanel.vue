@@ -17,12 +17,18 @@ const gameHandler: GameHandler = GameHandler.getInstance()
 const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getNodes()
 const edges: Ref<Edges> = gameHandler.getHistoryExport().getEdges()
 
+  /**
+   * @description The position of the nodes in the graph.
+   */
 const layouts: Ref<Layouts> = ref({
   nodes: {
     //'0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
   }
 })
 
+/**
+ * Update the layout after setup and after every move.
+ */
 if (configs.view) {
   configs.view.onBeforeInitialDisplay = updateLayout
 }
@@ -30,6 +36,9 @@ watch(nodes.value, updateLayout)
 
 const graph = ref<VNetworkGraphInstance>()
 
+/**
+ * Calculate new node positions and pan to the active node.
+ */
 function updateLayout() {
   const activeNode = layout(nodes.value, edges.value, layouts.value)
   const height = graph.value?.getSizes().height
@@ -43,6 +52,7 @@ function updateLayout() {
 }
 </script>
 
+<!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
 <template>
   <v-network-graph
     ref="graph"
@@ -53,7 +63,7 @@ function updateLayout() {
     :configs="configs"
   >
     <template #override-node="{ nodeId }">
-      <GraphPanelNode :node-id="nodeId" :nodes="nodes" />
+      <GraphPanelNode :node="nodes[nodeId]" />
     </template>
   </v-network-graph>
 </template>

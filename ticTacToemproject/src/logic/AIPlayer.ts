@@ -4,8 +4,21 @@ import { GameHandler } from './GameHandler'
 import type { GameBoardWithPrevMove } from './Moves'
 import type { Player } from './Player'
 import { Randomizer } from './Randomizer'
+
+/**
+ * This class represents an AI player.
+ * Its behaviour is based on the weights of possible moves.
+ */
 export class AIPlayer implements Player {
+  /**
+   * The weights are an edge-label on the gamegraph, where vertices are gameboards and edges are moves.
+   * The weights are stored in a map, where gameboards are passed using their normal form.
+   * The first input for the weights map is the parent gameboard, the second input is the child gameboard.
+   */
   weights: Map<number, Map<number, number>> = new Map()
+  /**
+   * The randomizer provides a choice for a random number.
+   */
   randomzier: Randomizer = new Randomizer()
   policy: EvaluationPolicy
 
@@ -32,7 +45,7 @@ export class AIPlayer implements Player {
   }
 
   /**
-   * Choose a suitable next gameboard, by weights
+   * Choose a suitable next gameboard, by weights.
    * @returns the normal form of the next gameboard
    */
   pickChildNode(): number {
