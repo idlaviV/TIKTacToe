@@ -4,17 +4,16 @@ import {
   type Edges,
   VNetworkGraph,
   type Layouts,
-  defineConfigs,
-  type VNetworkGraphInstance,
-  type UserConfigs
+  type VNetworkGraphInstance
 } from 'v-network-graph'
-import GraphPanelNodeField from './GraphPanelNodeField.vue'
+import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
 import { GameHandler } from '@/logic/GameHandler'
+import { configs } from '@/components/GraphPanelUserConfigs'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
-const range = [0, 1, 2]
+
 const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getNodes()
 const edges: Ref<Edges> = gameHandler.getHistoryExport().getEdges()
 
@@ -23,6 +22,11 @@ const layouts: Ref<Layouts> = ref({
     //'0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
   }
 })
+
+if (configs.view) {
+  configs.view.onBeforeInitialDisplay = updateLayout
+}
+watch(nodes.value, updateLayout)
 
 const graph = ref<VNetworkGraphInstance>()
 
@@ -37,46 +41,6 @@ function updateLayout() {
     graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
   }
 }
-
-const configs: UserConfigs = defineConfigs({
-  view: {
-    panEnabled: true,
-    zoomEnabled: false,
-    scalingObjects: true,
-    autoPanAndZoomOnLoad: 'center-zero',
-    autoPanOnResize: false,
-    onBeforeInitialDisplay: updateLayout
-  },
-  node: {
-    selectable: false,
-    draggable: false,
-    normal: {
-      type: 'rect',
-      borderRadius: 0,
-      width: 65,
-      height: 65
-    },
-    label: {
-      visible: false
-    }
-  },
-  edge: {
-    normal: {
-      color: '#aaa',
-      width: 2
-    },
-    margin: 4,
-    marker: {
-      target: {
-        type: 'arrow',
-        width: 4,
-        height: 4
-      }
-    }
-  }
-})
-
-watch(nodes.value, updateLayout)
 </script>
 
 <template>
@@ -89,15 +53,7 @@ watch(nodes.value, updateLayout)
     :configs="configs"
   >
     <template #override-node="{ nodeId }">
-      <template v-for="x in range">
-        <GraphPanelNodeField
-          v-for="y in range"
-          :key="x + '|' + y"
-          :x="x"
-          :y="y"
-          :fieldType="nodes[nodeId].boardState[y][x]"
-        />
-      </template>
+      <GraphPanelNode :node-id="nodeId" :nodes="nodes" />
     </template>
   </v-network-graph>
 </template>
