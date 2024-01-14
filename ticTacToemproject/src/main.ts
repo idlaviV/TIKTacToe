@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './index.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 // Vuetify
 import 'vuetify/styles'
@@ -15,11 +16,12 @@ const vuetify = createVuetify({
   directives,
   theme: {
     defaultTheme: 'dark'
-  }
+  },  
 })
 
 GameHandler.getInstance()
 
 const app = createApp(App)
+
 
 app.use(vuetify).mount('#app')
