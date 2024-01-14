@@ -4,7 +4,7 @@ import GraphPanelNodeField from './GraphPanelNodeField.vue'
 /**
  * @param node The node that this component should visualize.
  */
-defineProps<{ node:any }>()
+defineProps<{ node: any }>()
 const range = [0, 1, 2]
 </script>
 

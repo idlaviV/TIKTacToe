@@ -2,7 +2,7 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
-import MainScreenMoves from './MainScreenMoves.vue';
+import MainScreenMoves from './MainScreenMoves.vue'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
@@ -11,8 +11,6 @@ const playerOnTurn = gameHandler.getPlayerOnTurn()
 const ResetGame = () => {
   gameHandler.resetGame()
 }
-
-
 </script>
 
 <!-- The main screen contains the gameboard and main controls. -->
@@ -35,10 +33,8 @@ const ResetGame = () => {
     <br />
     <br />
 
-    
     <div>
-        <v-btn @click="ResetGame"> Reset Game </v-btn>
+      <v-btn @click="ResetGame"> Reset Game </v-btn>
     </div>
-    
   </div>
 </template>

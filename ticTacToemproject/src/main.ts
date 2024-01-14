@@ -16,12 +16,11 @@ const vuetify = createVuetify({
   directives,
   theme: {
     defaultTheme: 'dark'
-  },  
+  }
 })
 
 GameHandler.getInstance()
 
 const app = createApp(App)
-
 
 app.use(vuetify).mount('#app')

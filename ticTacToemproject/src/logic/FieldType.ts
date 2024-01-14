@@ -1,4 +1,4 @@
-import type { PlayerNumber } from "./PlayerNumber";
+import type { PlayerNumber } from './PlayerNumber'
 
 export type FieldType = PlayerNumber | 0
 
@@ -10,12 +10,12 @@ export type FieldType = PlayerNumber | 0
  * @throws an error if the field is neither 1, 2 nor 0
  */
 export function symbol(field: FieldType): string {
-    if (field == 1) {
-      return 'X'
-    } else if (field == 2) {
-      return '0'
-    } else if (field == 0) {
-      return ' '
-    }
-    throw new Error('Unexpected player in field found.')
+  if (field == 1) {
+    return 'X'
+  } else if (field == 2) {
+    return '0'
+  } else if (field == 0) {
+    return ' '
   }
+  throw new Error('Unexpected player in field found.')
+}
