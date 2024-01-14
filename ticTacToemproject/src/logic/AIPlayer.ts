@@ -138,4 +138,8 @@ export class AIPlayer implements Player {
     }
     return nextNFs
   }
+
+  applyPolicy(): void {
+    this.policy.applyPolicy(this, GameHandler.getInstance().getGBHandler().history)
+  }
 }

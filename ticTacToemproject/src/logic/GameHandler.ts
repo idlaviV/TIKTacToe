@@ -51,6 +51,14 @@ export class GameHandler {
         this.playerOnTurn.value = 1
       }
       this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+      this.performEndOfTurnActions()
+    }
+  }
+
+  performEndOfTurnActions() {
+    if (this.winner.value !== null) {
+      this.settings.getPlayer(1).isAI() ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy() : null
+      this.settings.getPlayer(2).isAI() ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy() : null
     }
   }
 
