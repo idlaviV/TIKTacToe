@@ -21,7 +21,7 @@ export class EliminationPolicy implements EvaluationPolicy {
   }
 
   /**
-   * This method applies the elimination policy to the given AIPlayer.
+   * Applies the elimination policy to the given AIPlayer.
    * It sets the probability to reach all moves that lead to a loss,
    * as well as moves that only lead to moves that lead to a loss to zero.
    * @inheritdoc
