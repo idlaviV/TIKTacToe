@@ -9,20 +9,24 @@ const playerOnTurn = gameHandler.getPlayerOnTurn()
 
 const ResetGame = () => {
   gameHandler.resetGame()
-  gameHandler.getPlayerOnTurn()
 }
 </script>
 
+<!-- The main screen contains the gameboard and main controls. -->
 <template>
   <div>
+    <!-- Caption and prompt for next turn -->
     <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
     <h3 class="text-xl mb-4">Player {{ playerOnTurn }}'s turn</h3>
 
+    <!-- The current gameboard -->
     <MainScreenBoard />
 
+    <!-- Display winner -->
     <h2 v-if="winner === drawStatus" class="text-6xl dond-bold mb-8">Draw!</h2>
     <h2 v-else-if="winner" class="text-6xl dond-bold mb-8">Player {{ winner }} wins!</h2>
 
+    <!-- Controls for AI turns -->
     <v-btn @click="gameHandler.performAiTurn()"> &#9655; </v-btn>
 
     <br />

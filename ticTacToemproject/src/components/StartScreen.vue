@@ -2,6 +2,10 @@
 import { ref } from 'vue'
 const emit = defineEmits(['startGame'])
 
+/**
+ * @description Starts the game and should pass the configuration to the LeftPanel component.
+ * @todo Pass the configuration to LeftPanel.
+ */
 function startGame() {
   console.log('Start game with')
   //We can access the options via the model
@@ -11,17 +15,26 @@ function startGame() {
   emit('startGame')
 }
 
-//Later on, this should be fetched from the backend
+/**
+ * @description The options for the player selection.
+ * @todo Fetch this from the backend.
+ */
 const items = [
   { player: 'Human', index: 0 },
   { player: 'AI', index: 1 }
 ]
 
-//Model for the selection in both selects
+/**
+ * Model for the player selection for player one
+ */
 const select1 = ref(0)
+/**
+ * Model for the player selection for player two
+ */
 const select2 = ref(1)
 </script>
 
+<!-- The StartScreen offers the selection of the players for the next game. -->
 <template>
   <h2>Spielerauswahl</h2>
 

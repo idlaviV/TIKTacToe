@@ -6,6 +6,7 @@ defineProps<{ nodeId: string; nodes: Nodes }>()
 const range = [0, 1, 2]
 </script>
 
+<!-- The GraphPanelNode contains the visualization of a single node of the graph, i.e. the corresponding gameboard. -->
 <template>
   <template v-for="x in range">
     <GraphPanelNodeField
