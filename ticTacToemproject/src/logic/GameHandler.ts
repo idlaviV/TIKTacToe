@@ -24,7 +24,8 @@ export class GameHandler {
   private constructor() {}
 
   /**
-   * This method returns the instance of the singleton. If the instance does not exist yet, it will be created.
+   * Returns the instance of the singleton.
+   * If the instance does not exist yet, it will be created.
    * @returns the instance of the singleton
    */
   public static getInstance(): GameHandler {
@@ -35,7 +36,7 @@ export class GameHandler {
   }
 
   /**
-   * This method performs a turn, by either an AI or a user.
+   * Performs a turn, by either an AI or a user.
    * @param x the x coordinate of the piece to be added
    * @param y the y coordinate of the piece to be added
    */
@@ -53,7 +54,8 @@ export class GameHandler {
   }
 
   /**
-   * This method performs a turn by an AI. If a user is on turn, nothing happens.
+   * Performs a turn by an AI.
+   * If a user is on turn, nothing happens.
    */
   performAiTurn() {
     if (this.winner.value == null) {
@@ -62,7 +64,8 @@ export class GameHandler {
   }
 
   /**
-   * This method performs a turn by a user. If an AI is on turn, nothing happens.
+   * Performs a turn by a user.
+   * If an AI is on turn, nothing happens.
    * @param x the x coordinate of the piece to be added
    * @param y the y coordinate of the piece to be added
    */
@@ -80,7 +83,8 @@ export class GameHandler {
   }
 
   /**
-   * This method returns all possible next positions with the moves that lead to them. They are given as an array of {@link GameBoardWithPrevMove}.
+   * Returns all possible next positions with the moves that lead to them.
+   * They are given as an array of {@link GameBoardWithPrevMove}.
    * @returns all possible next positions with the moves that lead to them
    */
   getPossibleNextPositionsWithMoves(): GameBoardWithPrevMove[] {
@@ -88,7 +92,7 @@ export class GameHandler {
   }
 
   /**
-   * This method returns only the next possible positions, without the moves that lead to them.
+   * Returns only the next possible positions, without the moves that lead to them.
    * @returns all possible next positions
    */
   getPossibleNextPositions(): GameBoard[] {

@@ -10,7 +10,7 @@ export class GameBoard {
   normalForm: number = -1
 
   /**
-   * This constructor creates a new gameboard. It defaults to an empty gameboard, where all fields are 0.
+   * Creates a new gameboard. It defaults to an empty gameboard, where all fields are 0.
    * 
    * @param state The state of the gameboard. The first index represents the row, the second index represents the column.
    * The value of the entry represents the player that has placed a mark in the field. 0 represents an empty field.
@@ -38,7 +38,7 @@ export class GameBoard {
   }
 
   /**
-   * This method clones the state of the gameboard.
+   * Clones the state of the gameboard.
    * @returns a deep copy of the state of the gameboard
    */
   clone(): FieldType[][] {
@@ -51,7 +51,7 @@ export class GameBoard {
   }
 
   /**
-   * This method returns the normal form of the gameboard and calculates it if it has not been calculated yet.
+   * Returns the normal form of the gameboard and calculates it if it has not been calculated yet.
    * @returns the normal form of the gameboard
    */
   getNormalForm(): number {
@@ -67,7 +67,7 @@ export class GameBoard {
 }
 
 /**
- * This function converts a FieldType to it's corresponding symbol.
+ * Converts a FieldType to its corresponding symbol for visualisation.
  * 1 is converted to 'X', 2 is converted to 'O' and 0 is converted to ' '.
  * @param field The FieldType to be converted to a symbol
  * @returns the corresponding symbol
@@ -85,7 +85,7 @@ export function symbol(field: FieldType): string {
 }
 
 /**
- * This function calculates the code of a given state. The code is a number that uniquely identifies the state.
+ * Calculates the code of a given state. The code is a number that uniquely identifies the state.
  * @param state the state of the gameboard of which the code is to be calculated
  * @returns the code of the given state
  */

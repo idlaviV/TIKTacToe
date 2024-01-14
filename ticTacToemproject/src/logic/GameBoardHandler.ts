@@ -14,7 +14,7 @@ export class GameBoardHandler {
   history: GameBoard[] = [this.gameBoard.value]
 
   /**
-   * This method adds a piece to the gameboard and updates the history.
+   * Adds a piece to the gameboard and updates the history.
    * @param x the x coordinate of the piece to be added
    * @param y the y coordinate of the piece to be added
    * @param player the player that made the move
@@ -25,7 +25,7 @@ export class GameBoardHandler {
   }
 
   /**
-   * This method adds a piece to a gameboard.
+   * Adds a piece to a gameboard.
    * @param x the x coordinate of the piece to be added
    * @param y the y coordinate of the piece to be added
    * @param board the board to add the piece to
@@ -42,7 +42,7 @@ export class GameBoardHandler {
   }
 
   /**
-   * This method resets the gameboard to an empty gameboard and resets the history.
+   * Resets the gameboard to an empty gameboard and resets the history.
    */
   resetGameBoard(): void {
     this.gameBoard.value = new GameBoard()
@@ -76,7 +76,8 @@ export class GameBoardHandler {
   }
 
   /**
-   * This method calculates all possible next positions from a given gameboard. It does this by trying to add a piece to every empty cell.
+   * Calculates all possible next positions from a given gameboard.
+   * It does this by trying to add a piece to each empty cell.
    * It does not account for gameboards possibly being equivalent.
    * @param currentPlayer The player that is currently on turn.
    * @param gameBoard A gameboard to calculate the possible next positions from. If not provided, the current gameboard is used.
