@@ -9,6 +9,8 @@ const toggleAutoplay = () => {
 }
 
 </script>
+
+<!-- This button toggles auto play. The depicted icon changes accordingly. -->
 <template>
         <v-btn @click="toggleAutoplay">
             <i  class="material-icons">
