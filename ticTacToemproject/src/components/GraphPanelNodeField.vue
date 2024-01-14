@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type FieldType } from '../logic/GameBoard'
+import { type FieldType } from '../logic/FieldType'
 import { convertFieldType } from '@/utils/HistoryExport'
 const props = defineProps<{ x: number; y: number; fieldType: FieldType }>()
 const x = props.x

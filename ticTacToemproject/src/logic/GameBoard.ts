@@ -1,4 +1,4 @@
-import type { FieldType } from './FieldType'
+import { symbol, type FieldType } from './FieldType'
 import { IsomorphismGroup } from './IsomorphismGroup'
 
 /**
@@ -66,23 +66,7 @@ export class GameBoard {
   }
 }
 
-/**
- * Converts a FieldType to its corresponding symbol for visualisation.
- * 1 is converted to 'X', 2 is converted to 'O' and 0 is converted to ' '.
- * @param field The FieldType to be converted to a symbol
- * @returns the corresponding symbol
- * @throws an error if the field is neither 1, 2 nor 0
- */
-export function symbol(field: FieldType): string {
-  if (field == 1) {
-    return 'X'
-  } else if (field == 2) {
-    return '0'
-  } else if (field == 0) {
-    return ' '
-  }
-  throw new Error('Unexpected player in field found.')
-}
+
 
 /**
  * Calculates the code of a given state. The code is a number that uniquely identifies the state.
