@@ -6,8 +6,14 @@ import { ref } from 'vue';
 
 const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
+
 const toggleAutoPlay = () => {
     autoPlay.value = !autoPlay.value
+}
+
+const nextAiTurn = () => {
+    autoPlay.value = false
+    gameHandler.performAiTurn()
 }
 
 
@@ -17,7 +23,7 @@ const toggleAutoPlay = () => {
 <!-- MainScreenMoves contains the control buttons for AI turns-->
 <template>
     <div>
-        <v-btn @click="gameHandler.performAiTurn()">
+        <v-btn @click="nextAiTurn">
             <i class="material-icons">
                 skip_next
             </i></v-btn>
