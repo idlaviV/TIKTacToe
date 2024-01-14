@@ -1,25 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 
-const autoPlay = ref(true)
+defineProps<{autoPlay:boolean}>()
+const emit = defineEmits(['update:autoPlay'])
 
-const autoPlayOnSymbol = "play_arrow"
-const autoPlayOffSymbol = "pause"
-const playPauseButtonSymbol = ref(autoPlayOnSymbol)
 
 const toggleAutoplay = () => {
-    autoPlay.value = !autoPlay.value
-    if (autoPlay.value) {
-        playPauseButtonSymbol.value = autoPlayOnSymbol
-    } else {
-        playPauseButtonSymbol.value = autoPlayOffSymbol
-    }
+    emit('update:autoPlay')
 }
+
 </script>
 <template>
         <v-btn @click="toggleAutoplay">
             <i  class="material-icons">
-                {{ playPauseButtonSymbol }}
+                <span v-if="autoPlay">pause</span>
+                <span v-else>play_arrow</span>
             </i>
         </v-btn>
 </template>
