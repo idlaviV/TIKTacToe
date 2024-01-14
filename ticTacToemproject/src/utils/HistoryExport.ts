@@ -46,6 +46,10 @@ export class HistoryExport {
   getEdges(): Ref<Edges> {
     return this.edges
   }
+
+  getLastCode(): string {
+    return this.lastCode
+  }
 }
 
 export function convertFieldType(fieldType: FieldType): string {

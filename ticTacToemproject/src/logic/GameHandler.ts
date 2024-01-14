@@ -8,6 +8,7 @@ import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
+import { HistoryWithChildsExport } from '@/utils/HistoryWithChildsExport'
 
 export class GameHandler {
   private static instance: GameHandler
@@ -15,8 +16,9 @@ export class GameHandler {
   playerOnTurn: Ref<PlayerNumber> = ref(1)
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
-  historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer())
+  historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
+  historyWithChildsExport: HistoryWithChildsExport = new HistoryWithChildsExport(this.historyExport)
 
   private constructor() {}
 
@@ -36,7 +38,7 @@ export class GameHandler {
       } else {
         this.playerOnTurn.value = 1
       }
-      this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+      this.historyWithChildsExport.updateHistory(this.gBHandler.getGameBoard())
     }
   }
 
@@ -56,7 +58,7 @@ export class GameHandler {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn.value = 1
     this.winner.value = null
-    this.historyExport.resetHistory(this.gBHandler.getGameBoard())
+    this.historyWithChildsExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
   getPossibleNextPositionsWithMoves(): GameBoardWithPrevMove[] {
@@ -86,6 +88,10 @@ export class GameHandler {
 
   getHistoryExport(): HistoryExport {
     return this.historyExport
+  }
+
+  getHistoryWithChildsExport(): HistoryWithChildsExport {
+    return this.historyWithChildsExport
   }
 
   /**
