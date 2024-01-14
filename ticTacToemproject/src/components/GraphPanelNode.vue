@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
-import { type Nodes } from 'v-network-graph'
 
-defineProps<{ nodeId: string; nodes: Nodes }>()
+/**
+ * @param node The node that this component should visualize.
+ */
+defineProps<{ node:any }>()
 const range = [0, 1, 2]
 </script>
 
@@ -14,7 +16,7 @@ const range = [0, 1, 2]
       :key="x + '|' + y"
       :x="x"
       :y="y"
-      :fieldType="nodes[nodeId].boardState[y][x]"
+      :fieldType="node.boardState[y][x]"
     />
   </template>
 </template>

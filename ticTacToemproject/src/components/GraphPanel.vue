@@ -63,7 +63,7 @@ function updateLayout() {
     :configs="configs"
   >
     <template #override-node="{ nodeId }">
-      <GraphPanelNode :node-id="nodeId" :nodes="nodes" />
+      <GraphPanelNode :node="nodes[nodeId]" />
     </template>
   </v-network-graph>
 </template>
