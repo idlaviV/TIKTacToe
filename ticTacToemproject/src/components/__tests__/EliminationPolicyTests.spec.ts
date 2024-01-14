@@ -100,7 +100,7 @@ describe('applyPolicy', () => {
     expect(aI.weights).toEqual(weights)
   })
 
-  test('should not change weights if AI won', () => {
+  test('should set weights of last move to 0 if AI won', () => {
     handler.winner.value = 2
     policy.applyPolicy(aI, history)
     expect(
