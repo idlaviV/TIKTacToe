@@ -105,10 +105,6 @@ export class GameHandler {
     return boards
   }
 
-  getSettings(): GameSettings {
-    return this.settings
-  }
-
   getGBHandler(): GameBoardHandler {
     return this.gBHandler
   }

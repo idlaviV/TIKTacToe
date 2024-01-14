@@ -2,8 +2,6 @@ import type { AIPlayer } from './AIPlayer'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import type { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
-import { GameSettings } from './GameSettings'
-import type { PlayerNumber } from './PlayerNumber'
 import { drawStatus } from './WinnerStatus'
 
 /**
@@ -29,28 +27,29 @@ export class EliminationPolicy implements EvaluationPolicy {
    */
   applyPolicy(aI: AIPlayer, history: GameBoard[]): void {
     const handler: GameHandler = GameHandler.getInstance()
-    const settings: GameSettings = handler.getSettings()
     const winner = handler.getWinner().value
 
     if (winner === null || winner === drawStatus) {
       return
-    } else if (settings.getPlayer(winner as PlayerNumber) !== aI) {
-      const lastAiTurnStart = history[history.length - 3].getNormalForm()
-      const lastAiTurnEnd = history[history.length - 2].getNormalForm()
+    } else {
+      this.applyWinningPolicy(aI, history)
+    }
+  }
 
-      aI.weights.get(lastAiTurnStart)?.set(lastAiTurnEnd, 0)
+  applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+    const lastAiTurnStart = history[history.length - 3].getNormalForm()
+    const lastAiTurnEnd = history[history.length - 2].getNormalForm()
 
-      for (let index = history.length - 3; index > 1; index -= 2) {
-        const board = history[index].getNormalForm()
-        for (const value of aI.weights.get(board)?.values() ?? []) {
-          if (value !== 0) {
-            return
-          }
+    aI.weights.get(lastAiTurnStart)?.set(lastAiTurnEnd, 0)
+
+    for (let index = history.length - 3; index > 1; index -= 2) {
+      const board = history[index].getNormalForm()
+      for (const value of aI.weights.get(board)?.values() ?? []) {
+        if (value !== 0) {
+          return
         }
-        aI.weights
-          .get(history[index - 2].getNormalForm())
-          ?.set(history[index - 1].getNormalForm(), 0)
       }
+      aI.weights.get(history[index - 2].getNormalForm())?.set(history[index - 1].getNormalForm(), 0)
     }
   }
 }

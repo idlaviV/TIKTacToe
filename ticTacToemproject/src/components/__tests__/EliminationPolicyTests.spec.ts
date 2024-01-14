@@ -6,7 +6,7 @@ import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
 
 const handler = GameHandler.getInstance()
-const settings = handler.getSettings()
+const settings = handler.settings
 const weights = new Map()
 weights.set(
   0,
@@ -28,7 +28,7 @@ weights.set(
   10012,
   new Map([
     [12210, 1],
-    [112200, 0]
+    [112200, 1]
   ])
 )
 weights.set(
@@ -103,7 +103,11 @@ describe('applyPolicy', () => {
   test('should not change weights if AI won', () => {
     handler.winner.value = 2
     policy.applyPolicy(aI, history)
-    expect(aI.weights).toEqual(weights)
+    expect(
+      aI.weights
+        .get(history[history.length - 3].getNormalForm())
+        ?.get(history[history.length - 2].getNormalForm())
+    ).toEqual(0)
   })
 
   test('should set weights of last move to 0 if AI did not win', () => {
@@ -114,9 +118,16 @@ describe('applyPolicy', () => {
         .get(history[history.length - 3].getNormalForm())
         ?.get(history[history.length - 2].getNormalForm())
     ).toEqual(0)
+    expect(
+      aI.weights
+        .get(history[history.length - 5].getNormalForm())
+        ?.get(history[history.length - 4].getNormalForm())
+    ).toEqual(1)
   })
 
   test('should set weights of last and second to last move to 0 if AI did not win', () => {
+    weights.get(10012)?.set(112200, 0)
+
     handler.winner.value = 1
     policy.applyPolicy(aI, history)
     expect(
