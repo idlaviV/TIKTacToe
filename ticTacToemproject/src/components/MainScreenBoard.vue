@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { GameHandler } from '../logic/GameHandler'
+import { symbol } from '../logic/FieldType'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const gameBoard = gameHandler.getGBHandler().getGameBoardExport()
@@ -20,7 +21,7 @@ const MakeMove = (x: number, y: number) => {
           cell === 1 ? 'text-pink-500' : 'text-blue-500'
         }`"
       >
-        {{ cell === 1 ? 'X' : cell === 2 ? 'O' : '' }}
+        {{ symbol(cell) }}
       </div>
     </div>
   </div>
