@@ -27,7 +27,7 @@ export class GameHandler {
     new AIPlayer(new EliminationPolicy(), 'AI'),
     new AIPlayer(new EliminationPolicy(), 'AI2')
   ]
- 
+
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
 
   private constructor() {}

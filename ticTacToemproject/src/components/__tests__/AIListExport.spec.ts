@@ -1,5 +1,5 @@
 import { GameHandler } from '@/logic/GameHandler'
-import { Players, updateAIList } from '@/utils/PlayerListExport'
+import { Players, updatePlayerList } from '@/utils/PlayerListExport'
 import { beforeEach } from 'node:test'
 import { expect, test, describe } from 'vitest'
 
@@ -12,7 +12,7 @@ beforeEach(() => {
 
 describe('updateAIList', () => {
   test('generic input', () => {
-    updateAIList()
+    updatePlayerList()
     const aIList = Players.value
     expect(aIList.length).toEqual(3)
     expect(aIList.find((entry) => entry.player === 'Human')?.index).toEqual(-1)
@@ -21,7 +21,7 @@ describe('updateAIList', () => {
   })
   test('no AIs', () => {
     gameHandler.possiblePlayers = []
-    updateAIList()
+    updatePlayerList()
     const aIList = Players.value
     expect(aIList.length).toEqual(1)
     expect(aIList.find((entry) => entry.player === 'Human')?.index).toEqual(-1)

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { GameHandler } from '@/logic/GameHandler';
-import { Players, type PlayersExport, updateAIList } from '@/utils/PlayerListExport';
+import { GameHandler } from '@/logic/GameHandler'
+import { Players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
 import { ref, type Ref } from 'vue'
 const emit = defineEmits(['startGame'])
 
@@ -22,7 +22,7 @@ function startGame() {
  * @description The options for the player selection.
  * @todo Later on, the manual update should be removed and the list should be updated automatically.
  */
-updateAIList()
+updatePlayerList()
 const items: Ref<PlayersExport> = Players
 
 /**
