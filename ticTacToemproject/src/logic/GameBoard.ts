@@ -11,7 +11,7 @@ export class GameBoard {
 
   /**
    * Creates a new gameboard. It defaults to an empty gameboard, where all fields are 0.
-   * 
+   *
    * @param state The state of the gameboard. The first index represents the row, the second index represents the column.
    * The value of the entry represents the player that has placed a mark in the field. 0 represents an empty field.
    */
@@ -65,8 +65,6 @@ export class GameBoard {
     return this.code
   }
 }
-
-
 
 /**
  * Calculates the code of a given state. The code is a number that uniquely identifies the state.

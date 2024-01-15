@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AIList, type AIListExport, updateAIList } from '@/utils/AIListExport';
+import { AIList, type AIListExport, updateAIList } from '@/utils/AIListExport'
 import { ref, type Ref } from 'vue'
 const emit = defineEmits(['startGame'])
 
@@ -21,7 +21,7 @@ function startGame() {
  * @todo Later on, the manual update should be removed and the list should be updated automatically.
  */
 updateAIList()
-const items:Ref<AIListExport> = AIList
+const items: Ref<AIListExport> = AIList
 
 /**
  * Model for the player selection for player one

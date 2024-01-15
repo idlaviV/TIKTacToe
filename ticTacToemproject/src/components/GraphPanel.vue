@@ -17,9 +17,9 @@ const gameHandler: GameHandler = GameHandler.getInstance()
 const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getNodes()
 const edges: Ref<Edges> = gameHandler.getHistoryExport().getEdges()
 
-  /**
-   * @description The position of the nodes in the graph.
-   */
+/**
+ * @description The position of the nodes in the graph.
+ */
 const layouts: Ref<Layouts> = ref({
   nodes: {
     //'0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
