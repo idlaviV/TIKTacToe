@@ -37,10 +37,10 @@ export class EliminationPolicy implements EvaluationPolicy {
   }
 
   applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
-    const lastAiTurnStart = history[history.length - 3].getNormalForm()
-    const lastAiTurnEnd = history[history.length - 2].getNormalForm()
+    const lastLooserTurnStart = history[history.length - 3].getNormalForm()
+    const lastLooserTurnEnd = history[history.length - 2].getNormalForm()
 
-    aI.weights.get(lastAiTurnStart)?.set(lastAiTurnEnd, 0)
+    aI.weights.get(lastLooserTurnStart)?.set(lastLooserTurnEnd, 0)
 
     for (let index = history.length - 3; index > 1; index -= 2) {
       const board = history[index].getNormalForm()
