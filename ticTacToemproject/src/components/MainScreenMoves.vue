@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
 import PlayButton from './MainScreenMovesPlayButton.vue'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
-let timer: number
 
 const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
 }
-
-watch(autoPlay, (status) =>{if (status) {
-  timer = setInterval(() => {
-    gameHandler.performAiTurn()
-  }, 1000)
-} else {
-  clearInterval(timer)
-}})
 
 /**
  * @description Informs the model, that the user wants to trigger the next AI turn.
