@@ -33,8 +33,8 @@ function updateLayout() {
   if (activeNode !== undefined && height !== undefined && width !== undefined) {
     const x = layouts.value.nodes[activeNode].x
     const y = layouts.value.nodes[activeNode].y
-    graph.value?.panTo({ x: x, y: -y }) //Moves to the current node
-    graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
+    graph.value?.panTo({ x: -x, y: -y }) //Moves to the current node
+    graph.value?.panBy({ x: width / 2, y: height / 2}) // Move current node to center
   }
 }
 

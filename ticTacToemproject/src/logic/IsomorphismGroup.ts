@@ -190,4 +190,26 @@ export class IsomorphismGroup {
   static getRepresentativeOfGameBoards(...gameBoards: number[]): number {
     return Math.min(...gameBoards)
   }
+
+  static getRepresentativesOfNonequivalentGameBoards(gameBoards: GameBoard[]): number[] {
+    const representativesOfNonequivalentGameBoards: number[] = []
+
+    const normalForms: Set<number> = new Set()
+    gameBoards.forEach(element => {
+      normalForms.add(element.getNormalForm())
+    });
+
+    for(const normalForm of normalForms) {
+      const gameBoardsWithNormalForm: number[] = []
+      gameBoards.forEach(element => {
+        if (element.getNormalForm() === normalForm) {
+          gameBoardsWithNormalForm.push(element.getCode())
+        }
+      });
+
+      representativesOfNonequivalentGameBoards.push(Math.min(...gameBoardsWithNormalForm))
+    }
+
+    return representativesOfNonequivalentGameBoards
+  }
 }

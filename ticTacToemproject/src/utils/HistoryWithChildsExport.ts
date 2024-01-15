@@ -3,7 +3,7 @@ import { GameBoard, type FieldType } from '../logic/GameBoard'
 import { type Nodes, type Edges } from 'v-network-graph'
 import { HistoryExport } from './HistoryExport'
 import { GameHandler } from '@/logic/GameHandler'
-import type { forEachChild } from 'typescript'
+import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 
 export class HistoryWithChildsExport {
   nodes: Ref<Nodes> = ref({})
@@ -37,12 +37,21 @@ export class HistoryWithChildsExport {
       }
     })
     
-    const childsOfActiveGameBoard = GameHandler.getInstance()
-      .getPossibleNextPositions()
+    const childsOfActiveGameBoard = GameHandler.getInstance().getPossibleNextPositions()
+    
+    const representativesOfNonequivalentGameBoards = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childsOfActiveGameBoard)
+    
+    const representativeGameBoards: GameBoard[] = []
+    childsOfActiveGameBoard.forEach(element => {
+      if (representativesOfNonequivalentGameBoards.includes(element.getCode())) {
+        representativeGameBoards.push(element)
+      }
+    });
 
-    for (let index = 0; index < childsOfActiveGameBoard.length; index++) {
-      let newCode: string = childsOfActiveGameBoard[index].getCode().toString()
-      this.nodes.value[newCode] = { name: newCode, boardState: childsOfActiveGameBoard[index].state, active: false }
+
+    for (let index = 0; index < representativeGameBoards.length; index++) {
+      let newCode: string = representativeGameBoards[index].getCode().toString()
+      this.nodes.value[newCode] = { name: newCode, boardState: representativeGameBoards[index].state, active: false }
       const key: string = this.lastCode + '#' + newCode
       this.edges.value[key] = { source: this.lastCode, target: newCode }
     }
