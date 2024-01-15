@@ -21,8 +21,10 @@ export class AIPlayer implements Player {
    */
   randomzier: Randomizer = new Randomizer()
   policy: EvaluationPolicy
+  name: string
 
-  constructor(policy: EvaluationPolicy) {
+  constructor(policy: EvaluationPolicy, name: string = 'AI') {
+    this.name = name
     this.policy = policy
   }
 
@@ -141,5 +143,9 @@ export class AIPlayer implements Player {
 
   applyPolicy(): void {
     this.policy.applyPolicy(this, GameHandler.getInstance().getGBHandler().history)
+  }
+
+  getName(): string {
+    return this.name
   }
 }

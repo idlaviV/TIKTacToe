@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { AIList, type AIListExport, updateAIList } from '@/utils/AIListExport'
+import { ref, type Ref } from 'vue'
 const emit = defineEmits(['startGame'])
 
 /**
@@ -9,29 +10,27 @@ const emit = defineEmits(['startGame'])
 function startGame() {
   console.log('Start game with')
   //We can access the options via the model
-  console.log('Player 1: %s', items[select1.value].player)
-  console.log('Player 2: %s', items[select2.value].player)
+  console.log('Player 1: %s', items.value.find((item) => item.index === select1.value)?.player)
+  console.log('Player 2: %s', items.value.find((item) => item.index === select2.value)?.player)
   //Later on, those options should be passed to the backend
   emit('startGame')
 }
 
 /**
  * @description The options for the player selection.
- * @todo Fetch this from the backend.
+ * @todo Later on, the manual update should be removed and the list should be updated automatically.
  */
-const items = [
-  { player: 'Human', index: 0 },
-  { player: 'AI', index: 1 }
-]
+updateAIList()
+const items: Ref<AIListExport> = AIList
 
 /**
  * Model for the player selection for player one
  */
-const select1 = ref(0)
+const select1 = ref(-1)
 /**
  * Model for the player selection for player two
  */
-const select2 = ref(1)
+const select2 = ref(0)
 </script>
 
 <!-- The StartScreen offers the selection of the players for the next game. -->

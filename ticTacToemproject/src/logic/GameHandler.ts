@@ -20,7 +20,12 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer(new EliminationPolicy()))
+  aIs: AIPlayer[] = [
+    new AIPlayer(new EliminationPolicy(), 'AI'),
+    new AIPlayer(new EliminationPolicy(), 'AI2')
+  ]
+  humanPlayer: UserPlayer = new UserPlayer('Human')
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[0])
 
   private constructor() {}
 
@@ -127,6 +132,14 @@ export class GameHandler {
 
   getHistoryExport(): HistoryExport {
     return this.historyExport
+  }
+
+  getAIList(): AIPlayer[] {
+    return this.aIs
+  }
+
+  getUserPlayer(): UserPlayer {
+    return this.humanPlayer
   }
 
   /**
