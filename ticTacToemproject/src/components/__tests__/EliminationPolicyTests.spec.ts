@@ -6,7 +6,6 @@ import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
 
 const handler = GameHandler.getInstance()
-const settings = handler.settings
 const weights = new Map()
 weights.set(
   0,
@@ -46,8 +45,6 @@ let history: GameBoard[]
 beforeEach(() => {
   policy = new EliminationPolicy()
   aI = new AIPlayer(policy)
-  settings.player1 = new AIPlayer(policy)
-  settings.player2 = aI
   history = [
     new GameBoard(),
     new GameBoard([
@@ -127,7 +124,6 @@ describe('applyPolicy', () => {
 
   test('should set weights of last and second to last move to 0 if AI did not win', () => {
     weights.get(10012)?.set(112200, 0)
-
     handler.winner.value = 1
     policy.applyPolicy(aI, history)
     expect(
