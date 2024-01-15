@@ -9,4 +9,9 @@ export interface Player {
    *
    */
   makeMove(): void
+
+  /**
+   * @returns A name for this player. Only used for visualiszation purposes.
+   */
+  getName(): string
 }

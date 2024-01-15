@@ -1,3 +1,4 @@
+import type { EvaluationPolicy } from './EvaluationPolicy'
 import { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
 import type { GameBoardWithPrevMove } from './Moves'
@@ -9,6 +10,7 @@ import { Randomizer } from './Randomizer'
  * Its behaviour is based on the weights of possible moves.
  */
 export class AIPlayer implements Player {
+  
   /**
    * The weights are an edge-label on the gamegraph, where vertices are gameboards and edges are moves.
    * The weights are stored in a map, where gameboards are passed using their normal form.
@@ -19,6 +21,13 @@ export class AIPlayer implements Player {
    * The randomizer provides a choice for a random number.
    */
   randomzier: Randomizer = new Randomizer()
+  policy: EvaluationPolicy
+  name:string
+
+  constructor(policy: EvaluationPolicy, name:string="AI") {
+    this.name = name
+    this.policy = policy
+  }
 
   isAI(): boolean {
     return true
@@ -79,7 +88,7 @@ export class AIPlayer implements Player {
       weightedEntries.push({ code: pair[0], index: sum })
     }
 
-    /**
+    /*
      * If sum == 0, all weights are 0 and the AI has already lost.
      * We then simulate the weights to be all 1 and perform a random move.
      */
@@ -131,5 +140,9 @@ export class AIPlayer implements Player {
       nextNFs.add(board.getNormalForm())
     }
     return nextNFs
+  }
+
+  getName(): string {
+    return this.name
   }
 }
