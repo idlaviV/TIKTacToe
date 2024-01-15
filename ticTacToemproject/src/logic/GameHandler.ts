@@ -22,6 +22,10 @@ export class GameHandler {
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   humanPlayer: UserPlayer = new UserPlayer('Human')
+  /**
+   * The possible options for players.
+   * Contains all AIs and the option for the user to play.
+   */
   possiblePlayers: Player[] = [
     this.humanPlayer,
     new AIPlayer(new EliminationPolicy(), 'AI'),
@@ -84,6 +88,10 @@ export class GameHandler {
     }
   }
 
+  /**
+   * Registers chosen players as player1 and player2 for the next game.
+   * @param index_ index of the chosen option
+   */
   setPlayers(index1: number, index2: number) {
     this.settings.setPlayers(this.possiblePlayers[index1], this.possiblePlayers[index2])
   }
