@@ -9,6 +9,7 @@ import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
+import type { Player } from './Player'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -79,6 +80,22 @@ export class GameHandler {
     if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
     }
+  }
+
+  setPlayers(index1: number, index2: number) {
+    let newPlayer1: Player
+    let newPlayer2: Player
+    if (index1 === -1) {
+      newPlayer1 = this.humanPlayer
+    } else {
+      newPlayer1 = this.aIs[index1]
+    }
+    if (index2 === -1) {
+      newPlayer2 = this.humanPlayer
+    } else {
+      newPlayer2 = this.aIs[index2]
+    }
+    this.settings.setPlayers(newPlayer1, newPlayer2)
   }
 
   resetGame() {

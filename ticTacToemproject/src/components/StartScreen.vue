@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { GameHandler } from '@/logic/GameHandler';
 import { AIList, type AIListExport, updateAIList } from '@/utils/AIListExport'
 import { ref, type Ref } from 'vue'
 const emit = defineEmits(['startGame'])
@@ -13,6 +14,7 @@ function startGame() {
   console.log('Player 1: %s', items.value.find((item) => item.index === select1.value)?.player)
   console.log('Player 2: %s', items.value.find((item) => item.index === select2.value)?.player)
   //Later on, those options should be passed to the backend
+  GameHandler.getInstance().setPlayers(select1.value, select2.value)
   emit('startGame')
 }
 
