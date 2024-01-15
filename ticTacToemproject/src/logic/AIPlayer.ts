@@ -9,6 +9,7 @@ import { Randomizer } from './Randomizer'
  * Its behaviour is based on the weights of possible moves.
  */
 export class AIPlayer implements Player {
+  
   /**
    * The weights are an edge-label on the gamegraph, where vertices are gameboards and edges are moves.
    * The weights are stored in a map, where gameboards are passed using their normal form.
@@ -19,6 +20,12 @@ export class AIPlayer implements Player {
    * The randomizer provides a choice for a random number.
    */
   randomzier: Randomizer = new Randomizer()
+
+  name:string
+
+  constructor(name:string) {
+    this.name = name
+  }
 
   isAI(): boolean {
     return true
@@ -131,5 +138,9 @@ export class AIPlayer implements Player {
       nextNFs.add(board.getNormalForm())
     }
     return nextNFs
+  }
+
+  getName(): string {
+    return this.name
   }
 }
