@@ -16,7 +16,7 @@ let maxFromAI: number
 beforeEach(() => {
   resetGameHandler()
   gameHandler = GameHandler.getInstance()
-  player = new AIPlayer()
+  player = new AIPlayer("AI")
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   debugRandomizer = {
     randomInteger(min: number, max: number) {

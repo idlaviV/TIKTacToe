@@ -8,6 +8,8 @@ import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
+import type { Player } from './Player'
+import { updateAIList } from '@/utils/AIListExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -19,9 +21,12 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  settings: GameSettings = new GameSettings(new UserPlayer("Human"), new AIPlayer("AI"))
+  aIs: AIPlayer[] = [new AIPlayer("AI"), new AIPlayer("AI2")]
+  humanPlayer: UserPlayer = new UserPlayer("Human")
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[1])
 
-  private constructor() {}
+  private constructor() {
+  }
 
   /**
    * Returns the instance of the singleton.
@@ -118,6 +123,14 @@ export class GameHandler {
 
   getHistoryExport(): HistoryExport {
     return this.historyExport
+  }
+
+  getAIList(): Player[] {
+    return this.aIs
+  }
+
+  getUserPlayer(): UserPlayer {
+    return this.humanPlayer
   }
 
   /**
