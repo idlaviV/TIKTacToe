@@ -21,9 +21,9 @@ export class AIPlayer implements Player {
    */
   randomzier: Randomizer = new Randomizer()
   policy: EvaluationPolicy
-  name:string
+  name: string
 
-  constructor(policy: EvaluationPolicy, name:string="AI") {
+  constructor(policy: EvaluationPolicy, name: string = 'AI') {
     this.name = name
     this.policy = policy
   }
