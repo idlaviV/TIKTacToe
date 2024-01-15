@@ -9,7 +9,6 @@ import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
-import type { Player } from './Player'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -21,7 +20,10 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  aIs: AIPlayer[] = [new AIPlayer(new EliminationPolicy(), 'AI'), new AIPlayer(new EliminationPolicy(), 'AI2')]
+  aIs: AIPlayer[] = [
+    new AIPlayer(new EliminationPolicy(), 'AI'),
+    new AIPlayer(new EliminationPolicy(), 'AI2')
+  ]
   humanPlayer: UserPlayer = new UserPlayer('Human')
   settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[0])
 
@@ -124,7 +126,7 @@ export class GameHandler {
     return this.historyExport
   }
 
-  getAIList(): Player[] {
+  getAIList(): AIPlayer[] {
     return this.aIs
   }
 
