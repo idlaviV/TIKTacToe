@@ -22,15 +22,11 @@ export class AIPlayer implements Player {
    */
   randomzier: Randomizer = new Randomizer()
   policy: EvaluationPolicy
-
-  constructor(policy: EvaluationPolicy) {
-    this.policy = policy
-  }
-
   name:string
 
-  constructor(name:string) {
+  constructor(name:string, policy: EvaluationPolicy) {
     this.name = name
+    this.policy = policy
   }
 
   isAI(): boolean {
