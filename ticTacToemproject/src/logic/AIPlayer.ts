@@ -24,7 +24,7 @@ export class AIPlayer implements Player {
   policy: EvaluationPolicy
   name:string
 
-  constructor(name:string, policy: EvaluationPolicy) {
+  constructor(policy: EvaluationPolicy, name:string="AI") {
     this.name = name
     this.policy = policy
   }
