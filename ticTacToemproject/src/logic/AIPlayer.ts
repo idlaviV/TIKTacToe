@@ -10,7 +10,6 @@ import { Randomizer } from './Randomizer'
  * Its behaviour is based on the weights of possible moves.
  */
 export class AIPlayer implements Player {
-  
   /**
    * The weights are an edge-label on the gamegraph, where vertices are gameboards and edges are moves.
    * The weights are stored in a map, where gameboards are passed using their normal form.
@@ -22,9 +21,9 @@ export class AIPlayer implements Player {
    */
   randomzier: Randomizer = new Randomizer()
   policy: EvaluationPolicy
-  name:string
+  name: string
 
-  constructor(policy: EvaluationPolicy, name:string="AI") {
+  constructor(policy: EvaluationPolicy, name: string = 'AI') {
     this.name = name
     this.policy = policy
   }
