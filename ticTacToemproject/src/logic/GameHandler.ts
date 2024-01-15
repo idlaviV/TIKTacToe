@@ -8,7 +8,11 @@ import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
+import { EliminationPolicy } from './EliminationPolicy'
 
+/**
+ * This class handles the overall game. It is a singleton class.
+ */
 export class GameHandler {
   private static instance: GameHandler
 
@@ -16,10 +20,20 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer())
+  aIs: AIPlayer[] = [
+    new AIPlayer(new EliminationPolicy(), 'AI'),
+    new AIPlayer(new EliminationPolicy(), 'AI2')
+  ]
+  humanPlayer: UserPlayer = new UserPlayer('Human')
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[0])
 
   private constructor() {}
 
+  /**
+   * Returns the instance of the singleton.
+   * If the instance does not exist yet, it will be created.
+   * @returns the instance of the singleton
+   */
   public static getInstance(): GameHandler {
     if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
@@ -27,6 +41,11 @@ export class GameHandler {
     return GameHandler.instance
   }
 
+  /**
+   * Performs a turn, by either an AI or a user.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   */
   performTurn(x: number, y: number) {
     if (this.winner.value == null) {
       this.gBHandler.move(x, y, this.playerOnTurn.value)
@@ -40,12 +59,22 @@ export class GameHandler {
     }
   }
 
+  /**
+   * Performs a turn by an AI.
+   * If a user is on turn, nothing happens.
+   */
   performAiTurn() {
     if (this.winner.value == null) {
       this.settings.getPlayer(this.playerOnTurn.value).makeMove()
     }
   }
 
+  /**
+   * Performs a turn by a user.
+   * If an AI is on turn, nothing happens.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   */
   performTurnFromUserInput(x: number, y: number) {
     if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
@@ -59,10 +88,19 @@ export class GameHandler {
     this.historyExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
+  /**
+   * Returns all possible next positions with the moves that lead to them.
+   * They are given as an array of {@link GameBoardWithPrevMove}.
+   * @returns all possible next positions with the moves that lead to them
+   */
   getPossibleNextPositionsWithMoves(): GameBoardWithPrevMove[] {
     return this.gBHandler.getPossibleNextPositions(this.playerOnTurn.value)
   }
 
+  /**
+   * Returns only the next possible positions, without the moves that lead to them.
+   * @returns all possible next positions
+   */
   getPossibleNextPositions(): GameBoard[] {
     const boards: GameBoard[] = []
     const possibleNextPositions: GameBoardWithPrevMove[] = this.getPossibleNextPositionsWithMoves()
@@ -86,6 +124,14 @@ export class GameHandler {
 
   getHistoryExport(): HistoryExport {
     return this.historyExport
+  }
+
+  getAIList(): AIPlayer[] {
+    return this.aIs
+  }
+
+  getUserPlayer(): UserPlayer {
+    return this.humanPlayer
   }
 
   /**

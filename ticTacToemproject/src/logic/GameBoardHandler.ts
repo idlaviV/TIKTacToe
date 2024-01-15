@@ -1,19 +1,37 @@
 import type { PlayerNumber } from './PlayerNumber'
 import { GameBoard } from './GameBoard'
-import type { FieldType } from './GameBoard'
+import type { FieldType } from './FieldType'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 
+/**
+ * This class handles the gameboard. It keeps track of the current gameboard and the history of the gameboard.
+ * It also provides methods to add pieces to the gameboard and to calculate the winner.
+ */
 export class GameBoardHandler {
   gameBoard: Ref<GameBoard> = ref(new GameBoard())
   history: GameBoard[] = [this.gameBoard.value]
 
+  /**
+   * Adds a piece to the gameboard and updates the history.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   * @param player the player that made the move
+   */
   move(x: number, y: number, player: PlayerNumber) {
     this.gameBoard.value = this.addPiece(x, y, this.gameBoard.value, player)
     this.history.push(this.gameBoard.value)
   }
 
+  /**
+   * Adds a piece to a gameboard.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   * @param board the board to add the piece to
+   * @param player the player that made the move
+   * @returns the updated gameboard
+   */
   // private
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
     if (0 <= x && x <= 2 && 0 <= y && y <= 2 && board.state[x][y] == 0) {
@@ -24,6 +42,9 @@ export class GameBoardHandler {
     throw new Error('This piece cannot go there')
   }
 
+  /**
+   * Resets the gameboard to an empty gameboard and resets the history.
+   */
   resetGameBoard(): void {
     this.gameBoard.value = new GameBoard()
     this.history = [this.gameBoard.value]
@@ -56,7 +77,8 @@ export class GameBoardHandler {
   }
 
   /**
-   * This method calculates all possible next positions from a given gameboard. It does this by trying to add a piece to every empty cell.
+   * Calculates all possible next positions from a given gameboard.
+   * It does this by trying to add a piece to each empty cell.
    * It does not account for gameboards possibly being equivalent.
    * @param currentPlayer The player that is currently on turn.
    * @param gameBoard A gameboard to calculate the possible next positions from. If not provided, the current gameboard is used.

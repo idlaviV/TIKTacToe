@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { type FieldType } from '../logic/GameBoard'
+import { type FieldType } from '../logic/FieldType'
 import { convertFieldType } from '@/utils/HistoryExport'
+/**
+ * @param x The column of the field.
+ * @param y The row of the field.
+ * @param fieldType The displayed value.
+ */
 const props = defineProps<{ x: number; y: number; fieldType: FieldType }>()
 const x = props.x
 const y = props.y
@@ -19,6 +24,7 @@ const textx: number = xOffsetText + x * rectSize
 const texty: number = yOffsetText + y * rectSize
 </script>
 
+<!-- The GraphPanelNodeField visualizes a single field of the gameboard. -->
 <template>
   <rect
     :x="rectx"
