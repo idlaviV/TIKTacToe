@@ -21,12 +21,14 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  aIs: AIPlayer[] = [
+  humanPlayer: UserPlayer = new UserPlayer('Human')
+  possiblePlayers: Player[] = [
+    this.humanPlayer,
     new AIPlayer(new EliminationPolicy(), 'AI'),
     new AIPlayer(new EliminationPolicy(), 'AI2')
   ]
-  humanPlayer: UserPlayer = new UserPlayer('Human')
-  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[0])
+ 
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
 
   private constructor() {}
 
@@ -83,19 +85,7 @@ export class GameHandler {
   }
 
   setPlayers(index1: number, index2: number) {
-    let newPlayer1: Player
-    let newPlayer2: Player
-    if (index1 === -1) {
-      newPlayer1 = this.humanPlayer
-    } else {
-      newPlayer1 = this.aIs[index1]
-    }
-    if (index2 === -1) {
-      newPlayer2 = this.humanPlayer
-    } else {
-      newPlayer2 = this.aIs[index2]
-    }
-    this.settings.setPlayers(newPlayer1, newPlayer2)
+    this.settings.setPlayers(this.possiblePlayers[index1], this.possiblePlayers[index2])
   }
 
   resetGame() {
@@ -143,8 +133,8 @@ export class GameHandler {
     return this.historyExport
   }
 
-  getAIList(): AIPlayer[] {
-    return this.aIs
+  getPossiblePlayers(): Player[] {
+    return this.possiblePlayers
   }
 
   getUserPlayer(): UserPlayer {
