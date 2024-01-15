@@ -1,3 +1,4 @@
+import type { EvaluationPolicy } from './EvaluationPolicy'
 import { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
 import type { GameBoardWithPrevMove } from './Moves'
@@ -19,11 +20,12 @@ export class AIPlayer implements Player {
    * The randomizer provides a choice for a random number.
    */
   randomzier: Randomizer = new Randomizer()
+  policy: EvaluationPolicy
+  name:string
 
-  name: string
-
-  constructor(name: string) {
+  constructor(policy: EvaluationPolicy, name:string="AI") {
     this.name = name
+    this.policy = policy
   }
 
   isAI(): boolean {
@@ -85,7 +87,7 @@ export class AIPlayer implements Player {
       weightedEntries.push({ code: pair[0], index: sum })
     }
 
-    /**
+    /*
      * If sum == 0, all weights are 0 and the AI has already lost.
      * We then simulate the weights to be all 1 and perform a random move.
      */

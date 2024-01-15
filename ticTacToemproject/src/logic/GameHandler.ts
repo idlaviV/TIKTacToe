@@ -8,6 +8,7 @@ import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
+import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 
 /**
@@ -20,9 +21,9 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  aIs: AIPlayer[] = [new AIPlayer('AI'), new AIPlayer('AI2')]
+  aIs: AIPlayer[] = [new AIPlayer(new EliminationPolicy(), 'AI'), new AIPlayer(new EliminationPolicy(), 'AI2')]
   humanPlayer: UserPlayer = new UserPlayer('Human')
-  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[1])
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[0])
 
   private constructor() {}
 

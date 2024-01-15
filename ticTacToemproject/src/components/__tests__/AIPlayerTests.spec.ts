@@ -5,6 +5,7 @@ import { GameHandler } from '@/logic/GameHandler'
 import { Randomizer } from '@/logic/Randomizer'
 import { beforeEach, describe, expect, test } from 'vitest'
 import { resetGameHandler } from './TestUtil'
+import { EliminationPolicy } from '@/logic/EliminationPolicy'
 
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
@@ -16,7 +17,7 @@ let maxFromAI: number
 beforeEach(() => {
   resetGameHandler()
   gameHandler = GameHandler.getInstance()
-  player = new AIPlayer('AI')
+  player = new AIPlayer(new EliminationPolicy())
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   debugRandomizer = {
     randomInteger(min: number, max: number) {
