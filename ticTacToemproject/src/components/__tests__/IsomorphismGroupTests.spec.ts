@@ -212,3 +212,20 @@ describe('getRepresentativeOfGameBoards', () => {
     expect(representative).toEqual(1)
   })
 })
+
+describe('getRepresentativesOfNonequivalentGameBoards', () => {
+  const boards: GameBoard[] = []
+  let representative: number[] = []
+  const gameBoard = new GameBoard()
+  gameBoard.state = [
+    [0, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0]
+  ]
+  boards.push(gameBoard)
+
+  test('Single Element', () => {
+    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    expect(representative).toEqual([1])
+  })
+})

@@ -15,9 +15,9 @@ import { GameHandler } from '@/logic/GameHandler'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const range = [0, 1, 2]
-gameHandler.getHistoryWithChildsExport().initialize()
-const nodes: Ref<Nodes> = gameHandler.getHistoryWithChildsExport().getNodes()
-const edges: Ref<Edges> = gameHandler.getHistoryWithChildsExport().getEdges()
+gameHandler.getHistoryWithChildrenExport().initialize()
+const nodes: Ref<Nodes> = gameHandler.getHistoryWithChildrenExport().getNodes()
+const edges: Ref<Edges> = gameHandler.getHistoryWithChildrenExport().getEdges()
 
 const layouts: Ref<Layouts> = ref({
   nodes: {

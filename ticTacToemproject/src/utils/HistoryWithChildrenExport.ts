@@ -5,7 +5,7 @@ import { HistoryExport } from './HistoryExport'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 
-export class HistoryWithChildsExport {
+export class HistoryWithChildrenExport {
   nodes: Ref<Nodes> = ref({})
   edges: Ref<Edges> = ref({})
   lastCode: string = 'NotInitialized'
@@ -16,29 +16,31 @@ export class HistoryWithChildsExport {
   }
 
   initialize() {
-    this.copyHistoryWithoutChilds()
-    this.addChilds()
+    this.nodes.value = this.historyExport.getNodes().value
+    this.edges.value = this.historyExport.getEdges().value
+    this.lastCode = this.historyExport.getLastCode()
+    this.addChildren()
   }
 
   updateHistory(gameBoard: GameBoard) {
-    this.deleteChilds()
+    this.deleteChildren()
     this.historyExport.updateHistory(gameBoard)
-    this.copyHistoryWithoutChilds()
-    this.addChilds()
+    this.lastCode = this.historyExport.getLastCode()
+    this.addChildren()
   }
 
   resetHistory(gameBoard: GameBoard) {
     this.historyExport.resetHistory(gameBoard)
-    this.copyHistoryWithoutChilds()
-    this.addChilds()
+    this.lastCode = this.historyExport.getLastCode()
+    this.addChildren()
   }
 
-  addChilds() {
-    const childsOfActiveGameBoard = GameHandler.getInstance().getPossibleNextPositions()
+  addChildren() {
+    const childrenOfActiveGameBoard = GameHandler.getInstance().getPossibleNextPositions()
     const representativesOfNonequivalentGameBoards =
-      IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childsOfActiveGameBoard)
+      IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
     const representativeGameBoards: GameBoard[] = []
-    childsOfActiveGameBoard.forEach((element) => {
+    childrenOfActiveGameBoard.forEach((element) => {
       if (representativesOfNonequivalentGameBoards.includes(element.getCode())) {
         representativeGameBoards.push(element)
       }
@@ -57,13 +59,7 @@ export class HistoryWithChildsExport {
     }
   }
 
-  copyHistoryWithoutChilds() {
-    this.nodes.value = this.historyExport.getNodes().value
-    this.edges.value = this.historyExport.getEdges().value
-    this.lastCode = this.historyExport.getLastCode()
-  }
-
-  deleteChilds() {
+  deleteChildren() {
     Object.keys(this.edges.value).forEach((element) => {
       if (
         this.nodes.value[this.edges.value[element].source].isChild ||
