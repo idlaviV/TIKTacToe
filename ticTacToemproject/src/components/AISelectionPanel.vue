@@ -10,16 +10,19 @@ const aiName = ref('New AI')
 </script>
 <template>
   <div>
-    <div>
-      AISelectionPanel
-      <v-virtual-scroll :items="aIs" height="200">
+    <v-card class="mx-auto" max-width="700">
+      <v-card-title>AISelectionPanel</v-card-title>
+      <v-virtual-scroll :items="aIs" height="220">
         <template v-slot:default="{ item }">
-          {{ item.player }}
+          <v-list-item :title="item.player">
+            <template v-slot:append>
+              <v-btn>Reset</v-btn>
+            </template>
+          </v-list-item>
         </template>
       </v-virtual-scroll>
-    </div>
-    <div>
-      Neue KI erzeugen
+      <v-divider></v-divider>
+      <v-card-title>Neue KI erzeugen</v-card-title>
       <v-select
         label="Choose AI type"
         v-model="selectedAIOption"
@@ -31,6 +34,6 @@ const aiName = ref('New AI')
       <v-btn v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)">
         Create AI
       </v-btn>
-    </div>
+    </v-card>
   </div>
 </template>
