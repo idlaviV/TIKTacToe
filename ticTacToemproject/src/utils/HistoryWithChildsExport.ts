@@ -18,6 +18,7 @@ export class HistoryWithChildsExport {
   }
 
   updateHistory(gameBoard: GameBoard) {
+    this.deleteChilds()
     this.historyExport.updateHistory(gameBoard)
     this.copyHistoryWithoutChilds()
     this.addChilds()
@@ -51,7 +52,7 @@ export class HistoryWithChildsExport {
 
     for (let index = 0; index < representativeGameBoards.length; index++) {
       let newCode: string = representativeGameBoards[index].getCode().toString()
-      this.nodes.value[newCode] = { name: newCode, boardState: representativeGameBoards[index].state, active: false }
+      this.nodes.value[newCode] = { name: newCode, boardState: representativeGameBoards[index].state, active: false, isChild: true }
       const key: string = this.lastCode + '#' + newCode
       this.edges.value[key] = { source: this.lastCode, target: newCode }
     }
@@ -61,6 +62,20 @@ export class HistoryWithChildsExport {
     this.nodes.value = this.historyExport.getNodes().value
     this.edges.value = this.historyExport.getEdges().value
     this.lastCode = this.historyExport.getLastCode()
+  }
+
+  deleteChilds() {
+    Object.keys(this.edges.value).forEach((element) => {
+      if (this.nodes.value[this.edges.value[element].source].isChild || this.nodes.value[this.edges.value[element].target].isChild) {
+        delete this.edges.value[element]
+      }
+    })
+
+    Object.keys(this.nodes.value).forEach((element) => {
+      if (this.nodes.value[element].isChild) {
+        delete this.nodes.value[element]
+      }
+    })
   }
 
   getNodes(): Ref<Nodes> {
