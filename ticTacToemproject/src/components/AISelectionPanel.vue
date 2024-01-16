@@ -12,11 +12,11 @@ const aiName = ref('New AI')
   <div>
     <div>
       AISelectionPanel
-      <v-list>
-        <v-list-item v-for="ai in aIs" :key="ai.index">
-          <v-list-item-title>{{ ai.player }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+      <v-virtual-scroll :items="aIs" height="200">
+        <template v-slot:default="{ item }">
+          {{ item.player }}
+        </template>
+      </v-virtual-scroll>
     </div>
     <div>
       Neue KI erzeugen
