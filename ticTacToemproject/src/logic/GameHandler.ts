@@ -16,7 +16,6 @@ import { updatePlayerList } from '@/utils/PlayerListExport'
  * This class handles the overall game. It is a singleton class.
  */
 export class GameHandler {
-
   private static instance: GameHandler
 
   playerOnTurn: Ref<PlayerNumber> = ref(1)
