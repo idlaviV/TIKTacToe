@@ -11,13 +11,15 @@ const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
 }
 
-watch(autoPlay, (status) =>{if (status) {
-  timer = setInterval(() => {
-    gameHandler.performAiTurn()
-  }, 1000)
-} else {
-  clearInterval(timer)
-}})
+watch(autoPlay, (status) => {
+  if (status) {
+    timer = setInterval(() => {
+      gameHandler.performAiTurn()
+    }, 1000)
+  } else {
+    clearInterval(timer)
+  }
+})
 
 /**
  * @description Informs the model, that the user wants to trigger the next AI turn.
