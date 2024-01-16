@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
-import { setGUiState } from '@/logic/GuiState';
+import { setGUiState } from '@/logic/GuiState'
 import { Players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
 import { ref, type Ref } from 'vue'
 

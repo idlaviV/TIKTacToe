@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import LeftPanel from './components/LeftPanel.vue'
 import RightPanel from './components/RightPanel.vue'
-
-
 </script>
 
 <template>
@@ -12,7 +10,7 @@ import RightPanel from './components/RightPanel.vue'
         <LeftPanel />
       </div>
       <div class="column">
-        <RightPanel/>
+        <RightPanel />
       </div>
     </div>
   </main>
