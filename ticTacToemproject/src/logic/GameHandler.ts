@@ -62,8 +62,12 @@ export class GameHandler {
 
   performEndOfTurnActions() {
     if (this.winner.value !== null) {
-      this.settings.getPlayer(1).isAI() ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy() : null
-      this.settings.getPlayer(2).isAI() ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy() : null
+      this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : null
+      this.settings.getPlayer(2).isAI()
+        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+        : null
     }
   }
 

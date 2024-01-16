@@ -36,6 +36,7 @@ export class EliminationPolicy implements EvaluationPolicy {
     }
   }
 
+  //private
   applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
     const lastLooserTurnStart = history[history.length - 3].getNormalForm()
     const lastLooserTurnEnd = history[history.length - 2].getNormalForm()
