@@ -15,6 +15,9 @@ const aiName = ref('New AI')
       <v-virtual-scroll :items="aIs" height="220">
         <template v-slot:default="{ item }">
           <v-list-item :title="item.player">
+            <template v-slot:prepend>
+                <i class="material-symbols-outlined"> smart_toy </i>
+            </template>
             <template v-slot:append>
               <v-btn>Reset</v-btn>
             </template>
