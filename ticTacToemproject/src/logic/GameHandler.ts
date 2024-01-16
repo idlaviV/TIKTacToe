@@ -90,6 +90,7 @@ export class GameHandler {
   }
 
   createAI(selectedAIOption: number, name: string) {
+    console.log(selectedAIOption)
     this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
     updatePlayerList()
   }

@@ -4,8 +4,8 @@ import { Players } from '@/utils/PlayerListExport'
 import { ref } from 'vue'
 
 const aIs = Players
-const aiOptions = [{ title: 'Elimination', index: '0' }]
-const selectedAIOption = ref(0)
+const aiOptions = [{ title: 'Elimination', index: '0' }, {title: 'Random', index: '1'}]
+const selectedAIOption = ref()
 const aiName = ref('New AI')
 </script>
 <template>
