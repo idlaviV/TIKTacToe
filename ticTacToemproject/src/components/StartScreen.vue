@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
+import { setGUiState } from '@/logic/GuiState';
 import { Players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
 import { ref, type Ref } from 'vue'
 const emit = defineEmits(['startGame'])
@@ -16,6 +17,7 @@ function startGame() {
   //Later on, those options should be passed to the backend
   GameHandler.getInstance().setPlayers(select1.value, select2.value)
   emit('startGame')
+  setGUiState('game')
 }
 
 /**

@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { getGuiState } from '@/logic/GuiState';
 import MainScreen from './MainScreen.vue'
 import StartScreen from './StartScreen.vue'
-import { ref } from 'vue'
+
 
 /**
  * @type {boolean}
  * @description Toggles between the start screen and the main screen.
  */
-let gameIsRunning = ref(false)
+const gameIsRunning = getGuiState()
 
 /**
  * @description Starts the game and shoud pass the configuration to the model.
@@ -15,7 +16,6 @@ let gameIsRunning = ref(false)
  */
 function startGame() {
   console.log('Game started (and your configuration was intentionally ignored)')
-  gameIsRunning.value = true
 }
 </script>
 
@@ -23,7 +23,11 @@ function startGame() {
    depending on the global state. -->
 <template>
   <div>
-    <MainScreen v-if="gameIsRunning" />
-    <StartScreen v-else @start-game="startGame" />
+    <StartScreen
+      v-if="gameIsRunning == 'start'" 
+      @start-game="startGame" 
+    />
+    <MainScreen v-else />
+    
   </div>
 </template>
