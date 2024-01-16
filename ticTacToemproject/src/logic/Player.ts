@@ -1,3 +1,7 @@
+/**
+ * Represents a player.
+ * AIPlayers and UserPlayers are possible.
+ */
 export interface Player {
   /**
    * @returns Is this player an AI?
@@ -5,8 +9,7 @@ export interface Player {
   isAI(): boolean
 
   /**
-   * Prompt this player to directly execute a move on the board
-   *
+   * Prompt this player to directly execute a move on the gameboard.
    */
   makeMove(): void
 

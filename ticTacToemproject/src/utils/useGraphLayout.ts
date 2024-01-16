@@ -3,6 +3,13 @@ import type { Edges, Layouts, Nodes } from 'v-network-graph'
 
 const nodeSize = 40
 
+/**
+ * Places the nodes of the graph for a TopDown layout.
+ * @param nodes The nodes of the graph
+ * @param edges The edges of the graph
+ * @param layouts The layout of the graph
+ * @returns The last added node of the graph
+ */
 export function layout(nodes: Nodes, edges: Edges, layouts: Layouts): string {
   let activeNode: string = '0'
   const g = new dagre.graphlib.Graph()
