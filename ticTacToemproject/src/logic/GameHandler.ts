@@ -10,11 +10,13 @@ import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
+import { updatePlayerList } from '@/utils/PlayerListExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
  */
 export class GameHandler {
+
   private static instance: GameHandler
 
   playerOnTurn: Ref<PlayerNumber> = ref(1)
@@ -86,6 +88,11 @@ export class GameHandler {
     if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
     }
+  }
+
+  createAI(selectedAIOption: number, name: string) {
+    this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
+    updatePlayerList()
   }
 
   /**
