@@ -15,6 +15,7 @@ import { GameHandler } from '@/logic/GameHandler'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const range = [0, 1, 2]
+gameHandler.getHistoryWithChildsExport().initialize()
 const nodes: Ref<Nodes> = gameHandler.getHistoryWithChildsExport().getNodes()
 const edges: Ref<Edges> = gameHandler.getHistoryWithChildsExport().getEdges()
 
@@ -34,7 +35,7 @@ function updateLayout() {
     const x = layouts.value.nodes[activeNode].x
     const y = layouts.value.nodes[activeNode].y
     graph.value?.panTo({ x: -x, y: -y }) //Moves to the current node
-    graph.value?.panBy({ x: width / 2, y: height / 2}) // Move current node to center
+    graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
   }
 }
 

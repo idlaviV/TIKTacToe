@@ -13,8 +13,11 @@ export class HistoryWithChildsExport {
 
   constructor(historyExport: HistoryExport) {
     this.historyExport = historyExport
+  }
+
+  initialize() {
     this.copyHistoryWithoutChilds()
-    //this.addChilds() //Das muss eigentlich rein, damit direkt die ersten möglichen Kinder angezeigt werden
+    this.addChilds()
   }
 
   updateHistory(gameBoard: GameBoard) {
@@ -31,28 +34,24 @@ export class HistoryWithChildsExport {
   }
 
   addChilds() {
-    //hier muss ne effektivere Methode rein
-    Object.keys(this.nodes.value).forEach((element) => {
-      if (this.nodes.value[element].active === true) {
-        const activeGameBoardCode: string = element
-      }
-    })
-    
     const childsOfActiveGameBoard = GameHandler.getInstance().getPossibleNextPositions()
-    
-    const representativesOfNonequivalentGameBoards = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childsOfActiveGameBoard)
-    
+    const representativesOfNonequivalentGameBoards =
+      IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childsOfActiveGameBoard)
     const representativeGameBoards: GameBoard[] = []
-    childsOfActiveGameBoard.forEach(element => {
+    childsOfActiveGameBoard.forEach((element) => {
       if (representativesOfNonequivalentGameBoards.includes(element.getCode())) {
         representativeGameBoards.push(element)
       }
-    });
-
+    })
 
     for (let index = 0; index < representativeGameBoards.length; index++) {
       let newCode: string = representativeGameBoards[index].getCode().toString()
-      this.nodes.value[newCode] = { name: newCode, boardState: representativeGameBoards[index].state, active: false, isChild: true }
+      this.nodes.value[newCode] = {
+        name: newCode,
+        boardState: representativeGameBoards[index].state,
+        active: false,
+        isChild: true
+      }
       const key: string = this.lastCode + '#' + newCode
       this.edges.value[key] = { source: this.lastCode, target: newCode }
     }
@@ -66,7 +65,10 @@ export class HistoryWithChildsExport {
 
   deleteChilds() {
     Object.keys(this.edges.value).forEach((element) => {
-      if (this.nodes.value[this.edges.value[element].source].isChild || this.nodes.value[this.edges.value[element].target].isChild) {
+      if (
+        this.nodes.value[this.edges.value[element].source].isChild ||
+        this.nodes.value[this.edges.value[element].target].isChild
+      ) {
         delete this.edges.value[element]
       }
     })

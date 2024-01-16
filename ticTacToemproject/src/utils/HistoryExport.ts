@@ -14,7 +14,12 @@ export class HistoryExport {
   updateHistory(gameBoard: GameBoard) {
     this.nodes.value[this.lastCode].active = false
     const newCode: string = gameBoard.getCode().toString()
-    this.nodes.value[newCode] = { name: newCode, boardState: gameBoard.state, active: true, isChild: false }
+    this.nodes.value[newCode] = {
+      name: newCode,
+      boardState: gameBoard.state,
+      active: true,
+      isChild: false
+    }
     const key: string = this.lastCode + '#' + newCode
     this.edges.value[key] = { source: this.lastCode, target: newCode }
     this.lastCode = newCode

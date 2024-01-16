@@ -195,17 +195,17 @@ export class IsomorphismGroup {
     const representativesOfNonequivalentGameBoards: number[] = []
 
     const normalForms: Set<number> = new Set()
-    gameBoards.forEach(element => {
+    gameBoards.forEach((element) => {
       normalForms.add(element.getNormalForm())
-    });
+    })
 
-    for(const normalForm of normalForms) {
+    for (const normalForm of normalForms) {
       const gameBoardsWithNormalForm: number[] = []
-      gameBoards.forEach(element => {
+      gameBoards.forEach((element) => {
         if (element.getNormalForm() === normalForm) {
           gameBoardsWithNormalForm.push(element.getCode())
         }
-      });
+      })
 
       representativesOfNonequivalentGameBoards.push(Math.min(...gameBoardsWithNormalForm))
     }
