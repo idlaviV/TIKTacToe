@@ -6,6 +6,7 @@ import { ref } from 'vue';
 const aIs = Players
 const aiOptions = [{title: 'Elimination', index: '0'}]
 const selectedAIOption = ref(0)
+const aiName = ref('New AI')
 </script>
 <template>
     <div>
@@ -13,9 +14,7 @@ const selectedAIOption = ref(0)
         AISelectionPanel
         <v-list>
             <v-list-item v-for="ai in aIs" :key="ai.index">
-                <v-list-item-content>
                     <v-list-item-title>{{ai.player}}</v-list-item-title>
-                </v-list-item-content>
             </v-list-item>
         </v-list>
     </div><div>
@@ -27,8 +26,9 @@ const selectedAIOption = ref(0)
             item-title="title"
             item-value="index"
         />
+        <v-text-field v-model="aiName" label="Choose name"></v-text-field>
         <v-btn
-            v-on:click="GameHandler.getInstance().createAI(selectedAIOption, 'dummy')"
+            v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)"
         >
             Create AI
         </v-btn>
