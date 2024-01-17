@@ -41,7 +41,7 @@ export class EliminationPolicy implements EvaluationPolicy {
     const lastLooserTurnStart = history[history.length - 3].getNormalForm()
     const lastLooserTurnEnd = history[history.length - 2].getNormalForm()
 
-    aI.weights.get(lastLooserTurnStart)?.set(lastLooserTurnEnd, 0)
+    aI.getVertexMap(lastLooserTurnStart).set(lastLooserTurnEnd, 0)
 
     for (let index = history.length - 3; index > 1; index-=2) {
       for (const [_, weight] of aI.getVertexMap(history[index].getNormalForm())) {
@@ -49,7 +49,7 @@ export class EliminationPolicy implements EvaluationPolicy {
           return
         }
       }
-      aI.weights.get(history[index - 2].getNormalForm())?.set(history[index - 1].getNormalForm(), 0)
+      aI.getVertexMap(history[index - 2].getNormalForm()).set(history[index - 1].getNormalForm(), 0)
     }
   }
 }
