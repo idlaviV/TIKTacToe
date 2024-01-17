@@ -5,7 +5,7 @@ import { ref, watch } from 'vue'
 
 const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
-let timer: number
+let timer: ReturnType<typeof setTimeout>
 
 const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
