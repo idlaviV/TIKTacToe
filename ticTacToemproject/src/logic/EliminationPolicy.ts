@@ -43,7 +43,7 @@ export class EliminationPolicy implements EvaluationPolicy {
 
     aI.getVertexMap(lastLooserTurnStart).set(lastLooserTurnEnd, 0)
 
-    for (let index = history.length - 3; index > 1; index -= 2) {
+    for (let index = history.length - 3; index > 1; index--) {
       for (const [, weight] of aI.getVertexMap(history[index].getNormalForm())) {
         if (weight !== 0) {
           return
