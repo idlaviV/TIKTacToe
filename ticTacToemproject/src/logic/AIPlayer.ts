@@ -105,22 +105,15 @@ export class AIPlayer implements Player {
    * If no argument is passed, the current configuration of the game is used
    * @returns map of weights
    */
-  getVertexMap(normalForm?:number):Map<number,number> {
-    if(!normalForm) {
-      normalForm = GameHandler.getInstance()
-      .getGBHandler()
-      .getGameBoard()
-      .getNormalForm()
+  getVertexMap(normalForm?: number): Map<number, number> {
+    if (!normalForm) {
+      normalForm = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
     }
     if (!this.weights.has(normalForm) || this.weights.get(normalForm) === undefined) {
       this.initializeWeights(normalForm)
     }
     return this.weights.get(normalForm)!
-
   }
-
-  
- 
 
   /**
    * Initializes the weights of the children of a specified node
