@@ -76,13 +76,14 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 		\item[S300] Die Zuggeschwindigkeit der KI kann festgelegt werden. 
 		\item[S400] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel mit den gleichen Einstellungen gestartet wird.
 		\item[S500] Zwischen zwei Spielen besteht die Möglichkeit, die Gewichte der trainierte(n) KI(s) einzeln zurückzusetzen.
-		\item[S600] Bei der Initialisierung einer KI wird die Belohnungsstrategie vom Nutzer ausgewählt.
-		\item[S610] Eine Belohnungsstrategie ist die Elimination des letzten Zuges des Verlierers. Falls aus einem Zustand nur Verlustzüge möglich sind, so wird auch der Zug vor diesem Zustand eliminiert.
+		\item[\textcolor{red}{S601}] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte durch die Belohnungsstrategie angepasst werden können.
+		\item[\textcolor{red}{S605}] Bei der Initialisierung einer KI wird die Belohnungsstrategie vom Nutzer ausgewählt.
+		\item[\textcolor{red}{S611}] Eine Belohnungsstrategie ist die Elimination des letzten Zuges des Verlierers. Falls aus einem Zustand nur Verlustzüge möglich sind, so wird auch der Zug vor diesem Zustand eliminiert.
 		\item[S620] Eine Belohnungsstrategie ist Fehlerrückführung.
 				Für Gewinnen, Unentschieden und Verlust werden die Gewichte der ausgeführten Züge individuell angepasst.
+		\item[\textcolor{red}{S625}] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte der Belohnungsstrategie Fehlerrückführung vom Nutzer angepasst werden können.
 		\item[S630] Der Nutzer kann auswählen, dass die konfigurierte Belohnungsstrategie in Zukunft automatisch angewendet wird.
-		\item[S640] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte der Belohnungsstrategie Fehlerrückführung vom Nutzer angepasst werden können.
-		\item[S700] Während der Auswahl der Belohnungsstrategie wird der Spielverlauf mit alternativen Optionen als Graph angezeigt.
+		\item[\textcolor{red}{S701}] Während der Auswahl der Belohnungsstrategie wird der Spielverlauf mit alternativen Optionen als Graph angezeigt.
 	\end{itemize}
 
 \subsection{Kann-Kriterien}
@@ -107,6 +108,16 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 		\item[A100] Die Gewichte der KI können nur über vorgegebene Belohnungsstrategien angepasst werden.
 		\item[A200] Die Entscheidungen der KI basieren nur auf der aktuellen Spielsituation, nicht auf dem Spielverlauf.
 	\end{itemize}
+
+\subsection{Änderungen an den Kriterien}
+\subsubsection{Sprint 2}
+\begin{itemize}
+	\item S600 durch S601, S605 und S625 ersetzt
+	\item S610 zu S611 präzisiert/korrigiert
+	\item S700 durch S701 ersetzt, S710 gestrichen
+	\item K110 gestrichen
+	\item K700 gestrichen
+\end{itemize}
 	
 \section{Definition of Done}%Checkliste zur Überprüfung, ob ein Increment fertig ist
 Ein Increment besteht aus einem oder mehreren Features.
