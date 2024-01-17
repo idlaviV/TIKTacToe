@@ -86,6 +86,7 @@ describe('applyPolicy with realistic examples', () => {
       ])
     ]
     aI.weights = weights
+    handler.getGBHandler().gameBoard.value = history[history.length - 1]
   })
   test('should not change weights if game is not over', () => {
     handler.winner.value = null
@@ -226,6 +227,7 @@ describe('apply Policy with unrealistic examples', () => {
     )
     aI.weights = weights
     handler.winner.value = 1
+    handler.getGBHandler().gameBoard.value = history[history.length - 1]
   })
   test('standard loss, expect only one weight change', () => {
     policy.applyPolicy(aI, history)

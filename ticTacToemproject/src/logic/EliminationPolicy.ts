@@ -38,18 +38,20 @@ export class EliminationPolicy implements EvaluationPolicy {
 
   //private
   applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
-    const lastLooserTurnStart = history[history.length - 3].getNormalForm()
-    const lastLooserTurnEnd = history[history.length - 2].getNormalForm()
-
-    aI.getVertexMap(lastLooserTurnStart).set(lastLooserTurnEnd, 0)
-
-    for (let index = history.length - 3; index > 1; index--) {
-      for (const [, weight] of aI.getVertexMap(history[index].getNormalForm())) {
-        if (weight !== 0) {
-          return
-        }
+    for (let index = history.length - 1; index > 1; index--) {
+      if(containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))){
+        aI.getVertexMap(history[index - 2].getNormalForm()).set(history[index - 1].getNormalForm(), 0)
       }
-      aI.getVertexMap(history[index - 2].getNormalForm()).set(history[index - 1].getNormalForm(), 0)
     }
   }
+
+}
+
+function containsOnlyZeros(map: Map<number, number>): boolean {
+  for (const [, weight] of map) {
+    if (weight !== 0) {
+      return false
+    }
+  }
+  return true
 }
