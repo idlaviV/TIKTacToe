@@ -5,15 +5,15 @@ import GraphPanel from './components/GraphPanel.vue'
 
 <template>
   <main>
-   <v-container >
-    <v-row>
-      <v-col class="text-center">
-        <v-container><LeftPanel/></v-container>
-      </v-col>
-      <v-col>
-        <v-container><GraphPanel/></v-container>
-      </v-col>
-    </v-row>
-   </v-container>
+    <v-container>
+      <v-row>
+        <v-col class="text-center">
+          <v-container><LeftPanel /></v-container>
+        </v-col>
+        <v-col>
+          <v-container><GraphPanel /></v-container>
+        </v-col>
+      </v-row>
+    </v-container>
   </main>
 </template>

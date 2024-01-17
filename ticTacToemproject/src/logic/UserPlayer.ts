@@ -1,8 +1,8 @@
 import type { Player } from './Player'
 
 /**
- * This class represents a human player. 
- * He triggers moves via the GUI. 
+ * This class represents a human player.
+ * He triggers moves via the GUI.
  */
 export class UserPlayer implements Player {
   name: string
