@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import LeftPanel from './components/LeftPanel.vue'
-import GraphPanel from './components/GraphPanel.vue'
+import RightPanel from './components/RightPanel.vue'
 </script>
 
 <template>
@@ -10,7 +10,7 @@ import GraphPanel from './components/GraphPanel.vue'
         <LeftPanel />
       </div>
       <div class="column">
-        <GraphPanel />
+        <RightPanel />
       </div>
     </div>
   </main>
