@@ -8,14 +8,17 @@ const aIs = players
 /**
  * Remove the human player from the list of players
  */
-const getAIs:()=>{player:string, index:number}[] = () => {
+const getAIs: () => { player: string; index: number }[] = () => {
   return aIs.value.filter((ai) => ai.index !== 0)
 }
 /**
  * All possible AI options
  * @todo aiOptions should be pulled from backend somehow?
  */
-const aiOptions = [{ title: 'Elimination', index: 0 }, {title: 'Random', index: 1}]
+const aiOptions = [
+  { title: 'Elimination', index: 0 },
+  { title: 'Random', index: 1 }
+]
 /**
  * Model for the selected AI option
  */
@@ -37,7 +40,7 @@ const aiName = ref('New AI')
         <template v-slot:default="{ item }">
           <v-list-item :title="item.player">
             <template v-slot:prepend>
-                <i class="material-symbols-outlined"> smart_toy </i>
+              <i class="material-symbols-outlined"> smart_toy </i>
             </template>
             <template v-slot:append>
               <v-btn>Reset</v-btn>
