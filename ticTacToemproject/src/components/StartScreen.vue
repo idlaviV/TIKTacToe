@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
 import { setGUiState } from '@/logic/GuiState'
-import { Players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
+import { players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
 import { ref, type Ref } from 'vue'
 
 /**
@@ -19,7 +19,7 @@ function startGame() {
  * @description The options for the player selection.
  */
 updatePlayerList()
-const items: Ref<PlayersExport> = Players
+const items: Ref<PlayersExport> = players
 
 /**
  * Model for the player selection for player one
