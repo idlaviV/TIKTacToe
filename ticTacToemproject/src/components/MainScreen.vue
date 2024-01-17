@@ -18,14 +18,14 @@ const ResetGame = () => {
   <div>
     <!-- Caption and prompt for next turn -->
     <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
-    <h3 class="text-xl mb-4">Player {{ playerOnTurn }}'s turn</h3>
+    <h3 class="text-xl mb-4">Spieler {{ playerOnTurn }} ist dran</h3>
 
     <!-- The current gameboard -->
     <MainScreenBoard />
 
     <!-- Display winner -->
-    <h2 v-if="winner === drawStatus" class="text-6xl dond-bold mb-8">Draw!</h2>
-    <h2 v-else-if="winner" class="text-6xl dond-bold mb-8">Player {{ winner }} wins!</h2>
+    <h2 v-if="winner === drawStatus" class="text-6xl dond-bold mb-8">Unentschieden!</h2>
+    <h2 v-else-if="winner" class="text-6xl dond-bold mb-8">Spieler {{ winner }} hat gewonnen!</h2>
 
     <!-- Controls for AI turns -->
     <MainScreenMoves />
@@ -34,7 +34,7 @@ const ResetGame = () => {
     <br />
 
     <div>
-      <v-btn @click="ResetGame"> Reset Game </v-btn>
+      <v-btn @click="ResetGame"> Spiel zurücksetzen </v-btn>
     </div>
   </div>
 </template>
