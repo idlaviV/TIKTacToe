@@ -1,5 +1,4 @@
 import { HistoryExport } from '../utils/HistoryExport'
-import { HistoryWithChildrenExport } from '@/utils/HistoryWithChildrenExport'
 import type { GameBoard } from './GameBoard'
 import { GameBoardHandler } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
@@ -23,7 +22,6 @@ export class GameHandler {
   gBHandler: GameBoardHandler = new GameBoardHandler()
 
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  historyWithChildrenExport: HistoryWithChildrenExport = new HistoryWithChildrenExport(this.historyExport)
   humanPlayer: UserPlayer = new UserPlayer('Human')
   /**
    * The possible options for players.
@@ -65,7 +63,7 @@ export class GameHandler {
       } else {
         this.playerOnTurn.value = 1
       }
-      this.historyWithChildrenExport.updateHistory(this.gBHandler.getGameBoard())
+      this.historyExport.updateHistory(this.gBHandler.getGameBoard())
     }
   }
 
@@ -103,7 +101,7 @@ export class GameHandler {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn.value = 1
     this.winner.value = null
-    this.historyWithChildrenExport.resetHistory(this.gBHandler.getGameBoard())
+    this.historyExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
   /**
@@ -142,10 +140,6 @@ export class GameHandler {
 
   getHistoryExport(): HistoryExport {
     return this.historyExport
-  }
-
-  getHistoryWithChildrenExport(): HistoryWithChildrenExport {
-    return this.historyWithChildrenExport
   }
 
   getPossiblePlayers(): Player[] {

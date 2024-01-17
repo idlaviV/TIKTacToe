@@ -2,6 +2,7 @@ import { ref, type Ref } from 'vue'
 import type { GameBoard } from '../logic/GameBoard'
 import { type Nodes, type Edges } from 'v-network-graph'
 import type { FieldType } from '@/logic/FieldType'
+import { HistoryWithChildrenExport } from './HistoryWithChildrenExport'
 
 /**
  * This class represents the progress of a game. 
@@ -10,14 +11,16 @@ import type { FieldType } from '@/logic/FieldType'
 export class HistoryExport {
   nodes: Ref<Nodes> = ref({})
   edges: Ref<Edges> = ref({})
+  historyWithChildrenExport: HistoryWithChildrenExport
   lastCode: string = 'NotInitialized'
 
   constructor(gameBoard: GameBoard) {
     this.initializeHistory(gameBoard)
+    this.historyWithChildrenExport = new HistoryWithChildrenExport(this.nodes.value, this.edges.value, this.lastCode)
   }
 
   /**
-   * Adds the new game state to the history.
+   * Adds the new game state to the history. Updates the historyWithChildren.
    * @param gameBoard The new game state
    */
   updateHistory(gameBoard: GameBoard) {
@@ -26,12 +29,12 @@ export class HistoryExport {
     this.nodes.value[newCode] = {
       name: newCode,
       boardState: gameBoard.state,
-      active: true,
-      isChild: false
+      active: true
     }
     const key: string = this.lastCode + '#' + newCode
     this.edges.value[key] = { source: this.lastCode, target: newCode }
     this.lastCode = newCode
+    this.historyWithChildrenExport.update(this.nodes.value, this.edges.value, this.lastCode)
   }
 
   /**
@@ -61,6 +64,7 @@ export class HistoryExport {
       delete this.edges.value[element]
     })
     this.initializeHistory(gameBoard)
+    this.historyWithChildrenExport.update(this.nodes.value, this.edges.value, this.lastCode)
   }
 
   getNodes(): Ref<Nodes> {
@@ -73,6 +77,10 @@ export class HistoryExport {
 
   getLastCode(): string {
     return this.lastCode
+  }
+
+  getHistoryWithChildrenExport(): HistoryWithChildrenExport {
+    return this.historyWithChildrenExport
   }
 }
 
