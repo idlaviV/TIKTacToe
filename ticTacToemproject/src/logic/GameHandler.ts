@@ -89,6 +89,12 @@ export class GameHandler {
     }
   }
 
+  /**
+   * Adds a new AI to the list of possible players.
+   * @param selectedAIOption For later selection of AI type. Currently not used.
+   * @param name A chosen name for the AI. Does not have to be unique.
+   * @todo Implement selectedAIOption. Atm, EliminationPolicy is used by default.
+   */
   createAI(selectedAIOption: number, name: string) {
     console.log(selectedAIOption)
     this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
