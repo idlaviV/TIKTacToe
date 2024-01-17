@@ -1,13 +1,7 @@
 <script setup lang="ts">
+import { setLeftScreen, getLeftScreen } from '@/utils/GuiStates';
 import MainScreen from './MainScreen.vue'
 import StartScreen from './StartScreen.vue'
-import { ref } from 'vue'
-
-/**
- * @type {boolean}
- * @description Toggles between the start screen and the main screen.
- */
-let gameIsRunning = ref(false)
 
 /**
  * @description Starts the game and shoud pass the configuration to the model.
@@ -15,7 +9,7 @@ let gameIsRunning = ref(false)
  */
 function startGame() {
   console.log('Game started (and your configuration was intentionally ignored)')
-  gameIsRunning.value = true
+  setLeftScreen('MainScreen')
 }
 </script>
 
@@ -23,7 +17,7 @@ function startGame() {
    depending on the global state. -->
 <template>
   <div>
-    <MainScreen v-if="gameIsRunning" />
+    <MainScreen v-if="getLeftScreen() === 'MainScreen'" />
     <StartScreen v-else @start-game="startGame" />
   </div>
 </template>

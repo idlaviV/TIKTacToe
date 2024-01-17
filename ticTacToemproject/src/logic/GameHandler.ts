@@ -10,6 +10,7 @@ import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
+import { setLeftScreen } from '@/utils/GuiStates'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -57,17 +58,15 @@ export class GameHandler {
     if (this.winner.value == null) {
       this.gBHandler.move(x, y, this.playerOnTurn.value)
       this.winner.value = this.gBHandler.calculateWinner()
-      if (this.playerOnTurn.value === 1) {
-        this.playerOnTurn.value = 2
-      } else {
-        this.playerOnTurn.value = 1
-      }
       this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+
       this.performEndOfTurnActions()
     }
   }
-
+  
   performEndOfTurnActions() {
+    this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
+
     if (this.winner.value !== null) {
       this.settings.getPlayer(1).isAI()
         ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
@@ -75,6 +74,10 @@ export class GameHandler {
       this.settings.getPlayer(2).isAI()
         ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
         : null
+
+      // Sets the screen to the selection screen, in the end this should set to the evaluation screen, unless skipped
+      setLeftScreen('StartScreen')
+      this.resetGame()
     }
   }
 
