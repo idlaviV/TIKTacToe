@@ -1,4 +1,5 @@
 import { HistoryExport } from '../utils/HistoryExport'
+import { HistoryWithChildrenExport } from '@/utils/HistoryWithChildrenExport'
 import type { GameBoard } from './GameBoard'
 import { GameBoardHandler } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
@@ -8,20 +9,41 @@ import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
-import { HistoryWithChildrenExport } from '@/utils/HistoryWithChildrenExport'
+import { EliminationPolicy } from './EliminationPolicy'
+import type { Player } from './Player'
 
+/**
+ * This class handles the overall game. It is a singleton class.
+ */
 export class GameHandler {
   private static instance: GameHandler
 
   playerOnTurn: Ref<PlayerNumber> = ref(1)
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
-  settings: GameSettings = new GameSettings(new UserPlayer(), new AIPlayer())
+
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   historyWithChildrenExport: HistoryWithChildrenExport = new HistoryWithChildrenExport(this.historyExport)
+  humanPlayer: UserPlayer = new UserPlayer('Human')
+  /**
+   * The possible options for players.
+   * Contains all AIs and the option for the user to play.
+   */
+  possiblePlayers: Player[] = [
+    this.humanPlayer,
+    new AIPlayer(new EliminationPolicy(), 'AI'),
+    new AIPlayer(new EliminationPolicy(), 'AI2')
+  ]
+
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
 
   private constructor() {}
 
+  /**
+   * Returns the instance of the singleton.
+   * If the instance does not exist yet, it will be created.
+   * @returns the instance of the singleton
+   */
   public static getInstance(): GameHandler {
     if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
@@ -29,6 +51,11 @@ export class GameHandler {
     return GameHandler.instance
   }
 
+  /**
+   * Performs a turn, by either an AI or a user.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   */
   performTurn(x: number, y: number) {
     if (this.winner.value == null) {
       this.gBHandler.move(x, y, this.playerOnTurn.value)
@@ -42,16 +69,34 @@ export class GameHandler {
     }
   }
 
+  /**
+   * Performs a turn by an AI.
+   * If a user is on turn, nothing happens.
+   */
   performAiTurn() {
     if (this.winner.value == null) {
       this.settings.getPlayer(this.playerOnTurn.value).makeMove()
     }
   }
 
+  /**
+   * Performs a turn by a user.
+   * If an AI is on turn, nothing happens.
+   * @param x the x coordinate of the piece to be added
+   * @param y the y coordinate of the piece to be added
+   */
   performTurnFromUserInput(x: number, y: number) {
     if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
     }
+  }
+
+  /**
+   * Registers chosen players as player1 and player2 for the next game.
+   * @param index_ index of the chosen option
+   */
+  setPlayers(index1: number, index2: number) {
+    this.settings.setPlayers(this.possiblePlayers[index1], this.possiblePlayers[index2])
   }
 
   resetGame() {
@@ -61,10 +106,19 @@ export class GameHandler {
     this.historyWithChildrenExport.resetHistory(this.gBHandler.getGameBoard())
   }
 
+  /**
+   * Returns all possible next positions with the moves that lead to them.
+   * They are given as an array of {@link GameBoardWithPrevMove}.
+   * @returns all possible next positions with the moves that lead to them
+   */
   getPossibleNextPositionsWithMoves(): GameBoardWithPrevMove[] {
     return this.gBHandler.getPossibleNextPositions(this.playerOnTurn.value)
   }
 
+  /**
+   * Returns only the next possible positions, without the moves that lead to them.
+   * @returns all possible next positions
+   */
   getPossibleNextPositions(): GameBoard[] {
     const boards: GameBoard[] = []
     const possibleNextPositions: GameBoardWithPrevMove[] = this.getPossibleNextPositionsWithMoves()
@@ -92,6 +146,14 @@ export class GameHandler {
 
   getHistoryWithChildrenExport(): HistoryWithChildrenExport {
     return this.historyWithChildrenExport
+  }
+
+  getPossiblePlayers(): Player[] {
+    return this.possiblePlayers
+  }
+
+  getUserPlayer(): UserPlayer {
+    return this.humanPlayer
   }
 
   /**

@@ -4,29 +4,43 @@ import {
   type Edges,
   VNetworkGraph,
   type Layouts,
-  defineConfigs,
-  type VNetworkGraphInstance,
-  type UserConfigs
+  type VNetworkGraphInstance
 } from 'v-network-graph'
-import GraphPanelNodeField from './GraphPanelNodeField.vue'
+import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
 import { GameHandler } from '@/logic/GameHandler'
+import { configs } from '@/components/GraphPanelUserConfigs'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
+
 const range = [0, 1, 2]
 gameHandler.getHistoryWithChildrenExport().initialize()
 const nodes: Ref<Nodes> = gameHandler.getHistoryWithChildrenExport().getNodes()
 const edges: Ref<Edges> = gameHandler.getHistoryWithChildrenExport().getEdges()
 
+/**
+ * @description The position of the nodes in the graph.
+ */
 const layouts: Ref<Layouts> = ref({
   nodes: {
     //'0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
   }
 })
 
+/**
+ * Update the layout after setup and after every move.
+ */
+if (configs.view) {
+  configs.view.onBeforeInitialDisplay = updateLayout
+}
+watch(nodes.value, updateLayout)
+
 const graph = ref<VNetworkGraphInstance>()
 
+/**
+ * Calculate new node positions and pan to the active node.
+ */
 function updateLayout() {
   const activeNode = layout(nodes.value, edges.value, layouts.value)
   const height = graph.value?.getSizes().height
@@ -38,48 +52,9 @@ function updateLayout() {
     graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
   }
 }
-
-const configs: UserConfigs = defineConfigs({
-  view: {
-    panEnabled: true,
-    zoomEnabled: false,
-    scalingObjects: true,
-    autoPanAndZoomOnLoad: 'center-zero',
-    autoPanOnResize: false,
-    onBeforeInitialDisplay: updateLayout
-  },
-  node: {
-    selectable: false,
-    draggable: false,
-    normal: {
-      type: 'rect',
-      borderRadius: 0,
-      width: 65,
-      height: 65
-    },
-    label: {
-      visible: false
-    }
-  },
-  edge: {
-    normal: {
-      color: '#aaa',
-      width: 2
-    },
-    margin: 4,
-    marker: {
-      target: {
-        type: 'arrow',
-        width: 4,
-        height: 4
-      }
-    }
-  }
-})
-
-watch(nodes.value, updateLayout)
 </script>
 
+<!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
 <template>
   <v-network-graph
     ref="graph"
@@ -90,15 +65,7 @@ watch(nodes.value, updateLayout)
     :configs="configs"
   >
     <template #override-node="{ nodeId }">
-      <template v-for="x in range">
-        <GraphPanelNodeField
-          v-for="y in range"
-          :key="x + '|' + y"
-          :x="x"
-          :y="y"
-          :fieldType="nodes[nodeId].boardState[y][x]"
-        />
-      </template>
+      <GraphPanelNode :node="nodes[nodeId]" />
     </template>
   </v-network-graph>
 </template>

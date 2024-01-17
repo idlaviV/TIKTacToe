@@ -264,12 +264,13 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 										 -- (3,3.5)%Ticket M200 geschafft		
 										 -- (4,7.5);%Mit heftiger Arbeit gerade noch M300 geschafft
 	\draw[very thick, ForestGreen] (4,7.5) -- (5,7.5);%In den zwei Wochen Weihnachtsferien wurde kein Feature abgeschlossen
-	\draw[very thick] (5,7.5) -- (6,13.5);%M600 abgeschlossen
-	\draw[dotted] plot [smooth] coordinates {(0,0) (4,7.5) (8,34.5) (11,64)};
+	\draw[very thick] (5,7.5) -- (6,13.5)%M600 abgeschlossen
+										-- (7,13.5); %Keine neuen Features
+	\draw[dotted] plot [smooth] coordinates {(0,0) (4,7.5) (8,28) (11,48)};
 	%Ziele
 	\draw(4,7.5) node[cross, color=ForestGreen]{};%Sprint 1
-	\draw (8,34.5) node[cross, color=lightgray]{};%Sprint 2?
-	\draw (11,64) node[cross, color=lightgray]{};%Sprint 3?
+	%\draw (8,34.5) node[cross, color=lightgray]{};%Sprint 2?
+	%\draw (11,64) node[cross, color=lightgray]{};%Sprint 3?
 	%konservativere Ziele
 	\draw (8,28) node[cross, color=gray]{};%Sprint 2?
 	\draw (11,48) node[cross, color=gray]{};%Sprint 2?

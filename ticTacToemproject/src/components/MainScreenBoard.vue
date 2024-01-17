@@ -1,28 +1,24 @@
 <script setup lang="ts">
-import { drawStatus } from '../logic/WinnerStatus'
 import { GameHandler } from '../logic/GameHandler'
+import { symbol } from '../logic/FieldType'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const gameBoard = gameHandler.getGBHandler().getGameBoardExport()
-const winner = gameHandler.getWinner()
-const playerOnTurn = gameHandler.getPlayerOnTurn()
 
+/**
+ * Pass a move from user input to the model.
+ * @param x Column of the move.
+ * @param y Row of the move.
+ */
 const MakeMove = (x: number, y: number) => {
   gameHandler.performTurnFromUserInput(x, y)
 }
-
-const ResetGame = () => {
-  gameHandler.resetGame()
-  gameHandler.getPlayerOnTurn()
-}
 </script>
 
+<!-- The MainScreenBoard visualizes the state of the gameboard. -->
 <template>
-  <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
-
-  <h3 class="text-xl mb-4">Player {{ playerOnTurn }}'s turn</h3>
-
   <div class="flex flex-col items-center mb-8">
+    <!-- Iterate rows and columns of the gameboard -->
     <div v-for="(row, x) in gameBoard.state" :key="x" class="flex">
       <div
         v-for="(cell, y) in row"
@@ -32,18 +28,9 @@ const ResetGame = () => {
           cell === 1 ? 'text-pink-500' : 'text-blue-500'
         }`"
       >
-        {{ cell === 1 ? 'X' : cell === 2 ? 'O' : '' }}
+        <!-- Render proper symbol for player -->
+        {{ symbol(cell) }}
       </div>
     </div>
   </div>
-
-  <h2 v-if="winner === drawStatus" class="text-6xl dond-bold mb-8">Draw!</h2>
-  <h2 v-else-if="winner" class="text-6xl dond-bold mb-8">Player {{ winner }} wins!</h2>
-
-  <v-btn @click="gameHandler.performAiTurn()"> &#9655; </v-btn>
-
-  <br />
-  <br />
-
-  <v-btn @click="ResetGame"> Reset Game </v-btn>
 </template>
