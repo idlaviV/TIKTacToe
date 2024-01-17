@@ -44,9 +44,9 @@ export class EliminationPolicy implements EvaluationPolicy {
     aI.weights.get(lastLooserTurnStart)?.set(lastLooserTurnEnd, 0)
 
     for (let index = history.length - 3; index > 1; index--) {
-      const board = history[index].getNormalForm()
-      for (const value of aI.weights.get(board)!.values()) {
-        if (value !== 0) {
+      for (const [_, weight] of aI.getVertexMap()) {
+      //for (const value of aI.weights.get(board)!.values()) {
+        if (weight !== 0) {
           return
         }
       }
