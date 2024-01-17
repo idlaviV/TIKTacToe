@@ -7,7 +7,7 @@ import GraphPanel from './components/GraphPanel.vue'
   <main>
    <v-container >
     <v-row>
-      <v-col>
+      <v-col class="text-center">
         <v-container><LeftPanel/></v-container>
       </v-col>
       <v-col>
@@ -17,4 +17,3 @@ import GraphPanel from './components/GraphPanel.vue'
    </v-container>
   </main>
 </template>
-
