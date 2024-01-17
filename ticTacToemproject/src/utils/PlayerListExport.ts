@@ -7,13 +7,17 @@ export type PlayersExport = { player: string; index: number }[]
 /**
  * This object is provided to the frontend to display the list of all possible players.
  * The order of the array has to coincide with the order in GameHandler.possiblePlayers.
+ * @player is the given name of the player, index is the number in GameHandler.possiblePlayers array.
  */
-export const Players: Ref<PlayersExport> = ref([])
+export const players: Ref<PlayersExport> = ref([])
 
+/**
+ * Updates the list of all possible players.
+ */
 export function updatePlayerList() {
   const possiblePlayers: Player[] = GameHandler.getInstance().getPossiblePlayers()
-  Players.value = []
+  players.value = []
   for (const player of possiblePlayers) {
-    Players.value.push({ player: player.getName(), index: possiblePlayers.indexOf(player) })
+    players.value.push({ player: player.getName(), index: possiblePlayers.indexOf(player) })
   }
 }
