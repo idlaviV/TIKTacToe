@@ -100,19 +100,27 @@ export class AIPlayer implements Player {
   }
 
   /**
-   * Extract the weights of the outgoing edges of the current board configuration
+   * Extract the weights of the outgoing edges of a vertex in the weight graph
+   * @param normalForm The normal form of the gameboard corresponding to the vertex
+   * If no argument is passed, the current configuration of the game is used
    * @returns map of weights
    */
-  getVertexMap(): Map<number, number> {
-    const currentNF: number = GameHandler.getInstance()
+  getVertexMap(normalForm?:number):Map<number,number> {
+    if(!normalForm) {
+      normalForm = GameHandler.getInstance()
       .getGBHandler()
       .getGameBoard()
       .getNormalForm()
-    if (!this.weights.has(currentNF) || this.weights.get(currentNF) === undefined) {
-      this.initializeWeights(currentNF)
     }
-    return this.weights.get(currentNF)!
+    if (!this.weights.has(normalForm) || this.weights.get(normalForm) === undefined) {
+      this.initializeWeights(normalForm)
+    }
+    return this.weights.get(normalForm)!
+
   }
+
+  
+ 
 
   /**
    * Initializes the weights of the children of a specified node
