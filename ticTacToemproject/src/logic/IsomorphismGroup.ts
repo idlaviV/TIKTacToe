@@ -1,5 +1,12 @@
 import { calculateCode, type GameBoard } from './GameBoard'
+/**
+ * This class enables the calculation of equivalent gameboards and their normal forms.
+ * Two gameboards are considered equivalent if one can be transformed into the other by means of rotation and/or mirroring.
+ */
 export class IsomorphismGroup {
+  /**
+   * This class represents an isomorphism between two gameboards.
+   */
   static Isomorphism = class {
     transformation: number[][][]
 
@@ -7,6 +14,11 @@ export class IsomorphismGroup {
       this.transformation = transformation
     }
 
+    /**
+     * Applies the isomorphism to a gameboard.
+     * @param state The state of the gameboard.
+     * @returns The state of the transformed gameboard.
+     */
     apply(state: number[][]): number[][] {
       const trafo = this.transformation
       const result = [new Array(3), new Array(3), new Array(3)]
@@ -19,6 +31,7 @@ export class IsomorphismGroup {
     }
   }
 
+  // Rotates the gameboard by 90 degrees.
   static rotation90 = new IsomorphismGroup.Isomorphism([
     [
       [0, 2],
@@ -37,6 +50,7 @@ export class IsomorphismGroup {
     ]
   ])
 
+  // Rotates the gameboard by 180 degrees.
   static rotation180 = new IsomorphismGroup.Isomorphism([
     [
       [2, 2],
@@ -55,6 +69,7 @@ export class IsomorphismGroup {
     ]
   ])
 
+  // The gameboard as it is.
   static identity = new IsomorphismGroup.Isomorphism([
     [
       [0, 0],
@@ -73,6 +88,7 @@ export class IsomorphismGroup {
     ]
   ])
 
+  // Rotates the gameboard by 270 degrees.
   static rotation270 = new IsomorphismGroup.Isomorphism([
     [
       [2, 0],
@@ -91,6 +107,7 @@ export class IsomorphismGroup {
     ]
   ])
 
+  // Reflects the gameboard.
   static reflect = new IsomorphismGroup.Isomorphism([
     [
       [0, 2],
@@ -109,6 +126,7 @@ export class IsomorphismGroup {
     ]
   ])
 
+  // Reflects the gameboard and rotates it by 90 degrees.
   static reflect90 = new IsomorphismGroup.Isomorphism([
     [
       [0, 0],
@@ -127,6 +145,7 @@ export class IsomorphismGroup {
     ]
   ])
 
+  // Reflects the gameboard and rotates it by 180 degrees.
   static reflect180 = new IsomorphismGroup.Isomorphism([
     [
       [2, 0],
@@ -145,6 +164,7 @@ export class IsomorphismGroup {
     ]
   ])
 
+  // Reflects the gameboard and rotates it by 270 degrees.
   static reflect270 = new IsomorphismGroup.Isomorphism([
     [
       [2, 2],
@@ -163,6 +183,9 @@ export class IsomorphismGroup {
     ]
   ])
 
+  /**
+   * List of every possible isomorphism transformation
+   */
   static isomorphisms = [
     IsomorphismGroup.identity,
     IsomorphismGroup.rotation90,
@@ -174,6 +197,12 @@ export class IsomorphismGroup {
     IsomorphismGroup.reflect270
   ]
 
+  /**
+   * Returns a list of all equivalent gameboards in the form of their code.
+   * The identity is also included.
+   * @param gameBoard The gameboard whose equivalent gameboards are wanted.
+   * @returns A set of all equivalent gameboards.
+   */
   static getGameBoardEquiv(gameBoard: GameBoard): Set<number> {
     const equivs: Set<number> = new Set()
     for (const iso of this.isomorphisms) {
@@ -182,11 +211,21 @@ export class IsomorphismGroup {
     return equivs
   }
 
+  /**
+   * Returns the normal form of the gameboard in form of its code.
+   * @param gameBoard The gameboard whose normal form is wanted.
+   * @returns The normal form of the gameboard.
+   */
   static getNormalFormOfGameBoard(gameBoard: GameBoard): number {
     return this.getRepresentativeOfGameBoards(...this.getGameBoardEquiv(gameBoard))
   }
 
-  //This function only gives meaningful results if all gameBoards are equivalent
+  /**
+   * Returns the representative normal form of the gameboards in form of its code.
+   * This function only gives meaningful results if all gameBoards are equivalent.
+   * @param gameBoards The gameboard whose representative normal form is wanted.
+   * @returns The representative normal form of the gameboard in form of its code.
+   */
   static getRepresentativeOfGameBoards(...gameBoards: number[]): number {
     return Math.min(...gameBoards)
   }

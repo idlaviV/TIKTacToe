@@ -9,6 +9,7 @@ import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
+import type { Player } from './Player'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -20,12 +21,18 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  aIs: AIPlayer[] = [
+  humanPlayer: UserPlayer = new UserPlayer('Human')
+  /**
+   * The possible options for players.
+   * Contains all AIs and the option for the user to play.
+   */
+  possiblePlayers: Player[] = [
+    this.humanPlayer,
     new AIPlayer(new EliminationPolicy(), 'AI'),
     new AIPlayer(new EliminationPolicy(), 'AI2')
   ]
-  humanPlayer: UserPlayer = new UserPlayer('Human')
-  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[0])
+
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
 
   private constructor() {}
 
@@ -81,6 +88,14 @@ export class GameHandler {
     }
   }
 
+  /**
+   * Registers chosen players as player1 and player2 for the next game.
+   * @param index_ index of the chosen option
+   */
+  setPlayers(index1: number, index2: number) {
+    this.settings.setPlayers(this.possiblePlayers[index1], this.possiblePlayers[index2])
+  }
+
   resetGame() {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn.value = 1
@@ -126,8 +141,8 @@ export class GameHandler {
     return this.historyExport
   }
 
-  getAIList(): AIPlayer[] {
-    return this.aIs
+  getPossiblePlayers(): Player[] {
+    return this.possiblePlayers
   }
 
   getUserPlayer(): UserPlayer {
