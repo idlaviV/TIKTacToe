@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
-import { Players } from '@/utils/PlayerListExport'
+import { players } from '@/utils/PlayerListExport'
 import { ref } from 'vue'
 
-const aIs = Players
+const aIs = players
 const aiOptions = [{ title: 'Elimination', index: '0' }, {title: 'Random', index: '1'}]
 const selectedAIOption = ref()
 const aiName = ref('New AI')
