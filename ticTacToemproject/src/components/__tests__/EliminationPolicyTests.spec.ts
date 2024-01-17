@@ -7,36 +7,6 @@ import { beforeEach, describe, expect, test } from 'vitest'
 
 const handler = GameHandler.getInstance()
 const weights = new Map()
-weights.set(
-  0,
-  new Map([
-    [1, 1],
-    [10, 1],
-    [10000, 1]
-  ])
-)
-weights.set(10, new Map([[12, 1]]))
-weights.set(
-  12,
-  new Map([
-    [10012, 1],
-    [122, 1]
-  ])
-)
-weights.set(
-  10012,
-  new Map([
-    [12210, 1],
-    [112200, 1]
-  ])
-)
-weights.set(
-  12210,
-  new Map([
-    [2111020, 1],
-    [12211, 1]
-  ])
-)
 
 let policy: EliminationPolicy
 let aI: AIPlayer
@@ -45,35 +15,6 @@ let history: GameBoard[]
 beforeEach(() => {
   policy = new EliminationPolicy()
   aI = new AIPlayer(policy)
-  history = [
-    new GameBoard(),
-    new GameBoard([
-      [0, 0, 0],
-      [1, 0, 0],
-      [0, 0, 0]
-    ]),
-    new GameBoard([
-      [2, 0, 0],
-      [1, 0, 0],
-      [0, 0, 0]
-    ]),
-    new GameBoard([
-      [2, 0, 0],
-      [1, 1, 0],
-      [0, 0, 0]
-    ]),
-    new GameBoard([
-      [2, 0, 0],
-      [1, 1, 0],
-      [0, 2, 0]
-    ]),
-    new GameBoard([
-      [2, 0, 0],
-      [1, 1, 1],
-      [0, 2, 0]
-    ])
-  ]
-  aI.weights = weights
 })
 
 describe('getInitialWeight', () => {
@@ -85,6 +26,68 @@ describe('getInitialWeight', () => {
 })
 
 describe('applyPolicy', () => {
+  beforeEach(()=>{
+    weights.set(
+      0,
+      new Map([
+        [1, 1],
+        [10, 1],
+        [10000, 1]
+      ])
+    )
+    weights.set(10, new Map([[12, 1]]))
+    weights.set(
+      12,
+      new Map([
+        [10012, 1],
+        [122, 1]
+      ])
+    )
+    weights.set(
+      10012,
+      new Map([
+        [12210, 1],
+        [112200, 1]
+      ])
+    )
+    weights.set(
+      12210,
+      new Map([
+        [2111020, 1],
+        [12211, 1]
+      ])
+    )
+    history = [
+      new GameBoard(),
+      new GameBoard([
+        [0, 0, 0],
+        [1, 0, 0],
+        [0, 0, 0]
+      ]),
+      new GameBoard([
+        [2, 0, 0],
+        [1, 0, 0],
+        [0, 0, 0]
+      ]),
+      new GameBoard([
+        [2, 0, 0],
+        [1, 1, 0],
+        [0, 0, 0]
+      ]),
+      new GameBoard([
+        [2, 0, 0],
+        [1, 1, 0],
+        [0, 2, 0]
+      ]),
+      new GameBoard([
+        [2, 0, 0],
+        [1, 1, 1],
+        [0, 2, 0]
+      ])
+    ]
+    aI.weights = weights
+    
+  })
   test('should not change weights if game is not over', () => {
     handler.winner.value = null
     policy.applyPolicy(aI, history)
@@ -138,3 +141,5 @@ describe('applyPolicy', () => {
     ).toEqual(0)
   })
 })
+
+//describe()
