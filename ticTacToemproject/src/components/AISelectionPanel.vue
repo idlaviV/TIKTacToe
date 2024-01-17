@@ -4,15 +4,36 @@ import { players } from '@/utils/PlayerListExport'
 import { ref } from 'vue'
 
 const aIs = players
-const aiOptions = [{ title: 'Elimination', index: '0' }, {title: 'Random', index: '1'}]
-const selectedAIOption = ref()
+
+/**
+ * Remove the human player from the list of players
+ */
+const getAIs:()=>{player:string, index:number}[] = () => {
+  return aIs.value.filter((ai) => ai.index !== 0)
+}
+/**
+ * All possible AI options
+ * @todo aiOptions should be pulled from backend somehow?
+ */
+const aiOptions = [{ title: 'Elimination', index: 0 }, {title: 'Random', index: 1}]
+/**
+ * Model for the selected AI option
+ */
+const selectedAIOption = ref(0)
+/**
+ * Model for the name of the new AI
+ */
 const aiName = ref('New AI')
 </script>
+
+<!-- The AISelectionPanel contains a list of all existing AIs and the option to create new AIs,
+---- given a name and an AI type.
+-->
 <template>
   <div>
     <v-card class="mx-auto" max-width="700">
       <v-card-title>AISelectionPanel</v-card-title>
-      <v-virtual-scroll :items="aIs" height="220">
+      <v-virtual-scroll :items="getAIs()" height="220">
         <template v-slot:default="{ item }">
           <v-list-item :title="item.player">
             <template v-slot:prepend>
