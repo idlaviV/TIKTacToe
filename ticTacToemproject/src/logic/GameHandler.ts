@@ -108,7 +108,6 @@ export class GameHandler {
    * @todo Implement selectedAIOption. Atm, EliminationPolicy is used by default.
    */
   createAI(selectedAIOption: number, name: string) {
-    console.log(selectedAIOption)
     this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
     updatePlayerList()
   }
@@ -168,10 +167,6 @@ export class GameHandler {
 
   getPossiblePlayers(): Player[] {
     return this.possiblePlayers
-  }
-
-  getUserPlayer(): UserPlayer {
-    return this.humanPlayer
   }
 
   /**
