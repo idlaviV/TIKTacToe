@@ -11,7 +11,7 @@ import RightPanel from './components/RightPanel.vue'
           <v-container><LeftPanel /></v-container>
         </v-col>
         <v-col>
-          <v-container><GraphPanel /></v-container>
+          <v-container><RightPanel /></v-container>
         </v-col>
       </v-row>
     </v-container>
