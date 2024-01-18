@@ -39,12 +39,14 @@ export class EliminationPolicy implements EvaluationPolicy {
   //private
   applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
     for (let index = history.length - 1; index > 1; index--) {
-      if(containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))){
-        aI.getVertexMap(history[index - 2].getNormalForm()).set(history[index - 1].getNormalForm(), 0)
+      if (containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))) {
+        aI.getVertexMap(history[index - 2].getNormalForm()).set(
+          history[index - 1].getNormalForm(),
+          0
+        )
       }
     }
   }
-
 }
 
 function containsOnlyZeros(map: Map<number, number>): boolean {

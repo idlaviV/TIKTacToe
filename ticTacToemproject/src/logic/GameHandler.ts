@@ -23,15 +23,15 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  humanPlayer: UserPlayer = new UserPlayer('Human')
+  humanPlayer: UserPlayer = new UserPlayer('Mensch')
   /**
    * The possible options for players.
    * Contains all AIs and the option for the user to play.
    */
   possiblePlayers: Player[] = [
     this.humanPlayer,
-    new AIPlayer(new EliminationPolicy(), 'AI'),
-    new AIPlayer(new EliminationPolicy(), 'AI2')
+    new AIPlayer(new EliminationPolicy(), 'KI'),
+    new AIPlayer(new EliminationPolicy(), 'KI 2')
   ]
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
@@ -111,7 +111,6 @@ export class GameHandler {
    * @todo Implement selectedAIOption. Atm, EliminationPolicy is used by default.
    */
   createAI(selectedAIOption: number, name: string) {
-    console.log(selectedAIOption)
     this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
     updatePlayerList()
   }
@@ -171,10 +170,6 @@ export class GameHandler {
 
   getPossiblePlayers(): Player[] {
     return this.possiblePlayers
-  }
-
-  getUserPlayer(): UserPlayer {
-    return this.humanPlayer
   }
 
   /**

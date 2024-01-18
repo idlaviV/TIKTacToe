@@ -37,21 +37,20 @@ const select2 = ref(1)
 
   <div>
     <v-select
-      label="Choose player 1"
+      label="Spieler 1 wählen"
       v-model="select1"
       :items="items"
       item-title="player"
       item-value="index"
     />
-    vs.
+    gegen
     <v-select
-      label="Choose player 2"
+      label="Spieler 2 wählen"
       v-model="select2"
       :items="items"
       item-title="player"
       item-value="index"
     />
   </div>
-  <v-btn v-on:click="startGame">Start Game</v-btn>
+  <v-btn v-on:click="startGame">Spiel starten</v-btn>
 </template>
-@/utils/PlayerListExport

@@ -4,21 +4,16 @@ import RightPanel from './components/RightPanel.vue'
 </script>
 
 <template>
-  <main class="pt-8 bg-gray-800 text-center min-h-screen text-white">
-    <div class="row flex-col">
-      <div class="column">
-        <LeftPanel />
-      </div>
-      <div class="column">
-        <RightPanel />
-      </div>
-    </div>
+  <main>
+    <v-container>
+      <v-row>
+        <v-col class="text-center">
+          <v-container><LeftPanel /></v-container>
+        </v-col>
+        <v-col>
+          <v-container><RightPanel /></v-container>
+        </v-col>
+      </v-row>
+    </v-container>
   </main>
 </template>
-
-<style>
-.column {
-  float: left;
-  width: 50%;
-}
-</style>
