@@ -169,10 +169,6 @@ export class GameHandler {
     return this.possiblePlayers
   }
 
-  getUserPlayer(): UserPlayer {
-    return this.humanPlayer
-  }
-
   /**
    * Only for debug purpose
    */
