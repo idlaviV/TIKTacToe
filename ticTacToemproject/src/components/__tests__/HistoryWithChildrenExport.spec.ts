@@ -148,7 +148,6 @@ describe('Reacting on the game', () => {
         isChild: true
       }
     })
-    console.log(historyWithChildrenExport.getEdges().value)
     expect(historyWithChildrenExport.getEdges().value).toEqual({
       '0#1': { source: '0', target: '1' },
       '1#20001': { source: '1', target: '20001' },
