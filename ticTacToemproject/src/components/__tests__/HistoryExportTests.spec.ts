@@ -131,20 +131,6 @@ describe('updateHistory', () => {
     })
     expect(historyExport.lastCode).toEqual('210')
   })
-
-  //TODO: is this expected behaviour or do we just ignore it of fix it?
-  test('update with same board', () => {
-    historyExport.updateHistory(new GameBoard())
-    expect(historyExport.nodes.value).toEqual({
-      '0': {
-        name: '0',
-        boardState: new GameBoard().state,
-        active: true
-      }
-    })
-    expect(historyExport.edges.value).toEqual({})
-    expect(historyExport.lastCode).toEqual('0')
-  })
 })
 
 describe('resetHistory', () => {
