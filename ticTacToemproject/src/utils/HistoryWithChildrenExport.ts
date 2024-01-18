@@ -7,6 +7,7 @@ import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 /**
  * This class represents the graph which is shown in the game view on the right side.
  * It contains the history with the representatives of the equivalence classes of the possible next game states.
+ * It is created by the historyExport. So don't create it elsewhere.
  */
 export class HistoryWithChildrenExport {
   nodes: Ref<Nodes> = ref({})
@@ -18,8 +19,9 @@ export class HistoryWithChildrenExport {
   }
 
   /**
-   * Whenever the history is changed, the HistoryWithChildren is rebuilt. 
+   * Whenever the history is changed, the HistoryWithChildren is rebuilt.
    * To do this, it is overwritten with the history and the children are then added.
+   * Only call this function within the HistoryExport class in an active game, because it depends on the GameHandler status.
    * @param nodes the nodes of the history
    * @param edges the edges of the history
    * @param lastCode the last GameState of the history in its code form
@@ -73,7 +75,7 @@ export class HistoryWithChildrenExport {
         representativeGameBoards.push(element)
       }
     })
-    
+
     // The representatives of the equivalence classes are added to the graph.
     for (let index = 0; index < representativeGameBoards.length; index++) {
       let newCode: string = representativeGameBoards[index].getCode().toString()

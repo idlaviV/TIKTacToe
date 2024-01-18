@@ -231,8 +231,8 @@ export class IsomorphismGroup {
   }
 
   /**
-   * Extracts one representative GameBoard per contained equivalence class from an array of GameBoards
-   * If there are several GameBoards per equivalence class, the GameBoard with the smallest code is selected
+   * Extracts one representative GameBoard per contained equivalence class from an array of GameBoards.
+   * If there are several GameBoards per equivalence class, the GameBoard with the smallest code is selected.
    * @param gameBoards The array of GameBoards
    * @returns The array of representative GameBoards in code form
    */

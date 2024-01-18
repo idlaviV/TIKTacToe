@@ -5,7 +5,7 @@ import type { FieldType } from '@/logic/FieldType'
 import { HistoryWithChildrenExport } from './HistoryWithChildrenExport'
 
 /**
- * This class represents the progress of a game. 
+ * This class represents the progress of a game.
  * It is saved as a graph.
  */
 export class HistoryExport {
@@ -16,7 +16,11 @@ export class HistoryExport {
 
   constructor(gameBoard: GameBoard) {
     this.initializeHistory(gameBoard)
-    this.historyWithChildrenExport = new HistoryWithChildrenExport(this.nodes.value, this.edges.value, this.lastCode)
+    this.historyWithChildrenExport = new HistoryWithChildrenExport(
+      this.nodes.value,
+      this.edges.value,
+      this.lastCode
+    )
   }
 
   /**
@@ -38,7 +42,7 @@ export class HistoryExport {
   }
 
   /**
-   * Initializes the history. 
+   * Initializes the history.
    * The passed gameboard is set as the first game state.
    * @param gameBoard The first state of the history.
    */

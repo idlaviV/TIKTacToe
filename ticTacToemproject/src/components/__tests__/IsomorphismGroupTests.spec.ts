@@ -214,18 +214,50 @@ describe('getRepresentativeOfGameBoards', () => {
 })
 
 describe('getRepresentativesOfNonequivalentGameBoards', () => {
-  const boards: GameBoard[] = []
-  let representative: number[] = []
-  const gameBoard = new GameBoard()
-  gameBoard.state = [
-    [0, 0, 0],
-    [0, 1, 0],
-    [0, 0, 0]
-  ]
-  boards.push(gameBoard)
+  let boards: GameBoard[]
+  beforeEach(() => {
+    boards = []
+  })
 
-  test('Single Element', () => {
+  let representative: number[] = []
+  const gameBoard21 = new GameBoard([
+    [1, 2, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+  ])
+  const gameBoard120 = new GameBoard([
+    [0, 2, 1],
+    [0, 0, 0],
+    [0, 0, 0]
+  ])
+  const gameBoard2100 = new GameBoard([
+    [0, 0, 1],
+    [2, 0, 0],
+    [0, 0, 0]
+  ])
+
+  test('Single element', () => {
+    boards.push(gameBoard21)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
-    expect(representative).toEqual([1])
+    expect(representative).toEqual([21])
+  })
+  test('Multiple equivalent elements', () => {
+    boards.push(gameBoard21)
+    boards.push(gameBoard120)
+    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    expect(representative).toEqual([21])
+  })
+  test('Multiple nonequivalent elements', () => {
+    boards.push(gameBoard21)
+    boards.push(gameBoard2100)
+    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    expect(representative).toEqual([21, 2100])
+  })
+  test('Multiple nonequivalent and equivalent elements', () => {
+    boards.push(gameBoard21)
+    boards.push(gameBoard120)
+    boards.push(gameBoard2100)
+    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    expect(representative).toEqual([21, 2100])
   })
 })
