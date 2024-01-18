@@ -123,7 +123,7 @@ export class AIPlayer implements Player {
    * @todo At the moment, all nodes are always set to 1
    * @param code describes the node where weights are missing
    */
-  // private???
+  // private
   initializeWeights(code: number): void {
     const nextNFs: Set<number> = this.calculateNextNFs()
     const vertexMap = new Map<number, number>()
