@@ -72,7 +72,8 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 	\begin{itemize}
 		\item[S100] Automatisches Ziehen der KI kann an- und abgewählt werden.
 		\item[S110] Ist das automatische Ziehen deaktiviert, so gibt es die Möglichkeit einzelne Züge der KI auszulösen.
-		\item[S200] Es gibt die Möglichkeit, zwei KIs als Spieler auszuwählen.
+		\item[\textcolor{red}{S201}] Es gibt auch die Möglichkeit, zwei KIs, oder zwei Nutzer, als Spieler auszuwählen.
+		\item[\textcolor{red}{S210}] Eine KI kann auch gegen sich selbst spielen.
 		\item[S300] Die Zuggeschwindigkeit der KI kann festgelegt werden. 
 		\item[S400] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel mit den gleichen Einstellungen gestartet wird.
 		\item[S500] Zwischen zwei Spielen besteht die Möglichkeit, die Gewichte der trainierte(n) KI(s) einzeln zurückzusetzen.
@@ -84,6 +85,7 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 		\item[\textcolor{red}{S625}] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte der Belohnungsstrategie Fehlerrückführung vom Nutzer angepasst werden können.
 		\item[S630] Der Nutzer kann auswählen, dass die konfigurierte Belohnungsstrategie in Zukunft automatisch angewendet wird.
 		\item[\textcolor{red}{S701}] Während der Auswahl der Belohnungsstrategie wird der Spielverlauf mit alternativen Optionen als Graph angezeigt.
+		\item[\textcolor{red}{S800}] Der Nutzer kann beliebig viele KI's erzeugen. 
 	\end{itemize}
 
 \subsection{Kann-Kriterien}
@@ -99,6 +101,7 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 		\item[K600] Es gibt, solange das Spiel still steht, die Möglichkeit, die aktuell trainierte(n) KI(s) zu exportieren.
 				Solange das Spiel still steht können Gewichte importiert werden, die dann die aktuellen Gewichte der ausgewählten KI überschreiben.
 		\item[K800] Statt Tic-Tac-Toe kann auch ein einfaches Brettspiel gespielt werden, für das die KI mit einer ähnlichen Entscheidungsbaum-Struktur trainiert wird.
+		\item[\textcolor{red}{K900}] Die initialen Gewichte der KI hängen von der Belohnungsstrategie und der höhe des Zuges im Graphen ab.
 
 	\end{itemize}
 
