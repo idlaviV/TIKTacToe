@@ -15,9 +15,9 @@ describe('updateAIList', () => {
     updatePlayerList()
     const aIList = players.value
     expect(aIList.length).toEqual(3)
-    expect(aIList.find((entry) => entry.player === 'Human')?.index).toEqual(0)
-    expect(aIList.find((entry) => entry.player === 'AI')).not.toEqual(undefined)
-    expect(aIList.find((entry) => entry.player === 'AI2')).not.toEqual(undefined)
+    expect(aIList.find((entry) => entry.player === 'Mensch')?.index).toEqual(0)
+    expect(aIList.find((entry) => entry.player === 'KI')).not.toEqual(undefined)
+    expect(aIList.find((entry) => entry.player === 'KI 2')).not.toEqual(undefined)
   })
   test('no AIs', () => {
     gameHandler.possiblePlayers = []
