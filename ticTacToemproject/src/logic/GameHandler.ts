@@ -9,6 +9,8 @@ import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
+import type { Player } from './Player'
+import { updatePlayerList } from '@/utils/PlayerListExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -20,12 +22,18 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  aIs: AIPlayer[] = [
+  humanPlayer: UserPlayer = new UserPlayer('Human')
+  /**
+   * The possible options for players.
+   * Contains all AIs and the option for the user to play.
+   */
+  possiblePlayers: Player[] = [
+    this.humanPlayer,
     new AIPlayer(new EliminationPolicy(), 'AI'),
     new AIPlayer(new EliminationPolicy(), 'AI2')
   ]
-  humanPlayer: UserPlayer = new UserPlayer('Human')
-  settings: GameSettings = new GameSettings(this.humanPlayer, this.aIs[0])
+
+  settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
 
   private constructor() {}
 
@@ -56,6 +64,18 @@ export class GameHandler {
         this.playerOnTurn.value = 1
       }
       this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+      this.performEndOfTurnActions()
+    }
+  }
+
+  performEndOfTurnActions() {
+    if (this.winner.value !== null) {
+      this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : null
+      this.settings.getPlayer(2).isAI()
+        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+        : null
     }
   }
 
@@ -79,6 +99,26 @@ export class GameHandler {
     if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
     }
+  }
+
+  /**
+   * Adds a new AI to the list of possible players.
+   * @param selectedAIOption For later selection of AI type. Currently not used.
+   * @param name A chosen name for the AI. Does not have to be unique.
+   * @todo Implement selectedAIOption. Atm, EliminationPolicy is used by default.
+   */
+  createAI(selectedAIOption: number, name: string) {
+    console.log(selectedAIOption)
+    this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
+    updatePlayerList()
+  }
+
+  /**
+   * Registers chosen players as player1 and player2 for the next game.
+   * @param index_ index of the chosen option
+   */
+  setPlayers(index1: number, index2: number) {
+    this.settings.setPlayers(this.possiblePlayers[index1], this.possiblePlayers[index2])
   }
 
   resetGame() {
@@ -126,8 +166,8 @@ export class GameHandler {
     return this.historyExport
   }
 
-  getAIList(): AIPlayer[] {
-    return this.aIs
+  getPossiblePlayers(): Player[] {
+    return this.possiblePlayers
   }
 
   getUserPlayer(): UserPlayer {
