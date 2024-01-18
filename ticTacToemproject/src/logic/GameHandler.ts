@@ -11,7 +11,7 @@ import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
-import { setLeftScreen } from '@/utils/GuiStates'
+import { setGUiState } from './GuiState'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -64,22 +64,28 @@ export class GameHandler {
       this.performEndOfTurnActions()
     }
   }
-  
+
+  /**
+   * Performs the actions that have to be done at the end of a gameturn.
+   */
   performEndOfTurnActions() {
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
+  }
+  
+  /**
+   * Performs the actions that have to be done at the end of a game.
+   */
+  performEndOfGameActions() {
+    this.settings.getPlayer(1).isAI()
+      ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+      : null
+    this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
+      ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+      : null
 
-    if (this.winner.value !== null) {
-      this.settings.getPlayer(1).isAI()
-        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
-        : null
-      this.settings.getPlayer(2).isAI()
-        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
-        : null
-
-      // Sets the screen to the selection screen, in the end this should set to the evaluation screen, unless skipped
-      setLeftScreen('StartScreen')
-      this.resetGame()
-    }
+    // Sets the screen to the selection screen, in the end this should set to the evaluation screen, unless skipped
+    setGUiState('start')
+    this.resetGame()
   }
 
   /**

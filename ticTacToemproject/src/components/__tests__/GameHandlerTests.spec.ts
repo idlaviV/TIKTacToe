@@ -1,9 +1,12 @@
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameBoardWithPrevMove } from '@/logic/Moves'
 import { drawStatus } from '@/logic/WinnerStatus'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { resetGameHandler } from './TestUtil'
 import type { GameBoard } from '@/logic/GameBoard'
+import { AIPlayer } from '@/logic/AIPlayer'
+import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { getGuiState } from '@/logic/GuiState'
 
 let handler: GameHandler
 
@@ -297,5 +300,27 @@ describe('getPossibleNextPositions', () => {
     handler.performTurn(2, 2)
     nextTurns = handler.getPossibleNextPositions()
     expect(nextTurns.length).toEqual(0)
+  })
+})
+
+describe('performEndOfGameActions', () => {
+  test('should apply policy to both AIs', () => {
+    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 2')
+    const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
+    const spy2 = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
+    handler.performEndOfGameActions()
+    expect(spy1).toHaveBeenCalled()
+    expect(spy2).toHaveBeenCalled()
+    expect(getGuiState().value).toEqual('start')
+  })
+
+  test('should apply policy to same AI only once', () => {
+    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    handler.settings.player2 = handler.settings.player1
+    const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
+    handler.performEndOfGameActions()
+    expect(spy1).toHaveBeenCalledTimes(1)
+    expect(getGuiState().value).toEqual('start')
   })
 })
