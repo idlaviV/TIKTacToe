@@ -22,15 +22,15 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
   historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
-  humanPlayer: UserPlayer = new UserPlayer('Human')
+  humanPlayer: UserPlayer = new UserPlayer('Mensch')
   /**
    * The possible options for players.
    * Contains all AIs and the option for the user to play.
    */
   possiblePlayers: Player[] = [
     this.humanPlayer,
-    new AIPlayer(new EliminationPolicy(), 'AI'),
-    new AIPlayer(new EliminationPolicy(), 'AI2')
+    new AIPlayer(new EliminationPolicy(), 'KI'),
+    new AIPlayer(new EliminationPolicy(), 'KI 2')
   ]
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
