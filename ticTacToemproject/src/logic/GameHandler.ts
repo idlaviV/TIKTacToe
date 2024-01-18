@@ -10,6 +10,7 @@ import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
+import { updatePlayerList } from '@/utils/PlayerListExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -63,6 +64,18 @@ export class GameHandler {
         this.playerOnTurn.value = 1
       }
       this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+      this.performEndOfTurnActions()
+    }
+  }
+
+  performEndOfTurnActions() {
+    if (this.winner.value !== null) {
+      this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : null
+      this.settings.getPlayer(2).isAI()
+        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+        : null
     }
   }
 
@@ -86,6 +99,17 @@ export class GameHandler {
     if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
       this.performTurn(x, y)
     }
+  }
+
+  /**
+   * Adds a new AI to the list of possible players.
+   * @param selectedAIOption For later selection of AI type. Currently not used.
+   * @param name A chosen name for the AI. Does not have to be unique.
+   * @todo Implement selectedAIOption. Atm, EliminationPolicy is used by default.
+   */
+  createAI(selectedAIOption: number, name: string) {
+    this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
+    updatePlayerList()
   }
 
   /**
@@ -143,10 +167,6 @@ export class GameHandler {
 
   getPossiblePlayers(): Player[] {
     return this.possiblePlayers
-  }
-
-  getUserPlayer(): UserPlayer {
-    return this.humanPlayer
   }
 
   /**

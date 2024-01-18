@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import LeftPanel from './components/LeftPanel.vue'
-import GraphPanel from './components/GraphPanel.vue'
+import RightPanel from './components/RightPanel.vue'
 </script>
 
 <template>
