@@ -54,4 +54,3 @@ const select2 = ref(1)
   </div>
   <v-btn v-on:click="startGame">Spiel starten</v-btn>
 </template>
-@/utils/PlayerListExport
