@@ -114,6 +114,6 @@ export class GameBoardHandler {
 
 export class MoveError extends CustomError {
   public constructor(x:number, y:number, player:PlayerNumber) {
-    super("Player " + player + " cannot move to (" + x + ", " + y+")")
+    super("Player " + player + " cannot move to (" + x + "," + y+")")
   }
 }
