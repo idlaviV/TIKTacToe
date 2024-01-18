@@ -96,9 +96,11 @@ export class GameHandler {
    * @param y the y coordinate of the piece to be added
    */
   performTurnFromUserInput(x: number, y: number) {
-    try{if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
-      this.performTurn(x, y)
-    }} catch (e:unknown) {
+    try {
+      if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
+        this.performTurn(x, y)
+      }
+    } catch (e: unknown) {
       if (e instanceof MoveError) {
         //do nothing, as the user player has the right to make a wrong move
       } else {

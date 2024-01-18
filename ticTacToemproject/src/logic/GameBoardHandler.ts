@@ -40,7 +40,7 @@ export class GameBoardHandler {
       newState[x][y] = player
       return new GameBoard(newState)
     }
-    throw new MoveError(x,y,player)
+    throw new MoveError(x, y, player)
   }
 
   /**
@@ -113,7 +113,7 @@ export class GameBoardHandler {
 }
 
 export class MoveError extends CustomError {
-  public constructor(x:number, y:number, player:PlayerNumber) {
-    super("Player " + player + " cannot move to (" + x + "," + y+")")
+  public constructor(x: number, y: number, player: PlayerNumber) {
+    super('Player ' + player + ' cannot move to (' + x + ',' + y + ')')
   }
 }
