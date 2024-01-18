@@ -65,4 +65,3 @@ export class HistoryExport {
     return this.edges
   }
 }
-
