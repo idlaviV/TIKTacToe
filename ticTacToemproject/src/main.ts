@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './index.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'material-symbols'
 
 // Vuetify
 import 'vuetify/styles'
