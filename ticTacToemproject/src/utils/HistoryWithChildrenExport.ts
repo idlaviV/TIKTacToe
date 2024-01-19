@@ -66,8 +66,9 @@ export class HistoryWithChildrenExport {
    */
   addChildren() {
     // From the possible next moves the representatives of the equivalence classes are selected.
-    const childrenOfActiveGameBoard:GameBoard[] = GameHandler.getInstance().getPossibleNextPositions()
-    const representativesOfChildren:number[] =
+    const childrenOfActiveGameBoard: GameBoard[] =
+      GameHandler.getInstance().getPossibleNextPositions()
+    const representativesOfChildren: number[] =
       IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
     const representativeOfChildrenAsGameBoards: GameBoard[] = []
     childrenOfActiveGameBoard.forEach((element) => {

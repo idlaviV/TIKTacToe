@@ -71,7 +71,7 @@ export class GameHandler {
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
     this.historyExport.updateHistory(this.gBHandler.getGameBoard())
   }
-  
+
   /**
    * Performs the actions that have to be done at the end of a game.
    */
