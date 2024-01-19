@@ -34,12 +34,12 @@ describe('move', () => {
 
   test('add piece to already occupied space', () => {
     handler.move(0, 0, 1)
-    expect(() => handler.move(0, 0, 2)).toThrowError('This piece cannot go there')
+    expect(() => handler.move(0, 0, 2)).toThrowError('Player 2 cannot move to (0,0)')
     expect(handler.history.length == 1)
   })
 
   test('add piece outside of board', () => {
-    expect(() => handler.move(3, 0, 1)).toThrowError('This piece cannot go there')
+    expect(() => handler.move(3, 0, 1)).toThrowError('Player 1 cannot move to (3,0)')
     expect(handler.history.length == 1)
   })
 })

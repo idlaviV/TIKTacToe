@@ -8,8 +8,8 @@ const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
-const ResetGame = () => {
-  gameHandler.resetGame()
+const startEval = () => {
+  gameHandler.performEndOfGameActions()
 }
 </script>
 
@@ -24,7 +24,7 @@ const ResetGame = () => {
           <div class="text-pink-500">X Spieler 1</div>
           <div class="text-blue-500">O Spieler 2</div> </v-col
         ><v-col>
-          <v-btn @click="ResetGame"> Spiel zurücksetzen </v-btn>
+          <v-btn @click="startEval"> Belohnung ausführen </v-btn>
         </v-col></v-row
       ></v-container
     >

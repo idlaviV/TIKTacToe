@@ -1,6 +1,6 @@
 import { HistoryExport } from '../utils/HistoryExport'
 import type { GameBoard } from './GameBoard'
-import { GameBoardHandler } from './GameBoardHandler'
+import { GameBoardHandler, MoveError } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
 import type { PlayerNumber } from './PlayerNumber'
 import type { WinnerStatus } from './WinnerStatus'
@@ -11,6 +11,7 @@ import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
+import { setGUiState } from './GuiState'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -58,25 +59,33 @@ export class GameHandler {
     if (this.winner.value == null) {
       this.gBHandler.move(x, y, this.playerOnTurn.value)
       this.winner.value = this.gBHandler.calculateWinner()
-      if (this.playerOnTurn.value === 1) {
-        this.playerOnTurn.value = 2
-      } else {
-        this.playerOnTurn.value = 1
-      }
       this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+
       this.performEndOfTurnActions()
     }
   }
 
+  /**
+   * Performs the actions that have to be done at the end of a gameturn.
+   */
   performEndOfTurnActions() {
-    if (this.winner.value !== null) {
-      this.settings.getPlayer(1).isAI()
-        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
-        : null
-      this.settings.getPlayer(2).isAI()
-        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
-        : null
-    }
+    this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
+  }
+  
+  /**
+   * Performs the actions that have to be done at the end of a game.
+   */
+  performEndOfGameActions() {
+    this.settings.getPlayer(1).isAI()
+      ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+      : null
+    this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
+      ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+      : null
+
+    // Sets the screen to the selection screen, in the end this should set to the evaluation screen, unless skipped
+    setGUiState('start')
+    this.resetGame()
   }
 
   /**
@@ -96,8 +105,16 @@ export class GameHandler {
    * @param y the y coordinate of the piece to be added
    */
   performTurnFromUserInput(x: number, y: number) {
-    if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
-      this.performTurn(x, y)
+    try {
+      if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
+        this.performTurn(x, y)
+      }
+    } catch (e: unknown) {
+      if (e instanceof MoveError) {
+        //do nothing, as the user player has the right to make a wrong move
+      } else {
+        throw e
+      }
     }
   }
 
