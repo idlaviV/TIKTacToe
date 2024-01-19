@@ -66,27 +66,27 @@ export class HistoryWithChildrenExport {
    */
   addChildren() {
     // From the possible next moves the representatives of the equivalence classes are selected.
-    const childrenOfActiveGameBoard = GameHandler.getInstance().getPossibleNextPositions()
-    const representativesOfNonequivalentGameBoards =
+    const childrenOfActiveGameBoard:GameBoard[] = GameHandler.getInstance().getPossibleNextPositions()
+    const representativesOfChildren:number[] =
       IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
-    const representativeGameBoards: GameBoard[] = []
+    const representativeOfChildrenAsGameBoards: GameBoard[] = []
     childrenOfActiveGameBoard.forEach((element) => {
-      if (representativesOfNonequivalentGameBoards.includes(element.getCode())) {
-        representativeGameBoards.push(element)
+      if (representativesOfChildren.includes(element.getCode())) {
+        representativeOfChildrenAsGameBoards.push(element)
       }
     })
 
     // The representatives of the equivalence classes are added to the graph.
-    for (let index = 0; index < representativeGameBoards.length; index++) {
-      let newCode: string = representativeGameBoards[index].getCode().toString()
+    for (const representativeAsGameboard of representativeOfChildrenAsGameBoards) {
+      const newCode: string = representativeAsGameboard.getCode().toString()
       this.nodes.value[newCode] = {
         name: newCode,
-        boardState: representativeGameBoards[index].state,
+        boardState: representativeAsGameboard.state,
         active: false,
         isChild: true
       }
-      const key: string = this.lastCode + '#' + newCode
-      this.edges.value[key] = { source: this.lastCode, target: newCode }
+      const edgeKey: string = this.lastCode + '#' + newCode
+      this.edges.value[edgeKey] = { source: this.lastCode, target: newCode }
     }
   }
 

@@ -252,7 +252,9 @@ export class IsomorphismGroup {
         }
       })
 
-      representativesOfNonequivalentGameBoards.push(Math.min(...gameBoardsWithNormalForm))
+      representativesOfNonequivalentGameBoards.push(
+        IsomorphismGroup.getRepresentativeOfGameBoards(...gameBoardsWithNormalForm)
+      )
     }
 
     return representativesOfNonequivalentGameBoards

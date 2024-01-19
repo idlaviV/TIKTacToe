@@ -60,8 +60,6 @@ export class GameHandler {
     if (this.winner.value == null) {
       this.gBHandler.move(x, y, this.playerOnTurn.value)
       this.winner.value = this.gBHandler.calculateWinner()
-      this.historyExport.updateHistory(this.gBHandler.getGameBoard())
-
       this.performEndOfTurnActions()
     }
   }
@@ -71,6 +69,7 @@ export class GameHandler {
    */
   performEndOfTurnActions() {
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
+    this.historyExport.updateHistory(this.gBHandler.getGameBoard())
   }
   
   /**
