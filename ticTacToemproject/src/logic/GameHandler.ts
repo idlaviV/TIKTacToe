@@ -1,6 +1,6 @@
 import { HistoryExport } from '../utils/HistoryExport'
 import type { GameBoard } from './GameBoard'
-import { GameBoardHandler } from './GameBoardHandler'
+import { GameBoardHandler, MoveError } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
 import type { PlayerNumber } from './PlayerNumber'
 import type { WinnerStatus } from './WinnerStatus'
@@ -105,8 +105,16 @@ export class GameHandler {
    * @param y the y coordinate of the piece to be added
    */
   performTurnFromUserInput(x: number, y: number) {
-    if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
-      this.performTurn(x, y)
+    try {
+      if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
+        this.performTurn(x, y)
+      }
+    } catch (e: unknown) {
+      if (e instanceof MoveError) {
+        //do nothing, as the user player has the right to make a wrong move
+      } else {
+        throw e
+      }
     }
   }
 
