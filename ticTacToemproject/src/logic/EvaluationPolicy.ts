@@ -20,5 +20,5 @@ export interface EvaluationPolicy {
    * @param aI The AIPlayer to whom the policy is applied
    * @param history The history of the game
    */
-  applyPolicy(aI: AIPlayer, history: [GameBoard]): void
+  applyPolicy(aI: AIPlayer, history: GameBoard[]): void
 }

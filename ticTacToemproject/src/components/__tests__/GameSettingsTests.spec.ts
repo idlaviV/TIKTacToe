@@ -3,14 +3,17 @@ import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import { beforeEach, describe, expect, test } from 'vitest'
 import { resetGameHandler } from './TestUtil'
+import { GameSettings } from '@/logic/GameSettings'
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
+let settings: GameSettings
 
 beforeEach(() => {
   //Later: Setup should set AI on slot 2, UserPlayer on slot 1
   resetGameHandler()
   gameHandler = GameHandler.getInstance()
   gBHandler = gameHandler.getGBHandler()
+  settings = gameHandler.settings
   //Remove randomization
   const ai: AIPlayer = gameHandler.settings.player2 as AIPlayer
   ai.randomzier = {
@@ -21,11 +24,18 @@ beforeEach(() => {
   }
 })
 
+describe('getPlayer', () => {
+  test('getPlayer', () => {
+    expect(settings.getPlayer(1)).toEqual(settings.player1)
+    expect(settings.getPlayer(2)).toEqual(settings.player2)
+  })
+})
+
 describe('User input is only used if userplayer is on turn', () => {
   test('UserPlayer as player1, AIPlayer as player2', () => {
     gameHandler.performTurnFromUserInput(0, 0)
     expect(gBHandler.getGameBoard().getCode()).toEqual(1)
-    gameHandler.performTurnFromUserInput(0, 0)
+    gameHandler.performTurnFromUserInput(0, 1)
     expect(gBHandler.getGameBoard().getCode()).toEqual(1)
   })
 })

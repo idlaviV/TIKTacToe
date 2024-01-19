@@ -4,6 +4,7 @@ import type { FieldType } from './FieldType'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
+import { CustomError } from 'ts-custom-error'
 
 /**
  * This class handles the gameboard. It keeps track of the current gameboard and the history of the gameboard.
@@ -32,13 +33,14 @@ export class GameBoardHandler {
    * @param player the player that made the move
    * @returns the updated gameboard
    */
+  // private
   addPiece(x: number, y: number, board: GameBoard, player: PlayerNumber): GameBoard {
-    if (board.state[x][y] == 0) {
+    if (0 <= x && x <= 2 && 0 <= y && y <= 2 && board.state[x][y] == 0) {
       const newState: FieldType[][] = board.clone()
       newState[x][y] = player
       return new GameBoard(newState)
     }
-    throw new Error('This piece cannot go there')
+    throw new MoveError(x, y, player)
   }
 
   /**
@@ -107,5 +109,11 @@ export class GameBoardHandler {
 
   getGameBoardExport() {
     return this.gameBoard
+  }
+}
+
+export class MoveError extends CustomError {
+  public constructor(x: number, y: number, player: PlayerNumber) {
+    super('Player ' + player + ' cannot move to (' + x + ',' + y + ')')
   }
 }

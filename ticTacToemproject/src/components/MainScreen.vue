@@ -18,23 +18,31 @@ const ResetGame = () => {
   <div>
     <!-- Caption and prompt for next turn -->
     <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
-    <h3 class="text-xl mb-4">Player {{ playerOnTurn }}'s turn</h3>
+    <v-container
+      ><v-row
+        ><v-col>
+          <div class="text-pink-500">X Spieler 1</div>
+          <div class="text-blue-500">O Spieler 2</div> </v-col
+        ><v-col>
+          <v-btn @click="ResetGame"> Spiel zurücksetzen </v-btn>
+        </v-col></v-row
+      ></v-container
+    >
+    <h3 :class="{ invisible: winner !== null }">Spieler {{ playerOnTurn }} ist dran</h3>
 
     <!-- The current gameboard -->
     <MainScreenBoard />
 
-    <!-- Display winner -->
-    <h2 v-if="winner === drawStatus" class="text-6xl dond-bold mb-8">Draw!</h2>
-    <h2 v-else-if="winner" class="text-6xl dond-bold mb-8">Player {{ winner }} wins!</h2>
-
     <!-- Controls for AI turns -->
     <MainScreenMoves />
-
-    <br />
-    <br />
-
-    <div>
-      <v-btn @click="ResetGame"> Reset Game </v-btn>
-    </div>
+    <br /><br />
+    <!-- Display winner -->
+    <h2 v-if="winner === drawStatus" class="text-4xl dond-bold mb-8">Unentschieden!</h2>
+    <h2 v-else-if="winner" class="text-4xl dond-bold mb-8">Spieler {{ winner }} hat gewonnen!</h2>
   </div>
 </template>
+<style>
+.invisible {
+  visibility: hidden;
+}
+</style>

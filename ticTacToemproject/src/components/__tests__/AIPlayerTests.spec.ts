@@ -3,12 +3,14 @@ import { GameBoard } from '@/logic/GameBoard'
 import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import { Randomizer } from '@/logic/Randomizer'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { resetGameHandler } from './TestUtil'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import type { EvaluationPolicy } from '@/logic/EvaluationPolicy'
 
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
+let policy: EvaluationPolicy
 let player: AIPlayer
 let randomNumber = 1
 let debugRandomizer: Randomizer
@@ -17,7 +19,8 @@ let maxFromAI: number
 beforeEach(() => {
   resetGameHandler()
   gameHandler = GameHandler.getInstance()
-  player = new AIPlayer(new EliminationPolicy())
+  policy = new EliminationPolicy()
+  player = new AIPlayer(policy)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   debugRandomizer = {
     randomInteger(min: number, max: number) {
@@ -285,5 +288,17 @@ describe('perform turn on complicated board', () => {
         [1, 0, 1]
       ])
     )
+  })
+})
+
+describe('applyPolicy', () => {
+  test('eliminationPolicy', () => {
+    const policySpy = vi.spyOn(policy, 'applyPolicy')
+
+    expect(policySpy).not.toHaveBeenCalled()
+
+    player.applyPolicy()
+
+    expect(policySpy).toHaveBeenCalledWith(player, gBHandler.history)
   })
 })

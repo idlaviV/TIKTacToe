@@ -20,6 +20,11 @@ export class GameSettings {
     this.player2 = player2
   }
 
+  setPlayers(player1: Player, player2: Player) {
+    this.player1 = player1
+    this.player2 = player2
+  }
+
   getPlayer(playerNumber: PlayerNumber): Player {
     if (playerNumber == 1) {
       return this.player1
