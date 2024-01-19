@@ -38,7 +38,9 @@ const startEval = () => {
     <br /><br />
     <!-- Display winner -->
     <h2 v-show="winner === drawStatus" class="text-4xl dond-bold mb-8">Unentschieden!</h2>
-    <h2 v-show="winner === 1 || winner === 2" class="text-4xl dond-bold mb-8">Spieler {{ winner }} hat gewonnen!</h2>
+    <h2 v-show="winner === 1 || winner === 2" class="text-4xl dond-bold mb-8">
+      Spieler {{ winner }} hat gewonnen!
+    </h2>
   </div>
 </template>
 <style>
