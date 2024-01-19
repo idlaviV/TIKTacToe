@@ -14,8 +14,11 @@ import { configs } from '@/components/GraphPanelUserConfigs'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 
-const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getNodes()
-const edges: Ref<Edges> = gameHandler.getHistoryExport().getEdges()
+const range = [0, 1, 2]
+const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getNodes()
+const edges: Ref<Edges> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getEdges()
+// At the start the children are added. Later the addChildren-function is automatically called whenever the history is changed.
+gameHandler.getHistoryExport().getHistoryWithChildrenExport().addChildren()
 
 /**
  * @description The position of the nodes in the graph.
@@ -46,7 +49,7 @@ function updateLayout() {
   if (activeNode !== undefined && height !== undefined && width !== undefined) {
     const x = layouts.value.nodes[activeNode].x
     const y = layouts.value.nodes[activeNode].y
-    graph.value?.panTo({ x: x, y: -y }) //Moves to the current node
+    graph.value?.panTo({ x: -x, y: -y }) //Moves to the current node
     graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
   }
 }
