@@ -9,12 +9,10 @@ const autoPlay = ref(false)
 let timer: ReturnType<typeof setTimeout>
 
 const toggleAutoPlay = () => {
-  console.log('toggleAutoPlay')
   autoPlay.value = !autoPlay.value
 }
 
 const performAiTurnIfGameIsRunning = () => {
-  console.log('performAiTurnIfGameIsRunning')
   if (getGuiState().value == 'game') {
     gameHandler.performAiTurn()
   } else {
@@ -22,7 +20,7 @@ const performAiTurnIfGameIsRunning = () => {
   }
 }
 
-const startTimer = () => {
+const startTimerIfAutoPlay = () => {
   if (autoPlay.value) {
     timer = setInterval(performAiTurnIfGameIsRunning, 1000)
   } else {
@@ -31,16 +29,12 @@ const startTimer = () => {
 }
 
 watch(getGuiState(), (guiState) => {
-  console.log('guiState changed to ' + guiState)
   if (guiState == 'game') {
-    startTimer()
+    startTimerIfAutoPlay()
   }
 })
 
-watch(autoPlay, (status) => {
-  console.log('autoPlay changed to ' + status)
-  startTimer()
-})
+watch(autoPlay, startTimerIfAutoPlay)
 
 /**
  * @description Informs the model, that the user wants to trigger the next AI turn.
