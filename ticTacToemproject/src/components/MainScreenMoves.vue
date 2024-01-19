@@ -2,6 +2,7 @@
 import { GameHandler } from '@/logic/GameHandler'
 import PlayButton from './MainScreenMovesPlayButton.vue'
 import { ref, watch } from 'vue'
+import { getGuiState } from '@/logic/GuiState'
 
 const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
@@ -11,15 +12,29 @@ const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
 }
 
-watch(autoPlay, (status) => {
-  if (status) {
-    timer = setInterval(() => {
-      gameHandler.performAiTurn()
-    }, 1000)
+const performAiTurnIfGameIsRunning = () => {
+  if (getGuiState().value == 'game') {
+    gameHandler.performAiTurn()
   } else {
     clearInterval(timer)
   }
+}
+
+const startTimerIfAutoPlay = () => {
+  if (autoPlay.value) {
+    timer = setInterval(performAiTurnIfGameIsRunning, 1000)
+  } else {
+    clearInterval(timer)
+  }
+}
+
+watch(getGuiState(), (guiState) => {
+  if (guiState == 'game') {
+    startTimerIfAutoPlay()
+  }
 })
+
+watch(autoPlay, startTimerIfAutoPlay)
 
 /**
  * @description Informs the model, that the user wants to trigger the next AI turn.

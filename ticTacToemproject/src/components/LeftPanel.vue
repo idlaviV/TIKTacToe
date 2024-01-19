@@ -10,7 +10,7 @@ const guiState = getGuiState()
    depending on the global state. -->
 <template>
   <div>
-    <StartScreen v-if="guiState == 'start'" />
-    <MainScreen v-else />
+    <StartScreen v-show="guiState == 'start'" />
+    <MainScreen v-show="guiState == 'game'" />
   </div>
 </template>
