@@ -71,6 +71,10 @@ export class HistoryExport {
     this.historyWithChildrenExport.update(this.nodes.value, this.edges.value, this.lastCode)
   }
 
+  getHistoryWithChildrenExport() {
+    return this.historyWithChildrenExport
+  }
+
   getNodes(): Ref<Nodes> {
     return this.nodes
   }

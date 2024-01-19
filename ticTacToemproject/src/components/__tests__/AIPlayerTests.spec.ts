@@ -23,8 +23,8 @@ beforeEach(() => {
   player = new AIPlayer(policy)
   debugRandomizer = {
     randomInteger(min: number, max: number) {
-      if(min != 1) {
-        throw new Error("Illegal use of randomizer")
+      if (min != 1) {
+        throw new Error('Illegal use of randomizer')
       }
       maxFromAI = max
       return randomNumber
