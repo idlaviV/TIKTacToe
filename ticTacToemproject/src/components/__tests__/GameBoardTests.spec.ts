@@ -78,3 +78,18 @@ describe('getNormalForm', () => {
     expect(handler.getGameBoard().getNormalForm()).toEqual(102)
   })
 })
+
+describe('toString', () => {
+  test('empty board', () => {
+    expect(new GameBoard().toString()).toEqual('| | | |\n| | | |\n| | | |\n')
+  })
+  test('complex board', () => {
+    expect(
+      new GameBoard([
+        [1, 2, 0],
+        [0, 2, 1],
+        [2, 2, 2]
+      ]).toString()
+    ).toEqual('|X|O| |\n| |O|X|\n|O|O|O|\n')
+  })
+})

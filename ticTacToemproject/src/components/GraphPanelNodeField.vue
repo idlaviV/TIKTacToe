@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type FieldType } from '../logic/FieldType'
-import { convertFieldType } from '@/utils/HistoryExport'
+import { type FieldType, symbol } from '../logic/FieldType'
 /**
  * @param x The column of the field.
  * @param y The row of the field.
@@ -9,7 +8,7 @@ import { convertFieldType } from '@/utils/HistoryExport'
 const props = defineProps<{ x: number; y: number; fieldType: FieldType }>()
 const x = props.x
 const y = props.y
-const label: string = convertFieldType(props.fieldType)
+const label: string = symbol(props.fieldType)
 const xOffsetRect: number = -30
 const yOffsetRect: number = -30
 const xOffsetText: number = -20

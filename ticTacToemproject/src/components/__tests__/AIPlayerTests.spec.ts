@@ -21,9 +21,11 @@ beforeEach(() => {
   gameHandler = GameHandler.getInstance()
   policy = new EliminationPolicy()
   player = new AIPlayer(policy)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   debugRandomizer = {
     randomInteger(min: number, max: number) {
+      if (min != 1) {
+        throw new Error('Illegal use of randomizer')
+      }
       maxFromAI = max
       return randomNumber
     }

@@ -229,4 +229,34 @@ export class IsomorphismGroup {
   static getRepresentativeOfGameBoards(...gameBoards: number[]): number {
     return Math.min(...gameBoards)
   }
+
+  /**
+   * Extracts one representative GameBoard per contained equivalence class from an array of GameBoards.
+   * If there are several GameBoards per equivalence class, the GameBoard with the smallest code is selected.
+   * @param gameBoards The array of GameBoards
+   * @returns The array of representative GameBoards in code form
+   */
+  static getRepresentativesOfNonequivalentGameBoards(gameBoards: GameBoard[]): number[] {
+    const representativesOfNonequivalentGameBoards: number[] = []
+
+    const normalForms: Set<number> = new Set()
+    gameBoards.forEach((element) => {
+      normalForms.add(element.getNormalForm())
+    })
+
+    for (const normalForm of normalForms) {
+      const gameBoardsWithNormalForm: number[] = []
+      gameBoards.forEach((element) => {
+        if (element.getNormalForm() === normalForm) {
+          gameBoardsWithNormalForm.push(element.getCode())
+        }
+      })
+
+      representativesOfNonequivalentGameBoards.push(
+        IsomorphismGroup.getRepresentativeOfGameBoards(...gameBoardsWithNormalForm)
+      )
+    }
+
+    return representativesOfNonequivalentGameBoards
+  }
 }
