@@ -46,9 +46,9 @@ Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen nachv
 \section{Didaktische Ziele}
 Dieses Projekt und das Produkt "`\TicTacToe"' sind für den Informatikunterricht oder Informatik-AGs in der 7. bis 9.\ Klasse gedacht.
 Sie soll jedoch auch für interessierte Schülerinnen und Schüler der Oberstufe spannend und informativ sein.
-Eine Lerneinheit mit diesem Tool ist darauf ausgelegt, immer von einer Lehrkraft begleitet zu werden und ist nicht komplett ohne Anleitung nützlich.
-Schüler, die sich mit dem Tool beschäftigen, sollen nach Abschluss Lerneinheit nennen können, wie eine KI mit Hilfe von Gewichten lernen und trainiert werden kann.
-Außerdem sollen sie auch in der Lage sein, den Gewichte-Graphen als Modell des Gedächtnis der KI zu benennen und die Entscheidungen anhand dieses Graphen nachvollziehen zu können.
+Eine Lerneinheit mit diesem Tool ist darauf ausgelegt, immer von einer Lehrkraft begleitet zu werden.
+Schüler, die sich mit dem Tool beschäftigen, sollen nach Abschluss der Lerneinheit nennen können, wie eine KI mit Hilfe von Gewichten lernen und trainiert werden kann.
+Außerdem sollen sie in der Lage sein, den Gewichte-Graphen als Modell des Gedächtnis der KI zu benennen und die Entscheidungen anhand dieses Graphen nachvollziehen zu können.
 Ältere und schnellere Schüler können weiterhin beobachten und benennen,
 wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI auswirken und können diese aufgrund ihrer Beobachtungen auch bewerten.
 
@@ -62,7 +62,7 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 		\item[M300] Die vorherigen Konfigurationen des Spielfeldes werden gespeichert und in einem Baum visualisiert.
 		\item[M400] Alle Spielbrett-Konfigurationen, welche auf die momentane folgen können, können angezeigt werden (bis auf äquivalente Situationen).
 		\item[M500] Eine einfache KI wählt auf Basis von Gewichten einen Zug aus.
-		\item[M600] Um die KI zu trainieren werden durch Belohnungsstrategien die Gewichte der Pfade verändert.
+		\item[M600] Um die KI zu trainieren, werden durch Belohnungsstrategien die Gewichte der Pfade verändert.
 		\item[M610] Es gibt mindestens eine Belohnungsstrategie.
 		\item[M700] Der Nutzer kann gegen die KI Tic-Tac-Toe spielen.
 	\end{itemize}
@@ -76,29 +76,28 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 		\item[S300] Die Zuggeschwindigkeit der KI kann festgelegt werden. 
 		\item[S400] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel mit den gleichen Einstellungen gestartet wird.
 		\item[S500] Zwischen zwei Spielen besteht die Möglichkeit, die Gewichte der trainierte(n) KI(s) einzeln zurückzusetzen.
-		\item[S600] Es gibt eine Ansicht, in der am Ende des Spiels die Belohnungsstrategie vom Nutzer angepasst werden kann.
-		\item[S610] Eine Belohnungsstrategie ist die Elimination des letzten Zuges bei Verlust des Spiels.
+		\item[\textcolor{red}{S601}] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte durch die Belohnungsstrategie angepasst werden können.
+		\item[\textcolor{red}{S605}] Bei der Initialisierung einer KI wird die Belohnungsstrategie vom Nutzer ausgewählt.
+		\item[\textcolor{red}{S611}] Eine Belohnungsstrategie ist die Elimination des letzten Zuges des Verlierers. Falls aus einem Zustand nur Verlustzüge möglich sind, so wird auch der Zug vor diesem Zustand eliminiert.
 		\item[S620] Eine Belohnungsstrategie ist Fehlerrückführung.
 				Für Gewinnen, Unentschieden und Verlust werden die Gewichte der ausgeführten Züge individuell angepasst.
+		\item[\textcolor{red}{S625}] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte der Belohnungsstrategie Fehlerrückführung vom Nutzer angepasst werden können.
 		\item[S630] Der Nutzer kann auswählen, dass die konfigurierte Belohnungsstrategie in Zukunft automatisch angewendet wird.
-		\item[S700] Während der Auswahl der Belohnungsstrategie wird der Gewichte-Graph angezeigt.
-		\item[S710] Der Spielverlauf wird im Gewichte-Graph hervorgehoben.
+		\item[\textcolor{red}{S701}] Während der Auswahl der Belohnungsstrategie wird der Spielverlauf mit alternativen Optionen als Graph angezeigt.
 	\end{itemize}
 
 \subsection{Kann-Kriterien}
 	\begin{itemize}
 		\item[K100] Bei der Belohnungsstrategie Fehlerrückführung ist eine Aufschlüsselung der Belohnungen nach Spielstadium möglich.
 				Das heißt, dass die Gewichte in der frühen Phase des Spiels anders angepasst werden können als die in der späteren Phase.
-		\item[K110] Bei der Konfiguration der Belohnungsstrategie kann der Nutzer auswählen, dass die KI auch die Gewichte der Züge des Gegners anpasst.
 		\item[K200] Die bisher ausgeführten Züge können rückgängig gemacht werden.
-		\item[K300] Es ist eine Ansicht aufrufbar, in der der gesamte Gewichte-Graph angezeigt wird.
+		\item[K300] Es ist eine Ansicht aufrufbar, in welcher der gesamte Gewichte-Graph angezeigt wird.
 		\item[K400] Es ist eine perfekt spielende KI implementiert.
 				Bei Start des Spiels kann diese fehlerlose KI anstelle des Nutzers oder einer anderen KI ausgewählt werden.
 		\item[K500] Es gibt zu jedem Zeitpunkt die Möglichkeit, das aktuelle Spiel abzubrechen.
 				Dabei werden die Gewichte der aktuell trainierten KI nicht geändert.
 		\item[K600] Es gibt, solange das Spiel still steht, die Möglichkeit, die aktuell trainierte(n) KI(s) zu exportieren.
 				Solange das Spiel still steht können Gewichte importiert werden, die dann die aktuellen Gewichte der ausgewählten KI überschreiben.
-		\item[K700] Der Nutzer kann einstellen, dass nach Beenden eines Spiels die Start-Reihenfolge der Spieler automatisch getauscht wird.
 		\item[K800] Statt Tic-Tac-Toe kann auch ein einfaches Brettspiel gespielt werden, für das die KI mit einer ähnlichen Entscheidungsbaum-Struktur trainiert wird.
 
 	\end{itemize}
@@ -109,6 +108,16 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 		\item[A100] Die Gewichte der KI können nur über vorgegebene Belohnungsstrategien angepasst werden.
 		\item[A200] Die Entscheidungen der KI basieren nur auf der aktuellen Spielsituation, nicht auf dem Spielverlauf.
 	\end{itemize}
+
+\subsection{Änderungen an den Kriterien}
+\subsubsection{Sprint 2}
+\begin{itemize}
+	\item S600 durch S601, S605 und S625 ersetzt
+	\item S610 zu S611 präzisiert/korrigiert
+	\item S700 durch S701 ersetzt, S710 gestrichen
+	\item K110 gestrichen
+	\item K700 gestrichen
+\end{itemize}
 	
 \section{Definition of Done}%Checkliste zur Überprüfung, ob ein Increment fertig ist
 Ein Increment besteht aus einem oder mehreren Features.
@@ -182,12 +191,12 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 
 Ein Schüler öffnet die Website zum ersten Mal und sieht den Startbildschirm.
 Auf diesem kann für Spieler 1 (Sp1) und Spieler 2 (Sp2) ausgewählt werden kann, ob eine KI oder der Schüler die Züge übernimmt.
-Der Schüler wählt aus, dass er selbst (Sp1) gegen eine KI (Sp2) spielt und startet das Spiel per Knopfdruck.
+Der Schüler wählt aus, dass er selbst (Sp1) gegen eine KI (Sp2) mit der Belohnungsstrategie Elimination spielt und startet das Spiel per Knopfdruck.
 Er setzt den ersten Stein auf ein Feld seiner Wahl und schaut sich an der Seite alle möglichen nächsten Züge von Sp2 an.
 Er drückt auf einen Knopf, damit die KI für Sp2 zieht.
 Nach seinem nächsten Zug wählt er aus, dass die KI die Züge ab jetzt automatisch spielt.
 Im Folgenden macht die KI ihre Züge jetzt sobald der Schüler für Sp1 gezogen hat.
-Nachdem das Spiel fertig gespielt ist wählt er die Belohnungsstrategie aus.
+Nachdem das Spiel fertig gespielt ist, wird die Belohnungsstrategie angewandt.
 Dadurch werden die Gewichte der KI entsprechend angepasst.
 Dies kann der Schüler im angezeigten Gewichte-Graph nachvollziehen.
 
@@ -200,7 +209,7 @@ Im Folgenden spielt der Schüler gegen die KI mehrere Spiele, ohne dass der Star
 Die Gewichte der KI werden trotzdem nach jedem Spiel angepasst.
 
 Nachdem er die KI nach seinen Wünschen trainiert hat, stellt er ein, dass er wieder in den Startbildschirm kommt.
-Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnungsalgorithmus zu trainieren.
+Er löscht den Lernfortschritt der KI.
 
 \section{GUI-Entwurf}
 \begin{figure}[ht]
@@ -223,7 +232,7 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 \subsection{Klassendiagramme}
 \begin{figure}[ht]
 \includegraphics[width=\textwidth]{Klassendiagramme/Aktuell.png}
-\caption{Klassendiagramm für Release 1 (Entwurf)}
+\caption{Klassendiagramm für Release 2 (Qualitätssicherung)}
 \end{figure}
 \begin{figure}[ht]
 \includegraphics[height=\textheight]{Klassendiagramme/Planung.png}
@@ -265,7 +274,8 @@ Er löscht den Lernfortschritt der KI, um sie diesmal mit einem anderen Belohnun
 										 -- (4,7.5);%Mit heftiger Arbeit gerade noch M300 geschafft
 	\draw[very thick, ForestGreen] (4,7.5) -- (5,7.5);%In den zwei Wochen Weihnachtsferien wurde kein Feature abgeschlossen
 	\draw[very thick] (5,7.5) -- (6,13.5)%M600 abgeschlossen
-										-- (7,13.5); %Keine neuen Features
+										-- (7,13.5) %Keine neuen Features
+										-- (8,17);%S100, M700 geschafft
 	\draw[dotted] plot [smooth] coordinates {(0,0) (4,7.5) (8,28) (11,48)};
 	%Ziele
 	\draw(4,7.5) node[cross, color=ForestGreen]{};%Sprint 1
