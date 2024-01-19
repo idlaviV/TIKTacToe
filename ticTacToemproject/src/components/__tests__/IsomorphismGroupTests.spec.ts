@@ -1,6 +1,7 @@
 import { GameBoard, calculateCode } from '@/logic/GameBoard'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import { beforeEach, describe, expect, test } from 'vitest'
+import * as Util from './TestUtil'
 
 describe('getGameBoardEquiv', () => {
   test('Empty board', () => {
@@ -215,48 +216,37 @@ describe('getRepresentativeOfGameBoards', () => {
 
 describe('getRepresentativesOfNonequivalentGameBoards', () => {
   let boards: GameBoard[]
+  let representative: number[] = []
   beforeEach(() => {
     boards = []
   })
 
-  let representative: number[] = []
-  const gameBoard21 = new GameBoard([
-    [1, 2, 0],
-    [0, 0, 0],
-    [0, 0, 0]
-  ])
-  const gameBoard120 = new GameBoard([
-    [0, 2, 1],
-    [0, 0, 0],
-    [0, 0, 0]
-  ])
-  const gameBoard2100 = new GameBoard([
-    [0, 0, 1],
-    [2, 0, 0],
-    [0, 0, 0]
-  ])
+  test('Empty array', () => {
+    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    expect(representative).toEqual([])
+  })
 
   test('Single element', () => {
-    boards.push(gameBoard21)
+    boards.push(Util.gameBoard21)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(representative).toEqual([21])
   })
   test('Multiple equivalent elements', () => {
-    boards.push(gameBoard21)
-    boards.push(gameBoard120)
+    boards.push(Util.gameBoard21)
+    boards.push(Util.gameBoard120)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(representative).toEqual([21])
   })
   test('Multiple nonequivalent elements', () => {
-    boards.push(gameBoard21)
-    boards.push(gameBoard2100)
+    boards.push(Util.gameBoard21)
+    boards.push(Util.gameBoard2100)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(representative).toEqual([21, 2100])
   })
   test('Multiple nonequivalent and equivalent elements', () => {
-    boards.push(gameBoard21)
-    boards.push(gameBoard120)
-    boards.push(gameBoard2100)
+    boards.push(Util.gameBoard21)
+    boards.push(Util.gameBoard120)
+    boards.push(Util.gameBoard2100)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(representative).toEqual([21, 2100])
   })
