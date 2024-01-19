@@ -1,10 +1,13 @@
-Die Eliminationsstrategie ist eine Evaluationsstrategie, welche den KI's des TicTacToeamprojektes nativ zugeordnet werden kann.
+Die Eliminationsstrategie ist eine Evaluationsstrategie, welche den KIs des TicTacToeamprojektes nativ zugeordnet werden kann.
 
-Bei dieser wird das Gewicht des letzten Zuges des Verlierers (egal ob die KI verloren hat oder nicht) auf "0" heruntergesetzt.
-Danach werden alle Züge überprüft.
-Es wird überprüft, ob der Spieler nach einem Zug nur Züge mit Gewicht 0 machen kann.
-Dies wird jedes mal sowohl für die KI als auch für ihren Gegner durchgeführt.
-Falls dem so ist wird auch dieser Zug auf "0" gesetzt.
+Bei dieser wird am Ende eines Spiels das Gewicht des letzten Zuges des Verlierers (egal ob die KI verloren hat oder nicht) auf "0" gesetzt.
+Danach werden alle Gewichte der Züge des gerade absolvierten Spiels überprüft.
+Dabei wird überprüft, ob es einen Spielzustand gibt, bei dem ein Spieler in Zukunft nur Züge mit Gewicht 0 machen kann.
+Falls dem so ist, wird auch das Gewicht des davor vom betreffenden Spieler getätigten Zuges auf "0" gesetzt.
+Dies wird jedes Mal sowohl für die Züge der KI als auch für die Züge ihres Gegners durchgeführt.
+
+Beispiel?
+
 Um dies zu erreichen, werden die Zuggewichte für jeden Eintrag in der Spielhistorie überprüft, um festzustellen, ob nach diesen Zügen nur Züge mit Gewicht 0 möglich sind.
 Falls erforderlich, wird der vorherige Zug angepasst.
 Für Positionen in welchen schon ein Spieler gewonnen hat sind die darauf folgenden Züge als leere Menge definiert, wodurch die Züge des Verlierers, die zu ihnen führen immer eliminiert werden.
