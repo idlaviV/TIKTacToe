@@ -132,7 +132,6 @@ describe('apply Policy with artificial examples', () => {
 })
 
 function beforeSetUpRealisticExample() {
-  
   weights.set(
     0,
     new Map([
@@ -195,91 +194,89 @@ function beforeSetUpRealisticExample() {
   handler.getGBHandler().gameBoard.value = history[history.length - 1]
 }
 
-function beforeSetupArtificialExample()
-  {
-    history = [
-      new GameBoard(),
-      new GameBoard([
-        [2, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 2, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 2, 2],
-        [0, 0, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 2, 2],
-        [2, 0, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 2, 2],
-        [2, 2, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 2, 2],
-        [2, 2, 2],
-        [0, 0, 0]
-      ])
-    ]
-    weights.set(
-      0,
-      new Map([
-        [2, 1],
-        [1, 1],
-        [10, 1]
-      ])
-    )
-    weights.set(
-      2,
-      new Map([
-        [22, 1],
-        [21, 1],
-        [201, 1]
-      ])
-    )
-    weights.set(
-      22,
-      new Map([
-        [222, 1],
-        [221, 1],
-        [2201, 1]
-      ])
-    )
-    weights.set(
-      222,
-      new Map([
-        [2222, 1],
-        [2221, 1],
-        [22201, 1]
-      ])
-    )
-    weights.set(
-      2222,
-      new Map([
-        [22222, 1],
-        [22221, 1],
-        [222201, 1]
-      ])
-    )
-    weights.set(
-      22222,
-      new Map([
-        [222222, 1],
-        [222221, 1],
-        [2222201, 1]
-      ])
-    )
-    aI.weights = weights
-    handler.winner.value = 1
-    handler.getGBHandler().gameBoard.value = history[history.length - 1]
-  
+function beforeSetupArtificialExample() {
+  history = [
+    new GameBoard(),
+    new GameBoard([
+      [2, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 2, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 2, 2],
+      [0, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 2, 2],
+      [2, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 2, 2],
+      [2, 2, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 2, 2],
+      [2, 2, 2],
+      [0, 0, 0]
+    ])
+  ]
+  weights.set(
+    0,
+    new Map([
+      [2, 1],
+      [1, 1],
+      [10, 1]
+    ])
+  )
+  weights.set(
+    2,
+    new Map([
+      [22, 1],
+      [21, 1],
+      [201, 1]
+    ])
+  )
+  weights.set(
+    22,
+    new Map([
+      [222, 1],
+      [221, 1],
+      [2201, 1]
+    ])
+  )
+  weights.set(
+    222,
+    new Map([
+      [2222, 1],
+      [2221, 1],
+      [22201, 1]
+    ])
+  )
+  weights.set(
+    2222,
+    new Map([
+      [22222, 1],
+      [22221, 1],
+      [222201, 1]
+    ])
+  )
+  weights.set(
+    22222,
+    new Map([
+      [222222, 1],
+      [222221, 1],
+      [2222201, 1]
+    ])
+  )
+  aI.weights = weights
+  handler.winner.value = 1
+  handler.getGBHandler().gameBoard.value = history[history.length - 1]
 }

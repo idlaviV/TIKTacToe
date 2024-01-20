@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { resetGameHandler } from './TestUtil'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import type { EvaluationPolicy } from '@/logic/EvaluationPolicy'
-import { maxFromAI , debugRandomizerFactory} from './TestUtil'
+import { maxFromAI, debugRandomizerFactory } from './TestUtil'
 
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler

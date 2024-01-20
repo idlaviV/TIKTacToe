@@ -5,7 +5,7 @@ export function resetGameHandler() {
   GameHandler.getInstance().destroySingleton()
 }
 
-export let maxFromAI:number
+export let maxFromAI: number
 export function debugRandomizerFactory() {
   return {
     randomNumber: 0,
