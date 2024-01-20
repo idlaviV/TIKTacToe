@@ -83,22 +83,3 @@ export class HistoryExport {
     return this.edges
   }
 }
-
-/**
- * Converts the state of a field into the string representation.
- *    1 -> player1
- *    2 -> player2
- *    3 -> empty field
- * @param fieldType the state of the field
- * @returns The string to be displayed.
- */
-export function convertFieldType(fieldType: FieldType): string {
-  if (fieldType == 1) {
-    return 'X'
-  } else if (fieldType == 2) {
-    return 'O'
-  } else if (fieldType == 0) {
-    return ' '
-  }
-  throw new Error('Unexpected player in field found.')
-}
