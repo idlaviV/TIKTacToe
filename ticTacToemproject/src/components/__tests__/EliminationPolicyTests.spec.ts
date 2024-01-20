@@ -26,68 +26,7 @@ describe('getInitialWeight', () => {
 })
 
 describe('applyPolicy with realistic examples', () => {
-  beforeEach(() => {
-    weights.set(
-      0,
-      new Map([
-        [1, 1],
-        [10, 1],
-        [10000, 1]
-      ])
-    )
-    weights.set(10, new Map([[12, 1]]))
-    weights.set(
-      12,
-      new Map([
-        [10012, 1],
-        [122, 1]
-      ])
-    )
-    weights.set(
-      10012,
-      new Map([
-        [12210, 1],
-        [112200, 1]
-      ])
-    )
-    weights.set(
-      12210,
-      new Map([
-        [2111020, 1],
-        [12211, 1]
-      ])
-    )
-    history = [
-      new GameBoard(),
-      new GameBoard([
-        [0, 0, 0],
-        [1, 0, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 0, 0],
-        [1, 0, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 0, 0],
-        [1, 1, 0],
-        [0, 0, 0]
-      ]),
-      new GameBoard([
-        [2, 0, 0],
-        [1, 1, 0],
-        [0, 2, 0]
-      ]),
-      new GameBoard([
-        [2, 0, 0],
-        [1, 1, 1],
-        [0, 2, 0]
-      ])
-    ]
-    aI.weights = weights
-    handler.getGBHandler().gameBoard.value = history[history.length - 1]
-  })
+  beforeEach(beforeSetUpRealisticExample)
   test('should not change weights if game is not over', () => {
     handler.winner.value = null
     policy.applyPolicy(aI, history)
@@ -142,8 +81,122 @@ describe('applyPolicy with realistic examples', () => {
   })
 })
 
-describe('apply Policy with unrealistic examples', () => {
-  beforeEach(() => {
+describe('apply Policy with artificial examples', () => {
+  beforeEach(beforeSetupArtificialExample)
+  test('standard loss, expect only one weight change', () => {
+    policy.applyPolicy(aI, history)
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
+    expect(aI.weights.get(22)?.get(222)).toEqual(1)
+    expect(aI.weights.get(22)?.get(221)).toEqual(1)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+  })
+
+  test('loss, expect two weights to change', () => {
+    aI.weights.get(2222)?.set(22221, 0)
+    aI.weights.get(2222)?.set(222201, 0)
+    policy.applyPolicy(aI, history)
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(0)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(0)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
+    expect(aI.weights.get(22)?.get(222)).toEqual(0) //<--this changed, too
+    expect(aI.weights.get(22)?.get(221)).toEqual(1)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+  })
+
+  test('loss, expect two weights to change ', () => {
+    aI.weights.get(222)?.set(2222, 0)
+    aI.weights.get(222)?.set(2221, 0)
+    aI.weights.get(222)?.set(22201, 0)
+    policy.applyPolicy(aI, history)
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(0)
+    expect(aI.weights.get(222)?.get(2221)).toEqual(0)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(0)
+    expect(aI.weights.get(22)?.get(222)).toEqual(1)
+    expect(aI.weights.get(22)?.get(221)).toEqual(1)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+    expect(aI.weights.get(2)?.get(22)).toEqual(0) //<--this changed, too
+    expect(aI.weights.get(2)?.get(21)).toEqual(1)
+    expect(aI.weights.get(2)?.get(201)).toEqual(1)
+  })
+})
+
+function beforeSetUpRealisticExample() {
+  
+  weights.set(
+    0,
+    new Map([
+      [1, 1],
+      [10, 1],
+      [10000, 1]
+    ])
+  )
+  weights.set(10, new Map([[12, 1]]))
+  weights.set(
+    12,
+    new Map([
+      [10012, 1],
+      [122, 1]
+    ])
+  )
+  weights.set(
+    10012,
+    new Map([
+      [12210, 1],
+      [112200, 1]
+    ])
+  )
+  weights.set(
+    12210,
+    new Map([
+      [2111020, 1],
+      [12211, 1]
+    ])
+  )
+  history = [
+    new GameBoard(),
+    new GameBoard([
+      [0, 0, 0],
+      [1, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 0, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 1, 0],
+      [0, 0, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 1, 0],
+      [0, 2, 0]
+    ]),
+    new GameBoard([
+      [2, 0, 0],
+      [1, 1, 1],
+      [0, 2, 0]
+    ])
+  ]
+  aI.weights = weights
+  handler.getGBHandler().gameBoard.value = history[history.length - 1]
+}
+
+function beforeSetupArtificialExample()
+  {
     history = [
       new GameBoard(),
       new GameBoard([
@@ -228,51 +281,5 @@ describe('apply Policy with unrealistic examples', () => {
     aI.weights = weights
     handler.winner.value = 1
     handler.getGBHandler().gameBoard.value = history[history.length - 1]
-  })
-  test('standard loss, expect only one weight change', () => {
-    policy.applyPolicy(aI, history)
-    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
-    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
-    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
-    expect(aI.weights.get(222)?.get(2222)).toEqual(1)
-    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
-    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
-    expect(aI.weights.get(22)?.get(222)).toEqual(1)
-    expect(aI.weights.get(22)?.get(221)).toEqual(1)
-    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
-  })
-
-  test('loss, expect two weights to change', () => {
-    aI.weights.get(2222)?.set(22221, 0)
-    aI.weights.get(2222)?.set(222201, 0)
-    policy.applyPolicy(aI, history)
-    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
-    expect(aI.weights.get(2222)?.get(22221)).toEqual(0)
-    expect(aI.weights.get(2222)?.get(222201)).toEqual(0)
-    expect(aI.weights.get(222)?.get(2222)).toEqual(1)
-    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
-    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
-    expect(aI.weights.get(22)?.get(222)).toEqual(0) //<--this changed, too
-    expect(aI.weights.get(22)?.get(221)).toEqual(1)
-    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
-  })
-
-  test('loss, expect two weights to change ', () => {
-    aI.weights.get(222)?.set(2222, 0)
-    aI.weights.get(222)?.set(2221, 0)
-    aI.weights.get(222)?.set(22201, 0)
-    policy.applyPolicy(aI, history)
-    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
-    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
-    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
-    expect(aI.weights.get(222)?.get(2222)).toEqual(0)
-    expect(aI.weights.get(222)?.get(2221)).toEqual(0)
-    expect(aI.weights.get(222)?.get(22201)).toEqual(0)
-    expect(aI.weights.get(22)?.get(222)).toEqual(1)
-    expect(aI.weights.get(22)?.get(221)).toEqual(1)
-    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
-    expect(aI.weights.get(2)?.get(22)).toEqual(0) //<--this changed, too
-    expect(aI.weights.get(2)?.get(21)).toEqual(1)
-    expect(aI.weights.get(2)?.get(201)).toEqual(1)
-  })
-})
+  
+}
