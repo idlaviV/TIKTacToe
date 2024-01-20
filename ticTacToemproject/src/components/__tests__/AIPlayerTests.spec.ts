@@ -2,41 +2,30 @@ import { AIPlayer } from '@/logic/AIPlayer'
 import { GameBoard } from '@/logic/GameBoard'
 import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
-import { Randomizer } from '@/logic/Randomizer'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { resetGameHandler } from './TestUtil'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import type { EvaluationPolicy } from '@/logic/EvaluationPolicy'
+import { maxFromAI , debugRandomizerFactory} from './TestUtil'
 
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 let policy: EvaluationPolicy
 let player: AIPlayer
-let randomNumber = 1
-let debugRandomizer: Randomizer
-let maxFromAI: number
+const debugRandomizer = debugRandomizerFactory()
 
 beforeEach(() => {
   resetGameHandler()
   gameHandler = GameHandler.getInstance()
   policy = new EliminationPolicy()
   player = new AIPlayer(policy)
-  debugRandomizer = {
-    randomInteger(min: number, max: number) {
-      if (min != 1) {
-        throw new Error('Illegal use of randomizer')
-      }
-      maxFromAI = max
-      return randomNumber
-    }
-  }
   player.randomzier = debugRandomizer
   gBHandler = gameHandler.getGBHandler()
 })
 
 describe('perform turn on empty board', () => {
   test('option1', () => {
-    randomNumber = 1
+    debugRandomizer.setRandomNumber(1)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -52,7 +41,7 @@ describe('perform turn on empty board', () => {
     expect(maxFromAI).toEqual(3)
   })
   test('option2', () => {
-    randomNumber = 2
+    debugRandomizer.setRandomNumber(2)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -63,7 +52,7 @@ describe('perform turn on empty board', () => {
     )
   })
   test('option3', () => {
-    randomNumber = 3
+    debugRandomizer.setRandomNumber(3)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -74,7 +63,7 @@ describe('perform turn on empty board', () => {
     )
   })
   test('illegal option', () => {
-    randomNumber = 4
+    debugRandomizer.setRandomNumber(4)
     expect(() => player.makeMove()).toThrowError()
   })
 })
@@ -84,7 +73,7 @@ describe('perform turn on one-tile-board', () => {
     gameHandler.performTurn(0, 0)
   })
   test('option1', () => {
-    randomNumber = 1
+    debugRandomizer.setRandomNumber(1)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -102,7 +91,7 @@ describe('perform turn on one-tile-board', () => {
     expect(maxFromAI).toEqual(5)
   })
   test('option2', () => {
-    randomNumber = 2
+    debugRandomizer.setRandomNumber(2)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -113,7 +102,7 @@ describe('perform turn on one-tile-board', () => {
     )
   })
   test('option3', () => {
-    randomNumber = 3
+    debugRandomizer.setRandomNumber(3)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -124,7 +113,7 @@ describe('perform turn on one-tile-board', () => {
     )
   })
   test('option4', () => {
-    randomNumber = 4
+    debugRandomizer.setRandomNumber(4)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -135,7 +124,7 @@ describe('perform turn on one-tile-board', () => {
     )
   })
   test('option3', () => {
-    randomNumber = 5
+    debugRandomizer.setRandomNumber(5)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -155,7 +144,7 @@ describe('perform turn on empty board with changed weights', () => {
     player.weights.get(0)?.set(10000, 1)
   })
   test('option 1', () => {
-    randomNumber = 1
+    debugRandomizer.setRandomNumber(1)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -167,7 +156,7 @@ describe('perform turn on empty board with changed weights', () => {
     expect(maxFromAI).toEqual(3)
   })
   test('option 2', () => {
-    randomNumber = 2
+    debugRandomizer.setRandomNumber(2)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -178,7 +167,7 @@ describe('perform turn on empty board with changed weights', () => {
     )
   })
   test('option 3', () => {
-    randomNumber = 3
+    debugRandomizer.setRandomNumber(3)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -189,7 +178,7 @@ describe('perform turn on empty board with changed weights', () => {
     )
   })
   test('Illegal option', () => {
-    randomNumber = 4
+    debugRandomizer.setRandomNumber(4)
     expect(() => player.makeMove()).toThrowError()
   })
 })
@@ -202,7 +191,7 @@ describe('perform turn on empty board without options', () => {
     player.weights.get(0)?.set(10000, 0)
   })
   test('option1', () => {
-    randomNumber = 1
+    debugRandomizer.setRandomNumber(1)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -218,7 +207,7 @@ describe('perform turn on empty board without options', () => {
     expect(maxFromAI).toEqual(3)
   })
   test('option2', () => {
-    randomNumber = 2
+    debugRandomizer.setRandomNumber(2)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -229,7 +218,7 @@ describe('perform turn on empty board without options', () => {
     )
   })
   test('option3', () => {
-    randomNumber = 3
+    debugRandomizer.setRandomNumber(3)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -240,7 +229,7 @@ describe('perform turn on empty board without options', () => {
     )
   })
   test('illegal option', () => {
-    randomNumber = 4
+    debugRandomizer.setRandomNumber(4)
     expect(() => player.makeMove()).toThrowError()
   })
 })
@@ -254,7 +243,7 @@ describe('perform turn on complicated board', () => {
     ])
   })
   test('option1', () => {
-    randomNumber = 1
+    debugRandomizer.setRandomNumber(1)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -270,7 +259,7 @@ describe('perform turn on complicated board', () => {
     expect(maxFromAI).toEqual(3)
   })
   test('option2', () => {
-    randomNumber = 2
+    debugRandomizer.setRandomNumber(2)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
@@ -281,7 +270,7 @@ describe('perform turn on complicated board', () => {
     )
   })
   test('option3', () => {
-    randomNumber = 3
+    debugRandomizer.setRandomNumber(3)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
       new GameBoard([
