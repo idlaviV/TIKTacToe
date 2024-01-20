@@ -29,6 +29,14 @@ describe('performTurn', () => {
     handler.performTurn(0, 0)
     expect(handler.getGBHandler().getGameBoard().state[0][0]).toEqual(0)
   })
+  test('PlayerOnTurn changes after each turn',()=>{
+    handler.performTurn(0,0)
+    expect(handler.getPlayerOnTurn().value).toEqual(2)
+    expect(handler.getGBHandler().getGameBoard().state[0][0]).toEqual(1)
+    handler.performTurn(0,1)
+    expect(handler.getPlayerOnTurn().value).toEqual(1)
+    expect(handler.getGBHandler().getGameBoard().state[0][1]).toEqual(2)
+  })
 })
 
 describe('getPossibleNextPositionsWithMoves', () => {
