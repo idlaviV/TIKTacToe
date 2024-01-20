@@ -30,7 +30,7 @@ beforeEach(() => {
       return randomNumber
     }
   }
-  player.randomzier = debugRandomizer
+  player.randomizer = debugRandomizer
   gBHandler = gameHandler.getGBHandler()
 })
 
