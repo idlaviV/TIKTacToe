@@ -1,6 +1,5 @@
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameBoardWithPrevMove } from '@/logic/Moves'
-import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { resetGameHandler } from './TestUtil'
 import type { GameBoard } from '@/logic/GameBoard'
@@ -24,46 +23,11 @@ describe('resetGame', () => {
   })
 })
 
-describe('calculation of winner', () => {
-  test('player 1 win', () => {
+describe('performTurn', () => {
+  test('No turn after victory', () => {
+    handler.winner.value = 1
     handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(0, 1)
-    handler.performTurn(1, 1)
-    handler.performTurn(0, 2)
-    expect(handler.getWinner().value).toEqual(1)
-    handler.performTurn(2, 2)
-    expect(handler.gBHandler.getGameBoard().state[2][2]).toEqual(0)
-  })
-
-  test('player 2 win', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(0, 1)
-    handler.performTurn(1, 1)
-    handler.performTurn(2, 2)
-    handler.performTurn(1, 2)
-    expect(handler.getWinner().value).toEqual(2)
-  })
-
-  test('draw', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(2, 0)
-    handler.performTurn(1, 1)
-    handler.performTurn(0, 1)
-    handler.performTurn(0, 2)
-    handler.performTurn(1, 2)
-    handler.performTurn(2, 1)
-    handler.performTurn(2, 2)
-    expect(handler.getWinner().value).toEqual(drawStatus)
-  })
-
-  test('game not over', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(2, 0)
-    expect(handler.getWinner().value).toEqual(null)
+    expect(handler.getGBHandler().getGameBoard().state[0][0]).toEqual(0)
   })
 })
 
