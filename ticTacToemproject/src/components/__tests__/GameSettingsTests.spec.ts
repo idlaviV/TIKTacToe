@@ -2,26 +2,22 @@ import { AIPlayer } from '@/logic/AIPlayer'
 import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { resetGameHandler } from './TestUtil'
+import { debugRandomizerFactory, resetGameHandler } from './TestUtil'
 import { GameSettings } from '@/logic/GameSettings'
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 let settings: GameSettings
 
 beforeEach(() => {
-  //Later: Setup should set AI on slot 2, UserPlayer on slot 1
   resetGameHandler()
   gameHandler = GameHandler.getInstance()
   gBHandler = gameHandler.getGBHandler()
   settings = gameHandler.settings
   //Remove randomization
   const ai: AIPlayer = gameHandler.settings.player2 as AIPlayer
-  ai.randomizer = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    randomInteger(min: number, max: number) {
-      return 1
-    }
-  }
+  const randomizer = debugRandomizerFactory()
+  randomizer.setRandomNumber(1)
+  ai.randomizer = randomizer
 })
 
 describe('getPlayer', () => {
