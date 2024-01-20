@@ -16,7 +16,7 @@ beforeEach(() => {
   settings = gameHandler.settings
   //Remove randomization
   const ai: AIPlayer = gameHandler.settings.player2 as AIPlayer
-  ai.randomzier = {
+  ai.randomizer = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     randomInteger(min: number, max: number) {
       return 1

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
 import PlayButton from './MainScreenMovesPlayButton.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import { getGuiState } from '@/logic/GuiState'
 
 const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
 let timer: ReturnType<typeof setTimeout>
+const movesDisabled: Ref<boolean> = ref(false)
 
 const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
@@ -28,9 +29,14 @@ const startTimerIfAutoPlay = () => {
   }
 }
 
+const areMoveButtonsDisabled = () => {
+  movesDisabled.value = gameHandler.getNumberOfAIs() == 0
+}
+
 watch(getGuiState(), (guiState) => {
   if (guiState == 'game') {
     startTimerIfAutoPlay()
+    areMoveButtonsDisabled()
   }
 })
 
@@ -50,9 +56,10 @@ const nextAiTurn = () => {
 <template>
   <div>
     <!-- The PlayButton toggles auto play. -->
-    <PlayButton :auto-play="autoPlay" @update:auto-play="toggleAutoPlay"> </PlayButton>
+    <PlayButton :auto-play="autoPlay" :disabled="movesDisabled" @update:auto-play="toggleAutoPlay">
+    </PlayButton>
     <!-- This button triggers the next AI turn, if possible-->
-    <v-btn @click="nextAiTurn">
+    <v-btn :disabled="movesDisabled" @click="nextAiTurn">
       <i class="material-icons"> skip_next </i>
     </v-btn>
   </div>

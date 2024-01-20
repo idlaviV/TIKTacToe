@@ -19,7 +19,7 @@ beforeEach(() => {
   gameHandler = GameHandler.getInstance()
   policy = new EliminationPolicy()
   player = new AIPlayer(policy)
-  player.randomzier = debugRandomizer
+  player.randomizer = debugRandomizer
   gBHandler = gameHandler.getGBHandler()
 })
 
