@@ -14,7 +14,6 @@ import { configs } from '@/components/GraphPanelUserConfigs'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 
-const range = [0, 1, 2]
 const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getNodes()
 const edges: Ref<Edges> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getEdges()
 // At the start the children are added. Later the addChildren-function is automatically called whenever the history is changed.
