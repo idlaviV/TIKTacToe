@@ -19,7 +19,7 @@ export class AIPlayer implements Player {
   /**
    * The randomizer provides a choice for a random number.
    */
-  randomzier: Randomizer = new Randomizer()
+  randomizer: Randomizer = new Randomizer()
   policy: EvaluationPolicy
   name: string
 
@@ -53,7 +53,7 @@ export class AIPlayer implements Player {
   // private
   pickChildNode(): number {
     const weightedEntries = this.prepareWeightedEntries()
-    const randomIndex = this.randomzier.randomInteger(
+    const randomIndex = this.randomizer.randomInteger(
       1,
       weightedEntries[weightedEntries.length - 1].index
     )
