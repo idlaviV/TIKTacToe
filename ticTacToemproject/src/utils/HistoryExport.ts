@@ -1,7 +1,6 @@
 import { ref, type Ref } from 'vue'
 import type { GameBoard } from '../logic/GameBoard'
 import { type Nodes, type Edges } from 'v-network-graph'
-import type { FieldType } from '@/logic/FieldType'
 import { HistoryWithChildrenExport } from './HistoryWithChildrenExport'
 
 /**
