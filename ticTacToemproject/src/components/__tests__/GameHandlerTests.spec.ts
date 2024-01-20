@@ -1,8 +1,7 @@
 import { GameHandler } from '@/logic/GameHandler'
-import type { GameBoardWithPrevMove } from '@/logic/Moves'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
-import { resetGameHandler } from './TestUtil'
-import type { GameBoard } from '@/logic/GameBoard'
+import { gameBoardDraw, gameBoardWinPlayer1, resetGameHandler } from './TestUtil'
+import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import { getGuiState } from '@/logic/GuiState'
@@ -36,131 +35,6 @@ describe('performTurn', () => {
     handler.performTurn(0,1)
     expect(handler.getPlayerOnTurn().value).toEqual(1)
     expect(handler.getGBHandler().getGameBoard().state[0][1]).toEqual(2)
-  })
-})
-
-describe('getPossibleNextPositionsWithMoves', () => {
-  let nextTurns: GameBoardWithPrevMove[] = []
-  test('first turn', () => {
-    nextTurns = handler.getPossibleNextPositionsWithMoves()
-    expect(nextTurns.length).toEqual(9)
-    expect(nextTurns[0][0].state).toEqual([
-      [1, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[0][1]).toEqual([0, 0])
-    expect(nextTurns[1][0].state).toEqual([
-      [0, 1, 0],
-      [0, 0, 0],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[1][1]).toEqual([0, 1])
-    expect(nextTurns[2][0].state).toEqual([
-      [0, 0, 1],
-      [0, 0, 0],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[2][1]).toEqual([0, 2])
-    expect(nextTurns[3][0].state).toEqual([
-      [0, 0, 0],
-      [1, 0, 0],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[3][1]).toEqual([1, 0])
-    expect(nextTurns[4][0].state).toEqual([
-      [0, 0, 0],
-      [0, 1, 0],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[4][1]).toEqual([1, 1])
-    expect(nextTurns[5][0].state).toEqual([
-      [0, 0, 0],
-      [0, 0, 1],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[5][1]).toEqual([1, 2])
-    expect(nextTurns[6][0].state).toEqual([
-      [0, 0, 0],
-      [0, 0, 0],
-      [1, 0, 0]
-    ])
-    expect(nextTurns[6][1]).toEqual([2, 0])
-    expect(nextTurns[7][0].state).toEqual([
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 1, 0]
-    ])
-    expect(nextTurns[7][1]).toEqual([2, 1])
-    expect(nextTurns[8][0].state).toEqual([
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 1]
-    ])
-    expect(nextTurns[8][1]).toEqual([2, 2])
-  })
-
-  test('later turn', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(0, 1)
-    handler.performTurn(1, 1)
-    nextTurns = handler.getPossibleNextPositionsWithMoves()
-    expect(nextTurns.length).toEqual(5)
-    expect(nextTurns[0][0].state).toEqual([
-      [1, 1, 1],
-      [2, 2, 0],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[0][1]).toEqual([0, 2])
-    expect(nextTurns[1][0].state).toEqual([
-      [1, 1, 0],
-      [2, 2, 1],
-      [0, 0, 0]
-    ])
-    expect(nextTurns[1][1]).toEqual([1, 2])
-    expect(nextTurns[2][0].state).toEqual([
-      [1, 1, 0],
-      [2, 2, 0],
-      [1, 0, 0]
-    ])
-    expect(nextTurns[2][1]).toEqual([2, 0])
-    expect(nextTurns[3][0].state).toEqual([
-      [1, 1, 0],
-      [2, 2, 0],
-      [0, 1, 0]
-    ])
-    expect(nextTurns[3][1]).toEqual([2, 1])
-    expect(nextTurns[4][0].state).toEqual([
-      [1, 1, 0],
-      [2, 2, 0],
-      [0, 0, 1]
-    ])
-    expect(nextTurns[4][1]).toEqual([2, 2])
-  })
-
-  test('player won', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(0, 1)
-    handler.performTurn(1, 1)
-    handler.performTurn(0, 2)
-    nextTurns = handler.getPossibleNextPositionsWithMoves()
-    expect(nextTurns.length).toEqual(0)
-  })
-
-  test('draw', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(2, 0)
-    handler.performTurn(1, 1)
-    handler.performTurn(0, 1)
-    handler.performTurn(0, 2)
-    handler.performTurn(1, 2)
-    handler.performTurn(2, 1)
-    handler.performTurn(2, 2)
-    nextTurns = handler.getPossibleNextPositionsWithMoves()
-    expect(nextTurns.length).toEqual(0)
   })
 })
 
@@ -217,10 +91,11 @@ describe('getPossibleNextPositions', () => {
   })
 
   test('later turn', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(0, 1)
-    handler.performTurn(1, 0)
-    handler.performTurn(1, 1)
+    handler.getGBHandler().gameBoard.value = new GameBoard([
+      [1,2,0],
+      [1,2,0],
+      [0,0,0]
+    ])
     nextTurns = handler.getPossibleNextPositions()
     expect(nextTurns.length).toEqual(5)
     expect(nextTurns[0].state).toEqual([
@@ -251,25 +126,13 @@ describe('getPossibleNextPositions', () => {
   })
 
   test('player won', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(0, 1)
-    handler.performTurn(1, 1)
-    handler.performTurn(0, 2)
+    handler.getGBHandler().gameBoard.value = gameBoardWinPlayer1
     nextTurns = handler.getPossibleNextPositions()
     expect(nextTurns.length).toEqual(0)
   })
 
   test('draw', () => {
-    handler.performTurn(0, 0)
-    handler.performTurn(1, 0)
-    handler.performTurn(2, 0)
-    handler.performTurn(1, 1)
-    handler.performTurn(0, 1)
-    handler.performTurn(0, 2)
-    handler.performTurn(1, 2)
-    handler.performTurn(2, 1)
-    handler.performTurn(2, 2)
+    handler.getGBHandler().gameBoard.value = gameBoardDraw
     nextTurns = handler.getPossibleNextPositions()
     expect(nextTurns.length).toEqual(0)
   })
