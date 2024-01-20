@@ -31,8 +31,8 @@ export class GameHandler {
    */
   possiblePlayers: Player[] = [
     this.humanPlayer,
-    new AIPlayer(new EliminationPolicy(), 'KI'),
-    new AIPlayer(new EliminationPolicy(), 'KI 2')
+    new AIPlayer(new EliminationPolicy(), 'KI-Elimination'),
+    new AIPlayer(new EliminationPolicy(), 'KI-Dummy')
   ]
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
@@ -164,6 +164,13 @@ export class GameHandler {
       boards.push(position[0])
     }
     return boards
+  }
+
+  getNumberOfAIs(): number {
+    let count: number = 0
+    if (this.settings.getPlayer(1).isAI()) count++
+    if (this.settings.getPlayer(2).isAI()) count++
+    return count
   }
 
   getGBHandler(): GameBoardHandler {

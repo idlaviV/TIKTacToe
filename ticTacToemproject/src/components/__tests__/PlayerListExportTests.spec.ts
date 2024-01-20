@@ -12,8 +12,8 @@ describe('PlayerListExport', () => {
     updatePlayerList()
     expect(players.value).toEqual([
       { player: 'Mensch', index: 0 },
-      { player: 'KI', index: 1 },
-      { player: 'KI 2', index: 2 }
+      { player: 'KI-Elimination', index: 1 },
+      { player: 'KI-Dummy', index: 2 }
     ])
   })
   test('No AIs', () => {
@@ -26,8 +26,8 @@ describe('PlayerListExport', () => {
     GameHandler.getInstance().createAI(0, 'myAI')
     expect(players.value).toEqual([
       { player: 'Mensch', index: 0 },
-      { player: 'KI', index: 1 },
-      { player: 'KI 2', index: 2 },
+      { player: 'KI-Elimination', index: 1 },
+      { player: 'KI-Dummy', index: 2 },
       { player: 'myAI', index: 3 }
     ])
   })
