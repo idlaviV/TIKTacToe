@@ -323,4 +323,13 @@ describe('performEndOfGameActions', () => {
     expect(spy1).toHaveBeenCalledTimes(1)
     expect(getGuiState().value).toEqual('start')
   })
+
+  test('should apply policy to AI in position two', () => {
+    handler.settings.player1 = handler.humanPlayer
+    handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    const spy = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
+    handler.performEndOfGameActions()
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(getGuiState().value).toEqual('start')
+  })
 })
