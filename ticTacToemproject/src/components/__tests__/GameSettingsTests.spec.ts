@@ -4,6 +4,9 @@ import { GameHandler } from '@/logic/GameHandler'
 import { beforeEach, describe, expect, test } from 'vitest'
 import { debugRandomizerFactory, resetGameHandler } from './TestUtil'
 import { GameSettings } from '@/logic/GameSettings'
+import { UserPlayer } from '@/logic/UserPlayer'
+import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 let settings: GameSettings
@@ -49,5 +52,13 @@ describe('AI will only play if it is on turn', () => {
     //ai tries to move again, but can't
     gameHandler.performAiTurn()
     expect(gBHandler.getGameBoard().getCode()).toEqual(21)
+  })
+})
+
+describe('Player name export',()=>{
+  test('player1Name',()=>{
+    settings.setPlayers(new AIPlayer(new EliminationPolicy(),'myAI'), new UserPlayer('myUser'))
+    expect(player1Name.value).toEqual('myAI')
+    expect(player2Name.value).toEqual('myUser')
   })
 })

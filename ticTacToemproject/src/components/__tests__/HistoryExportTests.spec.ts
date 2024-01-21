@@ -143,14 +143,14 @@ describe('resetHistory', () => {
       ])
     )
     historyExport.resetHistory(new GameBoard())
-    expect(historyExport.nodes.value).toEqual({
+    expect(historyExport.getNodes().value).toEqual({
       '0': {
         name: '0',
         boardState: new GameBoard().state,
         active: true
       }
     })
-    expect(historyExport.edges.value).toEqual({})
+    expect(historyExport.getEdges().value).toEqual({})
     expect(historyExport.lastCode).toEqual('0')
   })
 })
