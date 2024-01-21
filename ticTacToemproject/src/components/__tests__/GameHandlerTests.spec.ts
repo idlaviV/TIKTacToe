@@ -168,3 +168,21 @@ describe('performEndOfGameActions', () => {
     expect(getGuiState().value).toEqual('start')
   })
 })
+
+describe('getNumberOfAIs',() =>{
+  test('One AI',() =>{
+    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    handler.settings.player2 = handler.humanPlayer
+    expect(handler.getNumberOfAIs()).toEqual(1)
+  })
+  test('Two AIs',() =>{
+    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 2')
+    expect(handler.getNumberOfAIs()).toEqual(2)
+  })
+  test('No AI',() =>{
+    handler.settings.player1 = handler.humanPlayer
+    handler.settings.player2 = handler.humanPlayer
+    expect(handler.getNumberOfAIs()).toEqual(0)
+  })
+})
