@@ -1,3 +1,4 @@
+import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 import type { Player } from './Player'
 import type { PlayerNumber } from './PlayerNumber'
 
@@ -23,6 +24,8 @@ export class GameSettings {
   setPlayers(player1: Player, player2: Player) {
     this.player1 = player1
     this.player2 = player2
+    player1Name.value = player1.getName()
+    player2Name.value = player2.getName()
   }
 
   getPlayer(playerNumber: PlayerNumber): Player {

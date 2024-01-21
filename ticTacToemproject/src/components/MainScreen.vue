@@ -3,6 +3,7 @@ import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
+import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
@@ -21,8 +22,12 @@ const startEval = () => {
     <v-container
       ><v-row
         ><v-col>
-          <div class="text-pink-500">X Spieler 1</div>
-          <div class="text-blue-500">O Spieler 2</div> </v-col
+          <v-row class="text-pink-500" justify="end" no-gutters>
+            <v-col cols="1">X</v-col><v-col class="text-left" cols="5">{{ player1Name }}</v-col>
+          </v-row>
+          <v-row class="text-blue-500" justify="end" no-gutters>
+            <v-col cols="1">O</v-col><v-col class="text-left" cols="5">{{ player2Name }}</v-col>
+          </v-row> </v-col
         ><v-col>
           <v-btn @click="startEval"> Belohnung anwenden </v-btn>
         </v-col></v-row
