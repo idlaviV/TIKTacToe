@@ -55,9 +55,9 @@ describe('AI will only play if it is on turn', () => {
   })
 })
 
-describe('Player name export',()=>{
-  test('player1Name',()=>{
-    settings.setPlayers(new AIPlayer(new EliminationPolicy(),'myAI'), new UserPlayer('myUser'))
+describe('Player name export', () => {
+  test('player1Name', () => {
+    settings.setPlayers(new AIPlayer(new EliminationPolicy(), 'myAI'), new UserPlayer('myUser'))
     expect(player1Name.value).toEqual('myAI')
     expect(player2Name.value).toEqual('myUser')
   })

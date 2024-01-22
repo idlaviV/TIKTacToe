@@ -28,11 +28,11 @@ describe('performTurn', () => {
     handler.performTurn(0, 0)
     expect(handler.getGBHandler().getGameBoard().state[0][0]).toEqual(0)
   })
-  test('PlayerOnTurn changes after each turn',()=>{
-    handler.performTurn(0,0)
+  test('PlayerOnTurn changes after each turn', () => {
+    handler.performTurn(0, 0)
     expect(handler.getPlayerOnTurn().value).toEqual(2)
     expect(handler.getGBHandler().getGameBoard().state[0][0]).toEqual(1)
-    handler.performTurn(0,1)
+    handler.performTurn(0, 1)
     expect(handler.getPlayerOnTurn().value).toEqual(1)
     expect(handler.getGBHandler().getGameBoard().state[0][1]).toEqual(2)
   })
@@ -92,9 +92,9 @@ describe('getPossibleNextPositions', () => {
 
   test('later turn', () => {
     handler.getGBHandler().gameBoard.value = new GameBoard([
-      [1,2,0],
-      [1,2,0],
-      [0,0,0]
+      [1, 2, 0],
+      [1, 2, 0],
+      [0, 0, 0]
     ])
     nextTurns = handler.getPossibleNextPositions()
     expect(nextTurns.length).toEqual(5)
@@ -169,18 +169,18 @@ describe('performEndOfGameActions', () => {
   })
 })
 
-describe('getNumberOfAIs',() =>{
-  test('One AI',() =>{
+describe('getNumberOfAIs', () => {
+  test('One AI', () => {
     handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
     handler.settings.player2 = handler.humanPlayer
     expect(handler.getNumberOfAIs()).toEqual(1)
   })
-  test('Two AIs',() =>{
+  test('Two AIs', () => {
     handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
     handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 2')
     expect(handler.getNumberOfAIs()).toEqual(2)
   })
-  test('No AI',() =>{
+  test('No AI', () => {
     handler.settings.player1 = handler.humanPlayer
     handler.settings.player2 = handler.humanPlayer
     expect(handler.getNumberOfAIs()).toEqual(0)

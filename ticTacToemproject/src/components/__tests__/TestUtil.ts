@@ -39,14 +39,20 @@ export const gameBoard2100 = new GameBoard([
   [0, 0, 0]
 ])
 
-export const gameBoardDraw = new GameBoard([[1, 1, 2],
+export const gameBoardDraw = new GameBoard([
+  [1, 1, 2],
   [2, 2, 1],
-  [1, 2, 1]])
+  [1, 2, 1]
+])
 
-export const gameBoardWinPlayer1 = new GameBoard([[1, 1, 1],
+export const gameBoardWinPlayer1 = new GameBoard([
+  [1, 1, 1],
   [2, 2, 0],
-  [0, 0, 0]])
+  [0, 0, 0]
+])
 
-  export const gameBoardWinPlayer2 = new GameBoard([[1, 1, 0],
-    [2, 2, 2],
-    [0, 0, 1]])
+export const gameBoardWinPlayer2 = new GameBoard([
+  [1, 1, 0],
+  [2, 2, 2],
+  [0, 0, 1]
+])
