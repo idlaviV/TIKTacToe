@@ -37,6 +37,8 @@ watch(getGuiState(), (guiState) => {
   if (guiState == 'game') {
     startTimerIfAutoPlay()
     areMoveButtonsDisabled()
+  } else {
+    clearInterval(timer)
   }
 })
 
