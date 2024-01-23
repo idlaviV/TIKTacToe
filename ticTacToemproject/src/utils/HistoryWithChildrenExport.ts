@@ -103,9 +103,9 @@ export class HistoryWithChildrenExport {
 }
 
 function extractNormalforms(output:ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
-  const normalForms: Set<number> = new Set()
-  output.forEach((value,key) => {
-    normalForms.add(key)
+  const normalForms: number[] = []
+  output.asMap().forEach((value,key) => {
+    normalForms.push(key)
   })
-  return Array.from(normalForms.values())
+  return normalForms
 }
