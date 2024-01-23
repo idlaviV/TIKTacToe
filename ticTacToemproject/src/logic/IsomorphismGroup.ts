@@ -238,7 +238,7 @@ export class IsomorphismGroup {
    * @param gameBoards The array of GameBoards
    * @returns The array of representative GameBoards in code form
    */
-  static getRepresentativesOfNonequivalentGameBoards(gameBoards: GameBoard[]): ArrayMultimap<NormalForm, GameBoardCode> {
+  static getRepresentativesOfNonequivalentGameBoards(gameBoards: GameBoard[]): ArrayMultimap<GameBoardCode, GameBoardCode> {
     const classes: ArrayMultimap<NormalForm,GameBoardCode> = new ArrayMultimap()
 
     gameBoards.forEach((element) => {
