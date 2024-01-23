@@ -50,8 +50,7 @@ export class AIPlayer implements Player {
    * Choose a suitable next gameboard, by weights.
    * @returns the normal form of the next gameboard
    */
-  // private
-  pickChildNode(): number {
+  private pickChildNode(): number {
     const weightedEntries = this.prepareWeightedEntries()
     const randomIndex = this.randomizer.randomInteger(
       1,
@@ -79,8 +78,7 @@ export class AIPlayer implements Player {
    * This would be a->1, b->3, c->4, d->4 and e->7.
    * @returns The entries of the array specify a child node and the corresponding index.
    */
-  // private
-  prepareWeightedEntries(): { code: number; index: number }[] {
+  private prepareWeightedEntries(): { code: number; index: number }[] {
     const vertexMap: Map<number, number> = this.getVertexMap()
     const weightedEntries = new Array()
     let sum: number = 0
@@ -107,7 +105,6 @@ export class AIPlayer implements Player {
    * If no argument is passed, the current configuration of the game is used
    * @returns map of weights
    */
-  // private
   getVertexMap(normalForm?: number): Map<number, number> {
     if (!normalForm) {
       normalForm = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
@@ -123,13 +120,12 @@ export class AIPlayer implements Player {
    * @todo At the moment, all nodes are always set to 1
    * @param code describes the node where weights are missing
    */
-  // private
-  initializeWeights(code: number): void {
+  private initializeWeights(code: number): void {
     const nextNFs: Set<number> = this.calculateNextNFs()
     const vertexMap = new Map<number, number>()
     this.weights.set(code, vertexMap)
     for (const nextCode of nextNFs) {
-      vertexMap.set(nextCode, 1)
+      vertexMap.set(nextCode, this.policy.getInitialWeight(getHeight(nextCode)))
     }
   }
 
@@ -138,8 +134,7 @@ export class AIPlayer implements Player {
    * @returns a set containing all normal forms
    * @deprecated
    */
-  // private
-  calculateNextNFs(): Set<number> {
+  private calculateNextNFs(): Set<number> {
     const nextNFs: Set<number> = new Set()
     const nextPositions: GameBoard[] = GameHandler.getInstance().getPossibleNextPositions()
     for (const board of nextPositions) {
@@ -155,4 +150,17 @@ export class AIPlayer implements Player {
   getName(): string {
     return this.name
   }
+}
+
+function getHeight(code: number): number {
+  const numberString = code.toString()
+  let height = 0
+  for (let i = 0; i < numberString.length; i++) {
+    const digit = parseInt(numberString[i])
+
+    if (digit === 1 || digit === 2) {
+      height++
+    }
+  }
+  return height
 }
