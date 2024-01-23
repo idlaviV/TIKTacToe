@@ -1,4 +1,5 @@
 import { calculateCode, type GameBoard } from './GameBoard'
+import {ArrayMultimap} from '@teppeis/multimaps';
 /**
  * This class enables the calculation of equivalent gameboards and their normal forms.
  * Two gameboards are considered equivalent if one can be transformed into the other by means of rotation and/or mirroring.
@@ -230,33 +231,31 @@ export class IsomorphismGroup {
     return Math.min(...gameBoards)
   }
 
+  static getRepresentativeOfGameBoardsAsGB(...gameBoards: GameBoard[]): number {
+    return this.getRepresentativeOfGameBoards(...gameBoards.map((gb) => gb.getCode()))
+  }
+
+
   /**
    * Extracts one representative GameBoard per contained equivalence class from an array of GameBoards.
    * If there are several GameBoards per equivalence class, the GameBoard with the smallest code is selected.
    * @param gameBoards The array of GameBoards
    * @returns The array of representative GameBoards in code form
    */
-  static getRepresentativesOfNonequivalentGameBoards(gameBoards: GameBoard[]): number[] {
-    const representativesOfNonequivalentGameBoards: number[] = []
+  static getRepresentativesOfNonequivalentGameBoards(gameBoards: GameBoard[]): ArrayMultimap<number, GameBoard> {
+    const classes: ArrayMultimap<number,GameBoard> = new ArrayMultimap()
 
-    const normalForms: Set<number> = new Set()
     gameBoards.forEach((element) => {
-      normalForms.add(element.getNormalForm())
+      classes.put(element.getNormalForm(), element)
     })
 
-    for (const normalForm of normalForms) {
-      const gameBoardsWithNormalForm: number[] = []
-      gameBoards.forEach((element) => {
-        if (element.getNormalForm() === normalForm) {
-          gameBoardsWithNormalForm.push(element.getCode())
-        }
-      })
-
-      representativesOfNonequivalentGameBoards.push(
-        IsomorphismGroup.getRepresentativeOfGameBoards(...gameBoardsWithNormalForm)
+    const representatives : ArrayMultimap<number,GameBoard> = new ArrayMultimap()
+    classes.forEach((value,key) => {
+      representatives.putAll(
+        IsomorphismGroup.getRepresentativeOfGameBoardsAsGB(...classes.get(key)),
+        classes.get(key)
       )
-    }
-
-    return representativesOfNonequivalentGameBoards
+    })
+    return representatives
   }
 }

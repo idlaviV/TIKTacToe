@@ -3,6 +3,7 @@ import { GameBoard } from '../logic/GameBoard'
 import { type Nodes, type Edges } from 'v-network-graph'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
+import { extractNormalforms } from '@/components/__tests__/IsomorphismGroupTests.spec'
 
 /**
  * This class represents the graph which is shown in the game view on the right side.
@@ -68,8 +69,8 @@ export class HistoryWithChildrenExport {
     // From the possible next moves the representatives of the equivalence classes are selected.
     const childrenOfActiveGameBoard: GameBoard[] =
       GameHandler.getInstance().getPossibleNextPositions()
-    const representativesOfChildren: number[] =
-      IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
+    const representativesOfChildren: number[] = extractNormalforms(
+      IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard))
     const representativeOfChildrenAsGameBoards: GameBoard[] = []
     childrenOfActiveGameBoard.forEach((element) => {
       if (representativesOfChildren.includes(element.getCode())) {
