@@ -3,6 +3,7 @@ import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import { beforeEach, describe, expect, test } from 'vitest'
 import * as Util from './TestUtil'
 import { ArrayMultimap } from '@teppeis/multimaps'
+import type { GameBoardCode } from '@/logic/Codes'
 
 describe('getGameBoardEquiv', () => {
   test('Empty board', () => {
@@ -217,7 +218,7 @@ describe('getRepresentativeOfGameBoards', () => {
 
 describe('getRepresentativesOfNonequivalentGameBoards', () => {
   let boards: GameBoard[]
-  let representative: ArrayMultimap<number, GameBoard>
+  let representative: ArrayMultimap<GameBoardCode, GameBoardCode>
   beforeEach(() => {
     boards = []
   })
@@ -231,19 +232,22 @@ describe('getRepresentativesOfNonequivalentGameBoards', () => {
     boards.push(Util.gameBoard21)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21])
-    expect(representative.get(21)).toEqual([Util.gameBoard21])
+    expect(representative.get(21)).toEqual([21])
   })
   test('Multiple equivalent elements', () => {
     boards.push(Util.gameBoard21)
     boards.push(Util.gameBoard120)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21])
+    expect(representative.get(21)).toEqual([21, 120])
   })
   test('Multiple nonequivalent elements', () => {
     boards.push(Util.gameBoard21)
     boards.push(Util.gameBoard2100)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21, 2100])
+    expect(representative.get(21)).toEqual([21])
+    expect(representative.get(2100)).toEqual([2100])
   })
   test('Multiple nonequivalent and equivalent elements', () => {
     boards.push(Util.gameBoard21)
@@ -251,14 +255,14 @@ describe('getRepresentativesOfNonequivalentGameBoards', () => {
     boards.push(Util.gameBoard2100)
     representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21, 2100])
+    expect(representative.get(21)).toEqual([21, 120])
+    expect(representative.get(2100)).toEqual([2100])
   })
 })
 
-export function extractNormalforms(output:ArrayMultimap<number, GameBoard>): number[] {
+function extractNormalforms(output:ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
   const normalForms: Set<number> = new Set()
-  console.log(output)
   output.forEach((value,key) => {
-    console.log("Key: " + key)
     normalForms.add(key)
   })
   return Array.from(normalForms.values())

@@ -3,7 +3,8 @@ import { GameBoard } from '../logic/GameBoard'
 import { type Nodes, type Edges } from 'v-network-graph'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
-import { extractNormalforms } from '@/components/__tests__/IsomorphismGroupTests.spec'
+import type { ArrayMultimap } from '@teppeis/multimaps'
+import type { GameBoardCode } from '@/logic/Codes'
 
 /**
  * This class represents the graph which is shown in the game view on the right side.
@@ -99,4 +100,12 @@ export class HistoryWithChildrenExport {
   getEdges(): Ref<Edges> {
     return this.edges
   }
+}
+
+function extractNormalforms(output:ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
+  const normalForms: Set<number> = new Set()
+  output.forEach((value,key) => {
+    normalForms.add(key)
+  })
+  return Array.from(normalForms.values())
 }
