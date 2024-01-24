@@ -71,7 +71,8 @@ export class HistoryWithChildrenExport {
     const childrenOfActiveGameBoard: GameBoard[] =
       GameHandler.getInstance().getPossibleNextPositions()
     const representativesOfChildren: number[] = extractNormalforms(
-      IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard))
+      IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
+    )
     const representativeOfChildrenAsGameBoards: GameBoard[] = []
     childrenOfActiveGameBoard.forEach((element) => {
       if (representativesOfChildren.includes(element.getCode())) {
@@ -102,9 +103,9 @@ export class HistoryWithChildrenExport {
   }
 }
 
-function extractNormalforms(output:ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
+function extractNormalforms(output: ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
   const normalForms: number[] = []
-  output.asMap().forEach((value,key) => {
+  output.asMap().forEach((value, key) => {
     normalForms.push(key)
   })
   return normalForms

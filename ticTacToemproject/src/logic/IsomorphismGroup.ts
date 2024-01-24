@@ -1,6 +1,6 @@
-import type { GameBoardCode, NormalForm } from './Codes';
+import type { GameBoardCode, NormalForm } from './Codes'
 import { calculateCode, type GameBoard } from './GameBoard'
-import {ArrayMultimap} from '@teppeis/multimaps';
+import { ArrayMultimap } from '@teppeis/multimaps'
 /**
  * This class enables the calculation of equivalent gameboards and their normal forms.
  * Two gameboards are considered equivalent if one can be transformed into the other by means of rotation and/or mirroring.
@@ -238,15 +238,17 @@ export class IsomorphismGroup {
    * @param gameBoards The array of GameBoards
    * @returns The array of representative GameBoards in code form
    */
-  static getRepresentativesOfNonequivalentGameBoards(gameBoards: GameBoard[]): ArrayMultimap<GameBoardCode, GameBoardCode> {
-    const classes: ArrayMultimap<NormalForm,GameBoardCode> = new ArrayMultimap()
+  static getRepresentativesOfNonequivalentGameBoards(
+    gameBoards: GameBoard[]
+  ): ArrayMultimap<GameBoardCode, GameBoardCode> {
+    const classes: ArrayMultimap<NormalForm, GameBoardCode> = new ArrayMultimap()
 
     gameBoards.forEach((element) => {
       classes.put(element.getNormalForm(), element.getCode())
     })
 
-    const representatives : ArrayMultimap<GameBoardCode,GameBoardCode> = new ArrayMultimap()
-    classes.asMap().forEach((value,key) => {
+    const representatives: ArrayMultimap<GameBoardCode, GameBoardCode> = new ArrayMultimap()
+    classes.asMap().forEach((value, key) => {
       representatives.putAll(
         IsomorphismGroup.getRepresentativeOfGameBoards(...classes.get(key)),
         classes.get(key)

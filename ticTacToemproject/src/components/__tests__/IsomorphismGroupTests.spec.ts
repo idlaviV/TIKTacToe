@@ -260,9 +260,9 @@ describe('getRepresentativesOfNonequivalentGameBoards', () => {
   })
 })
 
-function extractNormalforms(output:ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
+function extractNormalforms(output: ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
   const normalForms: number[] = []
-  output.asMap().forEach((value,key) => {
+  output.asMap().forEach((value, key) => {
     normalForms.push(key)
   })
   return normalForms
