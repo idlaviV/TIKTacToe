@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { TTTNode } from '@/utils/GraphExport';
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
 
 /**

@@ -41,6 +41,8 @@ function addChildren() {
       newNode.addAlternative(alternative)
     }
     nodes.value[key.toString()] = newNode
+    const edgeKey:string = getLastCode() + '#' + key.toString()
+    edges.value[edgeKey] = {source: getLastCode(), target: key.toString()}
   })
 }
 
