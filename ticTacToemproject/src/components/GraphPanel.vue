@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import {
-  VNetworkGraph,
-  type Layouts,
-  type Nodes,
-  type VNetworkGraphInstance
-} from 'v-network-graph'
+import { VNetworkGraph, type Layouts, type VNetworkGraphInstance } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
 import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { computed } from 'vue'
-import { getGuiState } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
 
 /**

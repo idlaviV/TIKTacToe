@@ -141,7 +141,7 @@ export class GameHandler {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn.value = 1
     this.winner.value = null
-    resetHistory(this.gBHandler.getGameBoard())
+    resetHistory()
   }
 
   /**

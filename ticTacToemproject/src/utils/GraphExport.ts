@@ -88,7 +88,7 @@ export function updateHistory(gameBoard: GameBoard) {
  * The passed gameboard is set as the first game state of the new history.
  * @param gameBoard The first game state of the new history
  */
-export function resetHistory(gameBoard: GameBoard) {
+export function resetHistory() {
   graphExport.value = new Graph()
   graphExport.value.initializeHistory()
 }
