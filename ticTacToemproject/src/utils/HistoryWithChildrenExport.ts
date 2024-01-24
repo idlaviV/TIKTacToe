@@ -3,6 +3,8 @@ import { GameBoard } from '../logic/GameBoard'
 import { type Nodes, type Edges } from 'v-network-graph'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
+import type { ArrayMultimap } from '@teppeis/multimaps'
+import type { GameBoardCode } from '@/logic/Codes'
 
 /**
  * This class represents the graph which is shown in the game view on the right side.
@@ -68,8 +70,9 @@ export class HistoryWithChildrenExport {
     // From the possible next moves the representatives of the equivalence classes are selected.
     const childrenOfActiveGameBoard: GameBoard[] =
       GameHandler.getInstance().getPossibleNextPositions()
-    const representativesOfChildren: number[] =
+    const representativesOfChildren: number[] = extractNormalforms(
       IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
+    )
     const representativeOfChildrenAsGameBoards: GameBoard[] = []
     childrenOfActiveGameBoard.forEach((element) => {
       if (representativesOfChildren.includes(element.getCode())) {
@@ -98,4 +101,12 @@ export class HistoryWithChildrenExport {
   getEdges(): Ref<Edges> {
     return this.edges
   }
+}
+
+function extractNormalforms(output: ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
+  const normalForms: number[] = []
+  output.asMap().forEach((value, key) => {
+    normalForms.push(key)
+  })
+  return normalForms
 }

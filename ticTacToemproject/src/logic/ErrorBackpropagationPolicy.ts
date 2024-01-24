@@ -32,10 +32,10 @@ export class ErrorBackpropagationPolicy implements EvaluationPolicy {
    * @override
    */
   getInitialWeight(height: number): number {
-    if (0 <= height && height <= 8) {
+    if (0 <= height && height < 8) {
       return 8 - height
     } else {
-      throw new Error('Height must be between 0 and 8')
+      throw new Error('Height must be between 0 and 7')
     }
   }
 

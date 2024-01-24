@@ -2,6 +2,7 @@ import { AIPlayer } from '@/logic/AIPlayer'
 import { ErrorBackpropagationPolicy } from '@/logic/ErrorBackpropagationPolicy'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
+import { drawStatus } from '@/logic/WinnerStatus'
 import { describe, expect, beforeEach, test } from 'vitest'
 
 const handler = GameHandler.getInstance()
@@ -26,24 +27,118 @@ describe('getInitialWeight', () => {
     expect(policy.getInitialWeight(5)).toBe(3)
     expect(policy.getInitialWeight(6)).toBe(2)
     expect(policy.getInitialWeight(7)).toBe(1)
-    expect(policy.getInitialWeight(8)).toBe(0)
   })
 
   test('throws error for invalid input', () => {
-    expect(policy.getInitialWeight(-1)).toThrow("Height must be between 0 and 8")
-    expect(policy.getInitialWeight(9)).toThrow("Height must be between 0 and 8")
+    expect(() => policy.getInitialWeight(-1)).toThrow(new Error('Height must be between 0 and 7'))
+    expect(() => policy.getInitialWeight(8)).toThrow(new Error('Height must be between 0 and 7'))
   })
 })
 
 describe('applyPolicy to realistic example', () => {
   beforeEach(beforeSetupRealisticExample)
 
-  test('does not change weights if game is not over', () => {
-    const expected = aI.getVertexMap(history[2].getNormalForm())
-
+  test('should not change weights if game is not over', () => {
+    handler.winner.value = null
     policy.applyPolicy(aI, history)
+    expect(aI.weights).toEqual(weights)
+  })
 
-    expect(aI.getVertexMap(history[2].getNormalForm())).toBe(expected)
+  test('game ends with draw', () => {
+    handler.winner.value = drawStatus
+    policy.applyPolicy(aI, history)
+    expect(
+      aI.weights
+        .get(history[history.length - 2].getNormalForm())
+        ?.get(history[history.length - 1].getNormalForm())
+    ).toEqual(policy.getInitialWeight(4) + 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 3].getNormalForm())
+        ?.get(history[history.length - 2].getNormalForm())
+    ).toEqual(policy.getInitialWeight(3) + 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 4].getNormalForm())
+        ?.get(history[history.length - 3].getNormalForm())
+    ).toEqual(policy.getInitialWeight(2) + 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 5].getNormalForm())
+        ?.get(history[history.length - 4].getNormalForm())
+    ).toEqual(policy.getInitialWeight(1) + 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 6].getNormalForm())
+        ?.get(history[history.length - 5].getNormalForm())
+    ).toEqual(policy.getInitialWeight(0) + 1)
+    expect(aI.weights.get(new GameBoard().getNormalForm())?.get(1)).toEqual(
+      policy.getInitialWeight(0)
+    ) // <--- remains unchanged
+  })
+
+  test('game ends with win and loss', () => {
+    handler.winner.value = 1
+    policy.applyPolicy(aI, history)
+    expect(
+      aI.weights
+        .get(history[history.length - 2].getNormalForm())
+        ?.get(history[history.length - 1].getNormalForm())
+    ).toEqual(policy.getInitialWeight(4) + 3)
+    expect(
+      aI.weights
+        .get(history[history.length - 3].getNormalForm())
+        ?.get(history[history.length - 2].getNormalForm())
+    ).toEqual(policy.getInitialWeight(3) - 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 4].getNormalForm())
+        ?.get(history[history.length - 3].getNormalForm())
+    ).toEqual(policy.getInitialWeight(2) + 3)
+    expect(
+      aI.weights
+        .get(history[history.length - 5].getNormalForm())
+        ?.get(history[history.length - 4].getNormalForm())
+    ).toEqual(policy.getInitialWeight(1) - 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 6].getNormalForm())
+        ?.get(history[history.length - 5].getNormalForm())
+    ).toEqual(policy.getInitialWeight(0) + 3)
+    expect(aI.weights.get(new GameBoard().getNormalForm())?.get(1)).toEqual(
+      policy.getInitialWeight(0)
+    ) // <--- remains unchanged
+  })
+
+  test('apply different changes', () => {
+    handler.winner.value = 1
+    policy.setDiffs(5, -1, 1)
+    policy.applyPolicy(aI, history)
+    expect(
+      aI.weights
+        .get(history[history.length - 2].getNormalForm())
+        ?.get(history[history.length - 1].getNormalForm())
+    ).toEqual(policy.getInitialWeight(4) + 5)
+    expect(
+      aI.weights
+        .get(history[history.length - 3].getNormalForm())
+        ?.get(history[history.length - 2].getNormalForm())
+    ).toEqual(policy.getInitialWeight(3) + 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 4].getNormalForm())
+        ?.get(history[history.length - 3].getNormalForm())
+    ).toEqual(policy.getInitialWeight(2) + 5)
+    expect(
+      aI.weights
+        .get(history[history.length - 5].getNormalForm())
+        ?.get(history[history.length - 4].getNormalForm())
+    ).toEqual(policy.getInitialWeight(1) + 1)
+    expect(
+      aI.weights
+        .get(history[history.length - 6].getNormalForm())
+        ?.get(history[history.length - 5].getNormalForm())
+    ).toEqual(policy.getInitialWeight(0) + 5)
   })
 })
 
