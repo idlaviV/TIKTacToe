@@ -1,4 +1,5 @@
 import type { AIPlayer } from './AIPlayer'
+import type { NormalForm } from './Codes'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import type { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
@@ -32,10 +33,10 @@ export class ErrorBackpropagationPolicy implements EvaluationPolicy {
    * @override
    */
   getInitialWeight(height: number): number {
-    if (0 <= height && height < 8) {
+    if (0 <= height && height <= 8) {
       return 8 - height
     } else {
-      throw new Error('Height must be between 0 and 7')
+      throw new Error('Height must be between 0 and 8')
     }
   }
 
@@ -59,22 +60,35 @@ export class ErrorBackpropagationPolicy implements EvaluationPolicy {
   }
 
   private applyDrawPolicy(aI: AIPlayer, history: GameBoard[]): void {
+    let possibleMoves: Map<NormalForm, number>
     for (let index = history.length - 1; index > 0; index--) {
-      aI.getVertexMap(history[index - 1].getNormalForm()).set(
-        history[index - 1].getNormalForm(),
-        aI.getVertexMap(history[index - 1].getNormalForm()).get(history[index].getNormalForm())! +
-          this.drawDiff
+      possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
+
+      possibleMoves.set(
+        history[index].getNormalForm(),
+        possibleMoves.get(history[index].getNormalForm())! + this.drawDiff
       )
+
+      if (possibleMoves.get(history[index].getNormalForm())! < 0) {
+        possibleMoves.set(history[index].getNormalForm(), 0)
+      }
     }
   }
 
   private applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+    let possibleMoves: Map<NormalForm, number>
     for (let index = history.length - 1; index > 0; index--) {
-      aI.getVertexMap(history[index - 1].getNormalForm()).set(
+      possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
+
+      possibleMoves.set(
         history[index].getNormalForm(),
-        aI.getVertexMap(history[index - 1].getNormalForm()).get(history[index].getNormalForm())! +
+        possibleMoves.get(history[index].getNormalForm())! +
           (index % 2 === (history.length - 1) % 2 ? this.winDiff : this.loseDiff)
       )
+
+      if (possibleMoves.get(history[index].getNormalForm())! < 0) {
+        possibleMoves.set(history[index].getNormalForm(), 0)
+      }
     }
   }
 }
