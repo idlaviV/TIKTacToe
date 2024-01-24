@@ -29,6 +29,24 @@ export const gameBoard1 = new GameBoard([
   [0, 0, 0]
 ])
 
+export const gameBoard1rot = new GameBoard([
+  [0, 0, 1],
+  [0, 0, 0],
+  [0, 0, 0]
+])
+
+export const gameBoard1rot2 = new GameBoard([
+  [0, 0, 0],
+  [0, 0, 0],
+  [1, 0, 0]
+])
+
+export const gameBoard1rot3 = new GameBoard([
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 1]
+])
+
 export const gameBoard10 = new GameBoard([
   [0, 1, 0],
   [0, 0, 0],

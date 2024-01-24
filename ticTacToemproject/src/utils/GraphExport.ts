@@ -1,4 +1,4 @@
-import type { GameBoardCode } from '@/logic/Codes'
+import type { GameBoardCode, NormalForm } from '@/logic/Codes'
 import type { FieldType } from '@/logic/FieldType'
 import type { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
@@ -12,12 +12,14 @@ export const edges: Ref<Edges> = ref({})
 export const activeNode: Ref<TTTNode | undefined> = ref()
 let level: number = 0
 let currentChildren : TTTNode[] = []
+let lastCode: string = 'NotInitialized'
 
 export function initializeHistory(gameBoard: GameBoard) {
   const newCode = gameBoard.getCode().toString()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, level)
   nodes.value[newCode] = newNode
   activeNode.value = newNode
+  lastCode = newCode
   addChildren()
 }
 
@@ -25,26 +27,27 @@ export function initializeHistory(gameBoard: GameBoard) {
  * @returns the code of the active node
  */
 function getLastCode(): string {
-  const lastCode:string = activeNode.value?.name!
+  /**const lastCode:string = activeNode.value?.name!
   console.log("Last code is "+lastCode)
+  return lastCode*/
   return lastCode
 }
 
 function addChildren() {
   const childrenOfActiveGameBoard: GameBoard[] =
     GameHandler.getInstance().getPossibleNextPositions()
-  const representativesOfChildren: ArrayMultimap<GameBoardCode,FieldType[][]> =
-    IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
-  representativesOfChildren.asMap().forEach((value, key) =>{
-    const representative:FieldType[][] = childrenOfActiveGameBoard.find((board) => board.getCode() == key)!.clone()
-    const newNode:TTTNode =  new TTTNode(key, representative, level+1, true)
-    for (const alternative of value) {
-      newNode.addAlternative(alternative)
-    }
+  const equivalenceClasses: ArrayMultimap<NormalForm,GameBoard> =
+    IsomorphismGroup.getEquivalenceClassesOfGameBoards(childrenOfActiveGameBoard)
+  const representatives:Map<NormalForm,GameBoard> = IsomorphismGroup.getRepresentativeOfEquivalenceClasses(equivalenceClasses)
+  equivalenceClasses.asMap().forEach((value,key) => {
+    const representative:GameBoard = representatives.get(key)!
+    const newNode:TTTNode = new TTTNode(representative.getCode(), representative.state, level+1, true)
+    newNode.setAlternative(value.map((element) => element.state))
     nodes.value[key.toString()] = newNode
     currentChildren.push(newNode)
     const edgeKey:string = getLastCode() + '#' + key.toString()
     edges.value[edgeKey] = {source: getLastCode(), target: key.toString()}
+
   })
 }
 
@@ -62,6 +65,7 @@ export function updateHistory(gameBoard: GameBoard) {
   edges.value[key] = { source: getLastCode(), target: newCode }
   
   activeNode.value = newNode
+  lastCode = newCode
   currentChildren = []
   addChildren()
   level++
@@ -98,8 +102,8 @@ export class TTTNode implements Node {
     this.isChild = isChild
   }
 
-  addAlternative(alternative: FieldType[][]) {
-    this.alternatives.push(alternative)
+  setAlternative(alternative: FieldType[][][]) {
+    this.alternatives = alternative
   }
 
 }
