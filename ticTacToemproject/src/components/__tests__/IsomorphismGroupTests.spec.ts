@@ -247,7 +247,6 @@ describe('getRepresentativesOfNonequivalentGameBoards', () => {
   test('Single element', () => {
     boards.push(Util.gameBoard21)
     representative = IsomorphismGroup.getEquivalenceClassesOfGameBoards(boards)
-    console.log(representative)
     expect(extractNormalforms(representative)).toEqual([21])
     expect(representative.get(21)).toEqual([Util.gameBoard21])
   })

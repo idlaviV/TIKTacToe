@@ -11,7 +11,6 @@ export class Graph {
   level: number = 0
   currentChildren: TTTNode[] = []
   lastCode: string = 'NotInitialized'
-  historyExport: Graph = new Graph()
   nodes: Nodes = {}
   edges: Edges = {}
   activeNode: TTTNode | undefined = undefined
@@ -67,7 +66,6 @@ function addChildren(graph: Graph) {
  */
 export function updateHistory(gameBoard: GameBoard) {
   const graph: Graph = graphExport.value
-  console.log('Update history, current level is ' + graph.level)
   //deleteChild(gameBoard)
   const newCode: string = gameBoard.getNormalForm().toString()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)

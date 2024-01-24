@@ -46,7 +46,6 @@ export class GameHandler {
   public static getInstance(): GameHandler {
     if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
-      graphExport.value.initializeHistory(GameHandler.instance.gBHandler.getGameBoard())
     }
 
     return GameHandler.instance
@@ -195,6 +194,5 @@ export class GameHandler {
    */
   destroySingleton(): void {
     GameHandler.instance = new GameHandler()
-    resetHistory(GameHandler.instance.gBHandler.getGameBoard())
   }
 }

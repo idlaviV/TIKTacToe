@@ -24,6 +24,7 @@ export class GameBoard {
   ) {
     this.state = state
     this.code = calculateCode(state)
+    this.getNormalForm()
   }
 
   toString(): String {

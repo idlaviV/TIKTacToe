@@ -3,7 +3,7 @@ import { GameBoard } from '@/logic/GameBoard'
 import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
-import { resetGameHandler } from './TestUtil'
+import { gameBoard1, gameBoard10, gameBoard10000, gameBoard20001, gameBoard21, resetGameHandler } from './TestUtil'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import type { EvaluationPolicy } from '@/logic/EvaluationPolicy'
 import { maxFromAI, debugRandomizerFactory } from './TestUtil'
@@ -28,11 +28,7 @@ describe('perform turn on empty board', () => {
     debugRandomizer.setRandomNumber(1)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
-      new GameBoard([
-        [1, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
+      gameBoard1
     )
     expect(player.weights.get(0)?.size).toEqual(3)
     expect(player.weights.get(0)?.get(1)).toEqual(1)
@@ -44,22 +40,14 @@ describe('perform turn on empty board', () => {
     debugRandomizer.setRandomNumber(2)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
-      new GameBoard([
-        [0, 1, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
+      gameBoard10
     )
   })
   test('option3', () => {
     debugRandomizer.setRandomNumber(3)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
-      new GameBoard([
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
-      ])
+      gameBoard10000
     )
   })
   test('illegal option', () => {
@@ -76,11 +64,7 @@ describe('perform turn on one-tile-board', () => {
     debugRandomizer.setRandomNumber(1)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
-      new GameBoard([
-        [1, 2, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
+      gameBoard21
     )
     expect(player.weights.get(1)?.size).toEqual(5)
     expect(player.weights.get(1)?.get(21)).toEqual(1)
@@ -93,23 +77,21 @@ describe('perform turn on one-tile-board', () => {
   test('option2', () => {
     debugRandomizer.setRandomNumber(2)
     player.makeMove()
+    const expected:GameBoard = new GameBoard([
+      [1, 0, 2],
+      [0, 0, 0],
+      [0, 0, 0]
+    ])
+    expected.getNormalForm()
     expect(gBHandler.getGameBoard()).toEqual(
-      new GameBoard([
-        [1, 0, 2],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
+      expected
     )
   })
   test('option3', () => {
     debugRandomizer.setRandomNumber(3)
     player.makeMove()
     expect(gBHandler.getGameBoard()).toEqual(
-      new GameBoard([
-        [1, 0, 0],
-        [0, 2, 0],
-        [0, 0, 0]
-      ])
+      gameBoard20001
     )
   })
   test('option4', () => {
