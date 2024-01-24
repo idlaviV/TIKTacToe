@@ -37,7 +37,7 @@ function addChildren() {
     IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
   representativesOfChildren.asMap().forEach((value, key) =>{
     const representative:FieldType[][] = childrenOfActiveGameBoard.find((board) => board.getCode() == key)!.clone()
-    const newNode:TTTNode =  new TTTNode(key, representative, level, true)
+    const newNode:TTTNode =  new TTTNode(key, representative, level+1, true)
     for (const alternative of value) {
       newNode.addAlternative(alternative)
     }

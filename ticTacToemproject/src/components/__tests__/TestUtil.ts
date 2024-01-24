@@ -23,6 +23,24 @@ export function debugRandomizerFactory() {
   }
 }
 
+export const gameBoard1 = new GameBoard([
+  [1, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0]
+])
+
+export const gameBoard10 = new GameBoard([
+  [0, 1, 0],
+  [0, 0, 0],
+  [0, 0, 0]
+])
+
+export const gameBoard10000 = new GameBoard([
+  [0, 0, 0],
+  [0, 1, 0],
+  [0, 0, 0]
+])
+
 export const gameBoard21 = new GameBoard([
   [1, 2, 0],
   [0, 0, 0],
