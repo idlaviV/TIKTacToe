@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
 import { setGUiState } from '@/logic/GuiState'
-import { graphExport } from '@/utils/GraphExport';
+import { graphExport } from '@/utils/GraphExport'
 import { players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
 import { ref, type Ref } from 'vue'
 

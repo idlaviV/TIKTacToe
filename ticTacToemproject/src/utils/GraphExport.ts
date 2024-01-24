@@ -16,7 +16,7 @@ export class Graph {
   activeNode: TTTNode | undefined = undefined
 
   initializeHistory() {
-    const gameBoard:GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
+    const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
     const newCode = gameBoard.getCode().toString()
     const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, this.level)
     this.nodes[newCode] = newNode
@@ -67,13 +67,14 @@ function addChildren(graph: Graph) {
  */
 export function updateHistory(gameBoard: GameBoard) {
   const graph: Graph = graphExport.value
-  //deleteChild(gameBoard)
+
   const newCode: string = gameBoard.getNormalForm().toString()
+  deleteChild(newCode, graph)
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
   graph.nodes[newCode] = newNode
 
-  //const key: string = getLastCode() + '#' + newCode
-  //edges.value[key] = { source: getLastCode(), target: newCode }
+  const key: string = graph.getLastCode() + '#' + newCode
+  graph.edges[key] = { source: graph.getLastCode(), target: newCode }
 
   graph.activeNode = newNode
   graph.lastCode = newCode
@@ -118,15 +119,8 @@ export class TTTNode implements Node {
   }
 }
 
-/**
-function deleteChild(gameBoard: GameBoard) {
-  for (const child of currentChildren) {
-    if (IsomorphismGroup.getGameBoardEquiv(gameBoard).has(child.code))
-    {
-      const oldEdgeLabel:string = activeNode.value?.code + "#" + child.name
-      delete edges.value[oldEdgeLabel]
-      delete nodes.value[child.name]
-    }
-  }
+function deleteChild(newCode: string, graph: Graph) {
+  const oldEdgeLabel: string = graph.getLastCode() + '#' + newCode
+  delete graph.edges[oldEdgeLabel]
+  delete graph.nodes[newCode]
 }
- */

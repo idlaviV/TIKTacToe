@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { VNetworkGraph, type Layouts, type VNetworkGraphInstance } from 'v-network-graph'
+import {
+  VNetworkGraph,
+  type Layouts,
+  type Nodes,
+  type VNetworkGraphInstance
+} from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
 import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
+import { computed } from 'vue'
+import { getGuiState } from '@/logic/GuiState'
+import { GameHandler } from '@/logic/GameHandler'
 
 /**
  * @description The position of the nodes in the graph.
@@ -21,9 +29,17 @@ const layouts: Ref<Layouts> = ref({
 if (configs.view) {
   configs.view.onBeforeInitialDisplay = updateLayout
 }
-watch(graphExport, updateLayout)
 
+const nodesForDisplay = computed(() => {
+  return graphExport.value.nodes
+})
+
+const edgesForDisplay = computed(() => {
+  return graphExport.value.edges
+})
 const graph = ref<VNetworkGraphInstance>()
+
+watch(GameHandler.getInstance().getPlayerOnTurn(), updateLayout)
 
 /**
  * Calculate new node positions and pan to the active node.
@@ -46,17 +62,16 @@ function updateLayout() {
   <v-network-graph
     ref="graph"
     class="graph"
-    :nodes="graphExport.nodes"
-    :edges="graphExport.edges"
+    :nodes="nodesForDisplay"
+    :edges="edgesForDisplay"
     :layouts="layouts"
     :configs="configs"
   >
     <template #override-node="{ nodeId }">
-      <GraphPanelNode :node="graphExport.nodes[nodeId]" />
+      <GraphPanelNode :nodeId="nodeId" />
     </template>
   </v-network-graph>
 </template>
-
 
 <style>
 .graph {

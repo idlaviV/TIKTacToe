@@ -49,9 +49,9 @@ describe('update', () => {
     updateHistory(gameBoard1rot)
     expect(Object.keys(nodes).length).toEqual(9)
     checkNode(nodes['0'], '0', new GameBoard().state, 0)
-    /**checkNode(nodes["1"], "100", gameBoard1rot.state, 1)
-      checkNode(nodes["10"], "10", gameBoard10.state, 1)
-      checkNode(nodes["10000"], "10000", gameBoard10000.state, 1)*/
+    checkNode(nodes['1'], '100', gameBoard1rot.state, 1)
+    checkNode(nodes['10'], '10', gameBoard10.state, 1)
+    checkNode(nodes['10000'], '10000', gameBoard10000.state, 1)
     checkNode(
       nodes['20001'],
       '20100',
