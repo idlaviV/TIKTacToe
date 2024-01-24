@@ -4,7 +4,7 @@ import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
 import { configs } from '@/components/GraphPanelUserConfigs'
-import { edges, nodes } from '@/utils/GraphExport'
+import { graphExport } from '@/utils/GraphExport'
 
 /**
  * @description The position of the nodes in the graph.
@@ -21,7 +21,7 @@ const layouts: Ref<Layouts> = ref({
 if (configs.view) {
   configs.view.onBeforeInitialDisplay = updateLayout
 }
-watch(nodes.value, updateLayout)
+watch(graphExport, updateLayout)
 
 const graph = ref<VNetworkGraphInstance>()
 
@@ -29,7 +29,7 @@ const graph = ref<VNetworkGraphInstance>()
  * Calculate new node positions and pan to the active node.
  */
 function updateLayout() {
-  const activeNode = layout(nodes.value, edges.value, layouts.value)
+  const activeNode = layout(graphExport.value.nodes, graphExport.value.edges, layouts.value)
   const height = graph.value?.getSizes().height
   const width = graph.value?.getSizes().width
   if (activeNode !== undefined && height !== undefined && width !== undefined) {
@@ -46,16 +46,17 @@ function updateLayout() {
   <v-network-graph
     ref="graph"
     class="graph"
-    :nodes="nodes"
-    :edges="edges"
+    :nodes="graphExport.nodes"
+    :edges="graphExport.edges"
     :layouts="layouts"
     :configs="configs"
   >
     <template #override-node="{ nodeId }">
-      <GraphPanelNode :node="nodes[nodeId]" />
+      <GraphPanelNode :node="graphExport.nodes[nodeId]" />
     </template>
   </v-network-graph>
 </template>
+
 
 <style>
 .graph {

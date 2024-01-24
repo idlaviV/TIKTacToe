@@ -14,7 +14,7 @@ beforeEach(() => {
   gameHandler.destroySingleton()
   gameHandler = GameHandler.getInstance()
   graphExport.value = new Graph()
-  graphExport.value.initializeHistory(gameHandler.getGBHandler().getGameBoard())
+  graphExport.value.initializeHistory()
   nodes = graphExport.value.nodes
   edges = graphExport.value.edges
 })
@@ -35,7 +35,6 @@ describe('update', () => {
     gameHandler.gBHandler.gameBoard.value = gameBoard1
     gameHandler.playerOnTurn.value = 2
     updateHistory(gameBoard1)
-    console.log(nodes)
     expect(Object.keys(nodes).length).toEqual(9)
     checkNode(nodes['0'], '0', new GameBoard().state, 0)
     checkNode(nodes['1'], '1', gameBoard1.state, 1)

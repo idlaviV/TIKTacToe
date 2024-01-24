@@ -1,6 +1,6 @@
 import type { GameBoardCode, NormalForm } from '@/logic/Codes'
 import type { FieldType } from '@/logic/FieldType'
-import type { GameBoard } from '@/logic/GameBoard'
+import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import type { ArrayMultimap } from '@teppeis/multimaps'
@@ -15,7 +15,8 @@ export class Graph {
   edges: Edges = {}
   activeNode: TTTNode | undefined = undefined
 
-  initializeHistory(gameBoard: GameBoard) {
+  initializeHistory() {
+    const gameBoard:GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
     const newCode = gameBoard.getCode().toString()
     const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, this.level)
     this.nodes[newCode] = newNode
@@ -88,7 +89,7 @@ export function updateHistory(gameBoard: GameBoard) {
  */
 export function resetHistory(gameBoard: GameBoard) {
   graphExport.value = new Graph()
-  graphExport.value.initializeHistory(gameBoard)
+  graphExport.value.initializeHistory()
 }
 
 export class TTTNode implements Node {
