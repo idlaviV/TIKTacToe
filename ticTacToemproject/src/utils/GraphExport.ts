@@ -1,6 +1,9 @@
+import type { GameBoardCode } from '@/logic/Codes'
+import type { FieldType } from '@/logic/FieldType'
 import type { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
+import type { ArrayMultimap } from '@teppeis/multimaps'
 import { type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 
@@ -11,7 +14,7 @@ let level: number = 0
 
 export function initializeHistory(gameBoard: GameBoard) {
   const newCode = gameBoard.getCode().toString()
-  const newNode: TTTNode = new TTTNode(newCode, gameBoard, level)
+  const newNode: TTTNode = new TTTNode(newCode, gameBoard.state, level)
   nodes.value[newCode] = newNode
   activeNode.value = newNode
   addChildren()
@@ -27,11 +30,16 @@ function getLastCode(): string {
 function addChildren() {
   const childrenOfActiveGameBoard: GameBoard[] =
     GameHandler.getInstance().getPossibleNextPositions()
-  const representativesOfChildren: number[] =
+  const representativesOfChildren: ArrayMultimap<GameBoardCode,FieldType[][]> =
     IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(childrenOfActiveGameBoard)
-  for(const normalForm of representativesOfChildren) {
-    
-  }
+  representativesOfChildren.asMap().forEach((value, key) =>{
+    const representative:FieldType[][] = childrenOfActiveGameBoard.find((board) => board.getCode() == key)!.clone()
+    const newNode:TTTNode =  new TTTNode(key.toString(), representative, level, true)
+    for (const alternative of value) {
+      newNode.addAlternative(alternative)
+    }
+    nodes.value[key.toString()] = newNode
+  })
 }
 
 /**
@@ -40,7 +48,7 @@ function addChildren() {
  */
 export function updateHistory(gameBoard: GameBoard) {
   const newCode: string = gameBoard.getCode().toString()
-  const newNode: TTTNode = new TTTNode(newCode, gameBoard, level)
+  const newNode: TTTNode = new TTTNode(newCode, gameBoard.state, level)
   nodes.value[newCode] = newNode
   activeNode.value = newNode
   const key: string = getLastCode() + '#' + newCode
@@ -69,16 +77,16 @@ export class TTTNode implements Node {
   boardState: number[][]
   isChild: boolean
   level: number
-  alternatives: number[][][] = []
+  alternatives: FieldType[][][] = []
 
-  constructor(name: string, boardState: GameBoard, level: number, isChild: boolean = false) {
+  constructor(name: string, boardState: number[][], level: number, isChild: boolean = false) {
     this.name = name
-    this.boardState = boardState.state
+    this.boardState = boardState
     this.level = level
     this.isChild = isChild
   }
 
-  addAlternative(alternative: number[][]) {
+  addAlternative(alternative: FieldType[][]) {
     this.alternatives.push(alternative)
   }
 

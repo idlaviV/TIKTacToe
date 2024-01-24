@@ -1,4 +1,5 @@
 import type { GameBoardCode, NormalForm } from './Codes'
+import type { FieldType } from './FieldType'
 import { calculateCode, type GameBoard } from './GameBoard'
 import { ArrayMultimap } from '@teppeis/multimaps'
 /**
@@ -232,6 +233,7 @@ export class IsomorphismGroup {
     return Math.min(...gameBoards)
   }
 
+
   /**
    * Extracts one representative GameBoard per contained equivalence class from an array of GameBoards.
    * If there are several GameBoards per equivalence class, the GameBoard with the smallest code is selected.
@@ -240,18 +242,20 @@ export class IsomorphismGroup {
    */
   static getRepresentativesOfNonequivalentGameBoards(
     gameBoards: GameBoard[]
-  ): ArrayMultimap<GameBoardCode, GameBoardCode> {
-    const classes: ArrayMultimap<NormalForm, GameBoardCode> = new ArrayMultimap()
+  ): ArrayMultimap<GameBoardCode, FieldType[][]> {
+    const classes: ArrayMultimap<NormalForm, GameBoard> = new ArrayMultimap()
 
     gameBoards.forEach((element) => {
-      classes.put(element.getNormalForm(), element.getCode())
+      classes.put(element.getNormalForm(), element)
     })
 
-    const representatives: ArrayMultimap<GameBoardCode, GameBoardCode> = new ArrayMultimap()
+    const representatives: ArrayMultimap<GameBoardCode, FieldType[][]> = new ArrayMultimap()
     classes.asMap().forEach((value, key) => {
       representatives.putAll(
-        IsomorphismGroup.getRepresentativeOfGameBoards(...classes.get(key)),
-        classes.get(key)
+        IsomorphismGroup.getRepresentativeOfGameBoards(...(
+          classes.get(key).map((board)=>board.getCode())
+          )),
+        classes.get(key).map((board)=>board.clone())
       )
     })
     return representatives

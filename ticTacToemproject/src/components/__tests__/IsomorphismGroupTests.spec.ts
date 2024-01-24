@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, test } from 'vitest'
 import * as Util from './TestUtil'
 import { ArrayMultimap } from '@teppeis/multimaps'
 import type { GameBoardCode } from '@/logic/Codes'
+import type { FieldType } from '@/logic/FieldType'
 
 describe('getGameBoardEquiv', () => {
   test('Empty board', () => {
@@ -218,7 +219,7 @@ describe('getRepresentativeOfGameBoards', () => {
 
 describe('getRepresentativesOfNonequivalentGameBoards', () => {
   let boards: GameBoard[]
-  let representative: ArrayMultimap<GameBoardCode, GameBoardCode>
+  let representative: ArrayMultimap<GameBoardCode, FieldType[][]>
   beforeEach(() => {
     boards = []
   })
@@ -260,7 +261,7 @@ describe('getRepresentativesOfNonequivalentGameBoards', () => {
   })
 })
 
-function extractNormalforms(output: ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
+function extractNormalforms(output: ArrayMultimap<GameBoardCode, FieldType[][]>): number[] {
   const normalForms: number[] = []
   output.asMap().forEach((value, key) => {
     normalForms.push(key)
