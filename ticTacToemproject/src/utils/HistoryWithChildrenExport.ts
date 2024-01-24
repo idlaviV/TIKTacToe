@@ -5,6 +5,7 @@ import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import type { ArrayMultimap } from '@teppeis/multimaps'
 import type { GameBoardCode } from '@/logic/Codes'
+import { forEachChild } from 'typescript'
 
 /**
  * This class represents the graph which is shown in the game view on the right side.
@@ -32,6 +33,7 @@ export class HistoryWithChildrenExport {
     this.deleteNodesAndEdges()
     this.overwrite(nodes, edges, lastCode)
     this.addChildren()
+    console.log(this.edges)
   }
 
   /**
@@ -90,7 +92,7 @@ export class HistoryWithChildrenExport {
         isChild: true
       }
       const edgeKey: string = this.lastCode + '#' + newCode
-      this.edges.value[edgeKey] = { source: this.lastCode, target: newCode }
+      this.edges.value[edgeKey] = { source: this.lastCode, target: newCode, label: "1" }
     }
   }
 

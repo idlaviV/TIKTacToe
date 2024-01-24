@@ -3,6 +3,7 @@ import {
   type Nodes,
   type Edges,
   VNetworkGraph,
+  VEdgeLabel,
   type Layouts,
   type VNetworkGraphInstance
 } from 'v-network-graph'
@@ -64,6 +65,9 @@ function updateLayout() {
     :layouts="layouts"
     :configs="configs"
   >
+    <template #edge-label="{ edge, ...slotProps }">
+      <v-edge-label :text="edge.label" v-bind="slotProps" />
+    </template>
     <template #override-node="{ nodeId }">
       <GraphPanelNode :node="nodes[nodeId]" />
     </template>

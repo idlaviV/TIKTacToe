@@ -35,7 +35,7 @@ export class HistoryExport {
       active: true
     }
     const key: string = this.lastCode + '#' + newCode
-    this.edges.value[key] = { source: this.lastCode, target: newCode }
+    this.edges.value[key] = { source: this.lastCode, target: newCode, label: "1" }
     this.lastCode = newCode
     this.historyWithChildrenExport.update(this.nodes.value, this.edges.value, this.lastCode)
   }
