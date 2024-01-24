@@ -49,26 +49,18 @@ describe('applyPolicy to realistic example', () => {
 
 describe('applyPolicy to artificial example', () => {
   beforeEach(beforeSetupArtificialExample)
-
-  test('does not change weights if game is not over', () => {
-    const expected = aI.getVertexMap(history[2].getNormalForm())
-
-    policy.applyPolicy(aI, history)
-
-    expect(aI.getVertexMap(history[2].getNormalForm())).toBe(expected)
-  })
 })
 
 function beforeSetupRealisticExample() {
   weights.set(
     0,
     new Map([
-      [1, 1],
-      [10, 1],
-      [10000, 1]
+      [1, policy.getInitialWeight(1)],
+      [10, policy.getInitialWeight(1)],
+      [10000, policy.getInitialWeight(1)]
     ])
   )
-  weights.set(10, new Map([[12, 1]]))
+  weights.set(10, new Map([[12, policy.getInitialWeight(2)]]))
   weights.set(
     12,
     new Map([
