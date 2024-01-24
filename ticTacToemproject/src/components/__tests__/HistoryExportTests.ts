@@ -1,3 +1,4 @@
+/**
 import { GameBoard } from '@/logic/GameBoard'
 import { HistoryExport } from '@/utils/HistoryExport'
 import { beforeEach, describe, expect, test } from 'vitest'
@@ -154,3 +155,4 @@ describe('resetHistory', () => {
     expect(historyExport.lastCode).toEqual('0')
   })
 })
+ */

@@ -7,47 +7,57 @@ import type { ArrayMultimap } from '@teppeis/multimaps'
 import { type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 
-export const nodes: Ref<Nodes> = ref({})
-export const edges: Ref<Edges> = ref({})
-export const activeNode: Ref<TTTNode | undefined> = ref()
-let level: number = 0
-let currentChildren : TTTNode[] = []
-let lastCode: string = 'NotInitialized'
+export class Graph {
+  level: number = 0
+  currentChildren: TTTNode[] = []
+  lastCode: string = 'NotInitialized'
+  historyExport: Graph = new Graph()
+  nodes: Nodes = {}
+  edges: Edges = {}
+  activeNode: TTTNode | undefined = undefined
 
-export function initializeHistory(gameBoard: GameBoard) {
-  const newCode = gameBoard.getCode().toString()
-  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, level)
-  nodes.value[newCode] = newNode
-  activeNode.value = newNode
-  lastCode = newCode
-  addChildren()
-}
+  initializeHistory(gameBoard: GameBoard) {
+    const newCode = gameBoard.getCode().toString()
+    const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, this.level)
+    this.nodes[newCode] = newNode
+    this.activeNode = newNode
+    this.lastCode = newCode
+    addChildren(this)
+    this.level = 1
+  }
 
-/**
- * @returns the code of the active node
- */
-function getLastCode(): string {
-  /**const lastCode:string = activeNode.value?.name!
+  /**
+   * @returns the code of the active node
+   */
+  getLastCode(): string {
+    /**const lastCode:string = activeNode.value?.name!
   console.log("Last code is "+lastCode)
   return lastCode*/
-  return lastCode
+    return this.lastCode
+  }
 }
+export const graphExport: Ref<Graph> = ref(new Graph())
 
-function addChildren() {
+function addChildren(graph: Graph) {
   const childrenOfActiveGameBoard: GameBoard[] =
     GameHandler.getInstance().getPossibleNextPositions()
-  const equivalenceClasses: ArrayMultimap<NormalForm,GameBoard> =
+  const equivalenceClasses: ArrayMultimap<NormalForm, GameBoard> =
     IsomorphismGroup.getEquivalenceClassesOfGameBoards(childrenOfActiveGameBoard)
-  const representatives:Map<NormalForm,GameBoard> = IsomorphismGroup.getRepresentativeOfEquivalenceClasses(equivalenceClasses)
-  equivalenceClasses.asMap().forEach((value,key) => {
-    const representative:GameBoard = representatives.get(key)!
-    const newNode:TTTNode = new TTTNode(representative.getCode(), representative.state, level+1, true)
+  const representatives: Map<NormalForm, GameBoard> =
+    IsomorphismGroup.getRepresentativeOfEquivalenceClasses(equivalenceClasses)
+  equivalenceClasses.asMap().forEach((value, key) => {
+    const representative: GameBoard = representatives.get(key)!
+    const newNode: TTTNode = new TTTNode(
+      representative.getCode(),
+      representative.state,
+      graph.level + 1,
+      true
+    )
     newNode.setAlternative(value.map((element) => element.state))
-    nodes.value[key.toString()] = newNode
-    currentChildren.push(newNode)
-    const edgeKey:string = getLastCode() + '#' + key.toString()
-    edges.value[edgeKey] = {source: getLastCode(), target: key.toString()}
-
+    graph.nodes[key.toString()] = newNode
+    graph.currentChildren.push(newNode)
+    const edgeKey: string = graph.getLastCode() + '#' + key.toString()
+    graph.edges[edgeKey] = { source: graph.getLastCode(), target: key.toString() }
   })
 }
 
@@ -56,19 +66,21 @@ function addChildren() {
  * @param gameBoard The new game state
  */
 export function updateHistory(gameBoard: GameBoard) {
-  deleteChild(gameBoard)
-  const newCode: string = gameBoard.getCode().toString()
-  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, level)
-  nodes.value[newCode] = newNode
+  const graph: Graph = graphExport.value
+  console.log('Update history, current level is ' + graph.level)
+  //deleteChild(gameBoard)
+  const newCode: string = gameBoard.getNormalForm().toString()
+  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
+  graph.nodes[newCode] = newNode
 
-  const key: string = getLastCode() + '#' + newCode
-  edges.value[key] = { source: getLastCode(), target: newCode }
-  
-  activeNode.value = newNode
-  lastCode = newCode
-  currentChildren = []
-  addChildren()
-  level++
+  //const key: string = getLastCode() + '#' + newCode
+  //edges.value[key] = { source: getLastCode(), target: newCode }
+
+  graph.activeNode = newNode
+  graph.lastCode = newCode
+  graph.currentChildren = []
+  addChildren(graph)
+  graph.level++
 }
 
 /**
@@ -77,13 +89,8 @@ export function updateHistory(gameBoard: GameBoard) {
  * @param gameBoard The first game state of the new history
  */
 export function resetHistory(gameBoard: GameBoard) {
-  Object.keys(nodes.value).forEach((element) => {
-    delete nodes.value[element]
-  })
-  Object.keys(edges.value).forEach((element) => {
-    delete edges.value[element]
-  })
-  initializeHistory(gameBoard)
+  graphExport.value = new Graph()
+  graphExport.value.initializeHistory(gameBoard)
 }
 
 export class TTTNode implements Node {
@@ -94,7 +101,12 @@ export class TTTNode implements Node {
   level: number
   alternatives: FieldType[][][] = []
 
-  constructor(code: GameBoardCode, boardState: FieldType[][], level: number, isChild: boolean = false) {
+  constructor(
+    code: GameBoardCode,
+    boardState: FieldType[][],
+    level: number,
+    isChild: boolean = false
+  ) {
     this.name = code.toString()
     this.code = code
     this.boardState = boardState
@@ -105,8 +117,9 @@ export class TTTNode implements Node {
   setAlternative(alternative: FieldType[][][]) {
     this.alternatives = alternative
   }
-
 }
+
+/**
 function deleteChild(gameBoard: GameBoard) {
   for (const child of currentChildren) {
     if (IsomorphismGroup.getGameBoardEquiv(gameBoard).has(child.code))
@@ -117,4 +130,4 @@ function deleteChild(gameBoard: GameBoard) {
     }
   }
 }
-
+ */

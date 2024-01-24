@@ -11,7 +11,7 @@ import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { setGUiState } from './GuiState'
-import { initializeHistory, resetHistory, updateHistory } from '@/utils/GraphExport'
+import { graphExport, resetHistory, updateHistory } from '@/utils/GraphExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -36,8 +36,7 @@ export class GameHandler {
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
 
-  private constructor() {
-  }
+  private constructor() {}
 
   /**
    * Returns the instance of the singleton.
@@ -47,9 +46,9 @@ export class GameHandler {
   public static getInstance(): GameHandler {
     if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
-      initializeHistory(GameHandler.instance.gBHandler.getGameBoard())
+      graphExport.value.initializeHistory(GameHandler.instance.gBHandler.getGameBoard())
     }
-    
+
     return GameHandler.instance
   }
 
@@ -196,5 +195,6 @@ export class GameHandler {
    */
   destroySingleton(): void {
     GameHandler.instance = new GameHandler()
+    resetHistory(GameHandler.instance.gBHandler.getGameBoard())
   }
 }

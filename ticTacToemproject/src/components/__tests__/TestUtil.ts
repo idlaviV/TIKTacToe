@@ -75,6 +75,12 @@ export const gameBoard2100 = new GameBoard([
   [0, 0, 0]
 ])
 
+export const gameBoard20001 = new GameBoard([
+  [1, 0, 0],
+  [0, 2, 0],
+  [0, 0, 0]
+])
+
 export const gameBoardDraw = new GameBoard([
   [1, 1, 2],
   [2, 2, 1],

@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import {
-  VNetworkGraph,
-  type Layouts,
-  type VNetworkGraphInstance
-} from 'v-network-graph'
+import { VNetworkGraph, type Layouts, type VNetworkGraphInstance } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
 import { configs } from '@/components/GraphPanelUserConfigs'
 import { edges, nodes } from '@/utils/GraphExport'
-
-
-
 
 /**
  * @description The position of the nodes in the graph.

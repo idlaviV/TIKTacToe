@@ -2,7 +2,7 @@ import { defineConfigs, type UserConfigs } from 'v-network-graph'
 export const configs: UserConfigs = defineConfigs({
   view: {
     panEnabled: true,
-    zoomEnabled: true,//for debugging purposes @todo
+    zoomEnabled: true, //for debugging purposes @todo
     scalingObjects: true,
     autoPanAndZoomOnLoad: 'center-zero',
     autoPanOnResize: false

@@ -1,4 +1,4 @@
-import type {  GameBoardCode, NormalForm } from './Codes'
+import type { GameBoardCode, NormalForm } from './Codes'
 import { calculateCode, type GameBoard } from './GameBoard'
 import { ArrayMultimap } from '@teppeis/multimaps'
 /**
@@ -219,7 +219,9 @@ export class IsomorphismGroup {
    * @returns The normal form of the gameboard.
    */
   static getNormalFormOfGameBoard(gameBoard: GameBoard): NormalForm {
-    return IsomorphismGroup.getRepresentativeOfGameBoards(Array.from(IsomorphismGroup.getGameBoardEquiv(gameBoard)))
+    return IsomorphismGroup.getRepresentativeOfGameBoards(
+      Array.from(IsomorphismGroup.getGameBoardEquiv(gameBoard))
+    )
   }
 
   /**
@@ -249,14 +251,15 @@ export class IsomorphismGroup {
    * @param classes The equivalence classes, indexed by their normal form
    * @returns A map from the normal form of each class to the representative GameBoard
    */
-  static getRepresentativeOfEquivalenceClasses(classes:ArrayMultimap<NormalForm, GameBoard>) : Map<NormalForm,GameBoard> {
-    const representatives:Map<NormalForm,GameBoard> = new Map()
-    classes.asMap().forEach((value, key) =>{
+  static getRepresentativeOfEquivalenceClasses(
+    classes: ArrayMultimap<NormalForm, GameBoard>
+  ): Map<NormalForm, GameBoard> {
+    const representatives: Map<NormalForm, GameBoard> = new Map()
+    classes.asMap().forEach((value, key) => {
       representatives.set(key, IsomorphismGroup.getRepresentativeOfGameBoardsAsGameBoard(value))
     })
     return representatives
   }
-
 
   /**
    * Calculates the equivalence classes of the given GameBoards.

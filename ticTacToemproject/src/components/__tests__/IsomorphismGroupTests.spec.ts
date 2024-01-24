@@ -216,9 +216,9 @@ describe('getRepresentativeOfGameBoards', () => {
   })
 })
 
-describe('getRepresentativeOfGameBoardsAsGameBoard',()=>{
-  let boards:GameBoard[] = []
-  let representative:GameBoard
+describe('getRepresentativeOfGameBoardsAsGameBoard', () => {
+  let boards: GameBoard[] = []
+  let representative: GameBoard
   test('One Element', () => {
     boards = [Util.gameBoard1]
     representative = IsomorphismGroup.getRepresentativeOfGameBoardsAsGameBoard(boards)

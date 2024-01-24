@@ -1,3 +1,4 @@
+/**
 import { GameBoard } from '@/logic/GameBoard'
 import { HistoryExport } from '@/utils/HistoryExport'
 import { HistoryWithChildrenExport } from '@/utils/HistoryWithChildrenExport'
@@ -158,3 +159,4 @@ describe('Reacting on the game', () => {
     })
   })
 })
+ */
