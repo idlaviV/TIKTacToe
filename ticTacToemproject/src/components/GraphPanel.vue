@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import {
-  type Nodes,
-  type Edges,
   VNetworkGraph,
   type Layouts,
   type VNetworkGraphInstance
@@ -9,15 +7,11 @@ import {
 import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
-import { GameHandler } from '@/logic/GameHandler'
 import { configs } from '@/components/GraphPanelUserConfigs'
+import { edges, nodes } from '@/utils/GraphExport'
 
-const gameHandler: GameHandler = GameHandler.getInstance()
 
-const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getNodes()
-const edges: Ref<Edges> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getEdges()
-// At the start the children are added. Later the addChildren-function is automatically called whenever the history is changed.
-gameHandler.getHistoryExport().getHistoryWithChildrenExport().addChildren()
+
 
 /**
  * @description The position of the nodes in the graph.

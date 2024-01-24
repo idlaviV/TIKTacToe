@@ -24,7 +24,9 @@ export function initializeHistory(gameBoard: GameBoard) {
  * @returns the code of the active node
  */
 function getLastCode(): string {
-  return activeNode.value?.name!
+  const lastCode:string = activeNode.value?.name!
+  console.log("Last code is "+lastCode)
+  return lastCode
 }
 
 function addChildren() {
@@ -50,9 +52,11 @@ export function updateHistory(gameBoard: GameBoard) {
   const newCode: string = gameBoard.getCode().toString()
   const newNode: TTTNode = new TTTNode(newCode, gameBoard.state, level)
   nodes.value[newCode] = newNode
-  activeNode.value = newNode
+
   const key: string = getLastCode() + '#' + newCode
   edges.value[key] = { source: getLastCode(), target: newCode }
+  
+  activeNode.value = newNode
   addChildren()
   level++
 }
@@ -74,12 +78,12 @@ export function resetHistory(gameBoard: GameBoard) {
 
 export class TTTNode implements Node {
   name: string
-  boardState: number[][]
+  boardState: FieldType[][]
   isChild: boolean
   level: number
   alternatives: FieldType[][][] = []
 
-  constructor(name: string, boardState: number[][], level: number, isChild: boolean = false) {
+  constructor(name: string, boardState: FieldType[][], level: number, isChild: boolean = false) {
     this.name = name
     this.boardState = boardState
     this.level = level
