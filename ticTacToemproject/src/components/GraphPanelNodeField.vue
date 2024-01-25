@@ -7,13 +7,15 @@ import { graphExport } from '@/utils/GraphExport'
  * @param y The row of the field.
  * @param fieldType The displayed value.
  */
-const props = defineProps<{ x: number; y: number; fieldType: FieldType; nodeId: string }>()
+const props = defineProps<{ x: number; y: number; fieldType: FieldType }>()
 const x = props.x
 const y = props.y
-//const label: string = symbol(props.fieldType)
-const label = computed(() => {
-  return symbol(graphExport.value.nodes[props.nodeId].boardState[props.y][props.x])
+
+const label = computed(()=>{
+  return symbol(props.fieldType)
 })
+
+
 const xOffsetRect: number = -30
 const yOffsetRect: number = -30
 const xOffsetText: number = -20

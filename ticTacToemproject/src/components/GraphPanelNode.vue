@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
-import { graphExport } from '@/utils/GraphExport'
 
 /**
  * @param node The node that this component should visualize.
  */
-const props = defineProps<{ nodeId: string }>()
+const props = defineProps<{ node: any }>()
 const range = [0, 1, 2]
 const state = computed(() => {
-  return graphExport.value.nodes[props.nodeId].boardState
+  return props.node.boardState
 })
 </script>
 
@@ -22,7 +21,6 @@ const state = computed(() => {
       :x="x"
       :y="y"
       :fieldType="state[y][x]"
-      :nodeId="nodeId"
     />
   </template>
 </template>
