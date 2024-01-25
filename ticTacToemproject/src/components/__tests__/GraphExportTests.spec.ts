@@ -11,7 +11,7 @@ import {
   gameBoard21
 } from './TestUtil'
 import type { Edges, Nodes } from 'v-network-graph'
-import { Graph, graphExport, resetHistory, updateHistory } from '@/utils/GraphExport'
+import { Graph, graphExport, initializeHistory, resetHistory, updateHistory } from '@/utils/GraphExport'
 
 let gameHandler: GameHandler = GameHandler.getInstance()
 let nodes: Nodes
@@ -99,7 +99,7 @@ describe('reset history', () => {
 
 function initHistory() {
   graphExport.value = new Graph()
-  graphExport.value.initializeHistory()
+  initializeHistory()
   nodes = graphExport.value.nodes
   edges = graphExport.value.edges
 }

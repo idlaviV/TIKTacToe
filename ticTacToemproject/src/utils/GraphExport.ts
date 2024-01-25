@@ -9,35 +9,57 @@ import { type Ref, ref } from 'vue'
 
 export class Graph {
   level: number = 0
-  currentChildren: TTTNode[] = []
-  lastCode: string = 'NotInitialized'
-  nodes: Nodes = {}
+  activeNodeCode: string = 'NotInitialized'
+  nodes: TTTNodes = {}
   edges: Edges = {}
-  activeNode: TTTNode | undefined = undefined
-
-  initializeHistory() {
-    const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
-    const newCode = gameBoard.getCode().toString()
-    const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, this.level)
-    this.nodes[newCode] = newNode
-    this.activeNode = newNode
-    this.lastCode = newCode
-    addChildren(this)
-    this.level = 1
-  }
-
-  /**
-   * @returns the code of the active node
-   */
-  getLastCode(): string {
-    /**const lastCode:string = activeNode.value?.name!
-  console.log("Last code is "+lastCode)
-  return lastCode*/
-    return this.lastCode
-  }
 }
 export const graphExport: Ref<Graph> = ref(new Graph())
 
+/**
+ * Reset the exported graph and initializes it with the current game state.
+ */
+export function initializeHistory() {
+  const graph :Graph = graphExport.value
+  const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
+  const newCode = gameBoard.getCode().toString()
+  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
+  graph.nodes[newCode] = newNode
+  graph.activeNodeCode = newCode
+  addChildren(graph)
+  graph.level = 1
+}
+
+/**
+ * Adds the new game state to the history. Updates the historyWithChildren.
+ * @param gameBoard The new game state
+ */
+export function updateHistory(gameBoard: GameBoard) {
+  const graph: Graph = graphExport.value
+  const newCode: string = gameBoard.getNormalForm().toString()
+  deleteChild(newCode, graph)
+  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
+  graph.nodes[newCode] = newNode
+  const key: string = graph.activeNodeCode + '#' + newCode
+  graph.edges[key] = { source: graph.activeNodeCode, target: newCode }
+  graph.activeNodeCode = newCode
+  addChildren(graph)
+  graph.level++
+}
+
+/**
+ * Delete the node and the incoming edge of a child from the graph.
+ * @param newCode The identifier of the child
+ * @param graph The graph containing the node and the edge
+ */
+function deleteChild(newCode: string, graph: Graph) {
+  const oldEdgeLabel: string = graph.activeNodeCode + '#' + newCode
+  delete graph.edges[oldEdgeLabel]
+  delete graph.nodes[newCode]
+}
+
+/**
+ * Add nodes and corresponding edges for every possible move to the graph.
+ */
 function addChildren(graph: Graph) {
   const childrenOfActiveGameBoard: GameBoard[] =
     GameHandler.getInstance().getPossibleNextPositions()
@@ -47,41 +69,29 @@ function addChildren(graph: Graph) {
     IsomorphismGroup.getRepresentativeOfEquivalenceClasses(equivalenceClasses)
   equivalenceClasses.asMap().forEach((value, key) => {
     const representative: GameBoard = representatives.get(key)!
-    const newNode: TTTNode = new TTTNode(
-      representative.getCode(),
-      representative.state,
-      graph.level + 1,
-      true
-    )
-    newNode.setAlternative(value.map((element) => element.state))
-    graph.nodes[key.toString()] = newNode
-    graph.currentChildren.push(newNode)
-    const edgeKey: string = graph.getLastCode() + '#' + key.toString()
-    graph.edges[edgeKey] = { source: graph.getLastCode(), target: key.toString() }
+    addChildToGraph(graph, representative, value, key.toString())
   })
 }
 
 /**
- * Adds the new game state to the history. Updates the historyWithChildren.
- * @param gameBoard The new game state
+ * Add a child and corresponding edge to the graph.
+ * @param representative The gameboard representing the equivalence class
+ * @param alternatives All gameboards in the equivalence class
+ * @param key The normal form of the equivalence class
  */
-export function updateHistory(gameBoard: GameBoard) {
-  const graph: Graph = graphExport.value
-
-  const newCode: string = gameBoard.getNormalForm().toString()
-  deleteChild(newCode, graph)
-  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
-  graph.nodes[newCode] = newNode
-
-  const key: string = graph.getLastCode() + '#' + newCode
-  graph.edges[key] = { source: graph.getLastCode(), target: newCode }
-
-  graph.activeNode = newNode
-  graph.lastCode = newCode
-  graph.currentChildren = []
-  addChildren(graph)
-  graph.level++
+function addChildToGraph(graph:Graph, representative: GameBoard, alternatives: GameBoard[], key: string) {
+  const newNode: TTTNode = new TTTNode(
+    representative.getCode(),
+    representative.state,
+    graph.level + 1,
+    true,
+    alternatives.map((element) => element.state)
+  )
+  graph.nodes[key.toString()] = newNode
+  const edgeKey: string = graph.activeNodeCode + '#' + key.toString()
+  graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString() }
 }
+
 
 /**
  * Resets the history.
@@ -90,37 +100,41 @@ export function updateHistory(gameBoard: GameBoard) {
  */
 export function resetHistory() {
   graphExport.value = new Graph()
-  graphExport.value.initializeHistory()
+  initializeHistory()
 }
 
+export type TTTNodes = Nodes & { [key: string]: TTTNode }
+/**
+ * This class is a model for the visualization of a game configuration in the graph.
+ */
 export class TTTNode implements Node {
+  // A string representation of the code of the gameboard that is visualized by this node.
   name: string
-  code: number
+  // The code of the gameboard that is visualized by this node.
+  code: GameBoardCode
+  // The state of the gameboard that is visualized by this node.
   boardState: FieldType[][]
+  // Whether this node is just an intermediate leaf in the graph.
   isChild: boolean
+  // The level of the node in the graph. The root element has level 0.
   level: number
+  // All alternative gameboards that could be played, equivalent to the gameboard that is visualized by this node.
   alternatives: FieldType[][][] = []
 
   constructor(
     code: GameBoardCode,
     boardState: FieldType[][],
     level: number,
-    isChild: boolean = false
+    isChild: boolean = false,
+    alternatives: FieldType[][][] = []
   ) {
     this.name = code.toString()
     this.code = code
     this.boardState = boardState
     this.level = level
     this.isChild = isChild
-  }
-
-  setAlternative(alternative: FieldType[][][]) {
-    this.alternatives = alternative
+    this.alternatives = alternatives
   }
 }
 
-function deleteChild(newCode: string, graph: Graph) {
-  const oldEdgeLabel: string = graph.getLastCode() + '#' + newCode
-  delete graph.edges[oldEdgeLabel]
-  delete graph.nodes[newCode]
-}
+

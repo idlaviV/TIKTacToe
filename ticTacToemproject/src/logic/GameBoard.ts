@@ -1,3 +1,4 @@
+import type { GameBoardCode } from './Codes'
 import { symbol, type FieldType } from './FieldType'
 import { IsomorphismGroup } from './IsomorphismGroup'
 
@@ -6,7 +7,7 @@ import { IsomorphismGroup } from './IsomorphismGroup'
  */
 export class GameBoard {
   state: FieldType[][]
-  code: number = -1
+  code: GameBoardCode = -1
   normalForm: number = -1
 
   /**
@@ -62,7 +63,7 @@ export class GameBoard {
     return this.normalForm
   }
 
-  getCode(): number {
+  getCode(): GameBoardCode {
     return this.code
   }
 }
