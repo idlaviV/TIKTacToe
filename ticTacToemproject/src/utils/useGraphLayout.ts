@@ -2,7 +2,6 @@ import dagre from '@dagrejs/dagre'
 import type { Edges, Layouts, Nodes } from 'v-network-graph'
 import * as gc from '@/components/GraphConstants'
 
-
 /**
  * Places the nodes of the graph for a TopDown layout.
  * @param nodes The nodes of the graph
