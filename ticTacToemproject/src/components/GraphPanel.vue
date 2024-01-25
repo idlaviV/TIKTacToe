@@ -39,12 +39,13 @@ watch(GameHandler.getInstance().getPlayerOnTurn(), updateLayout)
  * Calculate new node positions and pan to the active node.
  */
 function updateLayout() {
-  const activeNode = layout(graphExport.value.nodes, graphExport.value.edges, layouts.value)
+  layout(graphExport.value.nodes, graphExport.value.edges, layouts.value)
+  const activeNodeId = graphExport.value.lastCode
   const height = graph.value?.getSizes().height
   const width = graph.value?.getSizes().width
-  if (activeNode !== undefined && height !== undefined && width !== undefined) {
-    const x = layouts.value.nodes[activeNode].x
-    const y = layouts.value.nodes[activeNode].y
+  if (height !== undefined && width !== undefined) {
+    const x = layouts.value.nodes[activeNodeId].x
+    const y = layouts.value.nodes[activeNodeId].y
     graph.value?.panTo({ x: -x, y: -y }) //Moves to the current node
     graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
   }
