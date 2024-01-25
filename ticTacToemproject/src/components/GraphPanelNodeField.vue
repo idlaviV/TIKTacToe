@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type FieldType, symbol } from '../logic/FieldType'
-import { graphExport } from '@/utils/GraphExport'
 /**
  * @param x The column of the field.
  * @param y The row of the field.
@@ -11,10 +10,9 @@ const props = defineProps<{ x: number; y: number; fieldType: FieldType }>()
 const x = props.x
 const y = props.y
 
-const label = computed(()=>{
+const label = computed(() => {
   return symbol(props.fieldType)
 })
-
 
 const xOffsetRect: number = -30
 const yOffsetRect: number = -30
