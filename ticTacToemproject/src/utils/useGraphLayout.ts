@@ -1,7 +1,7 @@
 import dagre from '@dagrejs/dagre'
 import type { Edges, Layouts, Nodes } from 'v-network-graph'
+import * as gc from '@/components/GraphConstants'
 
-const nodeSize = 40
 
 /**
  * Places the nodes of the graph for a TopDown layout.
@@ -15,9 +15,9 @@ export function layout(nodes: Nodes, edges: Edges, layouts: Layouts): string {
   const g = new dagre.graphlib.Graph()
   g.setGraph({
     rankdir: 'TB',
-    nodesep: nodeSize * 2,
-    edgesep: nodeSize,
-    ranksep: nodeSize * 2
+    nodesep: gc.nodesep,
+    edgesep: gc.edgesep,
+    ranksep: gc.ranksep
   })
   // Default to assigning a new object as a label for each new edge.
   g.setDefaultEdgeLabel(() => ({}))
@@ -26,7 +26,7 @@ export function layout(nodes: Nodes, edges: Edges, layouts: Layouts): string {
   // metadata about the node. In this case we're going to add labels to each of
   // our nodes.
   Object.entries(nodes).forEach(([nodeId, node]) => {
-    g.setNode(nodeId, { label: node.name, width: nodeSize, height: nodeSize })
+    g.setNode(nodeId, { label: node.name, width: gc.nodeSize, height: gc.nodeSize })
     if (node.active && node.name !== undefined) {
       activeNode = node.name
     }
