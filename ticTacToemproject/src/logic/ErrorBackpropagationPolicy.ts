@@ -10,8 +10,6 @@ import { drawStatus } from './WinnerStatus'
  * It models a policy that punishes and rewards moves based on the outcome of the game.
  */
 export class ErrorBackpropagationPolicy implements EvaluationPolicy {
-  handler = GameHandler.getInstance()
-
   winDiff: number
   drawDiff: number
   loseDiff: number
@@ -48,7 +46,7 @@ export class ErrorBackpropagationPolicy implements EvaluationPolicy {
    * @override
    */
   applyPolicy(aI: AIPlayer, history: GameBoard[]): void {
-    const winner = this.handler.getWinner()
+    const winner = GameHandler.getInstance().getWinner()
 
     if (winner.value === null) {
       return
