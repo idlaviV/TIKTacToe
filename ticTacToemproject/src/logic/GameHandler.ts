@@ -12,6 +12,7 @@ import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { setGUiState } from './GuiState'
+import { ErrorBackpropagationPolicy } from './ErrorBackpropagationPolicy'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -32,7 +33,7 @@ export class GameHandler {
   possiblePlayers: Player[] = [
     this.humanPlayer,
     new AIPlayer(new EliminationPolicy(), 'KI-Elimination'),
-    new AIPlayer(new EliminationPolicy(), 'KI-Dummy')
+    new AIPlayer(new ErrorBackpropagationPolicy(), 'KI-Fehlerrückführung')
   ]
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
@@ -122,10 +123,13 @@ export class GameHandler {
    * Adds a new AI to the list of possible players.
    * @param selectedAIOption For later selection of AI type. Currently not used.
    * @param name A chosen name for the AI. Does not have to be unique.
-   * @todo Implement selectedAIOption. Atm, EliminationPolicy is used by default.
    */
   createAI(selectedAIOption: number, name: string) {
-    this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
+    if (selectedAIOption === 1) {
+      this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
+    } else if (selectedAIOption === 2) {
+      this.possiblePlayers.push(new AIPlayer(new ErrorBackpropagationPolicy(), name))
+    }
     updatePlayerList()
   }
 
