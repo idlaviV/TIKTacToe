@@ -2,9 +2,16 @@ import type { FieldType } from '@/logic/FieldType'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { gameBoard1, gameBoard10, gameBoard10000, gameBoard1rot, gameBoard20001 } from './TestUtil'
+import {
+  gameBoard1,
+  gameBoard10,
+  gameBoard10000,
+  gameBoard1rot,
+  gameBoard20001,
+  gameBoard21
+} from './TestUtil'
 import type { Edges, Nodes } from 'v-network-graph'
-import { Graph, graphExport, updateHistory } from '@/utils/GraphExport'
+import { Graph, graphExport, resetHistory, updateHistory } from '@/utils/GraphExport'
 
 let gameHandler: GameHandler = GameHandler.getInstance()
 let nodes: Nodes
@@ -13,10 +20,7 @@ let edges: Edges
 beforeEach(() => {
   gameHandler.destroySingleton()
   gameHandler = GameHandler.getInstance()
-  graphExport.value = new Graph()
-  graphExport.value.initializeHistory()
-  nodes = graphExport.value.nodes
-  edges = graphExport.value.edges
+  initHistory()
 })
 
 describe('constructor', () => {
@@ -27,6 +31,22 @@ describe('constructor', () => {
     checkNode(nodes['10'], '10', gameBoard10.state, 1)
     checkNode(nodes['10000'], '10000', gameBoard10000.state, 1)
     expect(Object.keys(edges).length).toEqual(3)
+  })
+  test('uncommon constructor use', () => {
+    gameHandler.gBHandler.gameBoard.value = gameBoard21
+    initHistory()
+    expect(Object.keys(nodes).length).toEqual(8)
+    checkNode(nodes['21'], '21', gameBoard21.state, 0)
+    checkNode(
+      nodes['121'],
+      '121',
+      [
+        [1, 2, 1],
+        [0, 0, 0],
+        [0, 0, 0]
+      ],
+      1
+    )
   })
 })
 
@@ -65,6 +85,24 @@ describe('update', () => {
     expect(Object.keys(edges).length).toEqual(8)
   })
 })
+
+describe('reset history', () => {
+  test('reset', () => {
+    updateHistory(gameBoard1)
+    updateHistory(gameBoard10)
+    resetHistory()
+    expect(Object.keys(graphExport.value.nodes).length).toEqual(4)
+    checkNode(nodes['0'], '0', new GameBoard().state, 0)
+    expect(Object.keys(graphExport.value.edges).length).toEqual(3)
+  })
+})
+
+function initHistory() {
+  graphExport.value = new Graph()
+  graphExport.value.initializeHistory()
+  nodes = graphExport.value.nodes
+  edges = graphExport.value.edges
+}
 
 function checkNode(node: any, name: string, boardState: FieldType[][], level: number) {
   expect(node.name).toEqual(name)
