@@ -19,7 +19,7 @@ export const graphExport: Ref<Graph> = ref(new Graph())
  * Reset the exported graph and initializes it with the current game state.
  */
 export function initializeHistory() {
-  const graph :Graph = graphExport.value
+  const graph: Graph = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
   const newCode = gameBoard.getCode().toString()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
@@ -79,7 +79,12 @@ function addChildren(graph: Graph) {
  * @param alternatives All gameboards in the equivalence class
  * @param key The normal form of the equivalence class
  */
-function addChildToGraph(graph:Graph, representative: GameBoard, alternatives: GameBoard[], key: string) {
+function addChildToGraph(
+  graph: Graph,
+  representative: GameBoard,
+  alternatives: GameBoard[],
+  key: string
+) {
   const newNode: TTTNode = new TTTNode(
     representative.getCode(),
     representative.state,
@@ -91,7 +96,6 @@ function addChildToGraph(graph:Graph, representative: GameBoard, alternatives: G
   const edgeKey: string = graph.activeNodeCode + '#' + key.toString()
   graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString() }
 }
-
 
 /**
  * Resets the history.
@@ -136,5 +140,3 @@ export class TTTNode implements Node {
     this.alternatives = alternatives
   }
 }
-
-
