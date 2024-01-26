@@ -73,10 +73,6 @@ export class BackpropagationPolicy implements EvaluationPolicy {
   }
 
   private setWeights(possibleMoves: Map<NormalForm, number>, diff: number, move: NormalForm): void {
-    possibleMoves.set(
-      move,
-      possibleMoves.get(move)! + diff
-    )
+    possibleMoves.set(move, possibleMoves.get(move)! + diff)
   }
 }
-

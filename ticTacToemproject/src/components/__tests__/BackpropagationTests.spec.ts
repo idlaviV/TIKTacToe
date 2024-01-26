@@ -1,5 +1,5 @@
 import { AIPlayer } from '@/logic/AIPlayer'
-import { ErrorBackpropagationPolicy } from '@/logic/ErrorBackpropagationPolicy'
+import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
@@ -8,12 +8,12 @@ import { describe, expect, beforeEach, test } from 'vitest'
 const handler = GameHandler.getInstance()
 const weights = new Map()
 
-let policy: ErrorBackpropagationPolicy
+let policy: BackpropagationPolicy
 let aI: AIPlayer
 let history: GameBoard[]
 
 beforeEach(() => {
-  policy = new ErrorBackpropagationPolicy()
+  policy = new BackpropagationPolicy()
   aI = new AIPlayer(policy)
 })
 
