@@ -1,4 +1,3 @@
-import { HistoryExport } from '../utils/HistoryExport'
 import type { GameBoard } from './GameBoard'
 import { GameBoardHandler, MoveError } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
@@ -12,7 +11,8 @@ import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { setGUiState } from './GuiState'
-import { ErrorBackpropagationPolicy } from './ErrorBackpropagationPolicy'
+import { resetHistory, updateHistory } from '@/utils/GraphExport'
+import { BackpropagationPolicy } from './BackpropagationPolicy'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -24,7 +24,6 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
 
-  historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   humanPlayer: UserPlayer = new UserPlayer('Mensch')
   /**
    * The possible options for players.
@@ -33,7 +32,7 @@ export class GameHandler {
   possiblePlayers: Player[] = [
     this.humanPlayer,
     new AIPlayer(new EliminationPolicy(), 'KI-Elimination'),
-    new AIPlayer(new ErrorBackpropagationPolicy(), 'KI-Fehlerrückführung')
+    new AIPlayer(new BackpropagationPolicy(), 'KI-Fehlerrückführung')
   ]
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
@@ -49,6 +48,7 @@ export class GameHandler {
     if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
     }
+
     return GameHandler.instance
   }
 
@@ -70,7 +70,7 @@ export class GameHandler {
    */
   performEndOfTurnActions() {
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
-    this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+    updateHistory(this.gBHandler.getGameBoard())
   }
 
   /**
@@ -128,7 +128,7 @@ export class GameHandler {
     if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
     } else if (selectedAIOption === 2) {
-      this.possiblePlayers.push(new AIPlayer(new ErrorBackpropagationPolicy(), name))
+      this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
     }
     updatePlayerList()
   }
@@ -145,7 +145,7 @@ export class GameHandler {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn.value = 1
     this.winner.value = null
-    this.historyExport.resetHistory(this.gBHandler.getGameBoard())
+    resetHistory()
   }
 
   /**
@@ -187,10 +187,6 @@ export class GameHandler {
 
   getWinner(): Ref<WinnerStatus> {
     return this.winner
-  }
-
-  getHistoryExport(): HistoryExport {
-    return this.historyExport
   }
 
   getPossiblePlayers(): Player[] {
