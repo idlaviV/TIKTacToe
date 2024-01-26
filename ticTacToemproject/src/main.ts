@@ -3,6 +3,7 @@ import App from './App.vue'
 import './index.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'material-symbols'
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
 // Vuetify
 import 'vuetify/styles'
