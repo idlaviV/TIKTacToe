@@ -1,4 +1,3 @@
-import { HistoryExport } from '../utils/HistoryExport'
 import type { GameBoard } from './GameBoard'
 import { GameBoardHandler, MoveError } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
@@ -12,6 +11,7 @@ import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { setGUiState } from './GuiState'
+import { graphExport, resetHistory, updateHistory } from '@/utils/GraphExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -23,7 +23,6 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
 
-  historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   humanPlayer: UserPlayer = new UserPlayer('Mensch')
   /**
    * The possible options for players.
@@ -48,6 +47,7 @@ export class GameHandler {
     if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
     }
+
     return GameHandler.instance
   }
 
@@ -69,7 +69,7 @@ export class GameHandler {
    */
   performEndOfTurnActions() {
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
-    this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+    updateHistory(this.gBHandler.getGameBoard())
   }
 
   /**
@@ -141,7 +141,7 @@ export class GameHandler {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn.value = 1
     this.winner.value = null
-    this.historyExport.resetHistory(this.gBHandler.getGameBoard())
+    resetHistory()
   }
 
   /**
@@ -183,10 +183,6 @@ export class GameHandler {
 
   getWinner(): Ref<WinnerStatus> {
     return this.winner
-  }
-
-  getHistoryExport(): HistoryExport {
-    return this.historyExport
   }
 
   getPossiblePlayers(): Player[] {

@@ -1,24 +1,17 @@
 <script setup lang="ts">
 import {
-  type Nodes,
-  type Edges,
-  VNetworkGraph,
   VEdgeLabel,
+  VNetworkGraph,
   type Layouts,
   type VNetworkGraphInstance
 } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import { ref, watch, type Ref } from 'vue'
 import { layout } from '../utils/useGraphLayout'
-import { GameHandler } from '@/logic/GameHandler'
 import { configs } from '@/components/GraphPanelUserConfigs'
-
-const gameHandler: GameHandler = GameHandler.getInstance()
-
-const nodes: Ref<Nodes> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getNodes()
-const edges: Ref<Edges> = gameHandler.getHistoryExport().getHistoryWithChildrenExport().getEdges()
-// At the start the children are added. Later the addChildren-function is automatically called whenever the history is changed.
-gameHandler.getHistoryExport().getHistoryWithChildrenExport().addChildren()
+import { graphExport } from '@/utils/GraphExport'
+import { computed } from 'vue'
+import { GameHandler } from '@/logic/GameHandler'
 
 /**
  * @description The position of the nodes in the graph.
@@ -35,20 +28,29 @@ const layouts: Ref<Layouts> = ref({
 if (configs.view) {
   configs.view.onBeforeInitialDisplay = updateLayout
 }
-watch(nodes.value, updateLayout)
 
+const nodesForDisplay = computed(() => {
+  return graphExport.value.nodes
+})
+
+const edgesForDisplay = computed(() => {
+  return graphExport.value.edges
+})
 const graph = ref<VNetworkGraphInstance>()
+
+watch(GameHandler.getInstance().getPlayerOnTurn(), updateLayout)
 
 /**
  * Calculate new node positions and pan to the active node.
  */
 function updateLayout() {
-  const activeNode = layout(nodes.value, edges.value, layouts.value)
+  layout(graphExport.value.nodes, graphExport.value.edges, layouts.value)
+  const activeNodeId = graphExport.value.activeNodeCode
   const height = graph.value?.getSizes().height
   const width = graph.value?.getSizes().width
-  if (activeNode !== undefined && height !== undefined && width !== undefined) {
-    const x = layouts.value.nodes[activeNode].x
-    const y = layouts.value.nodes[activeNode].y
+  if (height !== undefined && width !== undefined) {
+    const x = layouts.value.nodes[activeNodeId].x
+    const y = layouts.value.nodes[activeNodeId].y
     graph.value?.panTo({ x: -x, y: -y }) //Moves to the current node
     graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
   }
@@ -60,8 +62,8 @@ function updateLayout() {
   <v-network-graph
     ref="graph"
     class="graph"
-    :nodes="nodes"
-    :edges="edges"
+    :nodes="nodesForDisplay"
+    :edges="edgesForDisplay"
     :layouts="layouts"
     :configs="configs"
   >
@@ -69,7 +71,7 @@ function updateLayout() {
       <v-edge-label :text="edge.label" v-bind="slotProps" />
     </template>
     <template #override-node="{ nodeId }">
-      <GraphPanelNode :node="nodes[nodeId]" />
+      <GraphPanelNode :node="graphExport.nodes[nodeId]" />
     </template>
   </v-network-graph>
 </template>

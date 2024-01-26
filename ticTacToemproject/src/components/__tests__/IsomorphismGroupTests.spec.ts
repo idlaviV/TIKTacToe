@@ -3,7 +3,7 @@ import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import { beforeEach, describe, expect, test } from 'vitest'
 import * as Util from './TestUtil'
 import { ArrayMultimap } from '@teppeis/multimaps'
-import type { GameBoardCode } from '@/logic/Codes'
+import type { GameBoardCode, NormalForm } from '@/logic/Codes'
 
 describe('getGameBoardEquiv', () => {
   test('Empty board', () => {
@@ -205,65 +205,104 @@ describe('getRepresentativeOfGameBoards', () => {
   let representative = -1
   test('One Element', () => {
     boards = [1]
-    representative = IsomorphismGroup.getRepresentativeOfGameBoards(...boards)
+    representative = IsomorphismGroup.getRepresentativeOfGameBoards(boards)
     expect(representative).toEqual(1)
   })
 
   test('Multiple Elements', () => {
     boards = [1, 100, 1000000, 100000000]
-    representative = IsomorphismGroup.getRepresentativeOfGameBoards(...boards)
+    representative = IsomorphismGroup.getRepresentativeOfGameBoards(boards)
     expect(representative).toEqual(1)
+  })
+})
+
+describe('getRepresentativeOfGameBoardsAsGameBoard', () => {
+  let boards: GameBoard[] = []
+  let representative: GameBoard
+  test('One Element', () => {
+    boards = [Util.gameBoard1]
+    representative = IsomorphismGroup.getRepresentativeOfGameBoardsAsGameBoard(boards)
+    expect(representative).toEqual(Util.gameBoard1)
+  })
+
+  test('Multiple Elements', () => {
+    boards = [Util.gameBoard1, Util.gameBoard1rot, Util.gameBoard1rot2, Util.gameBoard1rot3]
+    representative = IsomorphismGroup.getRepresentativeOfGameBoardsAsGameBoard(boards)
+    expect(representative).toEqual(Util.gameBoard1)
   })
 })
 
 describe('getRepresentativesOfNonequivalentGameBoards', () => {
   let boards: GameBoard[]
-  let representative: ArrayMultimap<GameBoardCode, GameBoardCode>
+  let representative: ArrayMultimap<NormalForm, GameBoard>
   beforeEach(() => {
     boards = []
   })
 
   test('Empty array', () => {
-    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    representative = IsomorphismGroup.getEquivalenceClassesOfGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([])
   })
 
   test('Single element', () => {
     boards.push(Util.gameBoard21)
-    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    representative = IsomorphismGroup.getEquivalenceClassesOfGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21])
-    expect(representative.get(21)).toEqual([21])
+    expect(representative.get(21)).toEqual([Util.gameBoard21])
   })
   test('Multiple equivalent elements', () => {
     boards.push(Util.gameBoard21)
     boards.push(Util.gameBoard120)
-    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    representative = IsomorphismGroup.getEquivalenceClassesOfGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21])
-    expect(representative.get(21)).toEqual([21, 120])
+    expect(representative.get(21)).toEqual([Util.gameBoard21, Util.gameBoard120])
   })
   test('Multiple nonequivalent elements', () => {
     boards.push(Util.gameBoard21)
     boards.push(Util.gameBoard2100)
-    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    representative = IsomorphismGroup.getEquivalenceClassesOfGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21, 2100])
-    expect(representative.get(21)).toEqual([21])
-    expect(representative.get(2100)).toEqual([2100])
+    expect(representative.get(21)).toEqual([Util.gameBoard21])
+    expect(representative.get(2100)).toEqual([Util.gameBoard2100])
   })
   test('Multiple nonequivalent and equivalent elements', () => {
     boards.push(Util.gameBoard21)
     boards.push(Util.gameBoard120)
     boards.push(Util.gameBoard2100)
-    representative = IsomorphismGroup.getRepresentativesOfNonequivalentGameBoards(boards)
+    representative = IsomorphismGroup.getEquivalenceClassesOfGameBoards(boards)
     expect(extractNormalforms(representative)).toEqual([21, 2100])
-    expect(representative.get(21)).toEqual([21, 120])
-    expect(representative.get(2100)).toEqual([2100])
+    expect(representative.get(21)).toEqual([Util.gameBoard21, Util.gameBoard120])
+    expect(representative.get(2100)).toEqual([Util.gameBoard2100])
   })
 })
 
-function extractNormalforms(output: ArrayMultimap<GameBoardCode, GameBoardCode>): number[] {
-  const normalForms: number[] = []
-  output.asMap().forEach((value, key) => {
-    normalForms.push(key)
+describe('getRepresentativeOfEquivalenceClasses', () => {
+  test('Empty set', () => {
+    const classes = new ArrayMultimap<NormalForm, GameBoard>()
+    const representatives = IsomorphismGroup.getRepresentativeOfEquivalenceClasses(classes)
+    expect(representatives).toEqual(new Map())
+  })
+  test('Single class', () => {
+    const classes = new ArrayMultimap<NormalForm, GameBoard>()
+    classes.put(1, Util.gameBoard1)
+    const representatives = IsomorphismGroup.getRepresentativeOfEquivalenceClasses(classes)
+    expect(representatives).toEqual(new Map([[1, Util.gameBoard1]]))
+  })
+  test('Single big class', () => {
+    const classes = new ArrayMultimap<NormalForm, GameBoard>()
+    classes.put(1, Util.gameBoard1)
+    classes.put(1, Util.gameBoard1rot)
+    classes.put(1, Util.gameBoard1rot2)
+    classes.put(1, Util.gameBoard1rot3)
+    const representatives = IsomorphismGroup.getRepresentativeOfEquivalenceClasses(classes)
+    expect(representatives).toEqual(new Map([[1, Util.gameBoard1]]))
+  })
+})
+
+function extractNormalforms(output: ArrayMultimap<GameBoardCode, GameBoard>): number[] {
+  const normalForms: GameBoardCode[] = []
+  output.asMap().forEach((value) => {
+    normalForms.push(IsomorphismGroup.getRepresentativeOfGameBoardsAsGameBoard(value).getCode())
   })
   return normalForms
 }
