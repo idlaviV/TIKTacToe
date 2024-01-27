@@ -12,6 +12,7 @@ import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { computed } from 'vue'
 import { GameHandler } from '@/logic/GameHandler'
+import { updateLabels } from '@/utils/LabelExport'
 
 /**
  * @description The position of the nodes in the graph.
@@ -45,6 +46,7 @@ watch(GameHandler.getInstance().getPlayerOnTurn(), updateLayout)
  */
 function updateLayout() {
   layout(graphExport.value.nodes, graphExport.value.edges, layouts.value)
+  // updateLabels()
   const activeNodeId = graphExport.value.activeNodeCode
   const height = graph.value?.getSizes().height
   const width = graph.value?.getSizes().width
