@@ -109,7 +109,7 @@ export class AIPlayer implements Player {
    */
   // private
   getVertexMap(normalForm?: number): Map<number, number> {
-    if (!normalForm) {
+    if (normalForm === undefined) {
       normalForm = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
     }
     if (!this.weights.has(normalForm) || this.weights.get(normalForm) === undefined) {

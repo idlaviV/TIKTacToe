@@ -11,7 +11,7 @@ import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { setGUiState } from './GuiState'
-import { graphExport, resetHistory, updateHistory } from '@/utils/GraphExport'
+import { resetHistory, updateHistory } from '@/utils/GraphExport'
 
 /**
  * This class handles the overall game. It is a singleton class.

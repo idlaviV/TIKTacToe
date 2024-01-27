@@ -1,14 +1,15 @@
 import type { AIPlayer } from '@/logic/AIPlayer'
 import { GameHandler } from '@/logic/GameHandler'
-import { type Graph, graphExport } from '@/utils/GraphExport'
+import { graphExport } from '@/utils/GraphExport'
+import type { Edges } from 'v-network-graph'
 
 const aI: AIPlayer = GameHandler.getInstance().settings.player2 as AIPlayer
-const graph: Graph = graphExport.value
+const edges: Edges = graphExport.value.edges
 
 export function updateLabels(): void {
-  for (const edge in graph.edges) {
-    const [source, target] = edge.split('#')
+  for (const edge in edges) {
+    const [source, target] = [edges[edge].source, edges[edge].target]
     const label: number = aI.getVertexMap(parseInt(source)).get(parseInt(target))!
-    graph.edges[edge].label = label.toString()
+    edges[edge].label = label.toString()
   }
 }
