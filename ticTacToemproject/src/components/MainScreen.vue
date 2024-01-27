@@ -33,7 +33,8 @@ const startEval = () => {
         </v-col></v-row
       ></v-container
     >
-    <h3 :class="{ invisible: winner !== null }">Spieler {{ playerOnTurn }} ist dran</h3>
+    <h3 v-if="winner === null" class="text-xl">Spieler {{ playerOnTurn }} ist dran</h3>
+    <h3 v-else class="invisible text-xl">Spieler {{ playerOnTurn }} ist dran</h3>
 
     <!-- The current gameboard -->
     <MainScreenBoard />
