@@ -9,7 +9,7 @@ import { drawStatus } from './WinnerStatus'
  * This class implements the {@link EvaluationPolicy} interface.
  * It models a policy that punishes and rewards moves based on the outcome of the game.
  */
-export class ErrorBackpropagationPolicy implements EvaluationPolicy {
+export class BackpropagationPolicy implements EvaluationPolicy {
   handler = GameHandler.getInstance()
 
   winDiff: number
@@ -52,38 +52,20 @@ export class ErrorBackpropagationPolicy implements EvaluationPolicy {
 
     if (winner.value === null) {
       return
-    } else if (winner.value === drawStatus) {
-      this.applyDrawPolicy(aI, history)
-    } else {
-      this.applyWinningPolicy(aI, history)
     }
-  }
 
-  private applyDrawPolicy(aI: AIPlayer, history: GameBoard[]): void {
     let possibleMoves: Map<NormalForm, number>
+    let diff = this.drawDiff
     for (let index = history.length - 1; index > 0; index--) {
       possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
 
-      possibleMoves.set(
-        history[index].getNormalForm(),
-        possibleMoves.get(history[index].getNormalForm())! + this.drawDiff
-      )
-
-      if (possibleMoves.get(history[index].getNormalForm())! < 0) {
-        possibleMoves.set(history[index].getNormalForm(), 0)
+      if (winner.value !== drawStatus) {
+        diff = index % 2 === (history.length - 1) % 2 ? this.winDiff : this.loseDiff
       }
-    }
-  }
-
-  private applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
-    let possibleMoves: Map<NormalForm, number>
-    for (let index = history.length - 1; index > 0; index--) {
-      possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
 
       possibleMoves.set(
         history[index].getNormalForm(),
-        possibleMoves.get(history[index].getNormalForm())! +
-          (index % 2 === (history.length - 1) % 2 ? this.winDiff : this.loseDiff)
+        possibleMoves.get(history[index].getNormalForm())! + diff
       )
 
       if (possibleMoves.get(history[index].getNormalForm())! < 0) {
