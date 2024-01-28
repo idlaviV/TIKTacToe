@@ -1,4 +1,3 @@
-import { HistoryExport } from '../utils/HistoryExport'
 import type { GameBoard } from './GameBoard'
 import { GameBoardHandler, MoveError } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
@@ -11,7 +10,8 @@ import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
-import { setGUiState } from './GuiState'
+import { nextGuiState } from './GuiState'
+import { resetHistory, updateHistory } from '@/utils/GraphExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -23,7 +23,6 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
 
-  historyExport: HistoryExport = new HistoryExport(this.gBHandler.getGameBoard())
   humanPlayer: UserPlayer = new UserPlayer('Mensch')
   /**
    * The possible options for players.
@@ -48,6 +47,7 @@ export class GameHandler {
     if (!GameHandler.instance) {
       GameHandler.instance = new GameHandler()
     }
+
     return GameHandler.instance
   }
 
@@ -69,7 +69,7 @@ export class GameHandler {
    */
   performEndOfTurnActions() {
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
-    this.historyExport.updateHistory(this.gBHandler.getGameBoard())
+    updateHistory(this.gBHandler.getGameBoard())
   }
 
   /**
@@ -82,10 +82,8 @@ export class GameHandler {
     this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
       ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
       : null
-
-    // Sets the screen to the selection screen, in the end this should set to the evaluation screen, unless skipped
-    setGUiState('start')
     this.resetGame()
+    nextGuiState()
   }
 
   /**
@@ -141,7 +139,7 @@ export class GameHandler {
     this.gBHandler.resetGameBoard()
     this.playerOnTurn.value = 1
     this.winner.value = null
-    this.historyExport.resetHistory(this.gBHandler.getGameBoard())
+    resetHistory()
   }
 
   /**
@@ -183,10 +181,6 @@ export class GameHandler {
 
   getWinner(): Ref<WinnerStatus> {
     return this.winner
-  }
-
-  getHistoryExport(): HistoryExport {
-    return this.historyExport
   }
 
   getPossiblePlayers(): Player[] {

@@ -205,8 +205,8 @@ export class IsomorphismGroup {
    * @param gameBoard The gameboard whose equivalent gameboards are wanted.
    * @returns A set of all equivalent gameboards.
    */
-  static getGameBoardEquiv(gameBoard: GameBoard): Set<number> {
-    const equivs: Set<number> = new Set()
+  static getGameBoardEquiv(gameBoard: GameBoard): Set<GameBoardCode> {
+    const equivs: Set<GameBoardCode> = new Set()
     for (const iso of this.isomorphisms) {
       equivs.add(calculateCode(iso.apply(gameBoard.state)))
     }
@@ -218,8 +218,10 @@ export class IsomorphismGroup {
    * @param gameBoard The gameboard whose normal form is wanted.
    * @returns The normal form of the gameboard.
    */
-  static getNormalFormOfGameBoard(gameBoard: GameBoard): number {
-    return this.getRepresentativeOfGameBoards(...this.getGameBoardEquiv(gameBoard))
+  static getNormalFormOfGameBoard(gameBoard: GameBoard): NormalForm {
+    return IsomorphismGroup.getRepresentativeOfGameBoards(
+      Array.from(IsomorphismGroup.getGameBoardEquiv(gameBoard))
+    )
   }
 
   /**
@@ -228,32 +230,50 @@ export class IsomorphismGroup {
    * @param gameBoards The gameboard whose representative normal form is wanted.
    * @returns The representative normal form of the gameboard in form of its code.
    */
-  static getRepresentativeOfGameBoards(...gameBoards: number[]): number {
+  static getRepresentativeOfGameBoards(gameBoards: GameBoardCode[]): GameBoardCode {
     return Math.min(...gameBoards)
   }
 
-  /**
-   * Extracts one representative GameBoard per contained equivalence class from an array of GameBoards.
-   * If there are several GameBoards per equivalence class, the GameBoard with the smallest code is selected.
-   * @param gameBoards The array of GameBoards
-   * @returns The array of representative GameBoards in code form
-   */
-  static getRepresentativesOfNonequivalentGameBoards(
-    gameBoards: GameBoard[]
-  ): ArrayMultimap<GameBoardCode, GameBoardCode> {
-    const classes: ArrayMultimap<NormalForm, GameBoardCode> = new ArrayMultimap()
-
-    gameBoards.forEach((element) => {
-      classes.put(element.getNormalForm(), element.getCode())
+  static getRepresentativeOfGameBoardsAsGameBoard(gameBoards: GameBoard[]): GameBoard {
+    return gameBoards.reduce((previousValue, currentValue) => {
+      if (previousValue.getCode() < currentValue.getCode()) {
+        return previousValue
+      } else {
+        return currentValue
+      }
     })
+  }
 
-    const representatives: ArrayMultimap<GameBoardCode, GameBoardCode> = new ArrayMultimap()
+  /**
+   * Extracts one representative gameBoard per equivalence class.
+   * The chosen gameBoard is the gameBoard with the minimal code.
+   * If there are several GameBoards per equivalence class, the GameBoard with the smallest code is selected.
+   * @param classes The equivalence classes, indexed by their normal form
+   * @returns A map from the normal form of each class to the representative GameBoard
+   */
+  static getRepresentativeOfEquivalenceClasses(
+    classes: ArrayMultimap<NormalForm, GameBoard>
+  ): Map<NormalForm, GameBoard> {
+    const representatives: Map<NormalForm, GameBoard> = new Map()
     classes.asMap().forEach((value, key) => {
-      representatives.putAll(
-        IsomorphismGroup.getRepresentativeOfGameBoards(...classes.get(key)),
-        classes.get(key)
-      )
+      representatives.set(key, IsomorphismGroup.getRepresentativeOfGameBoardsAsGameBoard(value))
     })
     return representatives
+  }
+
+  /**
+   * Calculates the equivalence classes of the given GameBoards.
+   * @param gameBoards The array of GameBoards
+   * @returns maps the normal form of each class to the GameBoards in that class
+   */
+  static getEquivalenceClassesOfGameBoards(
+    gameBoards: GameBoard[]
+  ): ArrayMultimap<NormalForm, GameBoard> {
+    const classes: ArrayMultimap<NormalForm, GameBoard> = new ArrayMultimap()
+
+    gameBoards.forEach((element) => {
+      classes.put(element.getNormalForm(), element)
+    })
+    return classes
   }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
-import { setGUiState } from '@/logic/GuiState'
+import { nextGuiState } from '@/logic/GuiState'
+import { initializeHistory } from '@/utils/GraphExport'
 import { players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
 import { ref, type Ref } from 'vue'
 
@@ -12,7 +13,8 @@ function startGame() {
   console.log('Player 1: %s', items.value.find((item) => item.index === select1.value)?.player)
   console.log('Player 2: %s', items.value.find((item) => item.index === select2.value)?.player)
   GameHandler.getInstance().setPlayers(select1.value, select2.value)
-  setGUiState('game')
+  initializeHistory()
+  nextGuiState()
 }
 
 /**

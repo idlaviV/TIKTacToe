@@ -23,6 +23,42 @@ export function debugRandomizerFactory() {
   }
 }
 
+export const gameBoard1 = new GameBoard([
+  [1, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0]
+])
+
+export const gameBoard1rot = new GameBoard([
+  [0, 0, 1],
+  [0, 0, 0],
+  [0, 0, 0]
+])
+
+export const gameBoard1rot2 = new GameBoard([
+  [0, 0, 0],
+  [0, 0, 0],
+  [1, 0, 0]
+])
+
+export const gameBoard1rot3 = new GameBoard([
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 1]
+])
+
+export const gameBoard10 = new GameBoard([
+  [0, 1, 0],
+  [0, 0, 0],
+  [0, 0, 0]
+])
+
+export const gameBoard10000 = new GameBoard([
+  [0, 0, 0],
+  [0, 1, 0],
+  [0, 0, 0]
+])
+
 export const gameBoard21 = new GameBoard([
   [1, 2, 0],
   [0, 0, 0],
@@ -36,6 +72,12 @@ export const gameBoard120 = new GameBoard([
 export const gameBoard2100 = new GameBoard([
   [0, 0, 1],
   [2, 0, 0],
+  [0, 0, 0]
+])
+
+export const gameBoard20001 = new GameBoard([
+  [1, 0, 0],
+  [0, 2, 0],
   [0, 0, 0]
 ])
 

@@ -4,7 +4,8 @@ import { gameBoardDraw, gameBoardWinPlayer1, resetGameHandler } from './TestUtil
 import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
-import { getGuiState } from '@/logic/GuiState'
+import * as Gui from '@/logic/GuiState'
+import AppVue from '@/App.vue'
 
 let handler: GameHandler
 
@@ -139,6 +140,10 @@ describe('getPossibleNextPositions', () => {
 })
 
 describe('performEndOfGameActions', () => {
+  let stateSpy: any
+  beforeEach(() => {
+    stateSpy = vi.spyOn(Gui, 'nextGuiState')
+  })
   test('should apply policy to both AIs', () => {
     handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
     handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 2')
@@ -147,7 +152,7 @@ describe('performEndOfGameActions', () => {
     handler.performEndOfGameActions()
     expect(spy1).toHaveBeenCalled()
     expect(spy2).toHaveBeenCalled()
-    expect(getGuiState().value).toEqual('start')
+    expect(stateSpy).toHaveBeenCalled()
   })
 
   test('should apply policy to same AI only once', () => {
@@ -156,7 +161,7 @@ describe('performEndOfGameActions', () => {
     const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
     handler.performEndOfGameActions()
     expect(spy1).toHaveBeenCalledTimes(1)
-    expect(getGuiState().value).toEqual('start')
+    expect(stateSpy).toHaveBeenCalled()
   })
 
   test('should apply policy to AI in position two', () => {
@@ -165,7 +170,7 @@ describe('performEndOfGameActions', () => {
     const spy = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
     handler.performEndOfGameActions()
     expect(spy).toHaveBeenCalledTimes(1)
-    expect(getGuiState().value).toEqual('start')
+    expect(stateSpy).toHaveBeenCalled()
   })
 })
 
