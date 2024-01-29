@@ -48,29 +48,33 @@ export class BackpropagationPolicy implements EvaluationPolicy {
    * @override
    */
   applyPolicy(aI: AIPlayer, history: GameBoard[]): void {
-    const winner = this.handler.getWinner()
+    const winner = GameHandler.getInstance().getWinner()
 
     if (winner.value === null) {
       return
-    }
+    } else {
+      let possibleMoves: Map<NormalForm, number>
+      let nextMove: NormalForm
+      for (let index = history.length - 1; index > 0; index--) {
+        possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
+        nextMove = history[index].getNormalForm()
 
-    let possibleMoves: Map<NormalForm, number>
-    let diff = this.drawDiff
-    for (let index = history.length - 1; index > 0; index--) {
-      possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
+        if (winner.value === drawStatus) {
+          this.setWeights(possibleMoves, this.drawDiff, nextMove)
+        } else if (winner.value === 1) {
+          this.setWeights(possibleMoves, index % 2 === 1 ? this.winDiff : this.loseDiff, nextMove)
+        } else {
+          this.setWeights(possibleMoves, index % 2 === 0 ? this.winDiff : this.loseDiff, nextMove)
+        }
 
-      if (winner.value !== drawStatus) {
-        diff = index % 2 === (history.length - 1) % 2 ? this.winDiff : this.loseDiff
+        if (possibleMoves.get(history[index].getNormalForm())! < 0) {
+          possibleMoves.set(history[index].getNormalForm(), 0)
+        }
       }
-
-      possibleMoves.set(
-        history[index].getNormalForm(),
-        possibleMoves.get(history[index].getNormalForm())! + diff
-      )
-
-      if (possibleMoves.get(history[index].getNormalForm())! < 0) {
-        possibleMoves.set(history[index].getNormalForm(), 0)
-      }
     }
+  }
+
+  private setWeights(possibleMoves: Map<NormalForm, number>, diff: number, move: NormalForm): void {
+    possibleMoves.set(move, possibleMoves.get(move)! + diff)
   }
 }

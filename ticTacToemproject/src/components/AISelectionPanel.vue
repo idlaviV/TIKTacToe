@@ -17,7 +17,7 @@ const getAIs: () => { player: string; index: number }[] = () => {
  */
 const aiOptions = [
   { title: 'Elimination', index: 0 },
-  { title: 'Zufällig', index: 1 }
+  { title: 'Fehlerrückführung', index: 1 }
 ]
 /**
  * Model for the selected AI option
