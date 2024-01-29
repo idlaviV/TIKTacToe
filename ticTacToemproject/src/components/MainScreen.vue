@@ -4,15 +4,32 @@ import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
-import { skipEvaluation, skipStart } from '@/logic/GuiState'
+import { getGuiState, nextGuiState, skipEvaluation, skipStart } from '@/logic/GuiState'
+import { watch } from 'vue'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
 const startEval = () => {
-  gameHandler.performEndOfGameActions()
+  gameHandler.performEndOfGameActions(true)
 }
+
+const skipEval = () => {
+  gameHandler.performEndOfGameActions(false)
+}
+
+const goToEvaluation = () => {
+  if (winner.value !== null && getGuiState().value === 'game') {
+    if (!skipEvaluation.value) {
+      nextGuiState()
+    } else {
+      startEval()
+    }
+  }
+}
+
+watch(winner, goToEvaluation)
 </script>
 
 <!-- The main screen contains the gameboard and main controls. -->
@@ -46,7 +63,10 @@ const startEval = () => {
     <h2 v-show="winner === 1 || winner === 2" class="text-4xl dond-bold mb-8">
       Spieler {{ winner }} hat gewonnen!
     </h2>
-    <v-btn @click="startEval"> Belohnung anwenden </v-btn>
+    <div v-if="winner !== null">
+      <v-btn @click="startEval"> Belohnung anwenden </v-btn>
+      <v-btn @click="skipEval"> Überspringen </v-btn>
+    </div>
   </div>
 </template>
 <style>

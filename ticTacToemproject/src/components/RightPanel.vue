@@ -7,6 +7,6 @@ const guiState: Ref<GuiState> = getGuiState()
 </script>
 
 <template>
-  <AISelectionPanel v-show="guiState == 'start'" />
+  <AISelectionPanel v-show="guiState === 'start'" />
   <GraphPanel v-show="guiState !== 'start'" />
 </template>
