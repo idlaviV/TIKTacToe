@@ -6,6 +6,7 @@ import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import type { ArrayMultimap } from '@teppeis/multimaps'
 import { type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
+import { layout } from './useGraphLayout'
 
 export class Graph {
   level: number = 0
@@ -14,7 +15,9 @@ export class Graph {
   edges: Edges = {}
 }
 export const graphExport: Ref<Graph> = ref(new Graph())
-
+export function getActiveNodeCode(): string {
+  return graphExport.value.activeNodeCode
+}
 /**
  * Reset the exported graph and initializes it with the current game state.
  */
@@ -27,6 +30,7 @@ export function initializeHistory() {
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level = 1
+  layout(graph.nodes, graph.edges)
 }
 
 /**
@@ -44,6 +48,7 @@ export function updateHistory(gameBoard: GameBoard) {
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level++
+  layout(graph.nodes, graph.edges)
 }
 
 /**
