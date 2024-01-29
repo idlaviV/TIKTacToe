@@ -46,7 +46,7 @@ watch(GameHandler.getInstance().getPlayerOnTurn(), updateLayout)
  */
 function updateLayout() {
   layout(graphExport.value.nodes, graphExport.value.edges, layouts.value)
-  // updateLabels()
+  updateLabels()
   const activeNodeId = graphExport.value.activeNodeCode
   const height = graph.value?.getSizes().height
   const width = graph.value?.getSizes().width
