@@ -10,7 +10,7 @@ import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
-import { setGUiState } from './GuiState'
+import { nextGuiState } from './GuiState'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 
 /**
@@ -82,10 +82,8 @@ export class GameHandler {
     this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
       ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
       : null
-
-    // Sets the screen to the selection screen, in the end this should set to the evaluation screen, unless skipped
-    setGUiState('start')
     this.resetGame()
+    nextGuiState()
   }
 
   /**

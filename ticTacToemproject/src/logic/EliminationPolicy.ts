@@ -29,15 +29,12 @@ export class EliminationPolicy implements EvaluationPolicy {
     const handler: GameHandler = GameHandler.getInstance()
     const winner = handler.getWinner().value
 
-    if (winner === null || winner === drawStatus) {
-      return
-    } else {
+    if (winner !== null || winner !== drawStatus) {
       this.applyWinningPolicy(aI, history)
     }
   }
 
-  //private
-  applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+  private applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
     for (let index = history.length - 1; index > 1; index--) {
       if (containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))) {
         aI.getVertexMap(history[index - 2].getNormalForm()).set(

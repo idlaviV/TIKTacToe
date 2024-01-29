@@ -1,3 +1,4 @@
+import type { GameBoardCode, NormalForm } from './Codes'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
@@ -15,7 +16,7 @@ export class AIPlayer implements Player {
    * The weights are stored in a map, where gameboards are passed using their normal form.
    * The first input for the weights map is the parent gameboard, the second input is the child gameboard.
    */
-  weights: Map<number, Map<number, number>> = new Map()
+  weights: Map<NormalForm, Map<NormalForm, number>> = new Map()
   /**
    * The randomizer provides a choice for a random number.
    */
@@ -50,8 +51,7 @@ export class AIPlayer implements Player {
    * Choose a suitable next gameboard, by weights.
    * @returns the normal form of the next gameboard
    */
-  // private
-  pickChildNode(): number {
+  private pickChildNode(): number {
     const weightedEntries = this.prepareWeightedEntries()
     const randomIndex = this.randomizer.randomInteger(
       1,
@@ -79,8 +79,7 @@ export class AIPlayer implements Player {
    * This would be a->1, b->3, c->4, d->4 and e->7.
    * @returns The entries of the array specify a child node and the corresponding index.
    */
-  // private
-  prepareWeightedEntries(): { code: number; index: number }[] {
+  private prepareWeightedEntries(): { code: number; index: number }[] {
     const vertexMap: Map<number, number> = this.getVertexMap()
     const weightedEntries = new Array()
     let sum: number = 0
@@ -108,7 +107,7 @@ export class AIPlayer implements Player {
    * @returns map of weights
    */
   // private
-  getVertexMap(normalForm?: number): Map<number, number> {
+  getVertexMap(normalForm?: number): Map<NormalForm, number> {
     if (normalForm === undefined) {
       normalForm = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
     }
@@ -123,23 +122,20 @@ export class AIPlayer implements Player {
    * @todo At the moment, all nodes are always set to 1
    * @param code describes the node where weights are missing
    */
-  // private
-  initializeWeights(code: number): void {
+  initializeWeights(code: NormalForm): void {
     const nextNFs: Set<number> = this.calculateNextNFs()
     const vertexMap = new Map<number, number>()
     this.weights.set(code, vertexMap)
     for (const nextCode of nextNFs) {
-      vertexMap.set(nextCode, 1)
+      vertexMap.set(nextCode, this.policy.getInitialWeight(getHeight(code)))
     }
   }
 
   /**
    * Calculate the normal forms of the positions following the current gameboard.
    * @returns a set containing all normal forms
-   * @deprecated
    */
-  // private
-  calculateNextNFs(): Set<number> {
+  private calculateNextNFs(): Set<number> {
     const nextNFs: Set<number> = new Set()
     const nextPositions: GameBoard[] = GameHandler.getInstance().getPossibleNextPositions()
     for (const board of nextPositions) {
@@ -155,4 +151,15 @@ export class AIPlayer implements Player {
   getName(): string {
     return this.name
   }
+}
+
+function getHeight(code: GameBoardCode): number {
+  const numberString = code.toString()
+  let height = 0
+  for (let i = 0; i < numberString.length; i++) {
+    if (numberString[i] !== '0') {
+      height++
+    }
+  }
+  return height
 }
