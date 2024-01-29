@@ -4,6 +4,7 @@ import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
+import { watch } from 'vue'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
@@ -12,6 +13,14 @@ const playerOnTurn = gameHandler.getPlayerOnTurn()
 const startEval = () => {
   gameHandler.performEndOfGameActions()
 }
+
+const changeVisibility = () => {
+  if (winner !== null) {
+    document.getElementById("playerOnTurnDisplay")?.classList.toggle("invisible")
+  }
+}
+
+watch(winner, changeVisibility)
 </script>
 
 <!-- The main screen contains the gameboard and main controls. -->
@@ -33,8 +42,7 @@ const startEval = () => {
         </v-col></v-row
       ></v-container
     >
-    <h3 v-if="winner === null" class="text-xl">Spieler {{ playerOnTurn }} ist dran</h3>
-    <h3 v-else class="invisible text-xl">Spieler {{ playerOnTurn }} ist dran</h3>
+    <h3 class="text-xl" id="playerOnTurnDisplay">Spieler {{ playerOnTurn }} ist dran</h3>
 
     <!-- The current gameboard -->
     <MainScreenBoard />
