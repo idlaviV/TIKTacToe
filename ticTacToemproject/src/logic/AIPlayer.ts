@@ -1,6 +1,6 @@
 import type { GameBoardCode, NormalForm } from './Codes'
 import type { EvaluationPolicy } from './EvaluationPolicy'
-import { GameBoard } from './GameBoard'
+import { calculateNextNFs } from './GameBoardHandler'
 import { GameHandler } from './GameHandler'
 import type { GameBoardWithPrevMove } from './Moves'
 import type { Player } from './Player'
@@ -123,25 +123,12 @@ export class AIPlayer implements Player {
    * @param code describes the node where weights are missing
    */
   initializeWeights(code: NormalForm): void {
-    const nextNFs: Set<number> = this.calculateNextNFs()
-    const vertexMap = new Map<number, number>()
+    const nextNFs: Set<NormalForm> = calculateNextNFs(code)
+    const vertexMap = new Map<NormalForm, number>()
     this.weights.set(code, vertexMap)
     for (const nextCode of nextNFs) {
       vertexMap.set(nextCode, this.policy.getInitialWeight(getHeight(code)))
     }
-  }
-
-  /**
-   * Calculate the normal forms of the positions following the current gameboard.
-   * @returns a set containing all normal forms
-   */
-  private calculateNextNFs(): Set<number> {
-    const nextNFs: Set<number> = new Set()
-    const nextPositions: GameBoard[] = GameHandler.getInstance().getPossibleNextPositions()
-    for (const board of nextPositions) {
-      nextNFs.add(board.getNormalForm())
-    }
-    return nextNFs
   }
 
   applyPolicy(): void {

@@ -1,6 +1,7 @@
 import type { GameBoardCode } from './Codes'
 import { symbol, type FieldType } from './FieldType'
 import { IsomorphismGroup } from './IsomorphismGroup'
+import type { PlayerNumber } from './PlayerNumber'
 
 /**
  * This class represents a gameboard. Both the gameboard that can be played on as well as gameboards used in other classes.
@@ -83,4 +84,31 @@ export function calculateCode(state: number[][]): number {
     }
   }
   return code
+}
+
+export function getGameBoardFromCode(code: GameBoardCode): GameBoard {
+  const state: FieldType[][] = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+  ]
+  let base: number = 1
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; ++j) {
+      state[i][j] = Math.floor((code / base) % 10) as FieldType
+      base *= 10
+    }
+  }
+  return new GameBoard(state)
+}
+
+export function getPlayerOnTurn(code: GameBoardCode): PlayerNumber {
+  const codeString = code.toString()
+  let count = 0
+  for (const num of codeString) {
+    if (num !== '0') {
+      count++
+    }
+  }
+  return count % 2 === 0 ? 1 : 2
 }

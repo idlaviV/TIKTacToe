@@ -1,10 +1,12 @@
 import type { PlayerNumber } from './PlayerNumber'
-import { GameBoard } from './GameBoard'
+import { GameBoard, getGameBoardFromCode, getPlayerOnTurn } from './GameBoard'
 import type { FieldType } from './FieldType'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { CustomError } from 'ts-custom-error'
+import type { NormalForm } from './Codes'
+import { GameHandler } from './GameHandler'
 
 /**
  * This class handles the gameboard. It keeps track of the current gameboard and the history of the gameboard.
@@ -111,6 +113,21 @@ export class GameBoardHandler {
     return this.gameBoard
   }
 }
+
+/**
+ * Calculate the normal forms of the positions following the current gameboard.
+ * @returns a set containing all normal forms
+ */
+export function calculateNextNFs(code: NormalForm): Set<number> {
+  const handler = GameHandler.getInstance()
+  const nextNFs: Set<number> = new Set()
+  const nextPositions = handler.getGBHandler().getPossibleNextPositions(getPlayerOnTurn(code), getGameBoardFromCode(code))
+  for (const board of nextPositions) {
+    nextNFs.add(board[0].getNormalForm())
+  }
+  return nextNFs
+}
+
 
 export class MoveError extends CustomError {
   public constructor(x: number, y: number, player: PlayerNumber) {
