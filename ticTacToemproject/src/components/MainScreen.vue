@@ -17,7 +17,7 @@ const startEval = () => {
 
 const changeVisibility = () => {
   if (winner !== null) {
-    document.getElementById("playerOnTurnDisplay")?.classList.toggle("invisible")
+    document.getElementById('playerOnTurnDisplay')?.classList.toggle('invisible')
   }
 }
 
@@ -42,8 +42,7 @@ watch(winner, changeVisibility)
           <v-checkbox label="Automatische Belohnung" v-model="skipEvaluation"></v-checkbox>
           <v-checkbox label="Start überspringen" v-model="skipStart"></v-checkbox> </v-col></v-row
     ></v-container>
-    <h3 :class="{ invisible: winner !== null }">Spieler {{ playerOnTurn }} ist dran</h3>
-
+    <h3 class="text-xl" id="playerOnTurnDisplay">Spieler {{ playerOnTurn }} ist dran</h3>
     <!-- The current gameboard -->
     <MainScreenBoard />
 
