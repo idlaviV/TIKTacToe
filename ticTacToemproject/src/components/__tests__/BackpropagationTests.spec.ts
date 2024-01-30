@@ -390,6 +390,6 @@ function beforeSetupArtificialExample() {
     ])
   )
   aI.weights = weights
-  handler.winner.value = 1
+  handler.winner.value = 2
   handler.getGBHandler().gameBoard.value = history[history.length - 1]
 }
