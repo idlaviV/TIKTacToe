@@ -3,12 +3,12 @@ import { VNetworkGraph, type VNetworkGraphInstance } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import * as Layout from '@/utils/useGraphLayout'
 
 const layouts = Layout.layouts
-const nodesForDisplay = graphExport.value.nodes
-const edgesForDisplay = graphExport.value.edges
+const nodesForDisplay = computed(()=> {return graphExport.value.nodes})
+const edgesForDisplay = computed(()=>{return graphExport.value.edges})
 const graph = ref<VNetworkGraphInstance>()
 </script>
 
