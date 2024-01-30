@@ -64,15 +64,14 @@ export class BackpropagationPolicy implements EvaluationPolicy {
         } else {
           this.setWeights(possibleMoves, index % 2 === 0 ? this.winDiff : this.loseDiff, nextMove)
         }
-
-        if (possibleMoves.get(history[index].getNormalForm())! < 0) {
-          possibleMoves.set(history[index].getNormalForm(), 0)
-        }
       }
     }
   }
 
   private setWeights(possibleMoves: Map<NormalForm, number>, diff: number, move: NormalForm): void {
     possibleMoves.set(move, possibleMoves.get(move)! + diff)
+    if (possibleMoves.get(move)! < 0) {
+      possibleMoves.set(move, 0)
+    }
   }
 }
