@@ -1,7 +1,7 @@
 import { ref, type Ref } from 'vue'
 
 export const skipStart = ref(false)
-export const skipEvaluation = ref(true)
+export const skipEvaluation = ref(false)
 /**
  * The state of the GUI
  * 'start' for player selection,
