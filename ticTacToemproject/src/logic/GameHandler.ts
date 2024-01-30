@@ -74,6 +74,7 @@ export class GameHandler {
 
   /**
    * Performs the actions that have to be done at the end of a game.
+   * @param applyPolicy whether the policy shall be applied or not
    */
   performEndOfGameActions(applyPolicy: boolean) {
     if (applyPolicy) {

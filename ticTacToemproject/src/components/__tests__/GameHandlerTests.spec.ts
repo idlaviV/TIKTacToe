@@ -149,7 +149,7 @@ describe('performEndOfGameActions', () => {
     handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 2')
     const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
     const spy2 = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
-    handler.performEndOfGameActions()
+    handler.performEndOfGameActions(true)
     expect(spy1).toHaveBeenCalled()
     expect(spy2).toHaveBeenCalled()
     expect(stateSpy).toHaveBeenCalled()
@@ -159,7 +159,7 @@ describe('performEndOfGameActions', () => {
     handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
     handler.settings.player2 = handler.settings.player1
     const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
-    handler.performEndOfGameActions()
+    handler.performEndOfGameActions(true)
     expect(spy1).toHaveBeenCalledTimes(1)
     expect(stateSpy).toHaveBeenCalled()
   })
@@ -168,7 +168,7 @@ describe('performEndOfGameActions', () => {
     handler.settings.player1 = handler.humanPlayer
     handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 1')
     const spy = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
-    handler.performEndOfGameActions()
+    handler.performEndOfGameActions(true)
     expect(spy).toHaveBeenCalledTimes(1)
     expect(stateSpy).toHaveBeenCalled()
   })
