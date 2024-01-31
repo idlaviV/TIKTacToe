@@ -15,7 +15,7 @@ export function updateLabels(): void {
   const players: [Player, Player] = [settings.getPlayer(1), settings.getPlayer(2)]
   const edges: Edges = graphExport.value.edges
   let aI: AIPlayer
-  
+
   for (const edge in edges) {
     labelExport.value[edge] = ['', '']
     for (let i = 0; i < players.length; i++) {

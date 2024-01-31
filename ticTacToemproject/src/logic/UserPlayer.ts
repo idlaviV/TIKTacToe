@@ -7,7 +7,7 @@ import type { Player } from './Player'
 export class UserPlayer implements Player {
   name: string
 
-  constructor(name: string) {
+  constructor(name: string = 'Human') {
     this.name = name
   }
 
