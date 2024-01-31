@@ -7,8 +7,12 @@ import { computed, ref } from 'vue'
 import * as Layout from '@/utils/useGraphLayout'
 
 const layouts = Layout.layouts
-const nodesForDisplay = computed(()=> {return graphExport.value.nodes})
-const edgesForDisplay = computed(()=>{return graphExport.value.edges})
+const nodesForDisplay = computed(() => {
+  return graphExport.value.nodes
+})
+const edgesForDisplay = computed(() => {
+  return graphExport.value.edges
+})
 const graph = ref<VNetworkGraphInstance>()
 </script>
 
