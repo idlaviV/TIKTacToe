@@ -3,7 +3,7 @@ import LeftPanel from './components/LeftPanel.vue'
 import RightPanel from './components/RightPanel.vue'
 import { useDisplay } from 'vuetify';
 
-const { mobile } = useDisplay()
+const mobile = useDisplay().smAndDown
 </script>
 
 <template>

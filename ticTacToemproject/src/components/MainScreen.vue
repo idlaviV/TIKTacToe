@@ -38,6 +38,22 @@ const goToEvaluation = () => {
   }
 }
 
+const changePlayerDisplay = () => {
+  if (winner.value === null) {
+    if (playerOnTurn.value === 1) {
+      document.getElementById('player1Display')?.classList.add('font-bold')
+      document.getElementById('player2Display')?.classList.remove('font-bold')
+    } else {
+      document.getElementById('player1Display')?.classList.remove('font-bold')
+      document.getElementById('player2Display')?.classList.add('font-bold')
+    }
+  } else {
+    document.getElementById('player1Display')?.classList.remove('font-bold')
+    document.getElementById('player2Display')?.classList.remove('font-bold')
+  }
+}
+
+watch(playerOnTurn, changePlayerDisplay)
 watch(winner, goToEvaluation)
 </script>
 
@@ -48,10 +64,9 @@ watch(winner, goToEvaluation)
     <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
     <SettingsPopover />
     <v-container>
-      <div class="text-pink-500">X {{ player1Name }}</div>
-      <div class="text-blue-500">O {{ player2Name }}</div>
+      <div class="text-pink-500 font-bold" id="player1Display">X {{ player1Name }}</div>
+      <div class="text-blue-500" id="player2Display">O {{ player2Name }}</div>
     </v-container>
-    <h3 class="text-xl" id="playerOnTurnDisplay">Spieler {{ playerOnTurn }} ist dran</h3>
     <!-- The current gameboard -->
     <MainScreenBoard />
 
@@ -59,8 +74,8 @@ watch(winner, goToEvaluation)
     <MainScreenMoves />
     <br /><br />
     <!-- Display winner -->
-    <h2 v-show="winner === drawStatus" class="text-4xl dond-bold mb-8">Unentschieden!</h2>
-    <h2 v-show="winner === 1 || winner === 2" class="text-4xl dond-bold mb-8">
+    <h2 v-show="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
+    <h2 v-show="winner === 1 || winner === 2" class="text-4xl mb-8">
       Spieler {{ winner }} hat gewonnen!
     </h2>
     <div v-if="winner !== null">
