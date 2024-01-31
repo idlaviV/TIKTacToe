@@ -1,5 +1,4 @@
 import { AIPlayer } from '@/logic/AIPlayer'
-import type { NormalForm } from '@/logic/Codes'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'

@@ -1,6 +1,5 @@
 import { AIPlayer } from '@/logic/AIPlayer'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
-import type { NormalForm } from '@/logic/Codes'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
