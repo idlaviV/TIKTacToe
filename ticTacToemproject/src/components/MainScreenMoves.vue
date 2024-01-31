@@ -8,42 +8,48 @@ const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
 let timer: ReturnType<typeof setTimeout>
 const movesDisabled: Ref<boolean> = ref(false)
-const moveSpeed = ref(10)
+const moveSpeed = ref(2)
 
 const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
 }
 
-const performAiTurnIfGameIsRunning = () => {
-  if (getGuiState().value == 'game') {
-    gameHandler.performAiTurn()
-  } else {
-    clearInterval(timer)
-  }
-}
-
-const startTimerIfAutoPlay = () => {
-  if (autoPlay.value) {
-    timer = setInterval(performAiTurnIfGameIsRunning, 1000)
-  } else {
-    clearInterval(timer)
-  }
-}
-
-const areMoveButtonsDisabled = () => {
+const updateMoveButtonDiable = () => {
   movesDisabled.value = gameHandler.getNumberOfAIs() == 0
 }
 
 watch(getGuiState(), (guiState) => {
   if (guiState == 'game') {
-    startTimerIfAutoPlay()
-    areMoveButtonsDisabled()
+    startAutoPlayLoop()
+    updateMoveButtonDiable()
   } else {
-    clearInterval(timer)
+    clearTimeout(timer)
   }
 })
 
-watch(autoPlay, startTimerIfAutoPlay)
+const startAutoPlayLoop = (immediateTurn = false) => {
+  if (immediateTurn && autoPlay.value) {
+    gameHandler.performAiTurn()
+  }
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    if (autoPlay.value) {
+      startAutoPlayLoop(true)
+    }
+  }, calculateTimeout())
+}
+
+const calculateTimeout = () => {
+  if (moveSpeed.value == 9) {
+    return 50
+  }
+  if (moveSpeed.value == 10) {
+    return 5
+  }
+  return 2000 / moveSpeed.value
+}
+
+watch(autoPlay, startAutoPlayLoop)
 
 /**
  * @description Informs the model, that the user wants to trigger the next AI turn.
@@ -65,6 +71,7 @@ const nextAiTurn = () => {
     <v-btn :disabled="movesDisabled" @click="nextAiTurn">
       <i class="material-icons"> skip_next </i>
     </v-btn>
-    <input type="range" min="1" max="100" class="slider" id="speed" v-model="moveSpeed">
+    <input type="range" min="1" max="10" class="slider" id="speed" v-model="moveSpeed" />
   </div>
+  {{ moveSpeed }}
 </template>
