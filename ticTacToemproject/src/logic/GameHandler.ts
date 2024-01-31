@@ -191,6 +191,10 @@ export class GameHandler {
     return this.possiblePlayers
   }
 
+  getSettings(): GameSettings {
+    return this.settings
+  }
+
   /**
    * Only for debug purpose
    */

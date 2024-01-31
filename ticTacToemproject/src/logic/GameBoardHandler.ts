@@ -121,13 +121,14 @@ export class GameBoardHandler {
 export function calculateNextNFs(code: NormalForm): Set<number> {
   const handler = GameHandler.getInstance()
   const nextNFs: Set<number> = new Set()
-  const nextPositions = handler.getGBHandler().getPossibleNextPositions(getPlayerOnTurn(code), getGameBoardFromCode(code))
+  const nextPositions = handler
+    .getGBHandler()
+    .getPossibleNextPositions(getPlayerOnTurn(code), getGameBoardFromCode(code))
   for (const board of nextPositions) {
     nextNFs.add(board[0].getNormalForm())
   }
   return nextNFs
 }
-
 
 export class MoveError extends CustomError {
   public constructor(x: number, y: number, player: PlayerNumber) {

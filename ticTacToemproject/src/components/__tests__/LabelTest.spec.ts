@@ -1,5 +1,5 @@
-import { calculateNextNFs } from "@/logic/GameBoardHandler"
-import { describe, expect, test } from "vitest"
+import { calculateNextNFs } from '@/logic/GameBoardHandler'
+import { describe, expect, test } from 'vitest'
 
 describe('updateLabel', () => {
   test('first', () => {

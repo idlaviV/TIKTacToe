@@ -12,7 +12,7 @@ import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { computed } from 'vue'
 import { GameHandler } from '@/logic/GameHandler'
-import { updateLabels } from '@/utils/LabelExport'
+import { updateLabels, labelExport } from '@/utils/LabelExport'
 
 /**
  * @description The position of the nodes in the graph.
@@ -70,7 +70,7 @@ function updateLayout() {
     :configs="configs"
   >
     <template #edge-label="{ edge, ...slotProps }">
-      <v-edge-label :text="edge.label" v-bind="slotProps" />
+      <v-edge-label :text="labelExport.value[edge.id][1]" v-bind="slotProps" />
     </template>
     <template #override-node="{ nodeId }">
       <GraphPanelNode :node="graphExport.nodes[nodeId]" />
