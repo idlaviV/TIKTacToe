@@ -13,6 +13,11 @@ vi.mock('@/utils/GraphExport', () => {
     resetHistory: vi.fn()
   }
 })
+vi.mock('@/utils/LabelExport', () => {
+  return {
+    updateLabels: vi.fn()
+  }
+})
 
 const handler = GameHandler.getInstance()
 const weights = new Map()

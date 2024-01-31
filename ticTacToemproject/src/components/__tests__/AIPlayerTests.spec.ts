@@ -25,6 +25,11 @@ vi.mock('@/utils/GraphExport', () => {
     updateHistory: vi.fn()
   }
 })
+vi.mock('@/utils/LabelExport', () => {
+  return {
+    updateLables: vi.fn()
+  }
+})
 
 beforeEach(() => {
   resetGameHandler()

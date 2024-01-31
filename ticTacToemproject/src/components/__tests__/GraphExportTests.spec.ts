@@ -1,7 +1,7 @@
 import type { FieldType } from '@/logic/FieldType'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import {
   gameBoard1,
   gameBoard10,
@@ -19,6 +19,11 @@ import {
   updateHistory
 } from '@/utils/GraphExport'
 
+vi.mock('@/utils/LabelExport', () => {
+  return {
+    updateLabels: vi.fn()
+  }
+})
 let gameHandler: GameHandler = GameHandler.getInstance()
 let nodes: Nodes
 let edges: Edges

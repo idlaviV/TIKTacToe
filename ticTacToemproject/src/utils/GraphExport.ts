@@ -7,6 +7,7 @@ import type { ArrayMultimap } from '@teppeis/multimaps'
 import { type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 import { layout } from './useGraphLayout'
+import { labelExport, updateLabels } from './LabelExport'
 
 export class Graph {
   level: number = 0
@@ -30,6 +31,9 @@ export function initializeHistory() {
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level = 1
+  updateLabels()
+  console.log(labelExport.value)
+  console.log(labelExport.value['0#1'][1])
   layout(graph.nodes, graph.edges)
 }
 
@@ -44,10 +48,11 @@ export function updateHistory(gameBoard: GameBoard) {
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
   graph.nodes[newCode] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
-  graph.edges[key] = { source: graph.activeNodeCode, target: newCode }
+  graph.edges[key] = { source: graph.activeNodeCode, target: newCode, id: key }
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level++
+  updateLabels()
   layout(graph.nodes, graph.edges)
 }
 

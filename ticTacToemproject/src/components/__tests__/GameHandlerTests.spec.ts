@@ -12,6 +12,11 @@ vi.mock('@/utils/GraphExport', () => {
     resetHistory: vi.fn()
   }
 })
+vi.mock('@/utils/LabelExport', () => {
+  return {
+    updateLabels: vi.fn()
+  }
+})
 
 let handler: GameHandler
 

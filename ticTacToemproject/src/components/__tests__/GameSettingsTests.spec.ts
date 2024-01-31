@@ -14,6 +14,11 @@ vi.mock('@/utils/GraphExport', () => {
     resetHistory: vi.fn()
   }
 })
+vi.mock('@/utils/LabelExport', () => {
+  return {
+    updateLabels: vi.fn()
+  }
+})
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 let settings: GameSettings
