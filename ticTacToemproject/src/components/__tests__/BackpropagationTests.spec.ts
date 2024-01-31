@@ -3,7 +3,15 @@ import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
-import { describe, expect, beforeEach, test } from 'vitest'
+import { describe, expect, beforeEach, test, vi } from 'vitest'
+
+vi.mock('@/utils/GraphExport',()=>{
+  return {
+    updateHistory: vi.fn(),
+    initializeHistory: vi.fn(),
+    resetHistory: vi.fn()
+  }
+})
 
 const handler = GameHandler.getInstance()
 const weights = new Map()
