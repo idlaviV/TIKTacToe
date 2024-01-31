@@ -4,6 +4,7 @@ import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { describe, expect, beforeEach, test, vi } from 'vitest'
+import { getWeightClone } from './TestUtil'
 
 vi.mock('@/utils/GraphExport', () => {
   return {
@@ -12,8 +13,6 @@ vi.mock('@/utils/GraphExport', () => {
     resetHistory: vi.fn()
   }
 })
-import { describe, expect, beforeEach, test } from 'vitest'
-import { getWeightClone } from './TestUtil'
 
 const handler = GameHandler.getInstance()
 const weights = new Map()
