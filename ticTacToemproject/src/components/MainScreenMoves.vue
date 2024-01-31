@@ -8,6 +8,7 @@ const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
 let timer: ReturnType<typeof setTimeout>
 const movesDisabled: Ref<boolean> = ref(false)
+const moveSpeed = ref(10)
 
 const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
@@ -64,5 +65,6 @@ const nextAiTurn = () => {
     <v-btn :disabled="movesDisabled" @click="nextAiTurn">
       <i class="material-icons"> skip_next </i>
     </v-btn>
+    <input type="range" min="1" max="100" class="slider" id="speed" v-model="moveSpeed">
   </div>
 </template>
