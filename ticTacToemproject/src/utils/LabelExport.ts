@@ -6,9 +6,7 @@ import { graphExport } from '@/utils/GraphExport'
 import type { Edges } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 
-export class Labels {
-  [key: string]: [string, string]
-}
+export type Labels = Record<string, [string, string]>
 
 export const labelExport: Ref<Labels> = ref({})
 
