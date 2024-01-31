@@ -5,7 +5,7 @@ import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { describe, expect, beforeEach, test, vi } from 'vitest'
 
-vi.mock('@/utils/GraphExport',()=>{
+vi.mock('@/utils/GraphExport', () => {
   return {
     updateHistory: vi.fn(),
     initializeHistory: vi.fn(),

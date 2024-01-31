@@ -5,7 +5,7 @@ import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import * as Gui from '@/logic/GuiState'
-vi.mock('@/utils/GraphExport',()=>{
+vi.mock('@/utils/GraphExport', () => {
   return {
     updateHistory: vi.fn(),
     initializeHistory: vi.fn(),
