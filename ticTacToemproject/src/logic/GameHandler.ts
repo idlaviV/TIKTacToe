@@ -10,7 +10,7 @@ import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
-import { setGUiState } from './GuiState'
+import { nextGuiState } from './GuiState'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
 
@@ -75,18 +75,19 @@ export class GameHandler {
 
   /**
    * Performs the actions that have to be done at the end of a game.
+   * @param applyPolicy whether the policy shall be applied or not
    */
-  performEndOfGameActions() {
-    this.settings.getPlayer(1).isAI()
-      ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
-      : null
-    this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
-      ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
-      : null
-
-    // Sets the screen to the selection screen, in the end this should set to the evaluation screen, unless skipped
-    setGUiState('start')
+  performEndOfGameActions(applyPolicy: boolean) {
+    if (applyPolicy) {
+      this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : null
+      this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
+        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+        : null
+    }
     this.resetGame()
+    nextGuiState()
   }
 
   /**

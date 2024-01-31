@@ -10,6 +10,8 @@ import { drawStatus } from './WinnerStatus'
  * It models a policy that punishes and rewards moves based on the outcome of the game.
  */
 export class BackpropagationPolicy implements EvaluationPolicy {
+  handler = GameHandler.getInstance()
+
   winDiff: number
   drawDiff: number
   loseDiff: number

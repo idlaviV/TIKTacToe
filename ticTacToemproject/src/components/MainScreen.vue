@@ -4,14 +4,40 @@ import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
+import { getGuiState, nextGuiState, skipEvaluation, skipStart } from '@/logic/GuiState'
+import { watch } from 'vue'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
 const startEval = () => {
-  gameHandler.performEndOfGameActions()
+  gameHandler.performEndOfGameActions(true)
 }
+
+const skipEval = () => {
+  gameHandler.performEndOfGameActions(false)
+}
+
+const changeVisibility = () => {
+  if (winner !== null) {
+    document.getElementById('playerOnTurnDisplay')?.classList.toggle('invisible')
+  }
+}
+
+watch(winner, changeVisibility)
+
+const goToEvaluation = () => {
+  if (winner.value !== null && getGuiState().value === 'game') {
+    if (!skipEvaluation.value) {
+      nextGuiState()
+    } else {
+      startEval()
+    }
+  }
+}
+
+watch(winner, goToEvaluation)
 </script>
 
 <!-- The main screen contains the gameboard and main controls. -->
@@ -29,12 +55,10 @@ const startEval = () => {
             <v-col cols="1">O</v-col><v-col class="text-left" cols="5">{{ player2Name }}</v-col>
           </v-row> </v-col
         ><v-col>
-          <v-btn @click="startEval"> Belohnung anwenden </v-btn>
-        </v-col></v-row
-      ></v-container
-    >
-    <h3 :class="{ invisible: winner !== null }">Spieler {{ playerOnTurn }} ist dran</h3>
-
+          <v-checkbox label="Automatische Belohnung" v-model="skipEvaluation"></v-checkbox>
+          <v-checkbox label="Start überspringen" v-model="skipStart"></v-checkbox> </v-col></v-row
+    ></v-container>
+    <h3 class="text-xl" id="playerOnTurnDisplay">Spieler {{ playerOnTurn }} ist dran</h3>
     <!-- The current gameboard -->
     <MainScreenBoard />
 
@@ -46,6 +70,10 @@ const startEval = () => {
     <h2 v-show="winner === 1 || winner === 2" class="text-4xl dond-bold mb-8">
       Spieler {{ winner }} hat gewonnen!
     </h2>
+    <div v-if="winner !== null">
+      <v-btn @click="startEval"> Belohnung anwenden </v-btn>
+      <v-btn @click="skipEval"> Überspringen </v-btn>
+    </div>
   </div>
 </template>
 <style>
