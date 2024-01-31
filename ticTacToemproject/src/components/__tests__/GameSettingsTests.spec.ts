@@ -7,7 +7,7 @@ import { GameSettings } from '@/logic/GameSettings'
 import { UserPlayer } from '@/logic/UserPlayer'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
-vi.mock('@/utils/GraphExport',()=>{
+vi.mock('@/utils/GraphExport', () => {
   return {
     updateHistory: vi.fn(),
     initializeHistory: vi.fn(),

@@ -14,19 +14,17 @@ import {
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import type { EvaluationPolicy } from '@/logic/EvaluationPolicy'
 import { maxFromAI, debugRandomizerFactory } from './TestUtil'
-import { updateHistory } from '@/utils/GraphExport'
 
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 let policy: EvaluationPolicy
 let player: AIPlayer
 const debugRandomizer = debugRandomizerFactory()
-vi.mock('@/utils/GraphExport',()=>{
+vi.mock('@/utils/GraphExport', () => {
   return {
     updateHistory: vi.fn()
   }
 })
-
 
 beforeEach(() => {
   resetGameHandler()
