@@ -5,7 +5,13 @@ import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import * as Gui from '@/logic/GuiState'
-import AppVue from '@/App.vue'
+vi.mock('@/utils/GraphExport', () => {
+  return {
+    updateHistory: vi.fn(),
+    initializeHistory: vi.fn(),
+    resetHistory: vi.fn()
+  }
+})
 
 let handler: GameHandler
 

@@ -1,12 +1,19 @@
 import { AIPlayer } from '@/logic/AIPlayer'
 import type { GameBoardHandler } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { debugRandomizerFactory, resetGameHandler } from './TestUtil'
 import { GameSettings } from '@/logic/GameSettings'
 import { UserPlayer } from '@/logic/UserPlayer'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
+vi.mock('@/utils/GraphExport', () => {
+  return {
+    updateHistory: vi.fn(),
+    initializeHistory: vi.fn(),
+    resetHistory: vi.fn()
+  }
+})
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 let settings: GameSettings
