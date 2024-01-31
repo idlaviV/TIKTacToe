@@ -29,7 +29,7 @@ export class EliminationPolicy implements EvaluationPolicy {
     const handler: GameHandler = GameHandler.getInstance()
     const winner = handler.getWinner().value
 
-    if (winner !== null || winner !== drawStatus) {
+    if (winner !== null && winner !== drawStatus) {
       this.applyWinningPolicy(aI, history)
     }
   }

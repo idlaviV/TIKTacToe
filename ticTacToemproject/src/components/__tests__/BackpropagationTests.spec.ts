@@ -1,5 +1,6 @@
 import { AIPlayer } from '@/logic/AIPlayer'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
+import type { NormalForm } from '@/logic/Codes'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
@@ -41,8 +42,21 @@ describe('applyPolicy to realistic example', () => {
 
   test('should not change weights if game is not over', () => {
     handler.winner.value = null
+
+    const oldWeights: Map<NormalForm, Map<NormalForm, number>> = new Map<
+      NormalForm,
+      Map<NormalForm, number>
+    >()
+    aI.weights.forEach((value: Map<NormalForm, number>, key: NormalForm) => {
+      const innerMap = new Map<NormalForm, number>()
+      value.forEach((innerValue: number, innerKey: NormalForm) => {
+        innerMap.set(innerKey, innerValue)
+      })
+      oldWeights.set(key, innerMap)
+    })
+
     policy.applyPolicy(aI, history)
-    expect(aI.weights).toEqual(weights)
+    expect(aI.weights).toEqual(oldWeights)
   })
 
   test('game ends with draw', () => {
