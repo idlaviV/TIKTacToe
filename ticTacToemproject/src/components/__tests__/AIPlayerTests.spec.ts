@@ -20,6 +20,11 @@ let gBHandler: GameBoardHandler
 let policy: EvaluationPolicy
 let player: AIPlayer
 const debugRandomizer = debugRandomizerFactory()
+vi.mock('@/utils/GraphExport', () => {
+  return {
+    updateHistory: vi.fn()
+  }
+})
 
 beforeEach(() => {
   resetGameHandler()

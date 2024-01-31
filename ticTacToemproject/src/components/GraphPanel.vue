@@ -1,62 +1,20 @@
 <script setup lang="ts">
-import {
-  VEdgeLabel,
-  VNetworkGraph,
-  type Layouts,
-  type VNetworkGraphInstance
-} from 'v-network-graph'
+import { VNetworkGraph, VEdgeLabel, type VNetworkGraphInstance } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
-import { ref, watch, type Ref } from 'vue'
-import { layout } from '../utils/useGraphLayout'
 import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { computed } from 'vue'
-import { GameHandler } from '@/logic/GameHandler'
-import { updateLabels, labelExport } from '@/utils/LabelExport'
+import { computed, ref } from 'vue'
+import { labelExport } from '@/utils/LabelExport'
+import * as Layout from '@/utils/useGraphLayout'
 
-/**
- * @description The position of the nodes in the graph.
- */
-const layouts: Ref<Layouts> = ref({
-  nodes: {
-    //'0': { x: 20, y: 20 } //Fixes root to 20|20, the calculated position by dagre
-  }
-})
-
-/**
- * Update the layout after setup and after every move.
- */
-if (configs.view) {
-  configs.view.onBeforeInitialDisplay = updateLayout
-}
-
+const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
   return graphExport.value.nodes
 })
-
 const edgesForDisplay = computed(() => {
   return graphExport.value.edges
 })
 const graph = ref<VNetworkGraphInstance>()
-
-watch(GameHandler.getInstance().getPlayerOnTurn(), updateLayout)
-
-/**
- * Calculate new node positions and pan to the active node.
- */
-function updateLayout() {
-  layout(graphExport.value.nodes, graphExport.value.edges, layouts.value)
-  updateLabels()
-  const activeNodeId = graphExport.value.activeNodeCode
-  const height = graph.value?.getSizes().height
-  const width = graph.value?.getSizes().width
-  if (height !== undefined && width !== undefined) {
-    const x = layouts.value.nodes[activeNodeId].x
-    const y = layouts.value.nodes[activeNodeId].y
-    graph.value?.panTo({ x: -x, y: -y }) //Moves to the current node
-    graph.value?.panBy({ x: width / 2 - 20, y: height / 2 + 20 }) // Move current node to center
-  }
-}
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->

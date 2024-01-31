@@ -1,3 +1,4 @@
+import type { NormalForm } from '@/logic/Codes'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 
@@ -98,3 +99,15 @@ export const gameBoardWinPlayer2 = new GameBoard([
   [2, 2, 2],
   [0, 0, 1]
 ])
+
+export function getWeightClone(weights: Map<NormalForm, Map<NormalForm, number>>) {
+  const oldWeights: Map<NormalForm, Map<NormalForm, number>> = new Map()
+  weights.forEach((value: Map<NormalForm, number>, key: NormalForm) => {
+    const innerMap = new Map<NormalForm, number>()
+    value.forEach((innerValue: number, innerKey: NormalForm) => {
+      innerMap.set(innerKey, innerValue)
+    })
+    oldWeights.set(key, innerMap)
+  })
+  return oldWeights
+}

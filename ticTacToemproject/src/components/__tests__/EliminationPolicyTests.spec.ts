@@ -4,6 +4,7 @@ import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { getWeightClone } from './TestUtil'
 
 const handler = GameHandler.getInstance()
 const weights = new Map()
@@ -29,8 +30,11 @@ describe('applyPolicy with realistic examples', () => {
   beforeEach(beforeSetUpRealisticExample)
   test('should not change weights if game is not over', () => {
     handler.winner.value = null
+
+    const oldWeights = getWeightClone(aI.weights)
+
     policy.applyPolicy(aI, history)
-    expect(aI.weights).toEqual(weights)
+    expect(aI.weights).toEqual(oldWeights)
   })
 
   test('should not change weights if game results in draw', () => {
@@ -128,6 +132,26 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(2)?.get(22)).toEqual(0) //<--this changed, too
     expect(aI.weights.get(2)?.get(21)).toEqual(1)
     expect(aI.weights.get(2)?.get(201)).toEqual(1)
+  })
+
+  test('loss, expect first weight to change', () => {
+    aI.weights.get(22)?.set(222, 0)
+    aI.weights.get(22)?.set(221, 0)
+    aI.weights.get(22)?.set(2201, 0)
+    policy.applyPolicy(aI, history)
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
+    expect(aI.weights.get(22)?.get(222)).toEqual(0)
+    expect(aI.weights.get(22)?.get(221)).toEqual(0)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(0)
+    expect(aI.weights.get(2)?.get(22)).toEqual(1)
+    expect(aI.weights.get(2)?.get(21)).toEqual(1)
+    expect(aI.weights.get(2)?.get(201)).toEqual(1)
+    expect(aI.weights.get(0)?.get(2)).toEqual(0) //<--this changed, too
   })
 })
 

@@ -1,16 +1,23 @@
 import dagre from '@dagrejs/dagre'
 import type { Edges, Layouts, Nodes } from 'v-network-graph'
 import * as gc from '@/components/GraphConstants'
+import { ref, type Ref } from 'vue'
+import { graphExport } from './GraphExport'
+
+/**
+ * @description The position of the nodes in the graph.
+ */
+export const layouts: Ref<Layouts> = ref({
+  nodes: {}
+})
 
 /**
  * Places the nodes of the graph for a TopDown layout.
  * @param nodes The nodes of the graph
  * @param edges The edges of the graph
  * @param layouts The layout of the graph
- * @returns The last added node of the graph
  */
-export function layout(nodes: Nodes, edges: Edges, layouts: Layouts): string {
-  let activeNode: string = '0'
+export function layout(nodes: Nodes, edges: Edges) {
   const g = new dagre.graphlib.Graph()
   g.setGraph({
     rankdir: 'TB',
@@ -26,9 +33,6 @@ export function layout(nodes: Nodes, edges: Edges, layouts: Layouts): string {
   // our nodes.
   Object.entries(nodes).forEach(([nodeId, node]) => {
     g.setNode(nodeId, { label: node.name, width: gc.nodeSize, height: gc.nodeSize })
-    if (node.active && node.name !== undefined) {
-      activeNode = node.name
-    }
   })
 
   // Add edges to the graph.
@@ -37,12 +41,14 @@ export function layout(nodes: Nodes, edges: Edges, layouts: Layouts): string {
   })
 
   dagre.layout(g)
+  const active: string = graphExport.value.activeNodeCode
+  const offsetx = g.node(active).x
+  const offsety = g.node(active).y
 
   g.nodes().forEach((nodeId: string) => {
     // update node position
-    const x = g.node(nodeId).x
-    const y = g.node(nodeId).y
-    layouts.nodes[nodeId] = { x, y }
+    const x = g.node(nodeId).x - offsetx
+    const y = g.node(nodeId).y - offsety
+    layouts.value.nodes[nodeId] = { x, y }
   })
-  return activeNode
 }
