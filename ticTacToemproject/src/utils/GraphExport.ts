@@ -7,7 +7,7 @@ import type { ArrayMultimap } from '@teppeis/multimaps'
 import { type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 import { layout } from './useGraphLayout'
-import { labelExport, updateLabels } from './LabelExport'
+import { updateLabels } from './LabelExport'
 
 export class Graph {
   level: number = 0
@@ -32,8 +32,6 @@ export function initializeHistory() {
   addChildren(graph)
   graph.level = 1
   updateLabels()
-  console.log(labelExport.value)
-  console.log(labelExport.value['0#1'][1])
   layout(graph.nodes, graph.edges)
 }
 

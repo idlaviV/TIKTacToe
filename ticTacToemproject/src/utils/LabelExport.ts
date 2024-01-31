@@ -17,7 +17,6 @@ export function updateLabels(): void {
   let aI: AIPlayer
   
   for (const edge in edges) {
-    console.log(edge)
     labelExport.value[edge] = ['', '']
     for (let i = 0; i < players.length; i++) {
       if (players[i].isAI()) {

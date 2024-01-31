@@ -19,6 +19,7 @@ vi.mock('@/utils/LabelExport', () => {
     updateLabels: vi.fn()
   }
 })
+
 let gameHandler: GameHandler
 let gBHandler: GameBoardHandler
 let settings: GameSettings

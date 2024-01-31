@@ -8,9 +8,6 @@ import { labelExport } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 
 const layouts = Layout.layouts
-const labelsForDisplay = computed(()=>{
-  return labelExport.value
-})
 const nodesForDisplay = computed(() => {
   return graphExport.value.nodes
 })
@@ -31,7 +28,7 @@ const graph = ref<VNetworkGraphInstance>()
     :configs="configs"
   >
     <template #edge-label="{ edgeId, ...slotProps }">
-      <v-edge-label :text="labelsForDisplay[edgeId][1]" v-bind="slotProps" />
+      <v-edge-label :text="labelExport[edgeId][1]" v-bind="slotProps" />
     </template>
     <template #override-node="{ nodeId }">
       <GraphPanelNode :node="graphExport.nodes[nodeId]" />

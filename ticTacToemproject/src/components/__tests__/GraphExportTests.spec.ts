@@ -24,6 +24,7 @@ vi.mock('@/utils/LabelExport', () => {
     updateLabels: vi.fn()
   }
 })
+
 let gameHandler: GameHandler = GameHandler.getInstance()
 let nodes: Nodes
 let edges: Edges
