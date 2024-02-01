@@ -1,9 +1,7 @@
 import { AIPlayer } from '@/logic/AIPlayer'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
-import type { NormalForm } from '@/logic/Codes'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import { GameBoard, getGameBoardFromCode } from '@/logic/GameBoard'
-import { calculateNextNFs } from '@/logic/GameBoardHandler'
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameSettings } from '@/logic/GameSettings'
 import { UserPlayer } from '@/logic/UserPlayer'
@@ -170,17 +168,4 @@ describe('getGameBoardFromCode', () => {
   })
 })
 
-describe('calculateNextNFs', () => {
-  let nextTurns: Set<NormalForm>
-  test('first turn', () => {
-    nextTurns = calculateNextNFs(0)
-    expect(nextTurns.size).toEqual(3)
-    expect(nextTurns).toEqual(new Set([1, 10, 10000]))
-  })
 
-  test('later turn', () => {
-    nextTurns = calculateNextNFs(121)
-    expect(nextTurns.size).toEqual(4)
-    expect(nextTurns).toEqual(new Set([1002201, 1202001, 20121, 2121]))
-  })
-})

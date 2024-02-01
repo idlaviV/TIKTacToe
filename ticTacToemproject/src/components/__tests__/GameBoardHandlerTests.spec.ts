@@ -1,9 +1,10 @@
 import { GameBoard } from '@/logic/GameBoard'
-import { GameBoardHandler } from '@/logic/GameBoardHandler'
+import { GameBoardHandler, calculateNextNFs } from '@/logic/GameBoardHandler'
 import type { GameBoardWithPrevMove } from '@/logic/Moves'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
 import { gameBoardDraw, gameBoardWinPlayer1, gameBoardWinPlayer2 } from './TestUtil'
+import type { NormalForm } from '@/logic/Codes'
 
 let handler: GameBoardHandler
 beforeEach(() => {
@@ -147,5 +148,20 @@ describe('getPossibleNextPositionsWithMoves', () => {
     handler.gameBoard.value = gameBoardDraw
     nextTurns = handler.getPossibleNextPositions(2)
     expect(nextTurns.length).toEqual(0)
+  })
+})
+
+describe('calculateNextNFs', () => {
+  let nextTurns: Set<NormalForm>
+  test('first turn', () => {
+    nextTurns = calculateNextNFs(0)
+    expect(nextTurns.size).toEqual(3)
+    expect(nextTurns).toEqual(new Set([1, 10, 10000]))
+  })
+
+  test('later turn', () => {
+    nextTurns = calculateNextNFs(121)
+    expect(nextTurns.size).toEqual(4)
+    expect(nextTurns).toEqual(new Set([1002201, 1202001, 20121, 2121]))
   })
 })

@@ -1,6 +1,7 @@
 import { GameBoardHandler } from '@/logic/GameBoardHandler'
-import { GameBoard } from '@/logic/GameBoard'
+import { GameBoard, getGameBoardFromCode } from '@/logic/GameBoard'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { gameBoard1, gameBoard10, gameBoard10000, gameBoard1rot, gameBoard21 } from './TestUtil'
 
 let handler: GameBoardHandler
 
@@ -76,6 +77,72 @@ describe('getNormalForm', () => {
     handler.move(0, 2, 1)
     handler.move(0, 0, 2)
     expect(handler.getGameBoard().getNormalForm()).toEqual(102)
+  })
+})
+
+describe('getGameBoardFromCode', () => {
+  test('standard Codes', () => {
+    expect(getGameBoardFromCode(0)).toEqual(
+      new GameBoard()
+    )
+    expect(getGameBoardFromCode(1)).toEqual(
+      gameBoard1
+    )
+    expect(getGameBoardFromCode(10)).toEqual(
+      gameBoard10
+    )
+    expect(getGameBoardFromCode(100)).toEqual(
+      gameBoard1rot
+    )
+    expect(getGameBoardFromCode(10000)).toEqual(
+      gameBoard10000
+    )
+    expect(getGameBoardFromCode(21)).toEqual(
+      gameBoard21
+    )
+    expect(getGameBoardFromCode(102)).toEqual(
+      new GameBoard([
+        [2, 0, 1],
+        [0, 0, 0],
+        [0, 0, 0]
+      ])
+    )
+    expect(getGameBoardFromCode(112212121)).toEqual(
+      new GameBoard([
+        [1, 2, 1],
+        [2, 1, 2],
+        [2, 1, 1]
+      ])
+    )
+  })
+
+  test('custom codes', () => {
+    expect(getGameBoardFromCode(2)).toEqual(
+      new GameBoard([
+        [2, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ])
+    )
+    expect(getGameBoardFromCode(22)).toEqual(
+      new GameBoard([
+        [2, 2, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ])
+    )
+    expect(getGameBoardFromCode(222222222)).toEqual(
+      new GameBoard([
+        [2, 2, 2],
+        [2, 2, 2],
+        [2, 2, 2]
+      ])
+    )
+  })
+
+  test('invalid codes', () => {
+    expect(() => getGameBoardFromCode(3)).toThrowError()
+    expect(() => getGameBoardFromCode(1111111111)).toThrowError()
   })
 })
 
