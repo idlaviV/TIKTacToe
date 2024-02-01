@@ -3,8 +3,9 @@ import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
+import SettingsPopover from './SettingsPopover.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
-import { getGuiState, nextGuiState, skipEvaluation, skipStart } from '@/logic/GuiState'
+import { getGuiState, nextGuiState, skipEvaluation } from '@/logic/GuiState'
 import { watch } from 'vue'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
@@ -37,6 +38,22 @@ const goToEvaluation = () => {
   }
 }
 
+const changePlayerDisplay = () => {
+  if (winner.value === null) {
+    if (playerOnTurn.value === 1) {
+      document.getElementById('player1Display')?.classList.add('font-bold')
+      document.getElementById('player2Display')?.classList.remove('font-bold')
+    } else {
+      document.getElementById('player1Display')?.classList.remove('font-bold')
+      document.getElementById('player2Display')?.classList.add('font-bold')
+    }
+  } else {
+    document.getElementById('player1Display')?.classList.remove('font-bold')
+    document.getElementById('player2Display')?.classList.remove('font-bold')
+  }
+}
+
+watch(playerOnTurn, changePlayerDisplay)
 watch(winner, goToEvaluation)
 </script>
 
@@ -44,21 +61,12 @@ watch(winner, goToEvaluation)
 <template>
   <div>
     <!-- Caption and prompt for next turn -->
-    <h1 class="mb-8 text-3xl font-bold uppercase">Tic Tac Toe</h1>
-    <v-container
-      ><v-row
-        ><v-col>
-          <v-row class="text-pink-500" justify="end" no-gutters>
-            <v-col cols="1">X</v-col><v-col class="text-left" cols="5">{{ player1Name }}</v-col>
-          </v-row>
-          <v-row class="text-blue-500" justify="end" no-gutters>
-            <v-col cols="1">O</v-col><v-col class="text-left" cols="5">{{ player2Name }}</v-col>
-          </v-row> </v-col
-        ><v-col>
-          <v-checkbox label="Automatische Belohnung" v-model="skipEvaluation"></v-checkbox>
-          <v-checkbox label="Start überspringen" v-model="skipStart"></v-checkbox> </v-col></v-row
-    ></v-container>
-    <h3 class="text-xl" id="playerOnTurnDisplay">Spieler {{ playerOnTurn }} ist dran</h3>
+    <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
+    <SettingsPopover />
+    <v-container>
+      <div class="text-pink-500 font-bold" id="player1Display">X {{ player1Name }}</div>
+      <div class="text-blue-500" id="player2Display">O {{ player2Name }}</div>
+    </v-container>
     <!-- The current gameboard -->
     <MainScreenBoard />
 
@@ -66,8 +74,8 @@ watch(winner, goToEvaluation)
     <MainScreenMoves />
     <br /><br />
     <!-- Display winner -->
-    <h2 v-show="winner === drawStatus" class="text-4xl dond-bold mb-8">Unentschieden!</h2>
-    <h2 v-show="winner === 1 || winner === 2" class="text-4xl dond-bold mb-8">
+    <h2 v-show="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
+    <h2 v-show="winner === 1 || winner === 2" class="text-4xl mb-8">
       Spieler {{ winner }} hat gewonnen!
     </h2>
     <div v-if="winner !== null">
