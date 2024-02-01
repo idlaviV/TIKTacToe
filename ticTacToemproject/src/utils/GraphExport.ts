@@ -111,4 +111,3 @@ export function resetHistory() {
   graphExport.value = new Graph()
   initializeHistory()
 }
-

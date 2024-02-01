@@ -10,6 +10,7 @@ import { getGuiState } from '@/logic/GuiState'
 
 const guiState = getGuiState()
 const layouts = Layout.layouts
+
 const nodesForDisplay = computed(() => {
   if (guiState.value === 'game') {
     const currentLevel = graphExport.value.level
@@ -17,8 +18,8 @@ const nodesForDisplay = computed(() => {
   } else {
     return graphExport.value.nodes
   }
-  
 })
+
 const edgesForDisplay = computed(() => {
   return graphExport.value.edges
 })
