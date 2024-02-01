@@ -135,6 +135,23 @@ export class GameHandler {
   }
 
   /**
+   * Reset the weights of an AI.
+   * Cannot be used for user player (which has index 0).
+   * @param aiIndex the index of the AI to be resetted
+   */
+  resetAiWeights(aiIndex: number) {
+    if (aiIndex < 0 || aiIndex >= this.possiblePlayers.length) {
+      throw new Error('This player is not known.')
+    }
+    const ai = this.possiblePlayers[aiIndex]
+    if (ai instanceof AIPlayer) {
+      ai.resetWeights()
+    } else {
+      throw new Error('Player is not an AI.')
+    }
+  }
+
+  /**
    * Registers chosen players as player1 and player2 for the next game.
    * @param index_ index of the chosen option
    */

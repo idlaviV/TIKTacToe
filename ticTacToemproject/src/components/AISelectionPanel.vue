@@ -27,6 +27,10 @@ const selectedAIOption = ref(0)
  * Model for the name of the new AI
  */
 const aiName = ref('Neue KI')
+
+const resetAiWeights : ((index: number) => void) = (index:number) => {
+  GameHandler.getInstance().resetAiWeights(index)
+}
 </script>
 
 <!-- The AISelectionPanel contains a list of all existing AIs and the option to create new AIs,
@@ -43,7 +47,7 @@ const aiName = ref('Neue KI')
               <i class="material-symbols-outlined mx-2"> smart_toy </i>
             </template>
             <template v-slot:append>
-              <v-btn>Zurücksetzen</v-btn>
+              <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
             </template>
           </v-list-item>
         </template>

@@ -275,3 +275,18 @@ describe('applyPolicy', () => {
     expect(policySpy).toHaveBeenCalledWith(player, gBHandler.history)
   })
 })
+
+describe('resetWeights', () => {
+  test('resetWeights', () => {
+    player.initializeWeights(0)
+    player.weights.get(0)?.set(1, 5)
+    player.weights.get(0)?.set(10, 0)
+    player.weights.get(0)?.set(10000, 0)
+
+    expect(player.weights.get(0)?.size).toEqual(3)
+
+    player.resetWeights()
+    player.initializeWeights(0)
+    expect(player.weights.get(0)?.get(1)).toEqual(1)
+  })
+})
