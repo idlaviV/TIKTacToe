@@ -30,7 +30,12 @@ watch(getGuiState(), (guiState) => {
 })
 
 const updateGuiDisable = () => {
-  if (getGuiState().value == 'game' && gameHandler.getNumberOfAIs() == 2 && autoPlay.value && moveSpeed.value > 8) {
+  if (
+    getGuiState().value == 'game' &&
+    gameHandler.getNumberOfAIs() == 2 &&
+    autoPlay.value &&
+    moveSpeed.value > 8
+  ) {
     guiDisable.value = 'reduced'
   } else {
     guiDisable.value = 'standard'
