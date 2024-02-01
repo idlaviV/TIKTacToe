@@ -25,3 +25,4 @@ const state = computed(() => {
     />
   </template>
 </template>
+import type { TTTNode } from '@/utils/TTTNodes';

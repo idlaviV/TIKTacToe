@@ -5,10 +5,19 @@ import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { computed, ref } from 'vue'
 import * as Layout from '@/utils/useGraphLayout'
+import { filterNodesByLevel } from '@/utils/TTTNodes'
+import { getGuiState } from '@/logic/GuiState'
 
+const guiState = getGuiState()
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
-  return graphExport.value.nodes
+  if (guiState.value === 'game') {
+    const currentLevel = graphExport.value.level
+    return filterNodesByLevel(graphExport.value.nodes, currentLevel)
+  } else {
+    return graphExport.value.nodes
+  }
+  
 })
 const edgesForDisplay = computed(() => {
   return graphExport.value.edges

@@ -1,12 +1,12 @@
-import type { GameBoardCode, NormalForm } from '@/logic/Codes'
-import type { FieldType } from '@/logic/FieldType'
+import type { NormalForm } from '@/logic/Codes'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import type { ArrayMultimap } from '@teppeis/multimaps'
-import { type Edges, type Node, type Nodes } from 'v-network-graph'
+import { type Edges } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 import { layout } from './useGraphLayout'
+import { type TTTNodes, TTTNode } from './TTTNodes'
 
 export class Graph {
   level: number = 0
@@ -112,36 +112,3 @@ export function resetHistory() {
   initializeHistory()
 }
 
-export type TTTNodes = Nodes & { [key: string]: TTTNode }
-/**
- * This class is a model for the visualization of a game configuration in the graph.
- */
-export class TTTNode implements Node {
-  // A string representation of the code of the gameboard that is visualized by this node.
-  name: string
-  // The code of the gameboard that is visualized by this node.
-  code: GameBoardCode
-  // The state of the gameboard that is visualized by this node.
-  boardState: FieldType[][]
-  // Whether this node is just an intermediate leaf in the graph.
-  isChild: boolean
-  // The level of the node in the graph. The root element has level 0.
-  level: number
-  // All alternative gameboards that could be played, equivalent to the gameboard that is visualized by this node.
-  alternatives: FieldType[][][] = []
-
-  constructor(
-    code: GameBoardCode,
-    boardState: FieldType[][],
-    level: number,
-    isChild: boolean = false,
-    alternatives: FieldType[][][] = []
-  ) {
-    this.name = code.toString()
-    this.code = code
-    this.boardState = boardState
-    this.level = level
-    this.isChild = isChild
-    this.alternatives = alternatives
-  }
-}
