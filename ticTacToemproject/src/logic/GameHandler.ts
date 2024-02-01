@@ -132,12 +132,31 @@ export class GameHandler {
    * @param name A chosen name for the AI. Does not have to be unique.
    */
   createAI(selectedAIOption: number, name: string) {
-    if (selectedAIOption === 1) {
+    if (selectedAIOption === 0) {
       this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
-    } else if (selectedAIOption === 2) {
+    } else if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
+    } else {
+      throw new Error('Invalid AI option')
     }
     updatePlayerList()
+  }
+
+  /**
+   * Reset the weights of an AI.
+   * Cannot be used for user player (which has index 0).
+   * @param aiIndex the index of the AI to be resetted
+   */
+  resetAiWeights(aiIndex: number) {
+    if (aiIndex < 0 || aiIndex >= this.possiblePlayers.length) {
+      throw new Error('This player is not known.')
+    }
+    const ai = this.possiblePlayers[aiIndex]
+    if (ai instanceof AIPlayer) {
+      ai.resetWeights()
+    } else {
+      throw new Error('Player is not an AI.')
+    }
   }
 
   /**

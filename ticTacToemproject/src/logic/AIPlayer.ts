@@ -118,11 +118,13 @@ export class AIPlayer implements Player {
   }
 
   /**
-   * Initializes the weights of the children of a specified node
-   * @todo At the moment, all nodes are always set to 1
+   * Initializes the weights of the children of a specified node if they are not yet initialized.
    * @param code describes the node where weights are missing
    */
   initializeWeights(code: NormalForm): void {
+    if (this.weights.has(code)) {
+      return
+    }
     const nextNFs: Set<NormalForm> = calculateNextNFs(code)
     const vertexMap = new Map<NormalForm, number>()
     this.weights.set(code, vertexMap)
@@ -133,6 +135,10 @@ export class AIPlayer implements Player {
 
   applyPolicy(): void {
     this.policy.applyPolicy(this, GameHandler.getInstance().getGBHandler().history)
+  }
+
+  resetWeights(): void {
+    this.weights = new Map()
   }
 
   getName(): string {

@@ -25,11 +25,17 @@ watch(getGuiState(), (guiState) => {
     updateMoveButtonDiable()
   } else {
     clearTimeout(timer)
+    updateGuiDisable()
   }
 })
 
 const updateGuiDisable = () => {
-  if (gameHandler.getNumberOfAIs() == 2 && autoPlay.value && moveSpeed.value > 8) {
+  if (
+    getGuiState().value == 'game' &&
+    gameHandler.getNumberOfAIs() == 2 &&
+    autoPlay.value &&
+    moveSpeed.value > 8
+  ) {
     guiDisable.value = 'reduced'
   } else {
     guiDisable.value = 'standard'
