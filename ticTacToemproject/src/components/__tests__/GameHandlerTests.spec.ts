@@ -202,17 +202,15 @@ describe('getNumberOfAIs', () => {
 describe('createAI', () => {
   test('EliminationPolicy', () => {
     handler.createAI(0, 'KI 1')
-    const ai:AIPlayer = handler.possiblePlayers[3] as AIPlayer
+    const ai: AIPlayer = handler.possiblePlayers[3] as AIPlayer
     expect(ai.policy).toBeInstanceOf(EliminationPolicy)
   })
   test('BackpropagationPolicy', () => {
     handler.createAI(1, 'KI 1')
-    const ai:AIPlayer = handler.possiblePlayers[3] as AIPlayer
+    const ai: AIPlayer = handler.possiblePlayers[3] as AIPlayer
     expect(ai.policy).toBeInstanceOf(BackpropagationPolicy)
   })
   test('Invalid option', () => {
-    expect(() => 
-      handler.createAI(2, 'KI 1')
-    ).toThrow('Invalid AI option')
+    expect(() => handler.createAI(2, 'KI 1')).toThrow('Invalid AI option')
   })
 })
