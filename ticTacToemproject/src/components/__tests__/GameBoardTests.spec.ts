@@ -82,24 +82,12 @@ describe('getNormalForm', () => {
 
 describe('getGameBoardFromCode', () => {
   test('standard Codes', () => {
-    expect(getGameBoardFromCode(0)).toEqual(
-      new GameBoard()
-    )
-    expect(getGameBoardFromCode(1)).toEqual(
-      gameBoard1
-    )
-    expect(getGameBoardFromCode(10)).toEqual(
-      gameBoard10
-    )
-    expect(getGameBoardFromCode(100)).toEqual(
-      gameBoard1rot
-    )
-    expect(getGameBoardFromCode(10000)).toEqual(
-      gameBoard10000
-    )
-    expect(getGameBoardFromCode(21)).toEqual(
-      gameBoard21
-    )
+    expect(getGameBoardFromCode(0)).toEqual(new GameBoard())
+    expect(getGameBoardFromCode(1)).toEqual(gameBoard1)
+    expect(getGameBoardFromCode(10)).toEqual(gameBoard10)
+    expect(getGameBoardFromCode(100)).toEqual(gameBoard1rot)
+    expect(getGameBoardFromCode(10000)).toEqual(gameBoard10000)
+    expect(getGameBoardFromCode(21)).toEqual(gameBoard21)
     expect(getGameBoardFromCode(102)).toEqual(
       new GameBoard([
         [2, 0, 1],

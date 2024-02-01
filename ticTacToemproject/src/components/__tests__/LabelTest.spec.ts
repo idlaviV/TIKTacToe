@@ -1,7 +1,6 @@
 import { AIPlayer } from '@/logic/AIPlayer'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
-import { GameBoard, getGameBoardFromCode } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameSettings } from '@/logic/GameSettings'
 import { UserPlayer } from '@/logic/UserPlayer'
@@ -77,95 +76,3 @@ describe('updateLabel', () => {
     expect(labelExport.value['1#102']).toEqual(['', ''])
   })
 })
-
-describe('getGameBoardFromCode', () => {
-  test('standard Codes', () => {
-    expect(getGameBoardFromCode(0)).toEqual(
-      new GameBoard([
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(1)).toEqual(
-      new GameBoard([
-        [1, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(10)).toEqual(
-      new GameBoard([
-        [0, 1, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(100)).toEqual(
-      new GameBoard([
-        [0, 0, 1],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(10000)).toEqual(
-      new GameBoard([
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(21)).toEqual(
-      new GameBoard([
-        [1, 2, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(102)).toEqual(
-      new GameBoard([
-        [2, 0, 1],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(112212121)).toEqual(
-      new GameBoard([
-        [1, 2, 1],
-        [2, 1, 2],
-        [2, 1, 1]
-      ])
-    )
-  })
-
-  test('custom codes', () => {
-    expect(getGameBoardFromCode(2)).toEqual(
-      new GameBoard([
-        [2, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(22)).toEqual(
-      new GameBoard([
-        [2, 2, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ])
-    )
-    expect(getGameBoardFromCode(222222222)).toEqual(
-      new GameBoard([
-        [2, 2, 2],
-        [2, 2, 2],
-        [2, 2, 2]
-      ])
-    )
-  })
-
-  test('invalid codes', () => {
-    expect(() => getGameBoardFromCode(3)).toThrowError()
-    expect(() => getGameBoardFromCode(1111111111)).toThrowError()
-  })
-})
-
-
