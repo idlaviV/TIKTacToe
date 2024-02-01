@@ -12,6 +12,7 @@ const moveSpeed = ref(2)
 
 const toggleAutoPlay = () => {
   autoPlay.value = !autoPlay.value
+  updateGuiDisable()
 }
 
 const updateMoveButtonDiable = () => {
@@ -27,15 +28,19 @@ watch(getGuiState(), (guiState) => {
   }
 })
 
-const startAutoPlayLoop = (immediateTurn = false) => {
-  if (immediateTurn && autoPlay.value) {
-    gameHandler.performAiTurn()
-  }
-  if (moveSpeed.value > 8) {
+const updateGuiDisable = () => {
+  if (gameHandler.getNumberOfAIs() == 2 && autoPlay.value && moveSpeed.value > 8) {
     guiDisable.value = 'reduced'
   } else {
     guiDisable.value = 'standard'
   }
+}
+
+const startAutoPlayLoop = (immediateTurn = false) => {
+  if (immediateTurn && autoPlay.value) {
+    gameHandler.performAiTurn()
+  }
+  updateGuiDisable()
 
   clearTimeout(timer)
   timer = setTimeout(() => {
@@ -63,6 +68,7 @@ watch(autoPlay, startAutoPlayLoop)
  */
 const nextAiTurn = () => {
   autoPlay.value = false
+  updateGuiDisable()
   gameHandler.performAiTurn()
 }
 </script>
@@ -77,7 +83,6 @@ const nextAiTurn = () => {
     <v-btn :disabled="movesDisabled" @click="nextAiTurn">
       <i class="material-icons"> skip_next </i>
     </v-btn>
-    <input type="range" min="1" max="10" class="slider" id="speed" v-model="moveSpeed" />
+    <input :disabled="movesDisabled" type="range" min="1" max="10" class="slider" id="speed" v-model="moveSpeed" />
   </div>
-  {{ moveSpeed }}
 </template>
