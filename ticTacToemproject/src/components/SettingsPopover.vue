@@ -14,7 +14,7 @@ export default {
   <div class="text-center">
     <v-menu v-model="menu" :close-on-content-click="false" location="end">
       <template v-slot:activator="{ props }">
-        <v-btn color="indigo" v-bind="props" icon="mdi-wrench"></v-btn>
+        <v-btn v-bind="props" icon="mdi-wrench"></v-btn>
       </template>
 
       <v-card class="pe-4">
