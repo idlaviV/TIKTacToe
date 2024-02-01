@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import LeftPanel from './components/LeftPanel.vue'
 import RightPanel from './components/RightPanel.vue'
-import { useDisplay } from 'vuetify';
+import { useDisplay } from 'vuetify'
 
 const mobile = useDisplay().smAndDown
 </script>
