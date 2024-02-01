@@ -24,7 +24,7 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
 
-  gameCount:number = 0
+  gameCount: number = 0
 
   humanPlayer: UserPlayer = new UserPlayer('Mensch')
   /**
@@ -82,7 +82,7 @@ export class GameHandler {
   performEndOfGameActions(applyPolicy: boolean) {
     this.gameCount++
     if (this.gameCount % 100 == 0) {
-      console.log(this.gameCount + " " +  Date.now())
+      console.log(this.gameCount + ' ' + Date.now())
     }
     if (applyPolicy) {
       this.settings.getPlayer(1).isAI()

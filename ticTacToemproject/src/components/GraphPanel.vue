@@ -10,7 +10,7 @@ import { guiDisable } from '@/logic/GuiState'
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
   if (guiDisable.value === 'standard') {
-  return graphExport.value.nodes
+    return graphExport.value.nodes
   } else {
     return {}
   }
@@ -25,7 +25,7 @@ const graph = ref<VNetworkGraphInstance>()
 <template>
   <v-network-graph
     ref="graph"
-    class="graph"
+    class="graph full-height"
     :nodes="nodesForDisplay"
     :edges="edgesForDisplay"
     :layouts="layouts"
@@ -40,7 +40,11 @@ const graph = ref<VNetworkGraphInstance>()
 <style>
 .graph {
   width: 100%;
-  height: 600px;
+  height: 100%;
   border: 1px solid #000;
+}
+
+.full-height {
+  height: 90vh;
 }
 </style>

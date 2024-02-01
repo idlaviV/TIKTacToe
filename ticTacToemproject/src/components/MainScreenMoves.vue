@@ -83,6 +83,14 @@ const nextAiTurn = () => {
     <v-btn :disabled="movesDisabled" @click="nextAiTurn">
       <i class="material-icons"> skip_next </i>
     </v-btn>
-    <input :disabled="movesDisabled" type="range" min="1" max="10" class="slider" id="speed" v-model="moveSpeed" />
+    <input
+      :disabled="movesDisabled"
+      type="range"
+      min="1"
+      max="10"
+      class="slider"
+      id="speed"
+      v-model="moveSpeed"
+    />
   </div>
 </template>
