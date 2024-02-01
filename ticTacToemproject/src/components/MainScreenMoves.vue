@@ -2,7 +2,7 @@
 import { GameHandler } from '@/logic/GameHandler'
 import PlayButton from './MainScreenMovesPlayButton.vue'
 import { ref, watch, type Ref } from 'vue'
-import { getGuiState } from '@/logic/GuiState'
+import { getGuiState, guiDisable } from '@/logic/GuiState'
 
 const gameHandler = GameHandler.getInstance()
 const autoPlay = ref(false)
@@ -31,6 +31,12 @@ const startAutoPlayLoop = (immediateTurn = false) => {
   if (immediateTurn && autoPlay.value) {
     gameHandler.performAiTurn()
   }
+  if (moveSpeed.value > 8) {
+    guiDisable.value = 'reduced'
+  } else {
+    guiDisable.value = 'standard'
+  }
+
   clearTimeout(timer)
   timer = setTimeout(() => {
     if (autoPlay.value) {
