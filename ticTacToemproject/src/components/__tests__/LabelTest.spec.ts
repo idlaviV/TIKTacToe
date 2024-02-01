@@ -77,3 +77,15 @@ describe('updateLabel', () => {
     expect(labelExport.value['1#102']).toEqual(['', ''])
   })
 })
+
+describe('getGameBoardFromCode', () => {
+  test('', () => {
+
+  })
+})
+
+describe('getNextNFs', () => {
+  test('', () => {
+
+  })
+})
