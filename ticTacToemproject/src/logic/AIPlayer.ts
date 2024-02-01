@@ -79,7 +79,7 @@ export class AIPlayer implements Player {
    * This would be a->1, b->3, c->4, d->4 and e->7.
    * @returns The entries of the array specify a child node and the corresponding index.
    */
-  private prepareWeightedEntries(): { code: number; index: number }[] {
+  prepareWeightedEntries(): { code: number; index: number }[] {
     const vertexMap: Map<number, number> = this.getVertexMap()
     const weightedEntries = new Array()
     let sum: number = 0
