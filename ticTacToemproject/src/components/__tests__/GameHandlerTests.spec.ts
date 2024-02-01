@@ -5,6 +5,7 @@ import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
 import { EliminationPolicy } from '@/logic/EliminationPolicy'
 import * as Gui from '@/logic/GuiState'
+import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 vi.mock('@/utils/GraphExport', () => {
   return {
     updateHistory: vi.fn(),
@@ -195,5 +196,23 @@ describe('getNumberOfAIs', () => {
     handler.settings.player1 = handler.humanPlayer
     handler.settings.player2 = handler.humanPlayer
     expect(handler.getNumberOfAIs()).toEqual(0)
+  })
+})
+
+describe('createAI', () => {
+  test('EliminationPolicy', () => {
+    handler.createAI(0, 'KI 1')
+    const ai:AIPlayer = handler.possiblePlayers[3] as AIPlayer
+    expect(ai.policy).toBeInstanceOf(EliminationPolicy)
+  })
+  test('BackpropagationPolicy', () => {
+    handler.createAI(1, 'KI 1')
+    const ai:AIPlayer = handler.possiblePlayers[3] as AIPlayer
+    expect(ai.policy).toBeInstanceOf(BackpropagationPolicy)
+  })
+  test('Invalid option', () => {
+    expect(() => 
+      handler.createAI(2, 'KI 1')
+    ).toThrow('Invalid AI option')
   })
 })
