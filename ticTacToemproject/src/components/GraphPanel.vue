@@ -5,10 +5,15 @@ import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { computed, ref } from 'vue'
 import * as Layout from '@/utils/useGraphLayout'
+import { guiDisable } from '@/logic/GuiState'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
+  if (guiDisable.value === 'standard') {
   return graphExport.value.nodes
+  } else {
+    return {}
+  }
 })
 const edgesForDisplay = computed(() => {
   return graphExport.value.edges
