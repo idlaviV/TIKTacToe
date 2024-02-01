@@ -24,6 +24,8 @@ export class GameHandler {
   winner: Ref<WinnerStatus> = ref(null)
   gBHandler: GameBoardHandler = new GameBoardHandler()
 
+  gameCount: number = 0
+
   humanPlayer: UserPlayer = new UserPlayer('Mensch')
   /**
    * The possible options for players.
@@ -78,6 +80,10 @@ export class GameHandler {
    * @param applyPolicy whether the policy shall be applied or not
    */
   performEndOfGameActions(applyPolicy: boolean) {
+    this.gameCount++
+    if (this.gameCount % 100 == 0) {
+      console.log(this.gameCount + ' ' + Date.now())
+    }
     if (applyPolicy) {
       this.settings.getPlayer(1).isAI()
         ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
@@ -126,10 +132,12 @@ export class GameHandler {
    * @param name A chosen name for the AI. Does not have to be unique.
    */
   createAI(selectedAIOption: number, name: string) {
-    if (selectedAIOption === 1) {
+    if (selectedAIOption === 0) {
       this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
-    } else if (selectedAIOption === 2) {
+    } else if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
+    } else {
+      throw new Error('Invalid AI option')
     }
     updatePlayerList()
   }

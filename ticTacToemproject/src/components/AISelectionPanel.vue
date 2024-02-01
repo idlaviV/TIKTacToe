@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const aIs = players
 
 /**
  * Remove the human player from the list of players
  */
-const getAIs: () => { player: string; index: number }[] = () => {
+const getAIs = computed(() => {
   return aIs.value.filter((ai) => ai.index !== 0)
-}
+})
+
 /**
  * All possible AI options
  * @todo aiOptions should be pulled from backend somehow?
@@ -28,7 +29,7 @@ const selectedAIOption = ref(0)
  */
 const aiName = ref('Neue KI')
 
-const resetAiWeights : ((index: number) => void) = (index:number) => {
+const resetAiWeights: (index: number) => void = (index: number) => {
   GameHandler.getInstance().resetAiWeights(index)
 }
 </script>
@@ -40,7 +41,7 @@ const resetAiWeights : ((index: number) => void) = (index:number) => {
   <div>
     <v-card class="mx-auto" max-width="700">
       <v-card-title>KI-Übersichtsfenster</v-card-title>
-      <v-virtual-scroll :items="getAIs()" height="220">
+      <v-virtual-scroll :items="getAIs" height="220">
         <template v-slot:default="{ item }">
           <v-list-item :title="item.player">
             <template v-slot:prepend>

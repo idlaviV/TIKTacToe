@@ -149,7 +149,7 @@ export class AIPlayer implements Player {
     this.policy.applyPolicy(this, GameHandler.getInstance().getGBHandler().history)
   }
 
-  resetWeights():void {
+  resetWeights(): void {
     this.weights = new Map()
   }
 

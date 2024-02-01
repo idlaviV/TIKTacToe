@@ -5,10 +5,15 @@ import { configs } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { computed, ref } from 'vue'
 import * as Layout from '@/utils/useGraphLayout'
+import { guiDisable } from '@/logic/GuiState'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
-  return graphExport.value.nodes
+  if (guiDisable.value === 'standard') {
+    return graphExport.value.nodes
+  } else {
+    return {}
+  }
 })
 const edgesForDisplay = computed(() => {
   return graphExport.value.edges
@@ -20,7 +25,7 @@ const graph = ref<VNetworkGraphInstance>()
 <template>
   <v-network-graph
     ref="graph"
-    class="graph"
+    class="graph full-height"
     :nodes="nodesForDisplay"
     :edges="edgesForDisplay"
     :layouts="layouts"
@@ -35,7 +40,11 @@ const graph = ref<VNetworkGraphInstance>()
 <style>
 .graph {
   width: 100%;
-  height: 600px;
+  height: 100%;
   border: 1px solid #000;
+}
+
+.full-height {
+  height: 90vh;
 }
 </style>
