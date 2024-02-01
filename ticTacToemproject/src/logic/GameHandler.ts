@@ -9,7 +9,7 @@ import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
 import { EliminationPolicy } from './EliminationPolicy'
 import type { Player } from './Player'
-import { updatePlayerList } from '@/utils/PlayerListExport'
+import { players, updatePlayerList } from '@/utils/PlayerListExport'
 import { nextGuiState } from './GuiState'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
@@ -132,10 +132,12 @@ export class GameHandler {
    * @param name A chosen name for the AI. Does not have to be unique.
    */
   createAI(selectedAIOption: number, name: string) {
-    if (selectedAIOption === 1) {
+    if (selectedAIOption === 0) {
       this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
-    } else if (selectedAIOption === 2) {
+    } else if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
+    } else {
+      throw new Error('Invalid AI option')
     }
     updatePlayerList()
   }
