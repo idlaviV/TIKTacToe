@@ -93,11 +93,21 @@ export function getGameBoardFromCode(code: GameBoardCode): GameBoard {
     [0, 0, 0]
   ]
   let base: number = 1
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; ++j) {
-      state[i][j] = Math.floor((code / base) % 10) as FieldType
-      base *= 10
+  let currentSymbol: number
+  if (code.toString().length <= 9) {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; ++j) {
+        currentSymbol = Math.floor((code / base) % 10)
+        if (currentSymbol === 0 || currentSymbol === 1 || currentSymbol === 2) {
+          state[i][j] = currentSymbol
+          base *= 10
+        } else {
+          throw new Error('Invalid Code')
+        }
+      }
     }
+  } else {
+    throw new Error('Invalid Code')
   }
   return new GameBoard(state)
 }
