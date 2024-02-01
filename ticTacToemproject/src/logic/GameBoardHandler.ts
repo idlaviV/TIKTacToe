@@ -115,7 +115,7 @@ export class GameBoardHandler {
 }
 
 /**
- * Calculate the normal forms of the positions following the current gameboard.
+ * Calculate the normal forms of the positions following a specified NormalForm.
  * @returns a set containing all normal forms
  */
 export function calculateNextNFs(code: NormalForm): Set<number> {
