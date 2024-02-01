@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { skipEvaluation, skipStart } from '@/logic/GuiState'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const menu = ref(false)
 </script>
-
-
 
 <template>
   <div class="text-center">

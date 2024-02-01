@@ -10,7 +10,7 @@ import { guiDisable } from '@/logic/GuiState'
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
   if (guiDisable.value === 'standard') {
-  return graphExport.value.nodes
+    return graphExport.value.nodes
   } else {
     return {}
   }

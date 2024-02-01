@@ -12,12 +12,11 @@ export type GuiState = 'start' | 'game' | 'evaluation'
 const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
-export const guiDisable : Ref<GuiDisable> = ref('standard')
+export const guiDisable: Ref<GuiDisable> = ref('standard')
 
 export function getGuiState(): Ref<GuiState> {
   return state
 }
-
 
 /**
  * For debugging purposes only.
