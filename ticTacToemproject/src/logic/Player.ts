@@ -1,4 +1,3 @@
-import { th } from "vuetify/locale"
 
 /**
  * Represents a player.
