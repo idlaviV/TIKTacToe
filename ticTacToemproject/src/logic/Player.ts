@@ -2,19 +2,20 @@
  * Represents a player.
  * AIPlayers and UserPlayers are possible.
  */
-export interface Player {
+export abstract class Player {
   /**
    * @returns Is this player an AI?
    */
-  isAI(): boolean
+  abstract isAI(): boolean
 
   /**
    * Prompt this player to directly execute a move on the gameboard.
    */
-  makeMove(): void
+  abstract makeMove(): void
 
   /**
    * @returns A name for this player. Only used for visualiszation purposes.
    */
-  getName(): string
+  abstract getName(): string
+
 }
