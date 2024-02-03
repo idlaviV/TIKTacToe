@@ -1,4 +1,5 @@
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
+
 export const configs: UserConfigs = defineConfigs({
   view: {
     panEnabled: true,
@@ -34,10 +35,10 @@ export const configs: UserConfigs = defineConfigs({
       }
     },
     label: {
-      color: "#ffffff",
+      color: (edge) => (edge.height % 2 === 0 ? '#ec4899' : '#3b82f6'),
       fontSize: 15,
       background: {
-        visible: false,
+        visible: false
       }
     }
   }
