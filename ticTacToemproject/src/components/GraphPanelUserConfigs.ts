@@ -32,6 +32,13 @@ export const configs: UserConfigs = defineConfigs({
         width: 4,
         height: 4
       }
+    },
+    label: {
+      color: "#ffffff",
+      fontSize: 15,
+      background: {
+        visible: false,
+      }
     }
   }
 })

@@ -35,7 +35,7 @@ const graph = ref<VNetworkGraphInstance>()
       :configs="configs"
     >
       <template #edge-label="{ edgeId, ...slotProps }">
-        <v-edge-label :text="labelExport[edgeId][1]" v-bind="slotProps" />
+        <v-edge-label vertical-align="above" :text="labelExport[edgeId][1]" v-bind="slotProps" />
       </template>
       <template #override-node="{ nodeId }">
         <GraphPanelNode :node="graphExport.nodes[nodeId]" />
