@@ -24,31 +24,51 @@ const graph = ref<VNetworkGraphInstance>()
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
 <template>
-  <v-network-graph
-    ref="graph"
-    class="graph full-height"
-    :nodes="nodesForDisplay"
-    :edges="edgesForDisplay"
-    :layouts="layouts"
-    :configs="configs"
-  >
-    <template #edge-label="{ edgeId, ...slotProps }">
-      <v-edge-label :text="labelExport[edgeId][1]" v-bind="slotProps" />
-    </template>
-    <template #override-node="{ nodeId }">
-      <GraphPanelNode :node="graphExport.nodes[nodeId]" />
-    </template>
-  </v-network-graph>
+  <div class="graphPanel">
+    <v-network-graph
+      ref="graph"
+      id="graph"
+      class="graph"
+      :nodes="nodesForDisplay"
+      :edges="edgesForDisplay"
+      :layouts="layouts"
+      :configs="configs"
+    >
+      <template #edge-label="{ edgeId, ...slotProps }">
+        <v-edge-label :text="labelExport[edgeId][1]" v-bind="slotProps" />
+      </template>
+      <template #override-node="{ nodeId }">
+        <GraphPanelNode :node="graphExport.nodes[nodeId]" />
+      </template>
+    </v-network-graph>
+    <div id="labelSwitch">
+      <v-switch label="Wechsle KI"></v-switch>
+    </div>
+  </div>
 </template>
 
 <style>
+.graphPanel {
+  position: relative;
+}
+
+#labelSwitch {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  z-index: 10;
+}
+
+#graph {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .graph {
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
-}
-
-.full-height {
+  border: 1px solid #38373d;
   height: 90vh;
 }
 </style>
