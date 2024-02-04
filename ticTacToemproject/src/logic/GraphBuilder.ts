@@ -4,19 +4,30 @@ import type { AIPlayer } from './AIPlayer'
 import { TTTNode, type TTTNodes } from '@/utils/GraphExport'
 import type { NormalForm } from './Codes'
 
-class GraphBuilder {
+class AIGraph {
   nodes: TTTNodes = {}
   edges: Edges = {}
 }
 
-let builder : GraphBuilder = new GraphBuilder
-let tier: GameBoard[] = []
-let level: number = 0
+class GraphBuilder {
+  graph : AIGraph = new AIGraph()
+  tier: GameBoard[] = []
+  level: number = 0
+  ai:AIPlayer
+  constructor(ai:AIPlayer) {
+    this.ai = ai
+  }
+}
+
+const aiGraphs: Map<AIPlayer, AIGraph> = new Map()
+
 
 export function buildGraph(ai: AIPlayer) {
+  aiGraphs.set(ai, new AIGraph())
+  const builder: GraphBuilder = new GraphBuilder(ai)
   initializeGraph()
-  while (tier.length !== 0) {
-    calculateNextTier(ai)
+  while (builder.tier.length !== 0) {
+    calculateNextTier(ai, builder)
   }
 }
 
@@ -30,9 +41,11 @@ function registerNode(normalForm : NormalForm, nextTier : GameBoard[]) {
   }
 }
 
-function calculateNextTier(ai: AIPlayer) {
+
+
+function calculateNextTier(ai: AIPlayer, builder:GraphBuilder) {
   const nextTier: GameBoard[] = []
-  for (const board of tier) {
+  for (const board of builder.tier) {
     const map = ai.getVertexMap(board.getNormalForm())
     map.forEach((_weight, normalFormChild) => {
       registerNode(normalFormChild, nextTier)
@@ -71,5 +84,5 @@ export function getGraph() {
 }
 
 export function resetBuilder() {
-  builder = new GraphBuilder()
+  builder = new AIGraph()
 }
