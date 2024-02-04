@@ -8,7 +8,7 @@ export const player2GraphConfigs = initializeConfig('player2Graph')
 
 export type GraphType = 'simpleGraph' | 'gameGraph' | 'player1Graph' | 'player2Graph'
 
-function initializeConfig(graphType: GraphType) {
+function initializeConfig(graphType: GraphType): UserConfigs {
   const configs: UserConfigs = defineConfigs({
     view: {
       panEnabled: true,
@@ -32,8 +32,8 @@ function initializeConfig(graphType: GraphType) {
     },
     edge: {
       normal: {
-        dasharray: (edge) => (labelExport.value[edge.id][1] ? '4' : '0'),
-      color: '#aaa',
+        dasharray: (edge) => (labelExport.value[edge.id][1] === '0' ? '0' : '4'),
+        color: '#aaa',
         width: 2
       },
       margin: 4,

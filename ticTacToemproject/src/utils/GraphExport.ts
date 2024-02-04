@@ -4,7 +4,7 @@ import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import type { ArrayMultimap } from '@teppeis/multimaps'
-import { type Edges, type Node, type Nodes } from 'v-network-graph'
+import { type Edge, type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 import { layout } from './useGraphLayout'
 import { updateLabels } from './LabelExport'
@@ -13,7 +13,7 @@ export class Graph {
   level: number = 0
   activeNodeCode: number = -1
   nodes: TTTNodes = {}
-  edges: Edges = {}
+  edges: TTTEdges = {}
 }
 export const graphExport: Ref<Graph> = ref(new Graph())
 export function getActiveNodeCode(): string {
@@ -48,14 +48,15 @@ export function updateHistory(gameBoard: GameBoard) {
   graph.nodes[newCode.toString()] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
   const height: number = getHeightFromCode(graph.activeNodeCode)
-  graph.edges[key] = {
-    source: graph.activeNodeCode.toString(),
-    target: newCodeString,
-    id: key,
-    height: height,
-    numSource: graph.activeNodeCode,
-    numTarget: newCode
-  }
+  const newEdge: TTTEdge = new TTTEdge(
+    graph.activeNodeCode.toString(),
+    newCodeString,
+    key,
+    height,
+    graph.activeNodeCode,
+    newCode
+  )
+  graph.edges[key] = newEdge
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level++
@@ -112,14 +113,15 @@ function addChildToGraph(
   graph.nodes[key.toString()] = newNode
   const edgeKey: string = graph.activeNodeCode + '#' + key.toString()
   const height: number = getHeightFromCode(graph.activeNodeCode)
-  graph.edges[edgeKey] = {
-    source: graph.activeNodeCode.toString(),
-    target: key.toString(),
-    height: height,
-    id: edgeKey,
-    numSource: graph.activeNodeCode,
-    numTarget: key
-  }
+  const newEdge: TTTEdge = new TTTEdge(
+    graph.activeNodeCode.toString(),
+    key.toString(),
+    edgeKey,
+    height,
+    graph.activeNodeCode,
+    key
+  )
+  graph.edges[edgeKey] = newEdge
 }
 
 /**
@@ -163,6 +165,33 @@ export class TTTNode implements Node {
     this.level = level
     this.isChild = isChild
     this.alternatives = alternatives
+  }
+}
+
+export type TTTEdges = Edges & { [key: string]: TTTEdge }
+
+export class TTTEdge implements Edge {
+  source: string
+  target: string
+  id: string
+  height: number
+  numSource: number
+  numTarget: number
+
+  constructor(
+    source: string,
+    target: string,
+    id: string,
+    height: number,
+    numSource: number,
+    numTarget: number
+  ) {
+    this.source = source
+    this.target = target
+    this.id = id
+    this.height = height
+    this.numSource = numSource
+    this.numTarget = numTarget
   }
 }
 

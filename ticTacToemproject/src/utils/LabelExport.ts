@@ -2,8 +2,7 @@ import type { AIPlayer } from '@/logic/AIPlayer'
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameSettings } from '@/logic/GameSettings'
 import type { Player } from '@/logic/Player'
-import { graphExport } from '@/utils/GraphExport'
-import type { Edges } from 'v-network-graph'
+import { graphExport, type TTTEdges } from '@/utils/GraphExport'
 import { type Ref, ref } from 'vue'
 
 /**
@@ -20,7 +19,7 @@ export const labelExport: Ref<Labels> = ref({})
 export function updateLabels(): void {
   const settings: GameSettings = GameHandler.getInstance().getSettings()
   const players: [Player, Player] = [settings.getPlayer(1), settings.getPlayer(2)]
-  const edges: Edges = graphExport.value.edges
+  const edges: TTTEdges = graphExport.value.edges
 
   for (const edge in edges) {
     labelExport.value[edge] = ['', '']

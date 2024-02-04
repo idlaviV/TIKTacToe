@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { VNetworkGraph, VEdgeLabel, type VNetworkGraphInstance } from 'v-network-graph'
+import {
+  VNetworkGraph,
+  VEdgeLabel,
+  type VNetworkGraphInstance,
+  type UserConfigs
+} from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import {
   simpleGraphConfigs,
@@ -9,7 +14,7 @@ import {
 } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { getGuiState } from '@/logic/GuiState'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { labelExport } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
@@ -27,8 +32,24 @@ const edgesForDisplay = computed(() => {
   return graphExport.value.edges
 })
 const graph = ref<VNetworkGraphInstance>()
-const isPlayer2Graph = ref<false>()
-let config = simpleGraphConfigs
+const isPlayer2Graph = ref<boolean>(false)
+const config = ref<UserConfigs>(simpleGraphConfigs)
+const test = ref<number>(0)
+
+watch(getGuiState(), (guiState) => {
+  const handler = GameHandler.getInstance()
+  if (guiState === 'game') {
+    config.value = gameGraphConfigs
+  } else if (guiState === 'evaluation') {
+    if (handler.getNumberOfAIs() === 2) {
+      config.value = isPlayer2Graph.value ? player2GraphConfigs : player1GraphConfigs
+    } else if (handler.getNumberOfAIs() === 1) {
+      config.value = handler.getSettings().getPlayer(1).isAI()
+        ? player1GraphConfigs
+        : player2GraphConfigs
+    }
+  }
+})
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
@@ -44,7 +65,7 @@ let config = simpleGraphConfigs
       :configs="config"
     >
       <template #edge-label="{ edgeId, ...slotProps }">
-        <v-edge-label vertical-align="above" :text="labelExport[edgeId][1]" v-bind="slotProps" />
+        <v-edge-label vertical-align="above" :text="labelExport[edgeId][test]" v-bind="slotProps" />
       </template>
       <template #override-node="{ nodeId }">
         <GraphPanelNode :node="graphExport.nodes[nodeId]" />

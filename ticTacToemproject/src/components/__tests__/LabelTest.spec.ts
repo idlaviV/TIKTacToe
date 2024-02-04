@@ -30,11 +30,46 @@ describe('updateLabel', () => {
       ])
     )
     graphExport.value.edges = {}
-    graphExport.value.edges['0#1'] = { source: '0', target: '1' }
-    graphExport.value.edges['0#10'] = { source: '0', target: '10' }
-    graphExport.value.edges['0#10000'] = { source: '0', target: '10000' }
-    graphExport.value.edges['1#21'] = { source: '1', target: '21' }
-    graphExport.value.edges['1#102'] = { source: '1', target: '102' }
+    graphExport.value.edges['0#1'] = {
+      source: '0',
+      target: '1',
+      id: '0#1',
+      height: 0,
+      numSource: 0,
+      numTarget: 1
+    }
+    graphExport.value.edges['0#10'] = {
+      source: '0',
+      target: '10',
+      id: '0#10',
+      height: 0,
+      numSource: 0,
+      numTarget: 10
+    }
+    graphExport.value.edges['0#10000'] = {
+      source: '0',
+      target: '10000',
+      id: '0#10000',
+      height: 0,
+      numSource: 0,
+      numTarget: 10000
+    }
+    graphExport.value.edges['1#21'] = {
+      source: '1',
+      target: '21',
+      id: '1#21',
+      height: 1,
+      numSource: 1,
+      numTarget: 21
+    }
+    graphExport.value.edges['1#102'] = {
+      source: '1',
+      target: '102',
+      id: '1#102',
+      height: 1,
+      numSource: 1,
+      numTarget: 102
+    }
   })
   test('first Player is AI', () => {
     settings.setPlayers(aI, new UserPlayer())
