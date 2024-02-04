@@ -16,6 +16,8 @@ let builder : GraphBuilder = new GraphBuilder
 
 export function buildGraph(ai: AIPlayer) {
   initializeGraph()
+  console.log("Initialize happened")
+  console.log(builder.nodes)
   while (builder.tier.length !== 0 && builder.level < 2) {
     calculateNextTier(ai)
   }

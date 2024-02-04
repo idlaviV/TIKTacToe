@@ -3,13 +3,13 @@ import { AIPlayer } from "@/logic/AIPlayer";
 import { EliminationPolicy } from "@/logic/EliminationPolicy";
 import { GameHandler } from "@/logic/GameHandler";
 import { buildGraph, getEdges, getNodes, resetBuilder } from "@/logic/GraphBuilder";
-import { test ,describe, expect} from "vitest";
+import { test ,describe, expect, beforeEach} from "vitest";
 import { gameBoard1, gameBoard2100 } from "./TestUtil";
-import { beforeEach } from "node:test";
 import { GameBoard } from "@/logic/GameBoard";
 
 describe('build graph',()=>{
     beforeEach(()=>{
+        console.log("before each")
         GameHandler.getInstance()
         resetBuilder()
         const ai : AIPlayer = new AIPlayer(new EliminationPolicy, "ai")
