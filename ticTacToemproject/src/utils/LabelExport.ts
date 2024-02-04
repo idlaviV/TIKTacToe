@@ -27,8 +27,9 @@ export function updateLabels(): void {
     for (let i = 0; i < players.length; i++) {
       if (players[i].isAI()) {
         const aI = players[i] as AIPlayer
-        const [source, target] = [edges[edge].source, edges[edge].target]
-        const label: number = aI.getVertexMap(parseInt(source)).get(parseInt(target))!
+        const source: number = edges[edge].numSource
+        const target: number = edges[edge].numTarget
+        const label: number = aI.getVertexMap(source).get(target)!
         labelExport.value[edge][i] = label.toString()
       }
     }

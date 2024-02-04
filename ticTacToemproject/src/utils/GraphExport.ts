@@ -11,13 +11,13 @@ import { updateLabels } from './LabelExport'
 
 export class Graph {
   level: number = 0
-  activeNodeCode: string = 'NotInitialized'
+  activeNodeCode: number = -1
   nodes: TTTNodes = {}
   edges: Edges = {}
 }
 export const graphExport: Ref<Graph> = ref(new Graph())
 export function getActiveNodeCode(): string {
-  return graphExport.value.activeNodeCode
+  return graphExport.value.activeNodeCode.toString()
 }
 /**
  * Reset the exported graph and initializes it with the current game state.
@@ -25,9 +25,9 @@ export function getActiveNodeCode(): string {
 export function initializeHistory() {
   const graph: Graph = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
-  const newCode = gameBoard.getCode().toString()
+  const newCode: number = gameBoard.getCode()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
-  graph.nodes[newCode] = newNode
+  graph.nodes[newCode.toString()] = newNode
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level = 1
@@ -41,13 +41,21 @@ export function initializeHistory() {
  */
 export function updateHistory(gameBoard: GameBoard) {
   const graph: Graph = graphExport.value
-  const newCode: string = gameBoard.getNormalForm().toString()
-  deleteChild(newCode, graph)
+  const newCode: number = gameBoard.getNormalForm()
+  const newCodeString: string = newCode.toString()
+  deleteChild(newCodeString, graph)
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
-  graph.nodes[newCode] = newNode
+  graph.nodes[newCode.toString()] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
   const height: number = getHeightFromCode(graph.activeNodeCode)
-  graph.edges[key] = { source: graph.activeNodeCode, target: newCode, id: key, height: height }
+  graph.edges[key] = {
+    source: graph.activeNodeCode.toString(),
+    target: newCodeString,
+    id: key,
+    height: height,
+    numSource: graph.activeNodeCode,
+    numTarget: newCode
+  }
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level++
@@ -78,7 +86,7 @@ function addChildren(graph: Graph) {
     IsomorphismGroup.getRepresentativeOfEquivalenceClasses(equivalenceClasses)
   equivalenceClasses.asMap().forEach((value, key) => {
     const representative: GameBoard = representatives.get(key)!
-    addChildToGraph(graph, representative, value, key.toString())
+    addChildToGraph(graph, representative, value, key)
   })
 }
 
@@ -92,7 +100,7 @@ function addChildToGraph(
   graph: Graph,
   representative: GameBoard,
   alternatives: GameBoard[],
-  key: string
+  key: number
 ) {
   const newNode: TTTNode = new TTTNode(
     representative.getCode(),
@@ -104,7 +112,14 @@ function addChildToGraph(
   graph.nodes[key.toString()] = newNode
   const edgeKey: string = graph.activeNodeCode + '#' + key.toString()
   const height: number = getHeightFromCode(graph.activeNodeCode)
-  graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString(), height: height }
+  graph.edges[edgeKey] = {
+    source: graph.activeNodeCode.toString(),
+    target: key.toString(),
+    height: height,
+    id: edgeKey,
+    numSource: graph.activeNodeCode,
+    numTarget: key
+  }
 }
 
 /**
@@ -151,11 +166,12 @@ export class TTTNode implements Node {
   }
 }
 
-function getHeightFromCode(code: string) {
+function getHeightFromCode(code: number) {
+  const codeString = code.toString()
   let height = 0
 
-  for (let index = 0; index < code.length; index++) {
-    if (code[index] !== '0') {
+  for (let index = 0; index < codeString.length; index++) {
+    if (codeString[index] !== '0') {
       height += 1
     }
   }

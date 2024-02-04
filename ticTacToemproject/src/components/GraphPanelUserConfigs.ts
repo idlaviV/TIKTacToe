@@ -1,3 +1,4 @@
+import { labelExport } from '@/utils/LabelExport'
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
 
 export const configs: UserConfigs = defineConfigs({
@@ -23,6 +24,7 @@ export const configs: UserConfigs = defineConfigs({
   },
   edge: {
     normal: {
+      dasharray: (edge) => (labelExport.value[edge.id][1] ? '4' : '0'),
       color: '#aaa',
       width: 2
     },
