@@ -66,7 +66,7 @@ watch(winner, goToEvaluation)
     <div id="settingsButton">
       <SettingsPopover />
     </div>
-    
+
     <v-container>
       <div class="text-pink-500 font-bold" id="player1Display">X {{ player1Name }}</div>
       <div class="text-blue-500" id="player2Display">O {{ player2Name }}</div>
