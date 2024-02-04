@@ -59,10 +59,14 @@ watch(winner, goToEvaluation)
 
 <!-- The main screen contains the gameboard and main controls. -->
 <template>
-  <div>
+  <div id="mainScreen">
     <!-- Caption and prompt for next turn -->
     <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
-    <SettingsPopover />
+
+    <div id="settingsButton">
+      <SettingsPopover />
+    </div>
+
     <v-container>
       <div class="text-pink-500 font-bold" id="player1Display">X {{ player1Name }}</div>
       <div class="text-blue-500" id="player2Display">O {{ player2Name }}</div>
@@ -85,6 +89,16 @@ watch(winner, goToEvaluation)
   </div>
 </template>
 <style>
+#mainScreen {
+  position: relative;
+}
+
+#settingsButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .invisible {
   visibility: hidden;
 }

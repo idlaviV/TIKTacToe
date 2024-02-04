@@ -296,46 +296,46 @@ describe('resetWeights', () => {
   })
 })
 
-describe('prepareWeightedEntries',() => {
-  let vertexMap:Map<number, number>
+describe('prepareWeightedEntries', () => {
+  let vertexMap: Map<number, number>
   beforeEach(() => {
     player.getVertexMap = vi.fn(() => vertexMap)
     vertexMap = new Map()
   })
 
-  test('two options',()=>{
+  test('two options', () => {
     vertexMap.set(1, 1)
     vertexMap.set(2, 1)
     const weightedEntries = player.prepareWeightedEntries()
     expect(weightedEntries.length).toEqual(2)
-    expect(weightedEntries[0]).toEqual({code: 1, index: 1})
-    expect(weightedEntries[1]).toEqual({code: 2, index: 2})
+    expect(weightedEntries[0]).toEqual({ code: 1, index: 1 })
+    expect(weightedEntries[1]).toEqual({ code: 2, index: 2 })
   })
 
-  test('two options, first one with weight 0',()=>{
+  test('two options, first one with weight 0', () => {
     vertexMap.set(1, 0)
     vertexMap.set(2, 1)
     const weightedEntries = player.prepareWeightedEntries()
     expect(weightedEntries.length).toEqual(2)
-    expect(weightedEntries[0]).toEqual({code: 1, index: 0})
-    expect(weightedEntries[1]).toEqual({code: 2, index: 1})
+    expect(weightedEntries[0]).toEqual({ code: 1, index: 0 })
+    expect(weightedEntries[1]).toEqual({ code: 2, index: 1 })
   })
 
-  test('two options, second one with weight 0',()=>{
+  test('two options, second one with weight 0', () => {
     vertexMap.set(1, 1)
     vertexMap.set(2, 0)
     const weightedEntries = player.prepareWeightedEntries()
     expect(weightedEntries.length).toEqual(2)
-    expect(weightedEntries[0]).toEqual({code: 1, index: 1})
-    expect(weightedEntries[1]).toEqual({code: 2, index: 1})
+    expect(weightedEntries[0]).toEqual({ code: 1, index: 1 })
+    expect(weightedEntries[1]).toEqual({ code: 2, index: 1 })
   })
 
-  test('two options, both with weight 0',()=>{
+  test('two options, both with weight 0', () => {
     vertexMap.set(1, 0)
     vertexMap.set(2, 0)
     const weightedEntries = player.prepareWeightedEntries()
     expect(weightedEntries.length).toEqual(2)
-    expect(weightedEntries[0]).toEqual({code: 1, index: 1})
-    expect(weightedEntries[1]).toEqual({code: 2, index: 2})
+    expect(weightedEntries[0]).toEqual({ code: 1, index: 1 })
+    expect(weightedEntries[1]).toEqual({ code: 2, index: 2 })
   })
 })
