@@ -7,7 +7,7 @@ import { graphExport } from './GraphExport'
 /**
  * @description The position of the nodes in the graph.
  */
-export const layouts: Ref<Layouts> = ref({
+export const gameGraphLayout: Ref<Layouts> = ref({
   nodes: {}
 })
 
@@ -17,7 +17,7 @@ export const layouts: Ref<Layouts> = ref({
  * @param edges The edges of the graph
  * @param layouts The layout of the graph
  */
-export function layout(nodes: Nodes, edges: Edges) {
+export function layout(nodes: Nodes, edges: Edges, layouts: Ref<Layouts> = gameGraphLayout) {
   const g = new dagre.graphlib.Graph()
   g.setGraph({
     rankdir: 'TB',

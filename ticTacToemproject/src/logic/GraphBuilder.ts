@@ -1,21 +1,21 @@
 import type { Edges, Nodes } from 'v-network-graph'
 import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { AIPlayer } from './AIPlayer'
-import { TTTNode } from '@/utils/GraphExport'
+import { TTTNode, type TTTNodes } from '@/utils/GraphExport'
 import type { NormalForm } from './Codes'
 
 class GraphBuilder {
-  nodes: Nodes = {}
+  nodes: TTTNodes = {}
   edges: Edges = {}
-  tier: GameBoard[] = []
-  level: number = 0
 }
 
 let builder : GraphBuilder = new GraphBuilder
+let tier: GameBoard[] = []
+let level: number = 0
 
 export function buildGraph(ai: AIPlayer) {
   initializeGraph()
-  while (builder.tier.length !== 0) {
+  while (tier.length !== 0) {
     calculateNextTier(ai)
   }
 }
@@ -24,7 +24,7 @@ function registerNode(normalForm : NormalForm, nextTier : GameBoard[]) {
   const nextBoard: GameBoard = getGameBoardFromCode(normalForm)
   const secondCode = normalForm.toString()
   if (!(secondCode in builder.nodes)) {
-    const newNode = new TTTNode(normalForm, nextBoard.state, builder.level + 1)
+    const newNode = new TTTNode(normalForm, nextBoard.state, level + 1)
     builder.nodes[normalForm] = newNode
     nextTier.push(nextBoard)
   }
@@ -32,15 +32,15 @@ function registerNode(normalForm : NormalForm, nextTier : GameBoard[]) {
 
 function calculateNextTier(ai: AIPlayer) {
   const nextTier: GameBoard[] = []
-  for (const board of builder.tier) {
+  for (const board of tier) {
     const map = ai.getVertexMap(board.getNormalForm())
     map.forEach((_weight, normalFormChild) => {
       registerNode(normalFormChild, nextTier)
       registerEdge(board.getNormalForm(), normalFormChild) 
     })
   }
-  builder.tier = nextTier
-  builder.level++
+  tier = nextTier
+  level++
 }
 
 function registerEdge(normalFormParent: NormalForm, normalFormChild: NormalForm) {
@@ -52,10 +52,10 @@ function registerEdge(normalFormParent: NormalForm, normalFormChild: NormalForm)
 
 function initializeGraph() {
   const root: GameBoard = new GameBoard()
-  builder.tier = [root]
-  builder.level = 0
+  tier = [root]
+  level = 0
   const normalForm: NormalForm = root.getNormalForm()
-  builder.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), builder.level)
+  builder.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), level)
 }
 
 export function getNodes() {
@@ -64,6 +64,10 @@ export function getNodes() {
 
 export function getEdges() {
   return builder.edges
+}
+
+export function getGraph() {
+  return builder
 }
 
 export function resetBuilder() {

@@ -13,6 +13,7 @@ import { updatePlayerList } from '@/utils/PlayerListExport'
 import { nextGuiState } from './GuiState'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
+import { buildGraph, getGraph } from './GraphBuilder'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -174,6 +175,19 @@ export class GameHandler {
     resetHistory()
   }
 
+  getAIWeightsGraph(aiIndex:number) {
+    if (aiIndex < 0 || aiIndex >= this.possiblePlayers.length) {
+      throw new Error('This player is not known.')
+    }
+    const ai = this.possiblePlayers[aiIndex]
+    if (ai instanceof AIPlayer) {
+      buildGraph(ai)
+      return getGraph()
+    } else {
+      throw new Error('Player is not an AI.')
+    }
+  }
+
   /**
    * Returns all possible next positions with the moves that lead to them.
    * They are given as an array of {@link GameBoardWithPrevMove}.
@@ -195,6 +209,8 @@ export class GameHandler {
     }
     return boards
   }
+
+  
 
   getNumberOfAIs(): number {
     let count: number = 0

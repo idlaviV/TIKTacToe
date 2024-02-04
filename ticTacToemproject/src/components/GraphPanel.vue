@@ -8,7 +8,7 @@ import { labelExport } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 
-const layouts = Layout.layouts
+const layouts = Layout.gameGraphLayout
 const nodesForDisplay = computed(() => {
   if (guiDisable.value === 'standard') {
     return graphExport.value.nodes

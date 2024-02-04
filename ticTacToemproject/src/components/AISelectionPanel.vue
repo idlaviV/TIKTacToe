@@ -3,6 +3,7 @@ import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
 import { mdiShareVariant } from '@mdi/js'
+import  BigGraphAI  from '@/components/BigGraphAI.vue'
 
 const aIs = players
 
@@ -53,7 +54,7 @@ const resetAiWeights: (index: number) => void = (index: number) => {
                 <v-icon size="large" icon="mdi-call-split"></v-icon>
                 <v-overlay activator="parent">
                   <v-card class="hugeGraph">
-                    Hier kommt der Graph hin
+                    <BigGraphAI :ai-index="item.index"/>
                   </v-card>
                 </v-overlay>
               </v-btn>
