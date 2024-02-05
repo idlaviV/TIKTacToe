@@ -19,8 +19,8 @@ const mobile = useDisplay().smAndDown
       </v-row>
     </v-container>
     <v-container v-else>
-      <v-row class="text-center" no-gutters>
-        <v-container><LeftPanel /></v-container>
+      <v-row no-gutters>
+        <v-container class="text-center"><LeftPanel /></v-container>
         <v-container><RightPanel /></v-container>
       </v-row>
     </v-container>

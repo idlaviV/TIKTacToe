@@ -2,6 +2,7 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
+import { mdiShareVariant } from '@mdi/js'
 
 const aIs = players
 
@@ -48,6 +49,14 @@ const resetAiWeights: (index: number) => void = (index: number) => {
               <i class="material-symbols-outlined mx-2"> smart_toy </i>
             </template>
             <template v-slot:append>
+              <v-btn>
+                <v-icon size="large" icon="mdi-call-split"></v-icon>
+                <v-overlay activator="parent">
+                  <v-card class="hugeGraph">
+                    Hier kommt der Graph hin
+                  </v-card>
+                </v-overlay>
+              </v-btn>
               <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
             </template>
           </v-list-item>
@@ -69,3 +78,13 @@ const resetAiWeights: (index: number) => void = (index: number) => {
     </v-card>
   </div>
 </template>
+
+<style>
+.hugeGraph {
+  width: 90vw;
+  height: 90vh;
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+}
+</style>
