@@ -1,10 +1,10 @@
-import type { GameBoardCode } from "@/logic/Codes"
-import type { FieldType } from "@/logic/FieldType"
-import type { Edges , Node, Nodes} from "v-network-graph"
+import type { GameBoardCode } from '@/logic/Codes'
+import type { FieldType } from '@/logic/FieldType'
+import type { Edges, Node, Nodes } from 'v-network-graph'
 
 export class Graph {
-    nodes: TTTNodes = {}
-    edges: Edges = {}
+  nodes: TTTNodes = {}
+  edges: Edges = {}
 }
 
 export type TTTNodes = Nodes & { [key: string]: TTTNode }

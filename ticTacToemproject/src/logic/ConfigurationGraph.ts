@@ -3,10 +3,13 @@ import type { NormalForm } from './Codes'
 import { Graph, TTTNode } from '@/utils/Graph'
 import { calculateNextNFs } from './GameBoardHandler'
 
+/**
+ * After configuration with GraphBuilder, this graph contains one node for every configuration.
+ * Edges connect nodes A and B when a move from one representative of A yields a representative of B.
+ */
+const bigGraphExport: Graph = new Graph()
 
-const bigGraphExport : Graph = new Graph()
-
-const configurationConnections : Map<NormalForm, Set<NormalForm>> = new Map()
+const configurationConnections: Map<NormalForm, Set<NormalForm>> = new Map()
 
 /**
  * Returns the normal forms of the configurations which are children of a specific configuration.
@@ -14,18 +17,20 @@ const configurationConnections : Map<NormalForm, Set<NormalForm>> = new Map()
  * @param parent the normal form of the parent configuration
  * @returns A set containing the configurations
  */
-export function getPossibleNextNormalForms(parent:NormalForm) : Set<NormalForm> {
+export function getPossibleNextNormalForms(parent: NormalForm): Set<NormalForm> {
   if (!(parent in configurationConnections)) {
     configurationConnections.set(parent, calculateNextNFs(parent))
   }
   return configurationConnections.get(parent)!
 }
 
-
 /**
  * A class that constructs the graph of all possible configurations
  */
 export class GraphBuilder {
+  /**
+   * GraphBuilder tracks the GameBoards with a certain height in the configuration graph
+   */
   tier: GameBoard[] = []
   level: number = 0
 
@@ -36,23 +41,23 @@ export class GraphBuilder {
     this.initializeGraph()
     while (this.tier.length !== 0) {
       this.calculateNextTier()
-    }    
+    }
   }
 
-  calculateNextTier() {
+  private calculateNextTier() {
     const nextTier: GameBoard[] = []
     for (const board of this.tier) {
       const map = getPossibleNextNormalForms(board.getNormalForm())
       map.forEach((_weight, normalFormChild) => {
         this.registerNode(normalFormChild, nextTier)
-        this.registerEdge(board.getNormalForm(), normalFormChild) 
+        this.registerEdge(board.getNormalForm(), normalFormChild)
       })
     }
     this.tier = nextTier
     this.level++
   }
-  
-  registerNode(normalForm : NormalForm, nextTier : GameBoard[]) {
+
+  private registerNode(normalForm: NormalForm, nextTier: GameBoard[]) {
     const nextBoard: GameBoard = getGameBoardFromCode(normalForm)
     const secondCode = normalForm.toString()
     if (!(secondCode in bigGraphExport.nodes)) {
@@ -62,14 +67,14 @@ export class GraphBuilder {
     }
   }
 
-  registerEdge(normalFormParent: NormalForm, normalFormChild: NormalForm) {
+  private registerEdge(normalFormParent: NormalForm, normalFormChild: NormalForm) {
     const firstCode = normalFormParent.toString()
     const secondCode = normalFormChild.toString()
     const edgeKey: string = firstCode + '#' + secondCode
     bigGraphExport.edges[edgeKey] = { source: firstCode, target: secondCode }
   }
 
-  initializeGraph() {
+  private initializeGraph() {
     const root: GameBoard = new GameBoard()
     this.tier = [root]
     this.level = 0
@@ -87,5 +92,5 @@ export function getBigGraph() {
  */
 export function resetBuilder() {
   bigGraphExport.nodes = {}
-  bigGraphExport.edges = {} 
+  bigGraphExport.edges = {}
 }

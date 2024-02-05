@@ -8,14 +8,13 @@ import { layout } from './useGraphLayout'
 import { updateLabels } from './LabelExport'
 import { Graph, TTTNode } from './Graph'
 
-export class GraphExport extends Graph{
+export class GraphExport extends Graph {
   level: number = 0
   activeNodeCode: string = 'NotInitialized'
 }
+
 export const graphExport: Ref<GraphExport> = ref(new GraphExport())
-export function getActiveNodeCode(): string {
-  return graphExport.value.activeNodeCode
-}
+
 /**
  * Reset the exported graph and initializes it with the current game state.
  */
@@ -102,6 +101,10 @@ function addChildToGraph(
   graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString() }
 }
 
+export function getActiveNodeCode(): string {
+  return graphExport.value.activeNodeCode
+}
+
 /**
  * Resets the history.
  * The passed gameboard is set as the first game state of the new history.
@@ -111,5 +114,3 @@ export function resetHistory() {
   graphExport.value = new GraphExport()
   initializeHistory()
 }
-
-
