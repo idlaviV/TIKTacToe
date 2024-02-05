@@ -31,7 +31,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
     },
     edge: {
       normal: {
-        dasharray: (edge) => (labelExport.value[edge.id][1] === '0' ? '4' : '0'),
+        dasharray: (edge) => getDash(edge, graphType),
         color: '#aaa',
         width: 2
       },
@@ -54,6 +54,27 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
   })
 
   return configs
+}
+
+function getDash(edge: Edge, graphType: GraphType) {
+  const dashed = '4'
+  const continuous = '0'
+
+  if (graphType === 'gameGraph') {
+    if ((edge.height % 2 === 0 && labelExport.value[edge.id][0] === '0') ||
+        (edge.height % 2 === 1 && labelExport.value[edge.id][1] === '0')) {
+      return dashed
+    }
+  } else if (graphType === 'player1Graph') {
+    if (labelExport.value[edge.id][0] === '0') {
+      return dashed
+    }
+  } else if (graphType === 'player2Graph') {
+    if (labelExport.value[edge.id][1] === '0') {
+      return dashed
+    }
+  }
+  return continuous
 }
 
 function getLabelColor(edge: Edge, graphType: GraphType) {
