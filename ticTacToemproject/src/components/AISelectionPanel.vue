@@ -38,6 +38,7 @@ const resetAiWeights: (index: number) => void = (index: number) => {
 }
 
 const weightGraphClick = (aiIndex:number) =>{
+  
   showWeightGraph.value = !showWeightGraph.value
   aiWeightsSelection.value = aiIndex
 }

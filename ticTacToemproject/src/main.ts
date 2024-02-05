@@ -12,6 +12,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
 import { GameHandler } from './logic/GameHandler'
+import { GraphBuilder } from './logic/ConfigurationGraph'
 
 const vuetify = createVuetify({
   components,
@@ -26,3 +27,6 @@ GameHandler.getInstance()
 const app = createApp(App)
 
 app.use(vuetify).mount('#app')
+
+const builder = new GraphBuilder()
+  builder.buildGraph()

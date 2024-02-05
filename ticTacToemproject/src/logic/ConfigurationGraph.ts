@@ -39,9 +39,10 @@ export class GraphBuilder {
    */
   buildGraph() {
     this.initializeGraph()
-    while (this.tier.length !== 0) {
+    while (this.tier.length !== 0 && this.level < 3) {
       this.calculateNextTier()
     }
+    console.log("done with graph construction")
   }
 
   private calculateNextTier() {
