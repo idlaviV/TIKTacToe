@@ -6,20 +6,16 @@ import {
   type UserConfigs
 } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
-import {
-  simpleGraphConfigs,
-  gameGraphConfigs,
-  player1GraphConfigs,
-  player2GraphConfigs
-} from '@/components/GraphPanelUserConfigs'
+import { currentGraphType, initializeConfig } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { getGuiState } from '@/logic/GuiState'
 import { computed, ref, watch } from 'vue'
-import { labelExport } from '@/utils/LabelExport'
+import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
 
+const handler = GameHandler.getInstance()
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
   if (guiDisable.value === 'standard') {
@@ -31,23 +27,31 @@ const nodesForDisplay = computed(() => {
 const edgesForDisplay = computed(() => {
   return graphExport.value.edges
 })
+const graphType = computed(() => {
+  return currentGraphType
+})
 const graph = ref<VNetworkGraphInstance>()
 const isPlayer2Graph = ref<boolean>(false)
-const config = ref<UserConfigs>(simpleGraphConfigs)
-const test = ref<number>(0)
+const config = ref<UserConfigs>(initializeConfig('simpleGraph'))
 
 watch(getGuiState(), (guiState) => {
-  const handler = GameHandler.getInstance()
   if (guiState === 'game') {
-    config.value = gameGraphConfigs
+    config.value = initializeConfig('gameGraph')
   } else if (guiState === 'evaluation') {
     if (handler.getNumberOfAIs() === 2) {
-      config.value = isPlayer2Graph.value ? player2GraphConfigs : player1GraphConfigs
+      config.value = isPlayer2Graph.value
+        ? initializeConfig('player2Graph')
+        : initializeConfig('player1Graph')
     } else if (handler.getNumberOfAIs() === 1) {
       config.value = handler.getSettings().getPlayer(1).isAI()
-        ? player1GraphConfigs
-        : player2GraphConfigs
+        ? initializeConfig('player1Graph')
+        : initializeConfig('player2Graph')
     }
+  }
+})
+watch(isPlayer2Graph, (value) => {
+  if (getGuiState().value === 'evaluation' && handler.getNumberOfAIs() === 2) {
+    config.value = value ? initializeConfig('player2Graph') : initializeConfig('player1Graph')
   }
 })
 </script>
@@ -65,7 +69,11 @@ watch(getGuiState(), (guiState) => {
       :configs="config"
     >
       <template #edge-label="{ edgeId, ...slotProps }">
-        <v-edge-label vertical-align="above" :text="labelExport[edgeId][test]" v-bind="slotProps" />
+        <v-edge-label
+          vertical-align="above"
+          :text="getLabelToShow(edgeId, graphType.value)"
+          v-bind="slotProps"
+        />
       </template>
       <template #override-node="{ nodeId }">
         <GraphPanelNode :node="graphExport.nodes[nodeId]" />

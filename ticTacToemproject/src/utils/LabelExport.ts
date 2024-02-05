@@ -1,3 +1,4 @@
+import type { GraphType } from '@/components/GraphPanelUserConfigs'
 import type { AIPlayer } from '@/logic/AIPlayer'
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameSettings } from '@/logic/GameSettings'
@@ -22,15 +23,39 @@ export function updateLabels(): void {
   const edges: TTTEdges = graphExport.value.edges
 
   for (const edge in edges) {
-    labelExport.value[edge] = ['', '']
+    if (labelExport.value[edge] === undefined) {
+      labelExport.value[edge] = ['', '']
+    }
+
     for (let i = 0; i < players.length; i++) {
       if (players[i].isAI()) {
         const aI = players[i] as AIPlayer
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
         const label: number = aI.getVertexMap(source).get(target)!
-        labelExport.value[edge][i] = label.toString()
+        if (labelExport.value[edge][i] !== label.toString()) {
+          labelExport.value[edge][i] = label.toString()
+        }
       }
     }
   }
+}
+
+export function getLabelToShow(edgeID: string, graphType: GraphType): string {
+  if (graphType === 'gameGraph') {
+    const handler: GameHandler = GameHandler.getInstance()
+    const currentLabels: [string, string] = labelExport.value[edgeID]
+    if (handler.getNumberOfAIs() === 0) {
+      return ''
+    } else if (handler.getNumberOfAIs() === 1) {
+      return handler.getSettings().getPlayer(1).isAI() ? currentLabels[0] : currentLabels[1]
+    } else {
+      return graphExport.value.edges[edgeID].height % 2 === 0 ? currentLabels[0] : currentLabels[1]
+    }
+  } else if (graphType === 'player1Graph') {
+    return labelExport.value[edgeID][0]
+  } else if (graphType === 'player2Graph') {
+    return labelExport.value[edgeID][1]
+  }
+  return labelExport.value[edgeID][0]
 }

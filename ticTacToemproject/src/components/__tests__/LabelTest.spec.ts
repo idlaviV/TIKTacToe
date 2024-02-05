@@ -70,6 +70,7 @@ describe('updateLabel', () => {
       numSource: 1,
       numTarget: 102
     }
+    labelExport.value = {}
   })
   test('first Player is AI', () => {
     settings.setPlayers(aI, new UserPlayer())

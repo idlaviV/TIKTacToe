@@ -1,14 +1,13 @@
 import { labelExport } from '@/utils/LabelExport'
 import { defineConfigs, type Edge, type UserConfigs } from 'v-network-graph'
+import { type Ref, ref } from 'vue'
 
-export const simpleGraphConfigs = initializeConfig('simpleGraph')
-export const gameGraphConfigs = initializeConfig('gameGraph')
-export const player1GraphConfigs = initializeConfig('player1Graph')
-export const player2GraphConfigs = initializeConfig('player2Graph')
+export const currentGraphType: Ref<GraphType> = ref('simpleGraph')
 
 export type GraphType = 'simpleGraph' | 'gameGraph' | 'player1Graph' | 'player2Graph'
 
-function initializeConfig(graphType: GraphType): UserConfigs {
+export function initializeConfig(graphType: GraphType): UserConfigs {
+  currentGraphType.value = graphType
   const configs: UserConfigs = defineConfigs({
     view: {
       panEnabled: true,
@@ -32,7 +31,7 @@ function initializeConfig(graphType: GraphType): UserConfigs {
     },
     edge: {
       normal: {
-        dasharray: (edge) => (labelExport.value[edge.id][1] === '0' ? '0' : '4'),
+        dasharray: (edge) => (labelExport.value[edge.id][1] === '0' ? '4' : '0'),
         color: '#aaa',
         width: 2
       },
