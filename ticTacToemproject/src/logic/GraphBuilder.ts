@@ -1,8 +1,8 @@
 import type { Edges, Nodes } from 'v-network-graph'
 import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { AIPlayer } from './AIPlayer'
-import { TTTNode } from '@/utils/GraphExport'
 import type { NormalForm } from './Codes'
+import { TTTNode } from '@/utils/Graph'
 
 class GraphBuilder {
   nodes: Nodes = {}
