@@ -2,12 +2,16 @@ import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { NormalForm } from './Codes'
 import { Graph, TTTNode } from '@/utils/Graph'
 import { calculateNextNFs } from './GameBoardHandler'
+import { ref, type Ref } from 'vue'
+import type { Layouts } from 'v-network-graph'
 
 /**
  * After configuration with GraphBuilder, this graph contains one node for every configuration.
  * Edges connect nodes A and B when a move from one representative of A yields a representative of B.
  */
-const bigGraphExport: Graph = new Graph()
+const bigGraphExport: Ref<Graph> = ref(new Graph())
+export const testLayout :Layouts = {nodes: {}}
+let layoutCounter = 0
 
 const configurationConnections: Map<NormalForm, Set<NormalForm>> = new Map()
 
@@ -39,10 +43,11 @@ export class GraphBuilder {
    */
   buildGraph() {
     this.initializeGraph()
-    while (this.tier.length !== 0 && this.level < 3) {
+    while (this.tier.length !== 0 && this.level < 4) {
       this.calculateNextTier()
     }
     console.log("done with graph construction")
+    console.log(testLayout.nodes)
   }
 
   private calculateNextTier() {
@@ -61,10 +66,12 @@ export class GraphBuilder {
   private registerNode(normalForm: NormalForm, nextTier: GameBoard[]) {
     const nextBoard: GameBoard = getGameBoardFromCode(normalForm)
     const secondCode = normalForm.toString()
-    if (!(secondCode in bigGraphExport.nodes)) {
+    if (!(secondCode in bigGraphExport.value.nodes)) {
       const newNode = new TTTNode(normalForm, nextBoard.state, this.level + 1)
-      bigGraphExport.nodes[normalForm] = newNode
+      bigGraphExport.value.nodes[normalForm] = newNode
       nextTier.push(nextBoard)
+      testLayout.nodes[secondCode] = {x:layoutCounter*40, y:layoutCounter*40}
+      layoutCounter++
     }
   }
 
@@ -72,7 +79,7 @@ export class GraphBuilder {
     const firstCode = normalFormParent.toString()
     const secondCode = normalFormChild.toString()
     const edgeKey: string = firstCode + '#' + secondCode
-    bigGraphExport.edges[edgeKey] = { source: firstCode, target: secondCode }
+    bigGraphExport.value.edges[edgeKey] = { source: firstCode, target: secondCode }
   }
 
   private initializeGraph() {
@@ -80,7 +87,8 @@ export class GraphBuilder {
     this.tier = [root]
     this.level = 0
     const normalForm: NormalForm = root.getNormalForm()
-    bigGraphExport.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), this.level)
+    bigGraphExport.value.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), this.level)
+    testLayout.nodes["0"] = {x:-1, y:-1}
   }
 }
 
@@ -92,6 +100,6 @@ export function getBigGraph() {
  * For test purposes only
  */
 export function resetBuilder() {
-  bigGraphExport.nodes = {}
-  bigGraphExport.edges = {}
+  bigGraphExport.value.nodes = {}
+  bigGraphExport.value.edges = {}
 }

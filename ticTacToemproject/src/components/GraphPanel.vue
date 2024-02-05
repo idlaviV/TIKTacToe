@@ -7,17 +7,21 @@ import { computed, ref } from 'vue'
 import { labelExport } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
+import { getBigGraph, testLayout } from '@/logic/ConfigurationGraph'
 
 const layouts = Layout.layouts
+const myTestLayout = computed(() => {
+  return testLayout
+})
 const nodesForDisplay = computed(() => {
   if (guiDisable.value === 'standard') {
-    return graphExport.value.nodes
+    return getBigGraph().value.nodes
   } else {
     return {}
   }
 })
 const edgesForDisplay = computed(() => {
-  return graphExport.value.edges
+  return getBigGraph().value.edges
 })
 const graph = ref<VNetworkGraphInstance>()
 </script>
@@ -28,15 +32,13 @@ const graph = ref<VNetworkGraphInstance>()
     ref="graph"
     class="graph full-height"
     :nodes="nodesForDisplay"
-    :edges="edgesForDisplay"
-    :layouts="layouts"
+    :edges="{}"
+    :layout="myTestLayout"
     :configs="configs"
   >
-    <template #edge-label="{ edgeId, ...slotProps }">
-      <v-edge-label :text="labelExport[edgeId][1]" v-bind="slotProps" />
-    </template>
+    
     <template #override-node="{ nodeId }">
-      <GraphPanelNode :node="graphExport.nodes[nodeId]" />
+      <GraphPanelNode :node="nodesForDisplay[nodeId]" />
     </template>
   </v-network-graph>
 </template>

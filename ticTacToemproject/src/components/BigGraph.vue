@@ -12,7 +12,7 @@ import { ref } from 'vue';
         aiWeightsSelection: number
     }>()
 
-    const graphExport : Graph = getBigGraph()
+    const graphExport = getBigGraph()
     const graph = ref<VNetworkGraphInstance>()
 
 </script>
