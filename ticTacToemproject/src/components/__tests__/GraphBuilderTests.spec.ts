@@ -2,7 +2,7 @@
 import { AIPlayer } from "@/logic/AIPlayer";
 import { EliminationPolicy } from "@/logic/EliminationPolicy";
 import { GameHandler } from "@/logic/GameHandler";
-import { buildGraph, getEdges, getNodes, resetBuilder } from "@/logic/GraphBuilder";
+import { GraphBuilder, getBigGraph, resetBuilder } from "@/logic/GraphBuilder";
 import { test ,describe, expect, beforeEach} from "vitest";
 import { gameBoard1, gameBoard2100 } from "./TestUtil";
 import { GameBoard } from "@/logic/GameBoard";
@@ -12,7 +12,8 @@ describe('build graph',()=>{
         GameHandler.getInstance()
         resetBuilder()
         const ai : AIPlayer = new AIPlayer(new EliminationPolicy, "ai")
-        buildGraph(ai)
+        const builder: GraphBuilder = new GraphBuilder()
+        builder.buildGraph(ai)
     })
     test('graph contains child of early gameboard',()=>{
         const board = gameBoard1
@@ -48,7 +49,8 @@ function testForBoards(parent:GameBoard, child:GameBoard) {
         const nf1 = parent.getNormalForm().toString()
         const nf2 = child.getNormalForm().toString()
         const edgeKey = nf1 + "#" + nf2
-        expect(nf1 in getNodes()).toBeTruthy()
-        expect(nf2 in getNodes()).toBeTruthy()
-        expect(edgeKey in getEdges()).toBeTruthy()
+        const graph = getBigGraph()
+        expect(nf1 in graph.nodes).toBeTruthy()
+        expect(nf2 in graph.nodes).toBeTruthy()
+        expect(edgeKey in graph.edges).toBeTruthy()
 }

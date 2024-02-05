@@ -1,71 +1,66 @@
-import type { Edges, Nodes } from 'v-network-graph'
 import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { AIPlayer } from './AIPlayer'
 import type { NormalForm } from './Codes'
-import { TTTNode } from '@/utils/Graph'
+import { Graph, TTTNode } from '@/utils/Graph'
 
-class GraphBuilder {
-  nodes: Nodes = {}
-  edges: Edges = {}
+
+const bigGraph : Graph = new Graph()
+
+export class GraphBuilder {
   tier: GameBoard[] = []
   level: number = 0
-}
 
-let builder : GraphBuilder = new GraphBuilder
+  buildGraph(ai: AIPlayer) {
+    this.initializeGraph()
+    while (this.tier.length !== 0) {
+      this.calculateNextTier(ai)
+    }    
+  }
 
-export function buildGraph(ai: AIPlayer) {
-  initializeGraph()
-  while (builder.tier.length !== 0) {
-    calculateNextTier(ai)
+  registerNode(normalForm : NormalForm, nextTier : GameBoard[]) {
+    const nextBoard: GameBoard = getGameBoardFromCode(normalForm)
+    const secondCode = normalForm.toString()
+    if (!(secondCode in bigGraph.nodes)) {
+      const newNode = new TTTNode(normalForm, nextBoard.state, this.level + 1)
+      bigGraph.nodes[normalForm] = newNode
+      nextTier.push(nextBoard)
+    }
+  }
+
+  calculateNextTier(ai: AIPlayer) {
+    const nextTier: GameBoard[] = []
+    for (const board of this.tier) {
+      const map = ai.getVertexMap(board.getNormalForm())
+      map.forEach((_weight, normalFormChild) => {
+        this.registerNode(normalFormChild, nextTier)
+        this.registerEdge(board.getNormalForm(), normalFormChild) 
+      })
+    }
+    this.tier = nextTier
+    this.level++
+  }
+
+  registerEdge(normalFormParent: NormalForm, normalFormChild: NormalForm) {
+    const firstCode = normalFormParent.toString()
+    const secondCode = normalFormChild.toString()
+    const edgeKey: string = firstCode + '#' + secondCode
+    bigGraph.edges[edgeKey] = { source: firstCode, target: secondCode }
+  }
+
+  initializeGraph() {
+    const root: GameBoard = new GameBoard()
+    this.tier = [root]
+    this.level = 0
+    const normalForm: NormalForm = root.getNormalForm()
+    bigGraph.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), this.level)
   }
 }
 
-function registerNode(normalForm : NormalForm, nextTier : GameBoard[]) {
-  const nextBoard: GameBoard = getGameBoardFromCode(normalForm)
-  const secondCode = normalForm.toString()
-  if (!(secondCode in builder.nodes)) {
-    const newNode = new TTTNode(normalForm, nextBoard.state, builder.level + 1)
-    builder.nodes[normalForm] = newNode
-    nextTier.push(nextBoard)
-  }
-}
-
-function calculateNextTier(ai: AIPlayer) {
-  const nextTier: GameBoard[] = []
-  for (const board of builder.tier) {
-    const map = ai.getVertexMap(board.getNormalForm())
-    map.forEach((_weight, normalFormChild) => {
-      registerNode(normalFormChild, nextTier)
-      registerEdge(board.getNormalForm(), normalFormChild) 
-    })
-  }
-  builder.tier = nextTier
-  builder.level++
-}
-
-function registerEdge(normalFormParent: NormalForm, normalFormChild: NormalForm) {
-  const firstCode = normalFormParent.toString()
-  const secondCode = normalFormChild.toString()
-  const edgeKey: string = firstCode + '#' + secondCode
-  builder.edges[edgeKey] = { source: firstCode, target: secondCode }
-}
-
-function initializeGraph() {
-  const root: GameBoard = new GameBoard()
-  builder.tier = [root]
-  builder.level = 0
-  const normalForm: NormalForm = root.getNormalForm()
-  builder.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), builder.level)
-}
-
-export function getNodes() {
-  return builder.nodes
-}
-
-export function getEdges() {
-  return builder.edges
+export function getBigGraph() {
+  return bigGraph
 }
 
 export function resetBuilder() {
-  builder = new GraphBuilder()
+  bigGraph.nodes = {}
+  bigGraph.edges = {} 
 }
