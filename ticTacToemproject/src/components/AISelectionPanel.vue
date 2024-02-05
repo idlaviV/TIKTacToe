@@ -2,11 +2,12 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
+import BigGraph from './BigGraph.vue'
 
 const aIs = players
 
 const showWeightGraph = ref(false)
-const aiWeightsSelection = ref()
+const aiWeightsSelection = ref(0)
 
 /**
  * Remove the human player from the list of players
@@ -80,7 +81,7 @@ const weightGraphClick = (aiIndex:number) =>{
     </v-card>
     <v-overlay v-model="showWeightGraph">
                   <v-card class="hugeGraph">
-                    {{players[aiWeightsSelection].player}}
+                    <BigGraph :ai-weights-selection = "aiWeightsSelection"/>
                   </v-card>
   </v-overlay>
   </div>
