@@ -170,12 +170,21 @@ export class TTTNode implements Node {
 
 export type TTTEdges = Edges & { [key: string]: TTTEdge }
 
+/**
+ * This class is a model for the visualization of an edge in the graph.
+ */
 export class TTTEdge implements Edge {
+  // The id of the source node of the edge.
   source: string
+  // The id of the target node of the edge.
   target: string
+  // The id of the edge.
   id: string
+  // The height of the edge in the graph.
   height: number
+  // The code of the source node of the edge.
   numSource: number
+  // The code of the target node of the edge.
   numTarget: number
 
   constructor(

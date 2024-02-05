@@ -41,6 +41,11 @@ export function updateLabels(): void {
   }
 }
 
+/**
+ * Calculates the label to show for the edge with the given id, depending on the current graph type.
+ * @param edgeID The id of the edge for the label
+ * @param graphType The current graph type
+ */
 export function getLabelToShow(edgeID: string, graphType: GraphType): string {
   if (graphType === 'gameGraph') {
     const handler: GameHandler = GameHandler.getInstance()
@@ -57,5 +62,5 @@ export function getLabelToShow(edgeID: string, graphType: GraphType): string {
   } else if (graphType === 'player2Graph') {
     return labelExport.value[edgeID][1]
   }
-  return labelExport.value[edgeID][0]
+  return ''
 }
