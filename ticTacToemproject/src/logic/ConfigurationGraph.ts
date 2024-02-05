@@ -2,12 +2,19 @@ import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { NormalForm } from './Codes'
 import { Graph, TTTNode } from '@/utils/Graph'
 import { calculateNextNFs } from './GameBoardHandler'
+import type { Layouts } from 'v-network-graph'
+import { ref, type Ref } from 'vue'
+import dagre from '@dagrejs/dagre'
+import * as gc from '@/components/GraphConstants'
+
+
 
 /**
  * After configuration with GraphBuilder, this graph contains one node for every configuration.
  * Edges connect nodes A and B when a move from one representative of A yields a representative of B.
  */
 const bigGraphExport: Graph = new Graph()
+export const bigLayout : Ref<Layouts> = ref({nodes:{}})
 
 const configurationConnections: Map<NormalForm, Set<NormalForm>> = new Map()
 
@@ -39,10 +46,11 @@ export class GraphBuilder {
    */
   buildGraph() {
     this.initializeGraph()
-    while (this.tier.length !== 0 && this.level < 3) {
+    while (this.tier.length !== 0) {
       this.calculateNextTier()
     }
     console.log("done with graph construction")
+    layoutBigGraph()
   }
 
   private calculateNextTier() {
@@ -95,3 +103,36 @@ export function resetBuilder() {
   bigGraphExport.nodes = {}
   bigGraphExport.edges = {}
 }
+function layoutBigGraph() {
+  const g = new dagre.graphlib.Graph()
+  g.setGraph({
+    rankdir: 'TB',
+    nodesep: gc.nodesep,
+    edgesep: gc.edgesep,
+    ranksep: gc.ranksep
+  })
+  // Default to assigning a new object as a label for each new edge.
+  g.setDefaultEdgeLabel(() => ({}))
+
+  // Add nodes to the graph. The first argument is the node id. The second is
+  // metadata about the node. In this case we're going to add labels to each of
+  // our nodes.
+  Object.entries(bigGraphExport.nodes).forEach(([nodeId, node]) => {
+    g.setNode(nodeId, { label: node.name, width: gc.nodeSize, height: gc.nodeSize })
+  })
+
+  // Add edges to the graph.
+  Object.values(bigGraphExport.edges).forEach((edge) => {
+    g.setEdge(edge.source, edge.target)
+  })
+
+  dagre.layout(g)
+
+  g.nodes().forEach((nodeId: string) => {
+    const x = g.node(nodeId).x 
+    const y = g.node(nodeId).y 
+    bigLayout.value.nodes[nodeId] = { x,y }
+  })
+
+}
+
