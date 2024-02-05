@@ -2,9 +2,11 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
-import { mdiShareVariant } from '@mdi/js'
 
 const aIs = players
+
+const showWeightGraph = ref(false)
+const aiWeightsSelection = ref()
 
 /**
  * Remove the human player from the list of players
@@ -33,6 +35,11 @@ const aiName = ref('Neue KI')
 const resetAiWeights: (index: number) => void = (index: number) => {
   GameHandler.getInstance().resetAiWeights(index)
 }
+
+const weightGraphClick = (aiIndex:number) =>{
+  showWeightGraph.value = !showWeightGraph.value
+  aiWeightsSelection.value = aiIndex
+}
 </script>
 
 <!-- The AISelectionPanel contains a list of all existing AIs and the option to create new AIs,
@@ -50,12 +57,7 @@ const resetAiWeights: (index: number) => void = (index: number) => {
             </template>
             <template v-slot:append>
               <v-btn>
-                <v-icon size="large" icon="mdi-call-split"></v-icon>
-                <v-overlay activator="parent">
-                  <v-card class="hugeGraph">
-                    Hier kommt der Graph hin
-                  </v-card>
-                </v-overlay>
+                <v-icon size="large" icon="mdi-call-split" @click = "weightGraphClick(item.index)"></v-icon>
               </v-btn>
               <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
             </template>
@@ -76,7 +78,14 @@ const resetAiWeights: (index: number) => void = (index: number) => {
         Erstelle eine neue KI
       </v-btn>
     </v-card>
+    <v-overlay v-model="showWeightGraph">
+                  <v-card class="hugeGraph">
+                    {{players[aiWeightsSelection].player}}
+                  </v-card>
+  </v-overlay>
   </div>
+
+  
 </template>
 
 <style>
