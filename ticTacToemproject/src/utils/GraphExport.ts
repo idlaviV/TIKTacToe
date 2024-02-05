@@ -8,14 +8,13 @@ import { type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 import { layout } from './useGraphLayout'
 import { updateLabels } from './LabelExport'
+import { Graph } from './Graph'
 
-export class Graph {
+export class GraphExport extends Graph{
   level: number = 0
   activeNodeCode: string = 'NotInitialized'
-  nodes: TTTNodes = {}
-  edges: Edges = {}
 }
-export const graphExport: Ref<Graph> = ref(new Graph())
+export const graphExport: Ref<GraphExport> = ref(new GraphExport())
 export function getActiveNodeCode(): string {
   return graphExport.value.activeNodeCode
 }
@@ -23,7 +22,7 @@ export function getActiveNodeCode(): string {
  * Reset the exported graph and initializes it with the current game state.
  */
 export function initializeHistory() {
-  const graph: Graph = graphExport.value
+  const graph: GraphExport = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
   const newCode = gameBoard.getCode().toString()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
@@ -40,7 +39,7 @@ export function initializeHistory() {
  * @param gameBoard The new game state
  */
 export function updateHistory(gameBoard: GameBoard) {
-  const graph: Graph = graphExport.value
+  const graph: GraphExport = graphExport.value
   const newCode: string = gameBoard.getNormalForm().toString()
   deleteChild(newCode, graph)
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
@@ -59,7 +58,7 @@ export function updateHistory(gameBoard: GameBoard) {
  * @param newCode The identifier of the child
  * @param graph The graph containing the node and the edge
  */
-function deleteChild(newCode: string, graph: Graph) {
+function deleteChild(newCode: string, graph: GraphExport) {
   const oldEdgeLabel: string = graph.activeNodeCode + '#' + newCode
   delete graph.edges[oldEdgeLabel]
   delete graph.nodes[newCode]
@@ -68,7 +67,7 @@ function deleteChild(newCode: string, graph: Graph) {
 /**
  * Add nodes and corresponding edges for every possible move to the graph.
  */
-function addChildren(graph: Graph) {
+function addChildren(graph: GraphExport) {
   const childrenOfActiveGameBoard: GameBoard[] =
     GameHandler.getInstance().getPossibleNextPositions()
   const equivalenceClasses: ArrayMultimap<NormalForm, GameBoard> =
@@ -88,7 +87,7 @@ function addChildren(graph: Graph) {
  * @param key The normal form of the equivalence class
  */
 function addChildToGraph(
-  graph: Graph,
+  graph: GraphExport,
   representative: GameBoard,
   alternatives: GameBoard[],
   key: string
@@ -111,7 +110,7 @@ function addChildToGraph(
  * @param gameBoard The first game state of the new history
  */
 export function resetHistory() {
-  graphExport.value = new Graph()
+  graphExport.value = new GraphExport()
   initializeHistory()
 }
 
