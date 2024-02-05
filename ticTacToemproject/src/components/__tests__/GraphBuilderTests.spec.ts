@@ -1,6 +1,3 @@
-
-import { AIPlayer } from "@/logic/AIPlayer";
-import { EliminationPolicy } from "@/logic/EliminationPolicy";
 import { GameHandler } from "@/logic/GameHandler";
 import { GraphBuilder, getBigGraph, resetBuilder } from "@/logic/GraphBuilder";
 import { test ,describe, expect, beforeEach} from "vitest";
@@ -11,9 +8,8 @@ describe('build graph',()=>{
     beforeEach(()=>{
         GameHandler.getInstance()
         resetBuilder()
-        const ai : AIPlayer = new AIPlayer(new EliminationPolicy, "ai")
         const builder: GraphBuilder = new GraphBuilder()
-        builder.buildGraph(ai)
+        builder.buildGraph()
     })
     test('graph contains child of early gameboard',()=>{
         const board = gameBoard1

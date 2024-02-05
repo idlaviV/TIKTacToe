@@ -1,7 +1,7 @@
 import type { GameBoardCode, NormalForm } from './Codes'
 import type { EvaluationPolicy } from './EvaluationPolicy'
-import { calculateNextNFs } from './GameBoardHandler'
 import { GameHandler } from './GameHandler'
+import { getPossibleNextNormalForms } from './GraphBuilder'
 import type { GameBoardWithPrevMove } from './Moves'
 import type { Player } from './Player'
 import { Randomizer } from './Randomizer'
@@ -125,7 +125,7 @@ export class AIPlayer implements Player {
     if (this.weights.has(code)) {
       return
     }
-    const nextNFs: Set<NormalForm> = calculateNextNFs(code)
+    const nextNFs: Set<NormalForm> = getPossibleNextNormalForms(code)
     const vertexMap = new Map<NormalForm, number>()
     this.weights.set(code, vertexMap)
     for (const nextCode of nextNFs) {

@@ -5,9 +5,10 @@ import type { Edges , Node, Nodes} from "v-network-graph"
 export class Graph {
     nodes: TTTNodes = {}
     edges: Edges = {}
-  }
+}
 
-  export type TTTNodes = Nodes & { [key: string]: TTTNode }
+export type TTTNodes = Nodes & { [key: string]: TTTNode }
+
 /**
  * This class is a model for the visualization of a game configuration in the graph.
  */
