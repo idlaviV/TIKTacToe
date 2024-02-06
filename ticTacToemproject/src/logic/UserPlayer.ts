@@ -1,4 +1,4 @@
-import  { Player } from './Player'
+import { Player } from './Player'
 
 /**
  * This class represents a human player.

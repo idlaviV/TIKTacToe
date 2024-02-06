@@ -1,4 +1,3 @@
-
 /**
  * Represents a player.
  * AIPlayers and UserPlayers are possible.
@@ -25,14 +24,14 @@ export abstract class Player {
   games: number = 0
 
   getStats() {
-    return { wins: this.wins, losses: this.losses, draws: this.draws, games: this.games}
+    return { wins: this.wins, losses: this.losses, draws: this.draws, games: this.games }
   }
 
   /**
    * Register a player game on this player.
    * @param result Win: 1, Draw: 0, Loss: -1
    */
-  playedGame(result:number) {
+  playedGame(result: number) {
     this.games++
     switch (result) {
       case 0:
@@ -45,9 +44,7 @@ export abstract class Player {
         this.losses++
         break
       default:
-        throw new Error("Illegal result: " + result)
+        throw new Error('Illegal result: ' + result)
     }
   }
-
-
 }
