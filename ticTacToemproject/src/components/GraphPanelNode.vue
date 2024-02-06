@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
-import type { TTTNode } from '@/utils/GraphExport'
+import type { TTTNode } from '@/utils/Graph'
 
 /**
  * @param node The node that this component should visualize.

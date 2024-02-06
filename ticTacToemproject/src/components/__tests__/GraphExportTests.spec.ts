@@ -12,7 +12,7 @@ import {
 } from './TestUtil'
 import type { Edges, Nodes } from 'v-network-graph'
 import {
-  Graph,
+  GraphExport,
   graphExport,
   initializeHistory,
   resetHistory,
@@ -110,7 +110,7 @@ describe('reset history', () => {
 })
 
 function initHistory() {
-  graphExport.value = new Graph()
+  graphExport.value = new GraphExport()
   initializeHistory()
   nodes = graphExport.value.nodes
   edges = graphExport.value.edges
