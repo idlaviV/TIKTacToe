@@ -3,14 +3,14 @@ import type { EvaluationPolicy } from './EvaluationPolicy'
 import { GameHandler } from './GameHandler'
 import { getPossibleNextNormalForms } from './ConfigurationGraph'
 import type { GameBoardWithPrevMove } from './Moves'
-import type { Player } from './Player'
+import { Player } from './Player'
 import { Randomizer } from './Randomizer'
 
 /**
  * This class represents an AI player.
  * Its behaviour is based on the weights of possible moves.
  */
-export class AIPlayer implements Player {
+export class AIPlayer extends Player {
   /**
    * The weights are an edge-label on the gamegraph, where vertices are gameboards and edges are moves.
    * The weights are stored in a map, where gameboards are passed using their normal form.
@@ -25,6 +25,7 @@ export class AIPlayer implements Player {
   name: string
 
   constructor(policy: EvaluationPolicy, name: string = 'AI') {
+    super()
     this.name = name
     this.policy = policy
   }

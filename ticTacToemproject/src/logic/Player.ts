@@ -2,19 +2,49 @@
  * Represents a player.
  * AIPlayers and UserPlayers are possible.
  */
-export interface Player {
+export abstract class Player {
   /**
    * @returns Is this player an AI?
    */
-  isAI(): boolean
+  abstract isAI(): boolean
 
   /**
    * Prompt this player to directly execute a move on the gameboard.
    */
-  makeMove(): void
+  abstract makeMove(): void
 
   /**
    * @returns A name for this player. Only used for visualiszation purposes.
    */
-  getName(): string
+  abstract getName(): string
+
+  wins: number = 0
+  losses: number = 0
+  draws: number = 0
+  games: number = 0
+
+  getStats() {
+    return { wins: this.wins, losses: this.losses, draws: this.draws, games: this.games }
+  }
+
+  /**
+   * Register a player game on this player.
+   * @param result Win: 1, Draw: 0, Loss: -1
+   */
+  playedGame(result: number) {
+    this.games++
+    switch (result) {
+      case 0:
+        this.draws++
+        break
+      case 1:
+        this.wins++
+        break
+      case -1:
+        this.losses++
+        break
+      default:
+        throw new Error('Illegal result: ' + result)
+    }
+  }
 }
