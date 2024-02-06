@@ -3,6 +3,7 @@ import { GameHandler } from '@/logic/GameHandler'
 import { nextGuiState } from '@/logic/GuiState'
 import { initializeHistory } from '@/utils/GraphExport'
 import { players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
+import SettingsPopover from './SettingsPopover.vue'
 import { ref, type Ref } from 'vue'
 
 /**
@@ -35,26 +36,46 @@ const select2 = ref(1)
 
 <!-- The StartScreen offers the selection of the players for the next game. -->
 <template>
-  <div>
-    <h2>Spielerauswahl</h2>
+  <div id="startScreen">
+    <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
 
-    <div>
-      <v-select
-        label="Spieler 1 wählen"
-        v-model="select1"
-        :items="items"
-        item-title="player"
-        item-value="index"
-      />
-      gegen
-      <v-select
-        label="Spieler 2 wählen"
-        v-model="select2"
-        :items="items"
-        item-title="player"
-        item-value="index"
-      />
+    <div id="settingsButton">
+      <SettingsPopover />
     </div>
+
+    <v-container>
+      <h2>Spielerauswahl</h2>
+
+      <div>
+        <v-select
+          label="Spieler 1 wählen"
+          v-model="select1"
+          :items="items"
+          item-title="player"
+          item-value="index"
+        />
+        gegen
+        <v-select
+          label="Spieler 2 wählen"
+          v-model="select2"
+          :items="items"
+          item-title="player"
+          item-value="index"
+        />
+      </div>
+    </v-container>
     <v-btn v-on:click="startGame">Spiel starten</v-btn>
   </div>
 </template>
+
+<style>
+#startScreen {
+  position: relative;
+}
+
+#settingsButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+</style>
