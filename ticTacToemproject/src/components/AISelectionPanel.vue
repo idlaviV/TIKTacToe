@@ -4,6 +4,7 @@ import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
 
 const aIs = players
+const showSettingsOfAI = ref(false)
 
 /**
  * Remove the human player from the list of players
@@ -41,6 +42,17 @@ const resetAiWeights: (index: number) => void = (index: number) => {
   <div>
     <v-card class="mx-auto" max-width="700">
       <v-card-title>KI-Übersichtsfenster</v-card-title>
+      <v-overlay v-model="showSettingsOfAI" contained>
+        <v-card class="settingsOfAI pa-2 ma-2">
+          <v-btn color="red" class="closeButton" v-on:click="showSettingsOfAI = false">X</v-btn>
+          <div>
+            Hallo
+            <div>
+              Das ist mein Text
+            </div>
+          </div>
+        </v-card>
+      </v-overlay>
       <v-virtual-scroll :items="getAIs" height="220">
         <template v-slot:default="{ item }">
           <v-list-item :title="item.player">
@@ -48,6 +60,7 @@ const resetAiWeights: (index: number) => void = (index: number) => {
               <i class="material-symbols-outlined mx-2"> smart_toy </i>
             </template>
             <template v-slot:append>
+              <v-btn v-on:click="showSettingsOfAI = true">X</v-btn>
               <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
             </template>
           </v-list-item>
@@ -69,3 +82,15 @@ const resetAiWeights: (index: number) => void = (index: number) => {
     </v-card>
   </div>
 </template>
+
+<style>
+.settingsOfAI {
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+</style>
