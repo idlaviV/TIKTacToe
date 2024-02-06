@@ -42,7 +42,8 @@ export function updateHistory(gameBoard: GameBoard) {
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
   graph.nodes[newCode] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
-  graph.edges[key] = { source: graph.activeNodeCode, target: newCode, id: key }
+  const height: number = getHeightFromCode(graph.activeNodeCode)
+  graph.edges[key] = { source: graph.activeNodeCode, target: newCode, id: key, height: height }
   graph.activeNodeCode = newCode
   addChildren(graph)
   graph.level++
@@ -98,8 +99,10 @@ function addChildToGraph(
   )
   graph.nodes[key.toString()] = newNode
   const edgeKey: string = graph.activeNodeCode + '#' + key.toString()
-  graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString() }
+  const height: number = getHeightFromCode(graph.activeNodeCode)
+  graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString(), height: height }
 }
+
 
 export function getActiveNodeCode(): string {
   return graphExport.value.activeNodeCode
@@ -113,4 +116,15 @@ export function getActiveNodeCode(): string {
 export function resetHistory() {
   graphExport.value = new GraphExport()
   initializeHistory()
+}
+function getHeightFromCode(code: string) {
+  let height = 0
+
+  for (let index = 0; index < code.length; index++) {
+    if (code[index] !== '0') {
+      height += 1
+    }
+  }
+
+  return height
 }
