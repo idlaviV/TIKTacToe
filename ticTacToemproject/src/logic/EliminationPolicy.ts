@@ -63,7 +63,10 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
 
   /**
    * Modifies the weights of the AIPlayer at the given index.
-   * Is only called if the position at the given index is a losing position. 
+   * Is only called if the position at the given index is a losing position.
+   * @param aI The weights of the AIPlayer to be modified.
+   * @param history The history of the played game.
+   * @param index The index of the losing position to be considered.
    */
   abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): void
 }
@@ -74,7 +77,7 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
  */
 export class EliminationPolicySimple extends EliminationPolicy {
   /**
-   * Set the probability of losing turns to 0.
+   * Set the weight of the losing turn to 0.
    * @inheritdoc
    * @override
    */
