@@ -2,7 +2,7 @@ import type { AIPlayer } from './AIPlayer'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import type { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
-import { drawStatus } from './WinnerStatus'
+import { drawStatus, type WinnerStatus } from './WinnerStatus'
 
 export abstract class EliminationPolicy implements EvaluationPolicy {
   /**
@@ -31,7 +31,38 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
   /**
    * Apply the policy to the AIPlayer.
    */
-  abstract applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void
+  applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+    const handler: GameHandler = GameHandler.getInstance()
+    const winner = handler.getWinner().value
+    for (let index = history.length - 1; index > 1; index--) {
+      if (this.checkIfLooseMove(aI, history, index, winner)) {
+        this.modifyWeights(aI, history, index)
+      }
+    }
+  }
+
+  /**
+   * Checks whether the move at the given index is a move that leads to a loss,
+   * i.e. if the move //TODO
+   * @param aI 
+   * @param history 
+   * @param index 
+   * @param winner 
+   * @returns 
+   */
+  checkIfLooseMove(
+    aI: AIPlayer,
+    history: GameBoard[],
+    index: number,
+    winner: WinnerStatus
+  ): boolean {
+    if (winner === drawStatus && index === history.length - 1) {
+      return false
+    }
+    return containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))
+  }
+
+  abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): void
 }
 
 /**
@@ -45,21 +76,9 @@ export class EliminationPolicySimple extends EliminationPolicy {
    * @inheritdoc
    * @override
    */
-  applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
-    const handler: GameHandler = GameHandler.getInstance()
-    const winner = handler.getWinner().value
-    for (let index = history.length - 1; index > 1; index--) {
-      let isLossTurn: boolean = containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))
-      if (winner === drawStatus && index === history.length - 1) {
-        isLossTurn = false
-      }
-      if (isLossTurn) {
-        aI.getVertexMap(history[index - 2].getNormalForm()).set(
-          history[index - 1].getNormalForm(),
-          0
-        )
-      }
-    }
+  modifyWeights(aI: AIPlayer, history: GameBoard[], index: number): void {
+    const map = aI.getVertexMap(history[index - 2].getNormalForm())
+    map.set(history[index - 1].getNormalForm(), 0)
   }
 }
 
