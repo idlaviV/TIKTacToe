@@ -14,7 +14,7 @@ describe('updateAIList', () => {
   test('generic input', () => {
     updatePlayerList()
     const aIList = players.value
-    expect(aIList.length).toEqual(3)
+    expect(aIList.length).toEqual(4)
     expect(aIList.find((entry) => entry.player === 'Mensch')?.index).toEqual(0)
     expect(aIList.find((entry) => entry.player === 'KI-Elimination')).not.toEqual(undefined)
     expect(aIList.find((entry) => entry.player === 'KI-Fehlerrückführung')).not.toEqual(undefined)

@@ -182,7 +182,6 @@ describe('apply Policy with artificial examples', () => {
     aI.weights.get(222)?.set(2222, 0)
     aI.weights.get(222)?.set(2221, 0)//established 222->22201 as winning move
     policy.applyPolicy(aI, history)
-    console.log(aI.weights.get(222))
     expect(aI.weights.get(22222)?.get(222222)).toEqual(1)//winning move
     expect(aI.weights.get(22222)?.get(222221)).toEqual(0) //alternative to last winning move
     expect(aI.weights.get(22222)?.get(2222201)).toEqual(0)//alternative to last winning move

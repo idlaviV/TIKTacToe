@@ -18,7 +18,8 @@ const getAIs = computed(() => {
  */
 const aiOptions = [
   { title: 'Elimination', index: 0 },
-  { title: 'Fehlerrückführung', index: 1 }
+  { title: 'Fehlerrückführung', index: 1 },
+  { title: 'Elimination v2.0', index: 2}
 ]
 /**
  * Model for the selected AI option

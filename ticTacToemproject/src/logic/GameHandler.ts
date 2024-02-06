@@ -13,6 +13,7 @@ import { updatePlayerList } from '@/utils/PlayerListExport'
 import { nextGuiState } from './GuiState'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
+import { EliminationPolicyImproved } from './EliminationPolicyImproved'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -34,7 +35,8 @@ export class GameHandler {
   possiblePlayers: Player[] = [
     this.humanPlayer,
     new AIPlayer(new EliminationPolicySimple(), 'KI-Elimination'),
-    new AIPlayer(new BackpropagationPolicy(), 'KI-Fehlerrückführung')
+    new AIPlayer(new BackpropagationPolicy(), 'KI-Fehlerrückführung'),
+    new AIPlayer(new EliminationPolicyImproved(), 'KI-Elimination v2.0')
   ]
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
@@ -154,6 +156,8 @@ export class GameHandler {
       this.possiblePlayers.push(new AIPlayer(new EliminationPolicySimple(), name))
     } else if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
+    } else if (selectedAIOption ===2) {
+      this.possiblePlayers.push(new AIPlayer(new EliminationPolicyImproved(), name))
     } else {
       throw new Error('Invalid AI option')
     }
