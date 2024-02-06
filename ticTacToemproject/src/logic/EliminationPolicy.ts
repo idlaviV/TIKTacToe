@@ -23,7 +23,7 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
     const handler: GameHandler = GameHandler.getInstance()
     const winner = handler.getWinner().value
 
-    if (winner !== null && winner !== drawStatus) {
+    if (winner !== null) {
       this.applyWinningPolicy(aI, history)
     }
   }
@@ -46,8 +46,14 @@ export class EliminationPolicySimple extends EliminationPolicy {
    * @override
    */
   applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+    const handler: GameHandler = GameHandler.getInstance()
+    const winner = handler.getWinner().value
     for (let index = history.length - 1; index > 1; index--) {
-      if (containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))) {
+      let isLossTurn: boolean = containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))
+      if (winner === drawStatus && index === history.length - 1) {
+        isLossTurn = false
+      }
+      if (isLossTurn) {
         aI.getVertexMap(history[index - 2].getNormalForm()).set(
           history[index - 1].getNormalForm(),
           0

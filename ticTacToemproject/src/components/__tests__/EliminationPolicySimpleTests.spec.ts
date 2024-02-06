@@ -100,6 +100,23 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(22)?.get(2201)).toEqual(1)
   })
 
+  test('draw, expect no changes although there is a loss-move',()=>{
+    aI.weights.get(22222)?.set(222222,0)
+    aI.weights.get(22222)?.set(222221,0)
+    aI.weights.get(22222)?.set(2222201,0)
+    handler.winner.value = drawStatus
+    policy.applyPolicy(aI, history)
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(0)//<- this could have changed
+    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
+    expect(aI.weights.get(22)?.get(222)).toEqual(1)
+    expect(aI.weights.get(22)?.get(221)).toEqual(1)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+  })
+
   test('loss, expect two weights to change', () => {
     aI.weights.get(2222)?.set(22221, 0)
     aI.weights.get(2222)?.set(222201, 0)
