@@ -1,5 +1,5 @@
 import { AIPlayer } from '@/logic/AIPlayer'
-import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
+import { EliminationPolicyImproved } from '@/logic/EliminationPolicyImproved'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
@@ -9,12 +9,12 @@ import { getWeightClone } from './TestUtil'
 const handler = GameHandler.getInstance()
 const weights = new Map()
 
-let policy: EliminationPolicySimple
+let policy: EliminationPolicyImproved
 let aI: AIPlayer
 let history: GameBoard[]
 
 beforeEach(() => {
-  policy = new EliminationPolicySimple()
+  policy = new EliminationPolicyImproved()
   aI = new AIPlayer(policy)
 })
 
@@ -89,7 +89,26 @@ describe('apply Policy with artificial examples', () => {
   beforeEach(beforeSetupArtificialExample)
   test('standard loss, expect only one weight change', () => {
     policy.applyPolicy(aI, history)
-    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
+    expect(aI.weights.get(22222)?.get(222222)).toEqual(1) //<--Win move
+    expect(aI.weights.get(22222)?.get(222221)).toEqual(0) //<-alternatives to win move
+    expect(aI.weights.get(22222)?.get(2222201)).toEqual(0)//<-alternatives to win move
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)   //<-loss move
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
+    expect(aI.weights.get(22)?.get(222)).toEqual(1)
+    expect(aI.weights.get(22)?.get(221)).toEqual(1)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+  })
+
+  test('draw, expect no changes', () => {
+    policy.applyPolicy(aI, history)
+    expect(aI.weights.get(22222)?.get(222222)).toEqual(1)
+    expect(aI.weights.get(22222)?.get(222221)).toEqual(1) 
+    expect(aI.weights.get(22222)?.get(2222201)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(1)   
     expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
     expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
     expect(aI.weights.get(222)?.get(2222)).toEqual(1)
@@ -106,10 +125,10 @@ describe('apply Policy with artificial examples', () => {
     aI.weights.get(22222)?.set(2222201, 0)
     handler.winner.value = drawStatus
     policy.applyPolicy(aI, history)
-    expect(aI.weights.get(2222)?.get(22222)).toEqual(1)
-    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
-    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
-    expect(aI.weights.get(222)?.get(2222)).toEqual(0) //<- this is a losing move, although the game ended in a draw
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(1)//<- winning move
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(0)//<- alternative to winning move
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(0)//<- alternative to winning move
+    expect(aI.weights.get(222)?.get(2222)).toEqual(0) //<- loss move
     expect(aI.weights.get(222)?.get(2221)).toEqual(1)
     expect(aI.weights.get(222)?.get(22201)).toEqual(1)
     expect(aI.weights.get(22)?.get(222)).toEqual(1)
@@ -124,13 +143,17 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(2222)?.get(22222)).toEqual(0)
     expect(aI.weights.get(2222)?.get(22221)).toEqual(0)
     expect(aI.weights.get(2222)?.get(222201)).toEqual(0)
-    expect(aI.weights.get(222)?.get(2222)).toEqual(1)
-    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
-    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(1)//<- winning move
+    expect(aI.weights.get(222)?.get(2221)).toEqual(0)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(0)
     expect(aI.weights.get(22)?.get(222)).toEqual(0) //<--this changed, too
     expect(aI.weights.get(22)?.get(221)).toEqual(1)
     expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+    expect(aI.weights.get(2)?.get(22)).toEqual(1) //another winning move
+    expect(aI.weights.get(2)?.get(21)).toEqual(0)
+    expect(aI.weights.get(2)?.get(201)).toEqual(0)
   })
+
 
   test('loss, expect two weights to change ', () => {
     aI.weights.get(222)?.set(2222, 0)
@@ -143,9 +166,9 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(222)?.get(2222)).toEqual(0)
     expect(aI.weights.get(222)?.get(2221)).toEqual(0)
     expect(aI.weights.get(222)?.get(22201)).toEqual(0)
-    expect(aI.weights.get(22)?.get(222)).toEqual(1)
-    expect(aI.weights.get(22)?.get(221)).toEqual(1)
-    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+    expect(aI.weights.get(22)?.get(222)).toEqual(1)//<-winning move
+    expect(aI.weights.get(22)?.get(221)).toEqual(0)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(0)
     expect(aI.weights.get(2)?.get(22)).toEqual(0) //<--this changed, too
     expect(aI.weights.get(2)?.get(21)).toEqual(1)
     expect(aI.weights.get(2)?.get(201)).toEqual(1)
@@ -165,9 +188,9 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(22)?.get(222)).toEqual(0)
     expect(aI.weights.get(22)?.get(221)).toEqual(0)
     expect(aI.weights.get(22)?.get(2201)).toEqual(0)
-    expect(aI.weights.get(2)?.get(22)).toEqual(1)
-    expect(aI.weights.get(2)?.get(21)).toEqual(1)
-    expect(aI.weights.get(2)?.get(201)).toEqual(1)
+    expect(aI.weights.get(2)?.get(22)).toEqual(1)//Winning move
+    expect(aI.weights.get(2)?.get(21)).toEqual(0)
+    expect(aI.weights.get(2)?.get(201)).toEqual(0)
     expect(aI.weights.get(0)?.get(2)).toEqual(0) //<--this changed, too
   })
 })
