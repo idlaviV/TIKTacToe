@@ -48,18 +48,20 @@ export function updateLabels(): void {
  * @param graphType The current graph type
  */
 export function getLabelToShow(edgeID: string, graphType: GraphType): string {
-  if (graphType === 'gameGraph') {
-    const handler: GameHandler = GameHandler.getInstance()
-    const currentLabels: [string, string] = labelExport.value[edgeID]
-    if (handler.getNumberOfAIs() === 0) {
+  const handler: GameHandler = GameHandler.getInstance()
+  const currentLabels: [string, string] = labelExport.value[edgeID]
+  switch (graphType) {
+    case 'gameGraph':
+      if (handler.getNumberOfAIs() === 0) {
+        return ''
+      } else {
+        return graphExport.value.edges[edgeID].height % 2 === 0 ? currentLabels[0] : currentLabels[1]
+      }
+    case 'player1Graph':
+      return labelExport.value[edgeID][0]
+    case 'player2Graph':
+      return labelExport.value[edgeID][1]
+    default:
       return ''
-    } else {
-      return graphExport.value.edges[edgeID].height % 2 === 0 ? currentLabels[1] : currentLabels[0]
-    }
-  } else if (graphType === 'player1Graph') {
-    return labelExport.value[edgeID][0]
-  } else if (graphType === 'player2Graph') {
-    return labelExport.value[edgeID][1]
   }
-  return ''
 }

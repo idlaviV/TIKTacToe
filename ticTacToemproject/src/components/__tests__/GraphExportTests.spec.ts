@@ -74,6 +74,14 @@ describe('update', () => {
     checkNode(nodes['10000'], '10000', gameBoard10000.state, 1)
     checkNode(nodes['20001'], '20001', gameBoard20001.state, 2)
     expect(Object.keys(edges).length).toEqual(8)
+    expect(edges['0#1'].height).toEqual(0)
+    expect(edges['0#10'].height).toEqual(0)
+    expect(edges['0#10000'].height).toEqual(0)
+    expect(edges['1#21'].height).toEqual(1)
+    expect(edges['1#102'].height).toEqual(1)
+    expect(edges['1#20001'].height).toEqual(1)
+    expect(edges['1#2100'].height).toEqual(1)
+    expect(edges["1#1000200"].height).toEqual(1)
   })
   test('First turn, move is not an equivalence class', () => {
     gameHandler.gBHandler.gameBoard.value = gameBoard1rot

@@ -45,7 +45,7 @@ export function updateHistory(gameBoard: GameBoard) {
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
   graph.nodes[newCode.toString()] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
-  const height: number = graph.level
+  const height: number = graph.level - 1
   const newEdge: TTTEdge = new TTTEdge(
     graph.activeNodeCode.toString(),
     newCodeString,
