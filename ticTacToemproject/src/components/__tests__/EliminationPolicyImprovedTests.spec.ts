@@ -104,6 +104,8 @@ describe('apply Policy with artificial examples', () => {
   })
 
   test('draw, expect no changes', () => {
+    
+    handler.winner.value = drawStatus
     policy.applyPolicy(aI, history)
     expect(aI.weights.get(22222)?.get(222222)).toEqual(1)
     expect(aI.weights.get(22222)?.get(222221)).toEqual(1) 
@@ -136,7 +138,7 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(22)?.get(2201)).toEqual(1)
   })
 
-  test('loss, expect two weights to change', () => {
+  test('loss, one losing move discovered, which triggers another losing move', () => {
     aI.weights.get(2222)?.set(22221, 0)
     aI.weights.get(2222)?.set(222201, 0)
     policy.applyPolicy(aI, history)
@@ -149,13 +151,13 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(22)?.get(222)).toEqual(0) //<--this changed, too
     expect(aI.weights.get(22)?.get(221)).toEqual(1)
     expect(aI.weights.get(22)?.get(2201)).toEqual(1)
-    expect(aI.weights.get(2)?.get(22)).toEqual(1) //another winning move
-    expect(aI.weights.get(2)?.get(21)).toEqual(0)
-    expect(aI.weights.get(2)?.get(201)).toEqual(0)
+    expect(aI.weights.get(2)?.get(22)).toEqual(1) // this is not a winning move yet, as 22->221 can still be played
+    expect(aI.weights.get(2)?.get(21)).toEqual(1)
+    expect(aI.weights.get(2)?.get(201)).toEqual(1)
   })
 
 
-  test('loss, expect two weights to change ', () => {
+  test('loss, one losing move discovered, but the previous losing move was already known', () => {
     aI.weights.get(222)?.set(2222, 0)
     aI.weights.get(222)?.set(2221, 0)
     aI.weights.get(222)?.set(22201, 0)
@@ -174,7 +176,28 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(2)?.get(201)).toEqual(1)
   })
 
-  test('loss, expect first weight to change', () => {
+  test('loss position does not trigger win-move-elimination, because it already was marked as losing',()=>{
+    aI.weights.get(2222)?.set(22221,0)
+    aI.weights.get(2222)?.set(222201,0)
+    aI.weights.get(222)?.set(2222, 0)
+    aI.weights.get(222)?.set(2221, 0)//established 222->22201 as winning move
+    policy.applyPolicy(aI, history)
+    console.log(aI.weights.get(222))
+    expect(aI.weights.get(22222)?.get(222222)).toEqual(1)//winning move
+    expect(aI.weights.get(22222)?.get(222221)).toEqual(0) //alternative to last winning move
+    expect(aI.weights.get(22222)?.get(2222201)).toEqual(0)//alternative to last winning move
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(0)  //Losing move
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(0)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(0) 
+    expect(aI.weights.get(222)?.get(2222)).toEqual(0) // This is still an alternative to a win move
+    expect(aI.weights.get(222)?.get(2221)).toEqual(0) // This is still an alternative to a win move
+    expect(aI.weights.get(222)?.get(22201)).toEqual(1)//This is still a winning move
+    expect(aI.weights.get(22)?.get(222)).toEqual(1) 
+    expect(aI.weights.get(22)?.get(221)).toEqual(1)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+  })
+
+  test('loss, which eliminates a weight in rank 0', () => {
     aI.weights.get(22)?.set(222, 0)
     aI.weights.get(22)?.set(221, 0)
     aI.weights.get(22)?.set(2201, 0)
