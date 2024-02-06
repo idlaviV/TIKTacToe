@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { debugRandomizerFactory, resetGameHandler } from './TestUtil'
 import { GameSettings } from '@/logic/GameSettings'
 import { UserPlayer } from '@/logic/UserPlayer'
-import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 vi.mock('@/utils/GraphExport', () => {
   return {
@@ -70,7 +70,7 @@ describe('AI will only play if it is on turn', () => {
 
 describe('Player name export', () => {
   test('player1Name', () => {
-    settings.setPlayers(new AIPlayer(new EliminationPolicy(), 'myAI'), new UserPlayer('myUser'))
+    settings.setPlayers(new AIPlayer(new EliminationPolicySimple(), 'myAI'), new UserPlayer('myUser'))
     expect(player1Name.value).toEqual('myAI')
     expect(player2Name.value).toEqual('myUser')
   })

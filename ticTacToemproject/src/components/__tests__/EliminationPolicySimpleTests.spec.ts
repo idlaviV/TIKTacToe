@@ -1,5 +1,5 @@
 import { AIPlayer } from '@/logic/AIPlayer'
-import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
@@ -9,12 +9,12 @@ import { getWeightClone } from './TestUtil'
 const handler = GameHandler.getInstance()
 const weights = new Map()
 
-let policy: EliminationPolicy
+let policy: EliminationPolicySimple
 let aI: AIPlayer
 let history: GameBoard[]
 
 beforeEach(() => {
-  policy = new EliminationPolicy()
+  policy = new EliminationPolicySimple()
   aI = new AIPlayer(policy)
 })
 

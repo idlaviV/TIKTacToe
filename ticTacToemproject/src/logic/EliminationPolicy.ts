@@ -4,11 +4,7 @@ import type { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
 import { drawStatus } from './WinnerStatus'
 
-/**
- * This class implements the {@link EvaluationPolicy} interface.
- * It contains a policy that eliminates the moves that lead to a loss as well as moves that only lead to moves that lead to a loss.
- */
-export class EliminationPolicy implements EvaluationPolicy {
+export abstract class EliminationPolicy implements EvaluationPolicy {
   /**
    * @inheritdoc
    * @override
@@ -20,8 +16,6 @@ export class EliminationPolicy implements EvaluationPolicy {
 
   /**
    * Applies the elimination policy to the given AIPlayer.
-   * It sets the probability to reach all moves that lead to a loss,
-   * as well as moves that only lead to moves that lead to a loss to zero.
    * @inheritdoc
    * @override
    */
@@ -34,7 +28,24 @@ export class EliminationPolicy implements EvaluationPolicy {
     }
   }
 
-  private applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+  /**
+   * Apply the policy to the AIPlayer.
+   */
+  abstract applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void
+}
+
+/**
+ * This class implements the {@link EvaluationPolicy} interface.
+ * It contains a policy that eliminates the moves that lead to a loss as well as moves that only lead to moves that lead to a loss.
+ */
+export class EliminationPolicySimple extends EliminationPolicy {
+  /**
+   * It sets the probability to reach all moves that lead to a loss,
+   * as well as moves that only lead to moves that lead to a loss to zero.
+   * @inheritdoc
+   * @override
+   */
+  applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
     for (let index = history.length - 1; index > 1; index--) {
       if (containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))) {
         aI.getVertexMap(history[index - 2].getNormalForm()).set(

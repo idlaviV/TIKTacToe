@@ -7,7 +7,7 @@ import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
-import { EliminationPolicy } from './EliminationPolicy'
+import { EliminationPolicySimple } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { nextGuiState } from './GuiState'
@@ -33,7 +33,7 @@ export class GameHandler {
    */
   possiblePlayers: Player[] = [
     this.humanPlayer,
-    new AIPlayer(new EliminationPolicy(), 'KI-Elimination'),
+    new AIPlayer(new EliminationPolicySimple(), 'KI-Elimination'),
     new AIPlayer(new BackpropagationPolicy(), 'KI-Fehlerrückführung')
   ]
 
@@ -151,7 +151,7 @@ export class GameHandler {
    */
   createAI(selectedAIOption: number, name: string) {
     if (selectedAIOption === 0) {
-      this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
+      this.possiblePlayers.push(new AIPlayer(new EliminationPolicySimple(), name))
     } else if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
     } else {
