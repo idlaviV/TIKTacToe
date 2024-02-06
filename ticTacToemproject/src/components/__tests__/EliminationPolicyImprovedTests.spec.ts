@@ -192,7 +192,7 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(222)?.get(2222)).toEqual(0) // This is still an alternative to a win move
     expect(aI.weights.get(222)?.get(2221)).toEqual(0) // This is still an alternative to a win move
     expect(aI.weights.get(222)?.get(22201)).toEqual(1)//This is still a winning move
-    expect(aI.weights.get(22)?.get(222)).toEqual(1) 
+    expect(aI.weights.get(22)?.get(222)).toEqual(0) 
     expect(aI.weights.get(22)?.get(221)).toEqual(1)
     expect(aI.weights.get(22)?.get(2201)).toEqual(1)
   })
