@@ -1,7 +1,7 @@
 import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { NormalForm } from './Codes'
 import { Graph, TTTNode } from '@/utils/Graph'
-import { calculateNextNFs } from './GameBoardHandler'
+import { getPossibleNextNormalForms } from './GameBoardHandler'
 
 /**
  * After configuration with GraphBuilder, this graph contains one node for every configuration.
@@ -9,20 +9,7 @@ import { calculateNextNFs } from './GameBoardHandler'
  */
 const bigGraphExport: Graph = new Graph()
 
-const configurationConnections: Map<NormalForm, Set<NormalForm>> = new Map()
 
-/**
- * Returns the normal forms of the configurations which are children of a specific configuration.
- * Already calculated results are stored for later access.
- * @param parent the normal form of the parent configuration
- * @returns A set containing the configurations
- */
-export function getPossibleNextNormalForms(parent: NormalForm): Set<NormalForm> {
-  if (!(parent in configurationConnections)) {
-    configurationConnections.set(parent, calculateNextNFs(parent))
-  }
-  return configurationConnections.get(parent)!
-}
 
 /**
  * A class that constructs the graph of all possible configurations
