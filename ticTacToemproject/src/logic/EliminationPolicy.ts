@@ -31,26 +31,25 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
   /**
    * Apply the policy to the AIPlayer.
    */
-  applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+  private applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
     const handler: GameHandler = GameHandler.getInstance()
     const winner = handler.getWinner().value
     for (let index = history.length - 1; index > 1; index--) {
-      if (this.checkIfLooseMove(aI, history, index, winner)) {
+      if (this.checkIfLoosePosition(aI, history, index, winner)) {
         this.modifyWeights(aI, history, index)
       }
     }
   }
 
   /**
-   * Checks whether the move at the given index is a move that leads to a loss,
-   * i.e. if the move //TODO
-   * @param aI 
-   * @param history 
-   * @param index 
-   * @param winner 
-   * @returns 
+   * Checks whether the position at the given index is a loseing position,
+   * i.e. if every possible move has weight 0 or the previous move already won the game.
+   * @param aI The ai player whose weights should be considered.
+   * @param history The history of the played game.
+   * @param index The position after index moves is considered.
+   * @param winner The winner of the game.
    */
-  checkIfLooseMove(
+  private checkIfLoosePosition(
     aI: AIPlayer,
     history: GameBoard[],
     index: number,
@@ -62,6 +61,10 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
     return containsOnlyZeros(aI.getVertexMap(history[index].getNormalForm()))
   }
 
+  /**
+   * Modifies the weights of the AIPlayer at the given index.
+   * Is only called if the position at the given index is a losing position. 
+   */
   abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): void
 }
 
@@ -71,8 +74,7 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
  */
 export class EliminationPolicySimple extends EliminationPolicy {
   /**
-   * It sets the probability to reach all moves that lead to a loss,
-   * as well as moves that only lead to moves that lead to a loss to zero.
+   * Set the probability of losing turns to 0.
    * @inheritdoc
    * @override
    */
@@ -82,6 +84,9 @@ export class EliminationPolicySimple extends EliminationPolicy {
   }
 }
 
+/**
+ * Checks whether the given map contains only zeros.
+ */
 function containsOnlyZeros(map: Map<number, number>): boolean {
   for (const [, weight] of map) {
     if (weight !== 0) {
