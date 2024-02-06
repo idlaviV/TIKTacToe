@@ -59,7 +59,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
 function getDash(edge: Edge, graphType: GraphType) {
   const dashed = '4'
   const continuous = '0'
-  
+
   return getLabelToShow(edge.source + '#' + edge.target, graphType) === '0' ? dashed : continuous
 }
 

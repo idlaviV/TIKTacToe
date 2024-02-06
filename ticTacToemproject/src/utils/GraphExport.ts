@@ -1,34 +1,32 @@
-import type { GameBoardCode, NormalForm } from '@/logic/Codes'
-import type { FieldType } from '@/logic/FieldType'
+import type { NormalForm } from '@/logic/Codes'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { IsomorphismGroup } from '@/logic/IsomorphismGroup'
 import type { ArrayMultimap } from '@teppeis/multimaps'
-import { type Edge, type Edges, type Node, type Nodes } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 import { layout } from './useGraphLayout'
 import { updateLabels } from './LabelExport'
+import { Graph, TTTEdge, TTTNode } from './Graph'
 
-export class Graph {
+export class GraphExport extends Graph {
   level: number = 0
-  activeNodeCode: number = -1
-  nodes: TTTNodes = {}
-  edges: TTTEdges = {}
+  activeNodeCode: string = 'NotInitialized'
+  activeNodeCodeNum: number = -1
 }
-export const graphExport: Ref<Graph> = ref(new Graph())
-export function getActiveNodeCode(): string {
-  return graphExport.value.activeNodeCode.toString()
-}
+
+export const graphExport: Ref<GraphExport> = ref(new GraphExport())
+
 /**
  * Reset the exported graph and initializes it with the current game state.
  */
 export function initializeHistory() {
-  const graph: Graph = graphExport.value
+  const graph: GraphExport = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
   const newCode: number = gameBoard.getCode()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
   graph.nodes[newCode.toString()] = newNode
-  graph.activeNodeCode = newCode
+  graph.activeNodeCode = newCode.toString()
+  graph.activeNodeCodeNum = newCode
   addChildren(graph)
   graph.level = 1
   updateLabels()
@@ -40,24 +38,25 @@ export function initializeHistory() {
  * @param gameBoard The new game state
  */
 export function updateHistory(gameBoard: GameBoard) {
-  const graph: Graph = graphExport.value
+  const graph: GraphExport = graphExport.value
   const newCode: number = gameBoard.getNormalForm()
   const newCodeString: string = newCode.toString()
-  deleteChild(newCodeString, graph)
+  deleteChild(newCode.toString(), graph)
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
   graph.nodes[newCode.toString()] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
-  const height: number = getHeightFromCode(graph.activeNodeCode)
+  const height: number = graph.level
   const newEdge: TTTEdge = new TTTEdge(
     graph.activeNodeCode.toString(),
     newCodeString,
     key,
     height,
-    graph.activeNodeCode,
+    graph.activeNodeCodeNum,
     newCode
   )
   graph.edges[key] = newEdge
-  graph.activeNodeCode = newCode
+  graph.activeNodeCode = newCodeString
+  graph.activeNodeCodeNum = newCode
   addChildren(graph)
   graph.level++
   updateLabels()
@@ -69,7 +68,7 @@ export function updateHistory(gameBoard: GameBoard) {
  * @param newCode The identifier of the child
  * @param graph The graph containing the node and the edge
  */
-function deleteChild(newCode: string, graph: Graph) {
+function deleteChild(newCode: string, graph: GraphExport) {
   const oldEdgeLabel: string = graph.activeNodeCode + '#' + newCode
   delete graph.edges[oldEdgeLabel]
   delete graph.nodes[newCode]
@@ -78,7 +77,7 @@ function deleteChild(newCode: string, graph: Graph) {
 /**
  * Add nodes and corresponding edges for every possible move to the graph.
  */
-function addChildren(graph: Graph) {
+function addChildren(graph: GraphExport) {
   const childrenOfActiveGameBoard: GameBoard[] =
     GameHandler.getInstance().getPossibleNextPositions()
   const equivalenceClasses: ArrayMultimap<NormalForm, GameBoard> =
@@ -98,7 +97,7 @@ function addChildren(graph: Graph) {
  * @param key The normal form of the equivalence class
  */
 function addChildToGraph(
-  graph: Graph,
+  graph: GraphExport,
   representative: GameBoard,
   alternatives: GameBoard[],
   key: number
@@ -112,16 +111,20 @@ function addChildToGraph(
   )
   graph.nodes[key.toString()] = newNode
   const edgeKey: string = graph.activeNodeCode + '#' + key.toString()
-  const height: number = getHeightFromCode(graph.activeNodeCode)
+  const height: number = graph.level
   const newEdge: TTTEdge = new TTTEdge(
     graph.activeNodeCode.toString(),
     key.toString(),
     edgeKey,
     height,
-    graph.activeNodeCode,
+    graph.activeNodeCodeNum,
     key
   )
   graph.edges[edgeKey] = newEdge
+}
+
+export function getActiveNodeCode(): string {
+  return graphExport.value.activeNodeCode
 }
 
 /**
@@ -130,89 +133,6 @@ function addChildToGraph(
  * @param gameBoard The first game state of the new history
  */
 export function resetHistory() {
-  graphExport.value = new Graph()
+  graphExport.value = new GraphExport()
   initializeHistory()
-}
-
-export type TTTNodes = Nodes & { [key: string]: TTTNode }
-/**
- * This class is a model for the visualization of a game configuration in the graph.
- */
-export class TTTNode implements Node {
-  // A string representation of the code of the gameboard that is visualized by this node.
-  name: string
-  // The code of the gameboard that is visualized by this node.
-  code: GameBoardCode
-  // The state of the gameboard that is visualized by this node.
-  boardState: FieldType[][]
-  // Whether this node is just an intermediate leaf in the graph.
-  isChild: boolean
-  // The level of the node in the graph. The root element has level 0.
-  level: number
-  // All alternative gameboards that could be played, equivalent to the gameboard that is visualized by this node.
-  alternatives: FieldType[][][] = []
-
-  constructor(
-    code: GameBoardCode,
-    boardState: FieldType[][],
-    level: number,
-    isChild: boolean = false,
-    alternatives: FieldType[][][] = []
-  ) {
-    this.name = code.toString()
-    this.code = code
-    this.boardState = boardState
-    this.level = level
-    this.isChild = isChild
-    this.alternatives = alternatives
-  }
-}
-
-export type TTTEdges = Edges & { [key: string]: TTTEdge }
-
-/**
- * This class is a model for the visualization of an edge in the graph.
- */
-export class TTTEdge implements Edge {
-  // The id of the source node of the edge.
-  source: string
-  // The id of the target node of the edge.
-  target: string
-  // The id of the edge.
-  id: string
-  // The height of the edge in the graph.
-  height: number
-  // The code of the source node of the edge.
-  numSource: number
-  // The code of the target node of the edge.
-  numTarget: number
-
-  constructor(
-    source: string,
-    target: string,
-    id: string,
-    height: number,
-    numSource: number,
-    numTarget: number
-  ) {
-    this.source = source
-    this.target = target
-    this.id = id
-    this.height = height
-    this.numSource = numSource
-    this.numTarget = numTarget
-  }
-}
-
-function getHeightFromCode(code: number) {
-  const codeString = code.toString()
-  let height = 0
-
-  for (let index = 0; index < codeString.length; index++) {
-    if (codeString[index] !== '0') {
-      height += 1
-    }
-  }
-
-  return height
 }

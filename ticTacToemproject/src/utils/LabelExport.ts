@@ -3,8 +3,9 @@ import type { AIPlayer } from '@/logic/AIPlayer'
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameSettings } from '@/logic/GameSettings'
 import type { Player } from '@/logic/Player'
-import { graphExport, type TTTEdges } from '@/utils/GraphExport'
+import { graphExport } from '@/utils/GraphExport'
 import { type Ref, ref } from 'vue'
+import type { TTTEdges } from './Graph'
 
 /**
  * This class holds the labels for the edges, by their id, as a tupel of two weights.
@@ -52,10 +53,8 @@ export function getLabelToShow(edgeID: string, graphType: GraphType): string {
     const currentLabels: [string, string] = labelExport.value[edgeID]
     if (handler.getNumberOfAIs() === 0) {
       return ''
-    } else if (handler.getNumberOfAIs() === 1) {
-      return handler.getSettings().getPlayer(1).isAI() ? currentLabels[0] : currentLabels[1]
     } else {
-      return graphExport.value.edges[edgeID].height % 2 === 0 ? currentLabels[0] : currentLabels[1]
+      return graphExport.value.edges[edgeID].height % 2 === 0 ? currentLabels[1] : currentLabels[0]
     }
   } else if (graphType === 'player1Graph') {
     return labelExport.value[edgeID][0]
