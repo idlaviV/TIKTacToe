@@ -2,8 +2,8 @@ import { initializeHistory } from '@/utils/GraphExport'
 import { ref, type Ref } from 'vue'
 import { GameHandler } from './GameHandler'
 
-export const skipStart = ref(false)
-export const skipEvaluation = ref(false)
+export const skipStartScreen = ref(false)
+export const skipEvaluationScreen = ref(false)
 /**
  * The state of the GUI
  * 'start' for player selection,
@@ -37,21 +37,21 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
   switch (state.value) {
     case 'game':
       state.value = 'evaluation'
-      if (!skipEvaluation.value) {
+      if (!skipEvaluationScreen.value) {
         break
       }
     /* falls through */
     case 'evaluation':
       GameHandler.getInstance().performEndOfGameActions(!skipEvaluationOnce)
       state.value = 'postevaluation'
-      if(!skipEvaluation.value && !skipEvaluationOnce) {
+      if(!skipEvaluationScreen.value && !skipEvaluationOnce) {
         break
       }
     /* falls through */
     case 'postevaluation':
       state.value = 'start'
       GameHandler.getInstance().resetGame()
-      if (!skipStart.value) {
+      if (!skipStartScreen.value) {
         break
       }
     /* falls through */

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { skipEvaluation, skipStart } from '@/logic/GuiState'
+import { skipEvaluationScreen, skipStartScreen } from '@/logic/GuiState'
 import { ref } from 'vue'
 
 const menu = ref(false)
@@ -14,8 +14,8 @@ const menu = ref(false)
 
       <v-card class="pe-4">
         <v-card>
-          <v-checkbox-btn label="Automatische Belohnung" v-model="skipEvaluation"></v-checkbox-btn>
-          <v-checkbox-btn label="Start überspringen" v-model="skipStart"></v-checkbox-btn>
+          <v-checkbox-btn label="Automatische Belohnung" v-model="skipEvaluationScreen"></v-checkbox-btn>
+          <v-checkbox-btn label="Start überspringen" v-model="skipStartScreen"></v-checkbox-btn>
         </v-card>
       </v-card>
     </v-menu>
