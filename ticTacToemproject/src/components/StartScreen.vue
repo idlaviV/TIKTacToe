@@ -9,9 +9,6 @@ import { ref, type Ref } from 'vue'
  * @description Starts the game and updates the gui state.
  */
 function startGame() {
-  console.log('Start game with')
-  console.log('Player 1: %s', items.value.find((item) => item.index === select1.value)?.player)
-  console.log('Player 2: %s', items.value.find((item) => item.index === select2.value)?.player)
   GameHandler.getInstance().setPlayers(select1.value, select2.value)
   nextGuiState()
 }

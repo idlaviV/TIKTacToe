@@ -10,7 +10,7 @@ export const skipEvaluation = ref(false)
  * 'game' for the game itself,
  * 'evaluation' for the application of the evaluation strategy.
  */
-export type GuiState = 'start' | 'game' | 'evaluation'
+export type GuiState = 'start' | 'game' | 'evaluation' |'postevaluation'
 const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
@@ -31,7 +31,7 @@ export function setGuiState(newState: GuiState): void {
  * Switches to the next GUI state.
  * If we skip this state, we immediatly switch to the next one.
  */
-export function nextGuiState() {
+export function nextGuiState(skipEvaluationOnce: boolean = false) {
   switch (state.value) {
     case 'game':
       state.value = 'evaluation'
@@ -40,6 +40,13 @@ export function nextGuiState() {
       }
     /* falls through */
     case 'evaluation':
+      GameHandler.getInstance().performEndOfGameActions(!skipEvaluationOnce)
+      state.value = 'postevaluation'
+      if(!skipEvaluation.value && !skipEvaluationOnce) {
+        break
+      }
+    /* falls through */
+    case 'postevaluation':
       state.value = 'start'
       GameHandler.getInstance().resetGame()
       if (!skipStart.value) {
@@ -53,4 +60,5 @@ export function nextGuiState() {
       state.value = 'game'
       break
   }
+  console.log('New state: ' + state.value)
 }

@@ -37,7 +37,7 @@ const config = ref<UserConfigs>(initializeConfig('simpleGraph'))
 watch(getGuiState(), (guiState) => {
   if (guiState === 'game') {
     config.value = initializeConfig('gameGraph')
-  } else if (guiState === 'evaluation') {
+  } else if (guiState === 'evaluation' || guiState ==='postevaluation') {
     if (handler.getNumberOfAIs() === 2) {
       config.value = isPlayer2Graph.value
         ? initializeConfig('player2Graph')
@@ -50,7 +50,7 @@ watch(getGuiState(), (guiState) => {
   }
 })
 watch(isPlayer2Graph, (value) => {
-  if (getGuiState().value === 'evaluation' && handler.getNumberOfAIs() === 2) {
+  if ((getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') && handler.getNumberOfAIs() === 2) {
     config.value = value ? initializeConfig('player2Graph') : initializeConfig('player1Graph')
   }
 })
@@ -81,7 +81,7 @@ watch(isPlayer2Graph, (value) => {
     </v-network-graph>
     <div
       v-if="
-        getGuiState().value === 'evaluation' && GameHandler.getInstance().getNumberOfAIs() === 2
+        (getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') && GameHandler.getInstance().getNumberOfAIs() === 2
       "
       id="labelSwitch"
     >

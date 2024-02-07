@@ -24,7 +24,6 @@ export function initializeHistory() {
   if (graphExport.value.activeNodeCode !== 'NotInitialized') {
     throw new Error("History is already initialized.")
   }
-  console.log("Initialize history. Current level is " + graphExport.value.level.toString())
   const graph: GraphExport = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
   const newCode: number = gameBoard.getCode()
@@ -138,6 +137,5 @@ export function getActiveNodeCode(): string {
  * @param gameBoard The first game state of the new history
  */
 export function resetHistory() {
-  console.log("Reset History")
   graphExport.value = new GraphExport()
 }

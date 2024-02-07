@@ -5,28 +5,14 @@ import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
 import SettingsPopover from './SettingsPopover.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
-import { getGuiState, nextGuiState, skipEvaluation } from '@/logic/GuiState'
-import { ref, watch } from 'vue'
+import { getGuiState, nextGuiState } from '@/logic/GuiState'
+import { watch } from 'vue'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
-let wasEvalApplied = ref(false)
 
-const startEval = () => {
-  gameHandler.performEndOfGameActions(true)
-  wasEvalApplied.value = true
-}
-
-const skipEval = () => {
-  gameHandler.performEndOfGameActions(false)
-  nextGuiState()
-}
-
-const finishEvaluation = () => {
-  nextGuiState()
-}
-
+//deprecated
 const changeVisibility = () => {
   if (winner !== null) {
     document.getElementById('playerOnTurnDisplay')?.classList.toggle('invisible')
@@ -37,13 +23,7 @@ watch(winner, changeVisibility)
 
 const goToEvaluation = () => {
   if (winner.value !== null && getGuiState().value === 'game') {
-    if (!skipEvaluation.value) {
-      wasEvalApplied.value = false
-      nextGuiState()
-    } else {
-      gameHandler.performEndOfGameActions(true)
-      nextGuiState()
-    }
+    nextGuiState()
   }
 }
 
@@ -102,9 +82,9 @@ watch(winner, goToEvaluation)
       Spieler {{ winner }} hat gewonnen!
     </h2>
     <div v-if="winner !== null">
-      <v-btn v-show="!wasEvalApplied" @click="startEval"> Belohnung anwenden </v-btn>
-      <v-btn v-show="!wasEvalApplied" @click="skipEval"> Überspringen </v-btn>
-      <v-btn v-show="wasEvalApplied" @click="finishEvaluation"> Weiter </v-btn>
+      <v-btn v-show="getGuiState().value === 'evaluation'" @click="nextGuiState()"> Belohnung anwenden </v-btn>
+      <v-btn v-show="getGuiState().value === 'evaluation'" @click="nextGuiState(true)"> Überspringen </v-btn>
+      <v-btn v-show="getGuiState().value === 'postevaluation'" @click="nextGuiState()"> Weiter </v-btn>
     </div>
   </div>
 </template>
