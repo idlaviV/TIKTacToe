@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, test, vi, type MockInstance } from 'vites
 import { gameBoardDraw, gameBoardWinPlayer1, resetGameHandler } from './TestUtil'
 import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
-import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
 import * as Gui from '@/logic/GuiState'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 vi.mock('@/utils/GraphExport', () => {
@@ -157,8 +157,8 @@ describe('performEndOfGameActions', () => {
     stateSpy = vi.spyOn(Gui, 'nextGuiState')
   })
   test('should apply policy to both AIs', () => {
-    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
-    handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 2')
+    handler.settings.player1 = new AIPlayer(new EliminationPolicySimple(), 'KI 1')
+    handler.settings.player2 = new AIPlayer(new EliminationPolicySimple(), 'KI 2')
     const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
     const spy2 = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
     handler.performEndOfGameActions(true)
@@ -168,7 +168,7 @@ describe('performEndOfGameActions', () => {
   })
 
   test('should apply policy to same AI only once', () => {
-    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    handler.settings.player1 = new AIPlayer(new EliminationPolicySimple(), 'KI 1')
     handler.settings.player2 = handler.settings.player1
     const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
     handler.performEndOfGameActions(true)
@@ -178,7 +178,7 @@ describe('performEndOfGameActions', () => {
 
   test('should apply policy to AI in position two', () => {
     handler.settings.player1 = handler.humanPlayer
-    handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    handler.settings.player2 = new AIPlayer(new EliminationPolicySimple(), 'KI 1')
     const spy = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
     handler.performEndOfGameActions(true)
     expect(spy).toHaveBeenCalledTimes(1)
@@ -188,13 +188,13 @@ describe('performEndOfGameActions', () => {
 
 describe('getNumberOfAIs', () => {
   test('One AI', () => {
-    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
+    handler.settings.player1 = new AIPlayer(new EliminationPolicySimple(), 'KI 1')
     handler.settings.player2 = handler.humanPlayer
     expect(handler.getNumberOfAIs()).toEqual(1)
   })
   test('Two AIs', () => {
-    handler.settings.player1 = new AIPlayer(new EliminationPolicy(), 'KI 1')
-    handler.settings.player2 = new AIPlayer(new EliminationPolicy(), 'KI 2')
+    handler.settings.player1 = new AIPlayer(new EliminationPolicySimple(), 'KI 1')
+    handler.settings.player2 = new AIPlayer(new EliminationPolicySimple(), 'KI 2')
     expect(handler.getNumberOfAIs()).toEqual(2)
   })
   test('No AI', () => {
@@ -207,16 +207,16 @@ describe('getNumberOfAIs', () => {
 describe('createAI', () => {
   test('EliminationPolicy', () => {
     handler.createAI(0, 'KI 1')
-    const ai: AIPlayer = handler.possiblePlayers[3] as AIPlayer
-    expect(ai.policy).toBeInstanceOf(EliminationPolicy)
+    const ai: AIPlayer = handler.possiblePlayers[4] as AIPlayer
+    expect(ai.policy).toBeInstanceOf(EliminationPolicySimple)
   })
   test('BackpropagationPolicy', () => {
     handler.createAI(1, 'KI 1')
-    const ai: AIPlayer = handler.possiblePlayers[3] as AIPlayer
+    const ai: AIPlayer = handler.possiblePlayers[4] as AIPlayer
     expect(ai.policy).toBeInstanceOf(BackpropagationPolicy)
   })
   test('Invalid option', () => {
-    expect(() => handler.createAI(2, 'KI 1')).toThrow('Invalid AI option')
+    expect(() => handler.createAI(3, 'KI 1')).toThrow('Invalid AI option')
   })
 })
 
