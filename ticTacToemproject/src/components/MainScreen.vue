@@ -20,13 +20,11 @@ const startEval = () => {
 
 const skipEval = () => {
   gameHandler.performEndOfGameActions(false)
-  gameHandler.resetGame()
   nextGuiState()
 }
 
 const finishEvaluation = () => {
   nextGuiState()
-  gameHandler.resetGame()
 }
 
 const changeVisibility = () => {
@@ -44,7 +42,6 @@ const goToEvaluation = () => {
       nextGuiState()
     } else {
       gameHandler.performEndOfGameActions(true)
-      gameHandler.resetGame()
       nextGuiState()
     }
   }
