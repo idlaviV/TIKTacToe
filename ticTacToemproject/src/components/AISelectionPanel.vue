@@ -4,7 +4,8 @@ import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
 
 const aIs = players
-const showSettingsOfAI = ref(false)
+const areSettingsOfAIShown = ref(false)
+let shownPlayerStats = {}
 
 /**
  * Remove the human player from the list of players
@@ -33,6 +34,12 @@ const aiName = ref('Neue KI')
 const resetAiWeights: (index: number) => void = (index: number) => {
   GameHandler.getInstance().resetAiWeights(index)
 }
+
+function showSettingsOfAI(playerName: string) {
+  areSettingsOfAIShown.value = true
+  const possiblePlayers = GameHandler.getInstance().getPossiblePlayers()
+  shownPlayerStats = possiblePlayers.find(player => { return player.getName() === playerName })!.getStats()
+}
 </script>
 
 <!-- The AISelectionPanel contains a list of all existing AIs and the option to create new AIs,
@@ -42,15 +49,12 @@ const resetAiWeights: (index: number) => void = (index: number) => {
   <div>
     <v-card class="mx-auto" max-width="700">
       <v-card-title>KI-Übersichtsfenster</v-card-title>
-      <v-overlay v-model="showSettingsOfAI" contained>
+      <v-overlay v-model="areSettingsOfAIShown" contained>
         <v-card class="settingsOfAI pa-2 ma-2">
-          <v-btn color="red" class="closeButton" v-on:click="showSettingsOfAI = false">X</v-btn>
           <div>
-            Hallo
-            <div>
-              Das ist mein Text
-            </div>
+            {{ shownPlayerStats }}
           </div>
+          <v-btn color="red" size="x-small" class="closeButton" v-on:click="areSettingsOfAIShown = false">X</v-btn>
         </v-card>
       </v-overlay>
       <v-virtual-scroll :items="getAIs" height="220">
@@ -60,7 +64,7 @@ const resetAiWeights: (index: number) => void = (index: number) => {
               <i class="material-symbols-outlined mx-2"> smart_toy </i>
             </template>
             <template v-slot:append>
-              <v-btn v-on:click="showSettingsOfAI = true">X</v-btn>
+              <v-btn v-on:click="showSettingsOfAI(item.player)">X</v-btn>
               <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
             </template>
           </v-list-item>
@@ -90,7 +94,7 @@ const resetAiWeights: (index: number) => void = (index: number) => {
 
 .closeButton {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0px;
+  right: 0px;
 }
 </style>
