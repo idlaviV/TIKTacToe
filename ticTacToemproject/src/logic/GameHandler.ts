@@ -13,6 +13,7 @@ import { updatePlayerList } from '@/utils/PlayerListExport'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
 import { EliminationPolicyImproved } from './EliminationPolicyImproved'
+import { updateLabels } from '@/utils/LabelExport'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -93,6 +94,7 @@ export class GameHandler {
       this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
         ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
         : null
+      updateLabels()
     }
   }
 

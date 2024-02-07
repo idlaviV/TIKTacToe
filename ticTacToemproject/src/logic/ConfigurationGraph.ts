@@ -68,10 +68,17 @@ export class GraphBuilder {
   }
 
   private registerEdge(normalFormParent: NormalForm, normalFormChild: NormalForm) {
-    const firstCode = normalFormParent.toString()
-    const secondCode = normalFormChild.toString()
+    const firstCode = normalFormParent
+    const secondCode = normalFormChild
     const edgeKey: string = firstCode + '#' + secondCode
-    bigGraphExport.edges[edgeKey] = { source: firstCode, target: secondCode }
+    bigGraphExport.edges[edgeKey] = {
+      source: firstCode.toString(),
+      target: secondCode.toString(),
+      id: edgeKey,
+      height: this.level,
+      numSource: firstCode,
+      numTarget: secondCode
+    }
   }
 
   private initializeGraph() {

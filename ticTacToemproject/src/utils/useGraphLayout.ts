@@ -41,7 +41,7 @@ export function layout(nodes: Nodes, edges: Edges) {
   })
 
   dagre.layout(g)
-  const active: string = graphExport.value.activeNodeCode
+  const active: string = graphExport.value.activeNodeCode.toString()
   const offsetx = g.node(active).x
   const offsety = g.node(active).y
 
