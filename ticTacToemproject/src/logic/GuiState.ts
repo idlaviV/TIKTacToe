@@ -1,4 +1,6 @@
+import { initializeHistory } from '@/utils/GraphExport'
 import { ref, type Ref } from 'vue'
+import { GameHandler } from './GameHandler'
 
 export const skipStart = ref(false)
 export const skipEvaluation = ref(false)
@@ -39,11 +41,14 @@ export function nextGuiState() {
     /* falls through */
     case 'evaluation':
       state.value = 'start'
+      GameHandler.getInstance().resetGame()
       if (!skipStart.value) {
         break
       }
     /* falls through */
     case 'start':
+      initializeHistory()
+    /* falls through */
     default:
       state.value = 'game'
       break

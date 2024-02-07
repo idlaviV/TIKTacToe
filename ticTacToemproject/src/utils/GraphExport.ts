@@ -20,8 +20,8 @@ export const graphExport: Ref<GraphExport> = ref(new GraphExport())
  * Reset the exported graph and initializes it with the current game state.
  */
 export function initializeHistory() {
+  console.log("Initialize history. Current level is " + graphExport.value.level.toString())
   const graph: GraphExport = graphExport.value
-  graph.level = 0
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
   const newCode: number = gameBoard.getCode()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
@@ -134,6 +134,6 @@ export function getActiveNodeCode(): string {
  * @param gameBoard The first game state of the new history
  */
 export function resetHistory() {
+  console.log("Reset History")
   graphExport.value = new GraphExport()
-  initializeHistory()
 }

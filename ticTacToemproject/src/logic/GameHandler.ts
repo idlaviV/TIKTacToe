@@ -97,7 +97,6 @@ export class GameHandler {
         : null
       updateLabels()
     }
-    this.resetGame()
     nextGuiState()
   }
 
