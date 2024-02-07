@@ -30,6 +30,8 @@ export function setGuiState(newState: GuiState): void {
 /**
  * Switches to the next GUI state.
  * If we skip this state, we immediatly switch to the next one.
+ * Performs the necessary actions for the transition.
+ * @param skipEvaluationOnce if true, the evaluation is not performed and postevaluation is skipped.
  */
 export function nextGuiState(skipEvaluationOnce: boolean = false) {
   switch (state.value) {
