@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { AIPlayer } from '@/logic/AIPlayer';
-import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy';
+import { AIPlayer } from '@/logic/AIPlayer'
+import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
@@ -10,7 +10,7 @@ const areSettingsOfAIShown = ref(false)
 let aIPlayer = ref<AIPlayer>()
 let winDiff = ref<number>()
 let drawDiff = ref<number>()
-let loseDiff = ref <number>()
+let loseDiff = ref<number>()
 
 /**
  * Remove the human player from the list of players
@@ -43,14 +43,20 @@ const resetAiWeights: (index: number) => void = (index: number) => {
 function showSettingsOfAI(playerName: string) {
   areSettingsOfAIShown.value = true
   const possiblePlayers = GameHandler.getInstance().getPossiblePlayers()
-  aIPlayer.value = possiblePlayers.find(player => { return player.getName() === playerName })! as AIPlayer
+  aIPlayer.value = possiblePlayers.find((player) => {
+    return player.getName() === playerName
+  })! as AIPlayer
   winDiff.value = (aIPlayer.value.policy as BackpropagationPolicy).winDiff
   drawDiff.value = (aIPlayer.value.policy as BackpropagationPolicy).drawDiff
   loseDiff.value = (aIPlayer.value.policy as BackpropagationPolicy).loseDiff
 }
 
 function saveSettings() {
-  (aIPlayer.value!.policy as BackpropagationPolicy).setDiffs(Number(winDiff.value), Number(drawDiff.value), Number(loseDiff.value))
+  ;(aIPlayer.value!.policy as BackpropagationPolicy).setDiffs(
+    Number(winDiff.value),
+    Number(drawDiff.value),
+    Number(loseDiff.value)
+  )
 }
 </script>
 
@@ -68,12 +74,12 @@ function saveSettings() {
           <div class="text-left">Gewonnen: {{ aIPlayer!.getStats().wins }}</div>
           <div class="text-left">Unentschieden: {{ aIPlayer!.getStats().draws }}</div>
           <div class="text-left">Verloren: {{ aIPlayer!.getStats().losses }}</div>
-          
-          <div v-if="(aIPlayer!.policy instanceof BackpropagationPolicy)">
+
+          <div v-if="aIPlayer!.policy instanceof BackpropagationPolicy">
             <br />
             <v-divider></v-divider>
             <br />
-            <div class="text-center font-bold"> Wie soll belohnt werden? </div>
+            <div class="text-center font-bold">Wie soll belohnt werden?</div>
             <br />
             <v-text-field v-model="winDiff" label="Bei Gewinn" />
             <v-text-field v-model="drawDiff" label="Bei Unentschieden" />
@@ -94,7 +100,11 @@ function saveSettings() {
               <i class="material-symbols-outlined mx-2"> smart_toy </i>
             </template>
             <template v-slot:append>
-              <v-btn v-on:click="showSettingsOfAI(item.player)" size="x-small" icon="mdi-wrench"></v-btn>
+              <v-btn
+                v-on:click="showSettingsOfAI(item.player)"
+                size="x-small"
+                icon="mdi-wrench"
+              ></v-btn>
               <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
             </template>
           </v-list-item>
