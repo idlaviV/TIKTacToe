@@ -18,8 +18,12 @@ export const graphExport: Ref<GraphExport> = ref(new GraphExport())
 
 /**
  * Reset the exported graph and initializes it with the current game state.
+ * Should only be called on non-initialized graphs.
  */
 export function initializeHistory() {
+  if (graphExport.value.activeNodeCode !== 'NotInitialized') {
+    throw new Error("History is already initialized.")
+  }
   console.log("Initialize history. Current level is " + graphExport.value.level.toString())
   const graph: GraphExport = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
