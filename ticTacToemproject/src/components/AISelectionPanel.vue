@@ -6,11 +6,11 @@ import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
 
 const aIs = players
-const areSettingsOfAIShown = ref(false)
-let aIPlayer = ref<AIPlayer>()
-let winDiff = ref<number>()
-let drawDiff = ref<number>()
-let loseDiff = ref<number>()
+const areAISettingsShown = ref(false)
+const aIPlayer = ref<AIPlayer>()
+const winDiff = ref<number>()
+const drawDiff = ref<number>()
+const loseDiff = ref<number>()
 
 /**
  * Remove the human player from the list of players
@@ -41,7 +41,7 @@ const resetAiWeights: (index: number) => void = (index: number) => {
 }
 
 function showSettingsOfAI(playerName: string) {
-  areSettingsOfAIShown.value = true
+  areAISettingsShown.value = true
   const possiblePlayers = GameHandler.getInstance().getPossiblePlayers()
   aIPlayer.value = possiblePlayers.find((player) => {
     return player.getName() === playerName
@@ -67,7 +67,7 @@ function saveSettings() {
   <div>
     <v-card class="mx-auto" max-width="700">
       <v-card-title>KI-Übersichtsfenster</v-card-title>
-      <v-overlay v-model="areSettingsOfAIShown" class="justify-center">
+      <v-overlay v-model="areAISettingsShown" class="justify-center">
         <v-card class="pa-4 ma-4">
           <v-card-title class="text-center">{{ aIPlayer!.getName() }}</v-card-title>
           <div class="text-left">Spiele: {{ aIPlayer!.getStats().games }}</div>
@@ -89,7 +89,7 @@ function saveSettings() {
             </v-col>
           </div>
           <v-col class="text-center">
-            <v-btn color="red" v-on:click="areSettingsOfAIShown = false">Schließen</v-btn>
+            <v-btn color="red" v-on:click="areAISettingsShown = false">Schließen</v-btn>
           </v-col>
         </v-card>
       </v-overlay>
