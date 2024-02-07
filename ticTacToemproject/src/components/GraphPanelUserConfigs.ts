@@ -1,13 +1,13 @@
+import { getLabelToShow } from '@/utils/LabelExport'
 import { defineConfigs, type Edge, type UserConfigs } from 'v-network-graph'
+import { type Ref, ref } from 'vue'
 
-export const simpleGraphConfigs = initializeConfig('simpleGraph')
-export const gameGraphConfigs = initializeConfig('gameGraph')
-export const player1GraphConfigs = initializeConfig('player1Graph')
-export const player2GraphConfigs = initializeConfig('player2Graph')
+export const currentGraphType: Ref<GraphType> = ref('simpleGraph')
 
 export type GraphType = 'simpleGraph' | 'gameGraph' | 'player1Graph' | 'player2Graph'
 
-function initializeConfig(graphType: GraphType) {
+export function initializeConfig(graphType: GraphType): UserConfigs {
+  currentGraphType.value = graphType
   const configs: UserConfigs = defineConfigs({
     view: {
       panEnabled: true,
@@ -31,6 +31,7 @@ function initializeConfig(graphType: GraphType) {
     },
     edge: {
       normal: {
+        dasharray: (edge) => getDash(edge, graphType),
         color: '#aaa',
         width: 2
       },
@@ -53,6 +54,13 @@ function initializeConfig(graphType: GraphType) {
   })
 
   return configs
+}
+
+function getDash(edge: Edge, graphType: GraphType) {
+  const dashed = '4'
+  const continuous = '0'
+
+  return getLabelToShow(edge.source + '#' + edge.target, graphType) === '0' ? dashed : continuous
 }
 
 function getLabelColor(edge: Edge, graphType: GraphType) {

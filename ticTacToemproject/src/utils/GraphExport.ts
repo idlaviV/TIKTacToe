@@ -6,11 +6,12 @@ import type { ArrayMultimap } from '@teppeis/multimaps'
 import { type Ref, ref } from 'vue'
 import { layout } from './useGraphLayout'
 import { updateLabels } from './LabelExport'
-import { Graph, TTTNode } from './Graph'
+import { Graph, TTTEdge, TTTNode } from './Graph'
 
 export class GraphExport extends Graph {
   level: number = 0
   activeNodeCode: string = 'NotInitialized'
+  activeNodeCodeNum: number = -1
 }
 
 export const graphExport: Ref<GraphExport> = ref(new GraphExport())
@@ -20,11 +21,13 @@ export const graphExport: Ref<GraphExport> = ref(new GraphExport())
  */
 export function initializeHistory() {
   const graph: GraphExport = graphExport.value
+  graph.level = 0
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
-  const newCode = gameBoard.getCode().toString()
+  const newCode: number = gameBoard.getCode()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
-  graph.nodes[newCode] = newNode
-  graph.activeNodeCode = newCode
+  graph.nodes[newCode.toString()] = newNode
+  graph.activeNodeCode = newCode.toString()
+  graph.activeNodeCodeNum = newCode
   addChildren(graph)
   graph.level = 1
   updateLabels()
@@ -37,14 +40,24 @@ export function initializeHistory() {
  */
 export function updateHistory(gameBoard: GameBoard) {
   const graph: GraphExport = graphExport.value
-  const newCode: string = gameBoard.getNormalForm().toString()
-  deleteChild(newCode, graph)
+  const newCode: number = gameBoard.getNormalForm()
+  const newCodeString: string = newCode.toString()
+  deleteChild(newCode.toString(), graph)
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
-  graph.nodes[newCode] = newNode
+  graph.nodes[newCode.toString()] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
-  const height: number = getHeightFromCode(graph.activeNodeCode)
-  graph.edges[key] = { source: graph.activeNodeCode, target: newCode, id: key, height: height }
-  graph.activeNodeCode = newCode
+  const height: number = graph.level - 1
+  const newEdge: TTTEdge = new TTTEdge(
+    graph.activeNodeCode.toString(),
+    newCodeString,
+    key,
+    height,
+    graph.activeNodeCodeNum,
+    newCode
+  )
+  graph.edges[key] = newEdge
+  graph.activeNodeCode = newCodeString
+  graph.activeNodeCodeNum = newCode
   addChildren(graph)
   graph.level++
   updateLabels()
@@ -74,7 +87,7 @@ function addChildren(graph: GraphExport) {
     IsomorphismGroup.getRepresentativeOfEquivalenceClasses(equivalenceClasses)
   equivalenceClasses.asMap().forEach((value, key) => {
     const representative: GameBoard = representatives.get(key)!
-    addChildToGraph(graph, representative, value, key.toString())
+    addChildToGraph(graph, representative, value, key)
   })
 }
 
@@ -88,7 +101,7 @@ function addChildToGraph(
   graph: GraphExport,
   representative: GameBoard,
   alternatives: GameBoard[],
-  key: string
+  key: number
 ) {
   const newNode: TTTNode = new TTTNode(
     representative.getCode(),
@@ -99,8 +112,16 @@ function addChildToGraph(
   )
   graph.nodes[key.toString()] = newNode
   const edgeKey: string = graph.activeNodeCode + '#' + key.toString()
-  const height: number = getHeightFromCode(graph.activeNodeCode)
-  graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString(), height: height }
+  const height: number = graph.level
+  const newEdge: TTTEdge = new TTTEdge(
+    graph.activeNodeCode.toString(),
+    key.toString(),
+    edgeKey,
+    height,
+    graph.activeNodeCodeNum,
+    key
+  )
+  graph.edges[edgeKey] = newEdge
 }
 
 export function getActiveNodeCode(): string {
@@ -115,15 +136,4 @@ export function getActiveNodeCode(): string {
 export function resetHistory() {
   graphExport.value = new GraphExport()
   initializeHistory()
-}
-function getHeightFromCode(code: string) {
-  let height = 0
-
-  for (let index = 0; index < code.length; index++) {
-    if (code[index] !== '0') {
-      height += 1
-    }
-  }
-
-  return height
 }
