@@ -1,7 +1,7 @@
 import type { GameBoardCode, NormalForm } from './Codes'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import { GameHandler } from './GameHandler'
-import { getPossibleNextNormalForms } from './ConfigurationGraph'
+import { getPossibleNextNormalForms } from './GameBoardHandler'
 import type { GameBoardWithPrevMove } from './Moves'
 import { Player } from './Player'
 import { Randomizer } from './Randomizer'

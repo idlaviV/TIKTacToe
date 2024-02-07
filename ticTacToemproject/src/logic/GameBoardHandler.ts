@@ -8,6 +8,8 @@ import { CustomError } from 'ts-custom-error'
 import type { NormalForm } from './Codes'
 import { GameHandler } from './GameHandler'
 
+const configurationConnections: Map<NormalForm, Set<NormalForm>> = new Map()
+
 /**
  * This class handles the gameboard. It keeps track of the current gameboard and the history of the gameboard.
  * It also provides methods to add pieces to the gameboard and to calculate the winner.
@@ -115,10 +117,23 @@ export class GameBoardHandler {
 }
 
 /**
+ * Returns the normal forms of the configurations which are children of a specific configuration.
+ * Already calculated results are stored for later access.
+ * @param parent the normal form of the parent configuration
+ * @returns A set containing the configurations
+ */
+export function getPossibleNextNormalForms(parent: NormalForm): Set<NormalForm> {
+  if (!(parent in configurationConnections)) {
+    configurationConnections.set(parent, calculateNextNFs(parent))
+  }
+  return configurationConnections.get(parent)!
+}
+
+/**
  * Calculate the normal forms of the positions following a specified NormalForm.
  * @returns a set containing all normal forms
  */
-export function calculateNextNFs(code: NormalForm): Set<number> {
+function calculateNextNFs(code: NormalForm): Set<number> {
   const handler = GameHandler.getInstance()
   const nextNFs: Set<number> = new Set()
   const nextPositions = handler

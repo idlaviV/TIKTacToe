@@ -1,5 +1,5 @@
 import { GameHandler } from '@/logic/GameHandler'
-import { GraphBuilder, getBigGraph, resetBuilder } from '@/logic/ConfigurationGraph'
+import { GraphBuilder, getConfigurationGraphExport, resetBuilder } from '@/logic/ConfigurationGraph'
 import { test, describe, expect, beforeEach } from 'vitest'
 import { gameBoard1, gameBoard2100 } from './TestUtil'
 import { GameBoard } from '@/logic/GameBoard'
@@ -48,7 +48,7 @@ function testForBoards(parent: GameBoard, child: GameBoard) {
   const nf1 = parent.getNormalForm().toString()
   const nf2 = child.getNormalForm().toString()
   const edgeKey = nf1 + '#' + nf2
-  const graph = getBigGraph()
+  const graph = getConfigurationGraphExport()
   expect(nf1 in graph.nodes).toBeTruthy()
   expect(nf2 in graph.nodes).toBeTruthy()
   expect(edgeKey in graph.edges).toBeTruthy()

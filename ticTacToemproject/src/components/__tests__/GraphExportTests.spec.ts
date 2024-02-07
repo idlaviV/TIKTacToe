@@ -81,7 +81,7 @@ describe('update', () => {
     expect(edges['1#102'].height).toEqual(1)
     expect(edges['1#20001'].height).toEqual(1)
     expect(edges['1#2100'].height).toEqual(1)
-    expect(edges["1#1000200"].height).toEqual(1)
+    expect(edges['1#1000200'].height).toEqual(1)
   })
   test('First turn, move is not an equivalence class', () => {
     gameHandler.gBHandler.gameBoard.value = gameBoard1rot
