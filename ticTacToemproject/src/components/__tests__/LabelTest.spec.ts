@@ -1,6 +1,6 @@
 import { AIPlayer } from '@/logic/AIPlayer'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
-import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameSettings } from '@/logic/GameSettings'
 import { UserPlayer } from '@/logic/UserPlayer'
@@ -57,7 +57,7 @@ describe('updateLabel', () => {
   })
 
   test('both Players are AI', () => {
-    settings.setPlayers(aI, new AIPlayer(new EliminationPolicy()))
+    settings.setPlayers(aI, new AIPlayer(new EliminationPolicySimple()))
     updateLabels()
     expect(labelExport.value['0#1']).toEqual(['8', '1'])
     expect(labelExport.value['0#10']).toEqual(['8', '1'])

@@ -11,7 +11,7 @@ import {
   gameBoard21,
   resetGameHandler
 } from './TestUtil'
-import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
 import type { EvaluationPolicy } from '@/logic/EvaluationPolicy'
 import { maxFromAI, debugRandomizerFactory } from './TestUtil'
 
@@ -34,7 +34,7 @@ vi.mock('@/utils/LabelExport', () => {
 beforeEach(() => {
   resetGameHandler()
   gameHandler = GameHandler.getInstance()
-  policy = new EliminationPolicy()
+  policy = new EliminationPolicySimple()
   player = new AIPlayer(policy)
   player.randomizer = debugRandomizer
   gBHandler = gameHandler.getGBHandler()

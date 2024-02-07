@@ -1,5 +1,5 @@
 import { AIPlayer } from '@/logic/AIPlayer'
-import { EliminationPolicy } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
@@ -9,12 +9,12 @@ import { getWeightClone } from './TestUtil'
 const handler = GameHandler.getInstance()
 const weights = new Map()
 
-let policy: EliminationPolicy
+let policy: EliminationPolicySimple
 let aI: AIPlayer
 let history: GameBoard[]
 
 beforeEach(() => {
-  policy = new EliminationPolicy()
+  policy = new EliminationPolicySimple()
   aI = new AIPlayer(policy)
 })
 
@@ -93,6 +93,23 @@ describe('apply Policy with artificial examples', () => {
     expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
     expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
     expect(aI.weights.get(222)?.get(2222)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2221)).toEqual(1)
+    expect(aI.weights.get(222)?.get(22201)).toEqual(1)
+    expect(aI.weights.get(22)?.get(222)).toEqual(1)
+    expect(aI.weights.get(22)?.get(221)).toEqual(1)
+    expect(aI.weights.get(22)?.get(2201)).toEqual(1)
+  })
+
+  test('draw, but there is a loss-move, which gets eliminated', () => {
+    aI.weights.get(22222)?.set(222222, 0)
+    aI.weights.get(22222)?.set(222221, 0)
+    aI.weights.get(22222)?.set(2222201, 0)
+    handler.winner.value = drawStatus
+    policy.applyPolicy(aI, history)
+    expect(aI.weights.get(2222)?.get(22222)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(22221)).toEqual(1)
+    expect(aI.weights.get(2222)?.get(222201)).toEqual(1)
+    expect(aI.weights.get(222)?.get(2222)).toEqual(0) //<- this is a losing move, although the game ended in a draw
     expect(aI.weights.get(222)?.get(2221)).toEqual(1)
     expect(aI.weights.get(222)?.get(22201)).toEqual(1)
     expect(aI.weights.get(22)?.get(222)).toEqual(1)
