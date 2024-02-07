@@ -103,7 +103,6 @@ function addChildToGraph(
   graph.edges[edgeKey] = { source: graph.activeNodeCode, target: key.toString(), height: height }
 }
 
-
 export function getActiveNodeCode(): string {
   return graphExport.value.activeNodeCode
 }

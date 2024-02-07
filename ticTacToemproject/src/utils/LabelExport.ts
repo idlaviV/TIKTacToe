@@ -1,7 +1,7 @@
 import type { AIPlayer } from '@/logic/AIPlayer'
 import { GameHandler } from '@/logic/GameHandler'
 import type { GameSettings } from '@/logic/GameSettings'
-import type { Player } from '@/logic/Player'
+import { Player } from '@/logic/Player'
 import { graphExport } from '@/utils/GraphExport'
 import type { Edges } from 'v-network-graph'
 import { type Ref, ref } from 'vue'

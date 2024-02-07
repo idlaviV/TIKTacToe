@@ -2,17 +2,18 @@ import type { GameBoard } from './GameBoard'
 import { GameBoardHandler, MoveError } from './GameBoardHandler'
 import { GameSettings } from './GameSettings'
 import type { PlayerNumber } from './PlayerNumber'
-import type { WinnerStatus } from './WinnerStatus'
+import { drawStatus, type WinnerStatus } from './WinnerStatus'
 import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
-import { EliminationPolicy } from './EliminationPolicy'
+import { EliminationPolicySimple } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { nextGuiState } from './GuiState'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
+import { EliminationPolicyImproved } from './EliminationPolicyImproved'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -33,8 +34,9 @@ export class GameHandler {
    */
   possiblePlayers: Player[] = [
     this.humanPlayer,
-    new AIPlayer(new EliminationPolicy(), 'KI-Elimination'),
-    new AIPlayer(new BackpropagationPolicy(), 'KI-Fehlerrückführung')
+    new AIPlayer(new EliminationPolicySimple(), 'KI-Elimination'),
+    new AIPlayer(new BackpropagationPolicy(), 'KI-Fehlerrückführung'),
+    new AIPlayer(new EliminationPolicyImproved(), 'KI-Elimination v2.0')
   ]
 
   settings: GameSettings = new GameSettings(this.humanPlayer, this.possiblePlayers[1])
@@ -84,6 +86,7 @@ export class GameHandler {
     if (this.gameCount % 100 == 0) {
       console.log(this.gameCount + ' ' + Date.now())
     }
+    this.registerGamesInStats()
     if (applyPolicy) {
       this.settings.getPlayer(1).isAI()
         ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
@@ -94,6 +97,23 @@ export class GameHandler {
     }
     this.resetGame()
     nextGuiState()
+  }
+
+  private registerGamesInStats() {
+    switch (this.winner.value) {
+      case drawStatus:
+        this.settings.getPlayer(1).playedGame(0)
+        this.settings.getPlayer(2).playedGame(0)
+        break
+      case 1:
+        this.settings.getPlayer(1).playedGame(1)
+        this.settings.getPlayer(2).playedGame(-1)
+        break
+      case 2:
+        this.settings.getPlayer(1).playedGame(-1)
+        this.settings.getPlayer(2).playedGame(1)
+        break
+    }
   }
 
   /**
@@ -133,9 +153,11 @@ export class GameHandler {
    */
   createAI(selectedAIOption: number, name: string) {
     if (selectedAIOption === 0) {
-      this.possiblePlayers.push(new AIPlayer(new EliminationPolicy(), name))
+      this.possiblePlayers.push(new AIPlayer(new EliminationPolicySimple(), name))
     } else if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
+    } else if (selectedAIOption === 2) {
+      this.possiblePlayers.push(new AIPlayer(new EliminationPolicyImproved(), name))
     } else {
       throw new Error('Invalid AI option')
     }
