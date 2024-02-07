@@ -21,6 +21,7 @@ export const graphExport: Ref<GraphExport> = ref(new GraphExport())
  */
 export function initializeHistory() {
   const graph: GraphExport = graphExport.value
+  graph.level = 0
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
   const newCode: number = gameBoard.getCode()
   const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level)
