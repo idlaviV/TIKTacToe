@@ -156,7 +156,7 @@ export class GameHandler {
       this.possiblePlayers.push(new AIPlayer(new EliminationPolicySimple(), name))
     } else if (selectedAIOption === 1) {
       this.possiblePlayers.push(new AIPlayer(new BackpropagationPolicy(), name))
-    } else if (selectedAIOption ===2) {
+    } else if (selectedAIOption === 2) {
       this.possiblePlayers.push(new AIPlayer(new EliminationPolicyImproved(), name))
     } else {
       throw new Error('Invalid AI option')
