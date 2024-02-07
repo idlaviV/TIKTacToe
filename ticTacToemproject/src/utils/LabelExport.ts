@@ -55,7 +55,9 @@ export function getLabelToShow(edgeID: string, graphType: GraphType): string {
       if (handler.getNumberOfAIs() === 0) {
         return ''
       } else {
-        return graphExport.value.edges[edgeID].height % 2 === 0 ? currentLabels[0] : currentLabels[1]
+        return graphExport.value.edges[edgeID].height % 2 === 0
+          ? currentLabels[0]
+          : currentLabels[1]
       }
     case 'player1Graph':
       return labelExport.value[edgeID][0]

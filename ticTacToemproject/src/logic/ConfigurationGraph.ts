@@ -6,7 +6,6 @@ import { getPossibleNextNormalForms } from './GameBoardHandler'
  * @Note This file is not used in the current version of the app.
  */
 
-
 /**
  * After configuration with GraphBuilder, this graph contains one node for every configuration.
  * Edges connect nodes A and B when a move from one representative of A yields a representative of B.
@@ -75,7 +74,11 @@ export class GraphBuilder {
     this.tier = [root]
     this.level = 0
     const normalForm: NormalForm = root.getNormalForm()
-    configurationGraphExport.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), this.level)
+    configurationGraphExport.nodes[normalForm.toString()] = new TTTNode(
+      normalForm,
+      root.clone(),
+      this.level
+    )
   }
 }
 

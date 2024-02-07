@@ -116,8 +116,6 @@ export class GameBoardHandler {
   }
 }
 
-
-
 /**
  * Returns the normal forms of the configurations which are children of a specific configuration.
  * Already calculated results are stored for later access.
