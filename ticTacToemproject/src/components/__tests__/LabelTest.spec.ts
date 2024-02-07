@@ -159,7 +159,7 @@ describe('getLabelToShow elimination ai as player Two', () => {
     labelExport.value['0#10000'] = ['', '1']
     labelExport.value['1#21'] = ['', '1']
     labelExport.value['1#102'] = ['', '1']
-    settings.setPlayers(new UserPlayer(), new AIPlayer(new EliminationPolicy()))
+    settings.setPlayers(new UserPlayer(), new AIPlayer(new EliminationPolicySimple()))
   })
   test('gameGraph', () => {
     expect(getLabelToShow('0#1', 'gameGraph')).toEqual('')
