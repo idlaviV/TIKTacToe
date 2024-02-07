@@ -1,28 +1,16 @@
 import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { NormalForm } from './Codes'
 import { Graph, TTTNode } from '@/utils/Graph'
-import { calculateNextNFs } from './GameBoardHandler'
+import { getPossibleNextNormalForms } from './GameBoardHandler'
+/**
+ * @Note This file is not used in the current version of the app.
+ */
 
 /**
  * After configuration with GraphBuilder, this graph contains one node for every configuration.
  * Edges connect nodes A and B when a move from one representative of A yields a representative of B.
  */
-const bigGraphExport: Graph = new Graph()
-
-const configurationConnections: Map<NormalForm, Set<NormalForm>> = new Map()
-
-/**
- * Returns the normal forms of the configurations which are children of a specific configuration.
- * Already calculated results are stored for later access.
- * @param parent the normal form of the parent configuration
- * @returns A set containing the configurations
- */
-export function getPossibleNextNormalForms(parent: NormalForm): Set<NormalForm> {
-  if (!(parent in configurationConnections)) {
-    configurationConnections.set(parent, calculateNextNFs(parent))
-  }
-  return configurationConnections.get(parent)!
-}
+const configurationGraphExport: Graph = new Graph()
 
 /**
  * A class that constructs the graph of all possible configurations
@@ -60,9 +48,9 @@ export class GraphBuilder {
   private registerNode(normalForm: NormalForm, nextTier: GameBoard[]) {
     const nextBoard: GameBoard = getGameBoardFromCode(normalForm)
     const secondCode = normalForm.toString()
-    if (!(secondCode in bigGraphExport.nodes)) {
+    if (!(secondCode in configurationGraphExport.nodes)) {
       const newNode = new TTTNode(normalForm, nextBoard.state, this.level + 1)
-      bigGraphExport.nodes[normalForm] = newNode
+      configurationGraphExport.nodes[normalForm] = newNode
       nextTier.push(nextBoard)
     }
   }
@@ -71,7 +59,7 @@ export class GraphBuilder {
     const firstCode = normalFormParent
     const secondCode = normalFormChild
     const edgeKey: string = firstCode + '#' + secondCode
-    bigGraphExport.edges[edgeKey] = {
+    configurationGraphExport.edges[edgeKey] = {
       source: firstCode.toString(),
       target: secondCode.toString(),
       id: edgeKey,
@@ -86,18 +74,22 @@ export class GraphBuilder {
     this.tier = [root]
     this.level = 0
     const normalForm: NormalForm = root.getNormalForm()
-    bigGraphExport.nodes[normalForm.toString()] = new TTTNode(normalForm, root.clone(), this.level)
+    configurationGraphExport.nodes[normalForm.toString()] = new TTTNode(
+      normalForm,
+      root.clone(),
+      this.level
+    )
   }
 }
 
-export function getBigGraph() {
-  return bigGraphExport
+export function getConfigurationGraphExport() {
+  return configurationGraphExport
 }
 
 /**
  * For test purposes only
  */
 export function resetBuilder() {
-  bigGraphExport.nodes = {}
-  bigGraphExport.edges = {}
+  configurationGraphExport.nodes = {}
+  configurationGraphExport.edges = {}
 }
