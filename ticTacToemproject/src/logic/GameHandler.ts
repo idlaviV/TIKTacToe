@@ -10,7 +10,6 @@ import { ref, type Ref } from 'vue'
 import { EliminationPolicySimple } from './EliminationPolicy'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
-import { nextGuiState } from './GuiState'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
 import { EliminationPolicyImproved } from './EliminationPolicyImproved'
@@ -95,8 +94,6 @@ export class GameHandler {
         ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
         : null
     }
-    this.resetGame()
-    nextGuiState()
   }
 
   private registerGamesInStats() {
