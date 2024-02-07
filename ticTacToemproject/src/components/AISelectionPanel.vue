@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { AIPlayer } from '@/logic/AIPlayer';
+import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy';
 import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
 
 const aIs = players
 const areSettingsOfAIShown = ref(false)
-let shownPlayerStats = {}
+let aIPlayer = ref<AIPlayer>()
+let winDiff = ref<number>()
+let drawDiff = ref<number>()
+let loseDiff = ref <number>()
 
 /**
  * Remove the human player from the list of players
@@ -38,7 +43,14 @@ const resetAiWeights: (index: number) => void = (index: number) => {
 function showSettingsOfAI(playerName: string) {
   areSettingsOfAIShown.value = true
   const possiblePlayers = GameHandler.getInstance().getPossiblePlayers()
-  shownPlayerStats = possiblePlayers.find(player => { return player.getName() === playerName })!.getStats()
+  aIPlayer.value = possiblePlayers.find(player => { return player.getName() === playerName })! as AIPlayer
+  winDiff.value = (aIPlayer.value.policy as BackpropagationPolicy).winDiff
+  drawDiff.value = (aIPlayer.value.policy as BackpropagationPolicy).drawDiff
+  loseDiff.value = (aIPlayer.value.policy as BackpropagationPolicy).loseDiff
+}
+
+function saveSettings() {
+  (aIPlayer.value!.policy as BackpropagationPolicy).setDiffs(Number(winDiff.value), Number(drawDiff.value), Number(loseDiff.value))
 }
 </script>
 
@@ -49,12 +61,30 @@ function showSettingsOfAI(playerName: string) {
   <div>
     <v-card class="mx-auto" max-width="700">
       <v-card-title>KI-Übersichtsfenster</v-card-title>
-      <v-overlay v-model="areSettingsOfAIShown" contained>
-        <v-card class="settingsOfAI pa-2 ma-2">
-          <div>
-            {{ shownPlayerStats }}
+      <v-overlay v-model="areSettingsOfAIShown" class="justify-center">
+        <v-card class="pa-4 ma-4">
+          <v-card-title class="text-center">{{ aIPlayer!.getName() }}</v-card-title>
+          <div class="text-left">Spiele: {{ aIPlayer!.getStats().games }}</div>
+          <div class="text-left">Gewonnen: {{ aIPlayer!.getStats().wins }}</div>
+          <div class="text-left">Unentschieden: {{ aIPlayer!.getStats().draws }}</div>
+          <div class="text-left">Verloren: {{ aIPlayer!.getStats().losses }}</div>
+          
+          <div v-if="(aIPlayer!.policy instanceof BackpropagationPolicy)">
+            <br />
+            <v-divider></v-divider>
+            <br />
+            <div class="text-center font-bold"> Wie soll belohnt werden? </div>
+            <br />
+            <v-text-field v-model="winDiff" label="Bei Gewinn" />
+            <v-text-field v-model="drawDiff" label="Bei Unentschieden" />
+            <v-text-field v-model="loseDiff" label="Bei Verlieren" />
+            <v-col class="text-center">
+              <v-btn v-on:click="saveSettings()"> Speichern </v-btn>
+            </v-col>
           </div>
-          <v-btn color="red" size="x-small" class="closeButton" v-on:click="areSettingsOfAIShown = false">X</v-btn>
+          <v-col class="text-center">
+            <v-btn color="red" v-on:click="areSettingsOfAIShown = false">Schließen</v-btn>
+          </v-col>
         </v-card>
       </v-overlay>
       <v-virtual-scroll :items="getAIs" height="220">
@@ -64,7 +94,7 @@ function showSettingsOfAI(playerName: string) {
               <i class="material-symbols-outlined mx-2"> smart_toy </i>
             </template>
             <template v-slot:append>
-              <v-btn v-on:click="showSettingsOfAI(item.player)">X</v-btn>
+              <v-btn v-on:click="showSettingsOfAI(item.player)" size="x-small" icon="mdi-wrench"></v-btn>
               <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
             </template>
           </v-list-item>
@@ -86,15 +116,3 @@ function showSettingsOfAI(playerName: string) {
     </v-card>
   </div>
 </template>
-
-<style>
-.settingsOfAI {
-  position: relative;
-}
-
-.closeButton {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-}
-</style>
