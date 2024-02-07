@@ -44,6 +44,7 @@ const goToEvaluation = () => {
       nextGuiState()
     } else {
       gameHandler.performEndOfGameActions(true)
+      gameHandler.resetGame()
       nextGuiState()
     }
   }
