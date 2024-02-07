@@ -6,18 +6,27 @@ import MainScreenMoves from './MainScreenMoves.vue'
 import SettingsPopover from './SettingsPopover.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 import { getGuiState, nextGuiState, skipEvaluation } from '@/logic/GuiState'
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
+let wasEvalApplied = ref(false)
 
 const startEval = () => {
   gameHandler.performEndOfGameActions(true)
+  wasEvalApplied.value = true
 }
 
 const skipEval = () => {
   gameHandler.performEndOfGameActions(false)
+  gameHandler.resetGame()
+  nextGuiState()
+}
+
+const finishEvaluation = () => {
+  nextGuiState()
+  gameHandler.resetGame()
 }
 
 const changeVisibility = () => {
@@ -31,9 +40,12 @@ watch(winner, changeVisibility)
 const goToEvaluation = () => {
   if (winner.value !== null && getGuiState().value === 'game') {
     if (!skipEvaluation.value) {
+      wasEvalApplied.value = false
       nextGuiState()
     } else {
-      startEval()
+      gameHandler.performEndOfGameActions(true)
+      gameHandler.resetGame()
+      nextGuiState()
     }
   }
 }
@@ -85,8 +97,9 @@ watch(winner, goToEvaluation)
       Spieler {{ winner }} hat gewonnen!
     </h2>
     <div v-if="winner !== null">
-      <v-btn @click="startEval"> Belohnung anwenden </v-btn>
-      <v-btn @click="skipEval"> Überspringen </v-btn>
+      <v-btn v-show="!wasEvalApplied" @click="startEval"> Belohnung anwenden </v-btn>
+      <v-btn v-show="!wasEvalApplied" @click="skipEval"> Überspringen </v-btn>
+      <v-btn v-show="wasEvalApplied" @click="finishEvaluation"> Weiter </v-btn>
     </div>
   </div>
 </template>

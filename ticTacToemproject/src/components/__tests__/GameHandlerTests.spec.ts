@@ -153,9 +153,6 @@ describe('getPossibleNextPositions', () => {
 
 describe('performEndOfGameActions', () => {
   let stateSpy: any
-  beforeEach(() => {
-    stateSpy = vi.spyOn(Gui, 'nextGuiState')
-  })
   test('should apply policy to both AIs', () => {
     handler.settings.player1 = new AIPlayer(new EliminationPolicySimple(), 'KI 1')
     handler.settings.player2 = new AIPlayer(new EliminationPolicySimple(), 'KI 2')
@@ -164,7 +161,6 @@ describe('performEndOfGameActions', () => {
     handler.performEndOfGameActions(true)
     expect(spy1).toHaveBeenCalled()
     expect(spy2).toHaveBeenCalled()
-    expect(stateSpy).toHaveBeenCalled()
   })
 
   test('should apply policy to same AI only once', () => {
@@ -173,7 +169,6 @@ describe('performEndOfGameActions', () => {
     const spy1 = vi.spyOn(handler.settings.player1 as AIPlayer, 'applyPolicy')
     handler.performEndOfGameActions(true)
     expect(spy1).toHaveBeenCalledTimes(1)
-    expect(stateSpy).toHaveBeenCalled()
   })
 
   test('should apply policy to AI in position two', () => {
@@ -182,7 +177,6 @@ describe('performEndOfGameActions', () => {
     const spy = vi.spyOn(handler.settings.player2 as AIPlayer, 'applyPolicy')
     handler.performEndOfGameActions(true)
     expect(spy).toHaveBeenCalledTimes(1)
-    expect(stateSpy).toHaveBeenCalled()
   })
 })
 
