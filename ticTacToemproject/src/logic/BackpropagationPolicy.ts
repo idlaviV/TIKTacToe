@@ -21,9 +21,9 @@ export class BackpropagationPolicy implements EvaluationPolicy {
   }
 
   setDiffs(winDiff: number, drawDiff: number, loseDiff: number): void {
-    this.winDiff = winDiff
-    this.drawDiff = drawDiff
-    this.loseDiff = loseDiff
+    this.winDiff = !isNaN(winDiff) ? winDiff : this.winDiff
+    this.drawDiff = !isNaN(drawDiff) ? drawDiff : this.drawDiff
+    this.loseDiff = !isNaN(loseDiff) ? loseDiff : this.loseDiff
   }
 
   /**
