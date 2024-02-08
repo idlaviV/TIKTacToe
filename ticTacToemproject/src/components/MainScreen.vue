@@ -81,8 +81,14 @@ watch(winner, goToEvaluation)
 
     <v-col align="center">
       <v-card class="text-left pa-2 ma-2 playersCard">
-        <div class="text-pink-500 font-bold" id="player1Display">X {{ player1Name }}</div>
-        <div class="text-blue-500" id="player2Display">O {{ player2Name }}</div>
+        <v-row class="text-pink-500 font-bold" id="player1Display">
+          <v-col cols="2" class="text-center">X</v-col>
+          <v-col>{{ player1Name }}</v-col>
+        </v-row>
+        <v-row class="text-blue-500" id="player2Display">
+          <v-col cols="2" class="text-center">O</v-col>
+          <v-col>{{ player2Name }}</v-col>
+        </v-row>
       </v-card>
     </v-col>
     <!-- The current gameboard -->
@@ -105,7 +111,7 @@ watch(winner, goToEvaluation)
 </template>
 <style>
 .playersCard {
-  width: 200px;
+  width: 220px;
 }
 
 #mainScreen {
