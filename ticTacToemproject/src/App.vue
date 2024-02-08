@@ -105,7 +105,7 @@ body {
 }
 
 .tictactoe {
-  font-size: 50px;
+  font-size: 49px;
 }
 
 @font-face {
