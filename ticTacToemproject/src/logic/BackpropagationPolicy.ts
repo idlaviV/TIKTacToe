@@ -21,28 +21,9 @@ export class BackpropagationPolicy implements EvaluationPolicy {
   }
 
   setDiffs(winDiff: number, drawDiff: number, loseDiff: number): void {
-    const maxDiff = 1000
-    if (Number.isInteger(winDiff)) {
-      if (winDiff > maxDiff) {
-        this.winDiff = maxDiff
-      } else if (winDiff < -maxDiff) {
-        this.winDiff = -maxDiff
-      }
-    }
-    if (Number.isInteger(drawDiff)) {
-      if (drawDiff > maxDiff) {
-        this.drawDiff = maxDiff
-      } else if (drawDiff < -maxDiff) {
-        this.drawDiff = -maxDiff
-      }
-    }
-    if (Number.isInteger(loseDiff)) {
-      if (loseDiff > maxDiff) {
-        this.loseDiff = maxDiff
-      } else if (loseDiff < -maxDiff) {
-        this.loseDiff = -maxDiff
-      }
-    }
+    this.winDiff = !isNaN(winDiff) ? winDiff : this.winDiff
+    this.drawDiff = !isNaN(drawDiff) ? drawDiff : this.drawDiff
+    this.loseDiff = !isNaN(loseDiff) ? loseDiff : this.loseDiff
   }
 
   /**
