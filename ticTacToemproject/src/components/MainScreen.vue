@@ -73,13 +73,22 @@ watch(winner, goToEvaluation)
 <template>
   <div id="mainScreen">
     <!-- Caption and prompt for next turn -->
-    <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
+    <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
     <div id="settingsButton">
       <SettingsPopover />
     </div>
 
-    <div class="my-3">
+    <v-row>
+      <v-col />
+        <v-col cols="7" class="pixelify text-xl">
+          <div class="text-left text-pink-500 playerOnTurn" id="player1Display">X {{ player1Name }}</div>
+          <div class="text-left text-blue-500" id="player2Display">O {{ player2Name }}</div>
+        </v-col>
+      <v-col />
+    </v-row>
+
+    <div class="my-3 pixelify">
       <v-row no-gutters align="center" id="player1Display" class="text-pink-500 font-bold">
         <v-col />
         <v-col cols="0">X</v-col>
@@ -112,10 +121,6 @@ watch(winner, goToEvaluation)
   </div>
 </template>
 <style>
-.playersCard {
-  width: 200px;
-}
-
 #mainScreen {
   position: relative;
 }
@@ -124,6 +129,10 @@ watch(winner, goToEvaluation)
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.playerDisplay {
+  max-width: 250px;
 }
 
 .invisible {

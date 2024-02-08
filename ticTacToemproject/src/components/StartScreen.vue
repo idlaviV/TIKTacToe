@@ -37,7 +37,7 @@ const select2 = ref(1)
 <!-- The StartScreen offers the selection of the players for the next game. -->
 <template>
   <div id="startScreen">
-    <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
+    <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
     <div id="settingsButton">
       <SettingsPopover />

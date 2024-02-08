@@ -31,4 +31,30 @@ const mobile = useDisplay().smAndDown
 html {
   background-color: black;
 }
+
+.bigarcade {
+  font-family: "8_big_arcade";
+}
+
+.dogica {
+  font-family: "dogica";
+}
+
+.tictactoe {
+  font-size: 50px;
+}
+
+@font-face {
+    font-family: "8_big_arcade";
+    src: url('./assets/fonts/8_bit_arcade/8-bit Arcade In.ttf');
+}
+
+@font-face {
+  font-family: "dogica";
+  src: url('./assets/fonts/dogica/TTF/dogica.ttf');
+}
+
+.pixelify {
+  font-family: 'Pixelify Sans', sans-serif;
+}
 </style>
