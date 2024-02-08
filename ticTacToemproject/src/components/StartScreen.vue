@@ -36,16 +36,14 @@ const select2 = ref(1)
 
 <!-- The StartScreen offers the selection of the players for the next game. -->
 <template>
-  <div id="startScreen">
+  <v-card class="bg-black" id="startScreen" align="center">
     <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
     <div id="settingsButton">
       <SettingsPopover />
     </div>
 
-    <v-container>
-      <h2>Spielerauswahl</h2>
-
+    <v-card class="playerSelection bg-black">
       <div>
         <v-select
           label="Spieler 1 wählen"
@@ -63,9 +61,9 @@ const select2 = ref(1)
           item-value="index"
         />
       </div>
-    </v-container>
+    </v-card>
     <v-btn v-on:click="startGame" class="bg-white">Spiel starten</v-btn>
-  </div>
+  </v-card>
 </template>
 
 <style>
@@ -77,5 +75,10 @@ const select2 = ref(1)
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.playerSelection {
+  max-width: 300px;
+  justify-self: center;
 }
 </style>

@@ -103,12 +103,6 @@ watch(isPlayer2Graph, (value) => {
   z-index: 10;
 }
 
-#graph {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .graph {
   width: 100%;
   height: 100%;

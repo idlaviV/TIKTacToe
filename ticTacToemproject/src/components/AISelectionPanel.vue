@@ -68,65 +68,64 @@ const rail = ref(true)
 ---- given a name and an AI type.
 -->
 <template>
-  <div>
-    <v-card class="mx-auto" max-width="700">
-      <v-card-title>KI-Übersichtsfenster</v-card-title>
-      <v-overlay v-model="areAISettingsShown" class="justify-center">
-        <v-card class="pa-4 ma-4">
-          <v-card-title class="text-center">{{ aIPlayer!.getName() }}</v-card-title>
-          <div class="text-left">Spiele: {{ aIPlayer!.getStats().games }}</div>
-          <div class="text-left">Gewonnen: {{ aIPlayer!.getStats().wins }}</div>
-          <div class="text-left">Unentschieden: {{ aIPlayer!.getStats().draws }}</div>
-          <div class="text-left">Verloren: {{ aIPlayer!.getStats().losses }}</div>
+  <v-card class="mx-auto" variant="outlined" max-width="700">
+    <v-card-title>KI-Übersichtsfenster</v-card-title>
+    <v-overlay v-model="areAISettingsShown" class="justify-center">
+      <v-card class="pa-4 ma-4">
+        <v-card-title class="text-center">{{ aIPlayer!.getName() }}</v-card-title>
+        <div class="text-left">Spiele: {{ aIPlayer!.getStats().games }}</div>
+        <div class="text-left">Gewonnen: {{ aIPlayer!.getStats().wins }}</div>
+        <div class="text-left">Unentschieden: {{ aIPlayer!.getStats().draws }}</div>
+        <div class="text-left">Verloren: {{ aIPlayer!.getStats().losses }}</div>
 
-          <div v-if="aIPlayer!.policy instanceof BackpropagationPolicy">
-            <br />
-            <v-divider></v-divider>
-            <br />
-            <div class="text-center font-bold">Wie soll belohnt werden?</div>
-            <br />
-            <v-text-field v-model="winDiff" label="Bei Gewinn" />
-            <v-text-field v-model="drawDiff" label="Bei Unentschieden" />
-            <v-text-field v-model="loseDiff" label="Bei Verlieren" />
-            <v-col class="text-center">
-              <v-btn v-on:click="saveSettings()"> Speichern </v-btn>
-            </v-col>
-          </div>
+        <div v-if="aIPlayer!.policy instanceof BackpropagationPolicy">
+          <br />
+          <v-divider></v-divider>
+          <br />
+          <div class="text-center font-bold">Wie soll belohnt werden?</div>
+          <br />
+          <v-text-field v-model="winDiff" label="Bei Gewinn" />
+          <v-text-field v-model="drawDiff" label="Bei Unentschieden" />
+          <v-text-field v-model="loseDiff" label="Bei Verlieren" />
           <v-col class="text-center">
-            <v-btn color="red" v-on:click="areAISettingsShown = false">Schließen</v-btn>
+            <v-btn v-on:click="saveSettings()"> Speichern </v-btn>
           </v-col>
-        </v-card>
-      </v-overlay>
-      <v-virtual-scroll :items="getAIs" height="220">
-        <template v-slot:default="{ item }">
-          <v-list-item :title="item.player">
-            <template v-slot:prepend>
-              <i class="material-symbols-outlined mx-2"> smart_toy </i>
-            </template>
-            <template v-slot:append>
-              <v-btn
-                v-on:click="showSettingsOfAI(item.player)"
-                size="x-small"
-                icon="mdi-wrench"
-              ></v-btn>
-              <v-btn v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
-            </template>
-          </v-list-item>
-        </template>
-      </v-virtual-scroll>
-      <v-divider></v-divider>
-      <v-card-title>Neue KI erzeugen</v-card-title>
-      <v-select
-        label="Wähle einen KI-Typ"
-        v-model="selectedAIOption"
-        :items="aiOptions"
-        item-title="title"
-        item-value="index"
-      />
-      <v-text-field v-model="aiName" label="Wähle einen Namen für die KI" />
-      <v-btn v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)">
-        Erstelle eine neue KI
-      </v-btn>
-    </v-card>
-  </div>
+        </div>
+        <v-col class="text-center">
+          <v-btn color="red" v-on:click="areAISettingsShown = false">Schließen</v-btn>
+        </v-col>
+      </v-card>
+    </v-overlay>
+    <v-virtual-scroll :items="getAIs" height="220">
+      <template v-slot:default="{ item }">
+        <v-list-item :title="item.player">
+          <template v-slot:prepend>
+            <i class="material-symbols-outlined mx-2"> smart_toy </i>
+          </template>
+          <template v-slot:append>
+            <v-btn
+              v-on:click="showSettingsOfAI(item.player)"
+              size="x-small"
+              icon="mdi-wrench"
+              variant="outlined"
+            ></v-btn>
+            <v-btn variant="outlined" v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
+          </template>
+        </v-list-item>
+      </template>
+    </v-virtual-scroll>
+    <v-divider></v-divider>
+    <v-card-title>Neue KI erzeugen</v-card-title>
+    <v-select
+      label="Wähle einen KI-Typ"
+      v-model="selectedAIOption"
+      :items="aiOptions"
+      item-title="title"
+      item-value="index"
+    />
+    <v-text-field v-model="aiName" label="Wähle einen Namen für die KI" />
+    <v-btn variant="outlined" v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)">
+      Erstelle eine neue KI
+    </v-btn>
+  </v-card>
 </template>

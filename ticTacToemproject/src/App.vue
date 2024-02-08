@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
+import { computed, ref, type Ref } from 'vue';
 import LeftPanel from './components/LeftPanel.vue'
 import RightPanel from './components/RightPanel.vue'
 import StartScreen from './components/StartScreen.vue'
@@ -24,8 +24,13 @@ const length = ref(2)
         show-arrows
       >
       <template v-slot:next="{ props }">
-        <v-btn @click="props.onClick">
+        <v-btn variant="outlined" @click="props.onClick">
           Zu den KIs >
+        </v-btn>
+      </template>
+      <template v-slot:prev="{ props }">
+        <v-btn variant="outlined" @click="props.onClick">
+          &lt; Zurück
         </v-btn>
       </template>
         <v-window-item>
@@ -40,10 +45,20 @@ const length = ref(2)
     </v-container>
 
     <v-container v-show="guiState !== 'start'">
-      <v-window
+      <v-window v-show="mobile"
         v-model="window"
         show-arrows
       >
+      <template v-slot:next="{ props }">
+        <v-btn variant="outlined" @click="props.onClick">
+          Zum Graph >
+        </v-btn>
+      </template>
+      <template v-slot:prev="{ props }">
+        <v-btn variant="outlined" @click="props.onClick">
+          &lt; Zurück
+        </v-btn>
+      </template>
         <v-window-item>
           <v-container>
             <MainScreen/>
@@ -53,6 +68,17 @@ const length = ref(2)
           <GraphPanel />
         </v-window-item>
       </v-window>
+        
+      <v-container v-show="!mobile">
+        <v-row no-gutters>
+          <v-col cols="4" class="text-center">
+            <v-container><LeftPanel /></v-container>
+          </v-col>
+          <v-col>
+            <v-container><RightPanel /></v-container>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-container>
   </main>
 </template>

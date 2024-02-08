@@ -71,7 +71,7 @@ watch(winner, goToEvaluation)
 
 <!-- The main screen contains the gameboard and main controls. -->
 <template>
-  <div id="mainScreen">
+  <v-card class="bg-black" id="mainScreen" align="center">
     <!-- Caption and prompt for next turn -->
     <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
@@ -101,7 +101,7 @@ watch(winner, goToEvaluation)
       <v-btn class="bg-white" v-show="!wasEvalApplied" @click="skipEval"> Überspringen </v-btn>
       <v-btn class="bg-white" v-show="wasEvalApplied" @click="finishEvaluation"> Weiter </v-btn>
     </div>
-  </div>
+  </v-card>
 </template>
 <style>
 #mainScreen {
