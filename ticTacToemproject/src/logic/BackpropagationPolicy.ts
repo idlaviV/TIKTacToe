@@ -27,6 +27,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
         this.winDiff = maxDiff
       } else if (winDiff < -maxDiff) {
         this.winDiff = -maxDiff
+      } else {
+        this.winDiff = winDiff
       }
     }
     if (Number.isInteger(drawDiff)) {
@@ -34,6 +36,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
         this.drawDiff = maxDiff
       } else if (drawDiff < -maxDiff) {
         this.drawDiff = -maxDiff
+      } else {
+        this.drawDiff = drawDiff
       }
     }
     if (Number.isInteger(loseDiff)) {
@@ -41,6 +45,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
         this.loseDiff = maxDiff
       } else if (loseDiff < -maxDiff) {
         this.loseDiff = -maxDiff
+      } else {
+        this.loseDiff = loseDiff
       }
     }
   }
