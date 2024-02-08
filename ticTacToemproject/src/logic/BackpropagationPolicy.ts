@@ -21,33 +21,33 @@ export class BackpropagationPolicy implements EvaluationPolicy {
   }
 
   setDiffs(winDiff: number, drawDiff: number, loseDiff: number): void {
+    const newWinDiff = this.validateSetOfDiff(winDiff)
+    const newDrawDiff = this.validateSetOfDiff(drawDiff)
+    const newLoseDiff = this.validateSetOfDiff(loseDiff)
+
+    if (!isNaN(newWinDiff)) {
+      this.winDiff = newWinDiff
+    }
+    if (!isNaN(newDrawDiff)) {
+      this.drawDiff = newDrawDiff
+    }
+    if (!isNaN(newLoseDiff)) {
+      this.loseDiff = newLoseDiff
+    }
+  }
+
+  private validateSetOfDiff(diff: number) {
     const maxDiff = 1000
-    if (Number.isInteger(winDiff)) {
-      if (winDiff > maxDiff) {
-        this.winDiff = maxDiff
-      } else if (winDiff < -maxDiff) {
-        this.winDiff = -maxDiff
+    if (Number.isInteger(diff)) {
+      if (diff > maxDiff) {
+        return maxDiff
+      } else if (diff < -maxDiff) {
+        return -maxDiff
       } else {
-        this.winDiff = winDiff
+        return diff
       }
-    }
-    if (Number.isInteger(drawDiff)) {
-      if (drawDiff > maxDiff) {
-        this.drawDiff = maxDiff
-      } else if (drawDiff < -maxDiff) {
-        this.drawDiff = -maxDiff
-      } else {
-        this.drawDiff = drawDiff
-      }
-    }
-    if (Number.isInteger(loseDiff)) {
-      if (loseDiff > maxDiff) {
-        this.loseDiff = maxDiff
-      } else if (loseDiff < -maxDiff) {
-        this.loseDiff = -maxDiff
-      } else {
-        this.loseDiff = loseDiff
-      }
+    } else {
+      return NaN
     }
   }
 
