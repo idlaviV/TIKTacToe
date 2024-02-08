@@ -20,6 +20,14 @@ export class BackpropagationPolicy implements EvaluationPolicy {
     this.loseDiff = loseDiff
   }
 
+  /**
+   * Sets the values, that are added from the weights of the AI.
+   * If the value is no int, it will not be set.
+   * If the value is higher than 1000 or lower than -1000, it will be set to 1000/-1000.
+   * @param winDiff the value added, if the AI had won
+   * @param drawDiff the value added, if the game ended with a draw
+   * @param loseDiff the value added, if the AI had lost
+   */
   setDiffs(winDiff: number, drawDiff: number, loseDiff: number): void {
     const newWinDiff = this.validateSetOfDiff(winDiff)
     const newDrawDiff = this.validateSetOfDiff(drawDiff)
@@ -36,6 +44,14 @@ export class BackpropagationPolicy implements EvaluationPolicy {
     }
   }
 
+  /**
+   * Checks, if the value is valid for a diff value.
+   * @param diff the value to be validated
+   * @returns If the value is no int: return NaN
+   *          If the value is higher than 1000: return 1000
+   *          If the value is lower than -1000: return -1000
+   *          Else: return diff
+   */
   private validateSetOfDiff(diff: number) {
     const maxDiff = 1000
     if (Number.isInteger(diff)) {
