@@ -26,3 +26,9 @@ const mobile = useDisplay().smAndDown
     </v-container>
   </main>
 </template>
+
+<style>
+html {
+  background-color: black;
+}
+</style>
