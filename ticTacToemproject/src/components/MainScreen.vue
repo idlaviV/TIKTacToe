@@ -79,29 +79,12 @@ watch(winner, goToEvaluation)
       <SettingsPopover />
     </div>
 
-    <v-row>
-      <v-col />
-        <v-col cols="7" class="pixelify text-xl">
-          <div class="text-left text-pink-500 playerOnTurn" id="player1Display">X {{ player1Name }}</div>
-          <div class="text-left text-blue-500" id="player2Display">O {{ player2Name }}</div>
-        </v-col>
-      <v-col />
-    </v-row>
-
-    <div class="my-3 pixelify">
-      <v-row no-gutters align="center" id="player1Display" class="text-pink-500 font-bold">
-        <v-col />
-        <v-col cols="0">X</v-col>
-        <v-col cols="6" class="text-left">{{ player1Name }}</v-col>
-        <v-col />
-      </v-row>
-      <v-row no-gutters align="center" id="player2Display" class="text-blue-500">
-        <v-col />
-        <v-col cols="0">O</v-col>
-        <v-col cols="6" class="text-left">{{ player2Name }}</v-col>
-        <v-col />
-      </v-row>
-    </div>
+    <v-col align="center">
+      <v-card class="pixelify text-xl bg-black playerDisplay" align="center">
+        <div class="text-left text-pink-500 playerOnTurn" id="player1Display">X {{ player1Name }}</div>
+        <div class="text-left text-blue-500" id="player2Display">O {{ player2Name }}</div>
+      </v-card>
+    </v-col>
     <!-- The current gameboard -->
     <MainScreenBoard />
 

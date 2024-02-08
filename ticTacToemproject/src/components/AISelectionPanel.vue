@@ -59,6 +59,9 @@ function saveSettings() {
     Number(loseDiff.value)
   )
 }
+
+const drawer = ref(true)
+const rail = ref(true)
 </script>
 
 <!-- The AISelectionPanel contains a list of all existing AIs and the option to create new AIs,

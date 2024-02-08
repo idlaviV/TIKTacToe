@@ -70,6 +70,7 @@ watch(isPlayer2Graph, (value) => {
     >
       <template #edge-label="{ edgeId, ...slotProps }">
         <v-edge-label
+          class="dogica text-xs"
           vertical-align="above"
           :text="getLabelToShow(edgeId, graphType.value)"
           v-bind="slotProps"
