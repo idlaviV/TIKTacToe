@@ -9,7 +9,7 @@ const menu = ref(false)
   <div class="text-center">
     <v-menu v-model="menu" :close-on-content-click="false" location="end">
       <template v-slot:activator="{ props }">
-        <v-btn v-bind="props" size="x-small" icon="mdi-wrench"></v-btn>
+        <v-btn v-bind="props" size="x-small" icon="mdi-wrench" class="bg-white"></v-btn>
       </template>
 
       <v-card class="pe-4">

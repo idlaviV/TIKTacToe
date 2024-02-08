@@ -105,9 +105,9 @@ watch(winner, goToEvaluation)
       Spieler {{ winner }} hat gewonnen!
     </h2>
     <div v-if="winner !== null">
-      <v-btn v-show="!wasEvalApplied" @click="startEval"> Belohnung anwenden </v-btn>
-      <v-btn v-show="!wasEvalApplied" @click="skipEval"> Überspringen </v-btn>
-      <v-btn v-show="wasEvalApplied" @click="finishEvaluation"> Weiter </v-btn>
+      <v-btn class="bg-white" v-show="!wasEvalApplied" @click="startEval"> Belohnung anwenden </v-btn>
+      <v-btn class="bg-white" v-show="!wasEvalApplied" @click="skipEval"> Überspringen </v-btn>
+      <v-btn class="bg-white" v-show="wasEvalApplied" @click="finishEvaluation"> Weiter </v-btn>
     </div>
   </div>
 </template>

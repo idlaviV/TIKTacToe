@@ -64,7 +64,7 @@ const select2 = ref(1)
         />
       </div>
     </v-container>
-    <v-btn v-on:click="startGame">Spiel starten</v-btn>
+    <v-btn v-on:click="startGame" class="bg-white">Spiel starten</v-btn>
   </div>
 </template>
 
