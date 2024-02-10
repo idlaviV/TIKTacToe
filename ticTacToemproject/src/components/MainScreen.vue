@@ -52,8 +52,13 @@ const goToEvaluation = () => {
 
 const changePlayerDisplay = () => {
   if (winner.value === null) {
-    document.getElementById('player1Display')?.classList.toggle('font-bold')
-    document.getElementById('player2Display')?.classList.toggle('font-bold')
+    if (playerOnTurn.value === 1) {
+      document.getElementById('player1Display')?.classList.add('font-bold')
+      document.getElementById('player2Display')?.classList.remove('font-bold')
+    } else {
+      document.getElementById('player1Display')?.classList.remove('font-bold')
+      document.getElementById('player2Display')?.classList.add('font-bold')
+    }
   } else {
     document.getElementById('player1Display')?.classList.remove('font-bold')
     document.getElementById('player2Display')?.classList.remove('font-bold')

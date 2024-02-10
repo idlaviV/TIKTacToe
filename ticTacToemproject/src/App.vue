@@ -45,7 +45,7 @@ const length = ref(2)
     </v-container>
 
     <v-container v-show="guiState !== 'start'">
-      <v-window v-show="mobile"
+      <v-window v-if="mobile"
         v-model="window"
         show-arrows
       >
@@ -69,13 +69,13 @@ const length = ref(2)
         </v-window-item>
       </v-window>
         
-      <v-container v-show="!mobile">
-        <v-row no-gutters>
-          <v-col cols="4" class="text-center">
-            <v-container><LeftPanel /></v-container>
+      <v-container v-if="!mobile">
+        <v-row>
+          <v-col cols="4">
+            <v-container><MainScreen/></v-container>
           </v-col>
           <v-col>
-            <v-container><RightPanel /></v-container>
+            <v-container><GraphPanel/></v-container>
           </v-col>
         </v-row>
       </v-container>
