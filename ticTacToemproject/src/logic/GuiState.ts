@@ -2,6 +2,7 @@ import { ref, type Ref } from 'vue'
 
 export const skipStart = ref(false)
 export const skipEvaluation = ref(false)
+export const useDigitalFont = ref(true)
 /**
  * The state of the GUI
  * 'start' for player selection,

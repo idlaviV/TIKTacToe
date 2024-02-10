@@ -8,7 +8,7 @@ import {
 import GraphPanelNode from './GraphPanelNode.vue'
 import { currentGraphType, initializeConfig } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { getGuiState } from '@/logic/GuiState'
+import { getGuiState, useDigitalFont } from '@/logic/GuiState'
 import { computed, ref, watch } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
@@ -54,6 +54,8 @@ watch(isPlayer2Graph, (value) => {
     config.value = value ? initializeConfig('player2Graph') : initializeConfig('player1Graph')
   }
 })
+
+
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
@@ -68,9 +70,17 @@ watch(isPlayer2Graph, (value) => {
       :layouts="layouts"
       :configs="config"
     >
-      <template #edge-label="{ edgeId, ...slotProps }">
+      <template v-if="useDigitalFont" #edge-label="{ edgeId, ...slotProps }">
         <v-edge-label
           class="dogica text-xs"
+          vertical-align="above"
+          :text="getLabelToShow(edgeId, graphType.value)"
+          v-bind="slotProps"
+        />
+      </template>
+      <template v-else #edge-label="{ edgeId, ...slotProps }">
+        <v-edge-label
+          class="text-xl"
           vertical-align="above"
           :text="getLabelToShow(edgeId, graphType.value)"
           v-bind="slotProps"
@@ -107,6 +117,6 @@ watch(isPlayer2Graph, (value) => {
   width: 100%;
   height: 100%;
   border: 1px solid #38373d;
-  height: 90vh;
+  height: 81vh;
 }
 </style>

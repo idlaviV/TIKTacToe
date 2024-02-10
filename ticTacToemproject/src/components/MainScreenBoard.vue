@@ -17,7 +17,7 @@ const MakeMove = (x: number, y: number) => {
 
 <!-- The MainScreenBoard visualizes the state of the gameboard. -->
 <template>
-  <div class="flex flex-col items-center mb-8 pixelify">
+  <div class="flex flex-col items-center mb-8">
     <!-- Iterate rows and columns of the gameboard -->
     <div v-for="(row, x) in gameBoard.state" :key="x" class="flex">
       <div

@@ -68,7 +68,7 @@ const rail = ref(true)
 ---- given a name and an AI type.
 -->
 <template>
-  <v-card class="mx-auto" variant="outlined" max-width="700">
+  <v-card class="mx-auto" variant="outlined" max-width="500">
     <v-card-title>KI-Übersichtsfenster</v-card-title>
     <v-overlay v-model="areAISettingsShown" class="justify-center">
       <v-card class="pa-4 ma-4">

@@ -75,10 +75,6 @@ watch(winner, goToEvaluation)
     <!-- Caption and prompt for next turn -->
     <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
-    <div id="settingsButton">
-      <SettingsPopover />
-    </div>
-
     <v-col align="center">
       <v-card class="text-xl bg-black playerDisplay" align="center">
         <div id="player1Display" class="text-left text-pink-500 font-bold">X {{ player1Name }}</div>

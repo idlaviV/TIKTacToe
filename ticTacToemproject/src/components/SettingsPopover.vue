@@ -1,23 +1,17 @@
 <script setup lang="ts">
-import { skipEvaluation, skipStart } from '@/logic/GuiState'
+import { skipEvaluation, skipStart, useDigitalFont } from '@/logic/GuiState'
 import { ref } from 'vue'
 
 const menu = ref(false)
 </script>
 
 <template>
-  <div class="text-center">
-    <v-menu v-model="menu" :close-on-content-click="false" location="end">
-      <template v-slot:activator="{ props }">
-        <v-btn v-bind="props" size="x-small" icon="mdi-wrench" variant="outlined"></v-btn>
-      </template>
-
-      <v-card class="pe-4">
-        <v-card>
-          <v-checkbox-btn label="Automatische Belohnung" v-model="skipEvaluation"></v-checkbox-btn>
-          <v-checkbox-btn label="Start überspringen" v-model="skipStart"></v-checkbox-btn>
-        </v-card>
-      </v-card>
-    </v-menu>
-  </div>
+  <v-card class="mx-auto" variant="outlined" max-width="500">
+    <div class="mx-2 my-2">
+      <v-card-title>Einstellungen</v-card-title>
+      <v-checkbox-btn label="Automatische Belohnung" v-model="skipEvaluation"></v-checkbox-btn>
+      <v-checkbox-btn label="Start überspringen" v-model="skipStart"></v-checkbox-btn>
+      <v-switch class="mx-2" v-model="useDigitalFont" label="Benutze digital Font"></v-switch>
+    </div>
+  </v-card>
 </template>
