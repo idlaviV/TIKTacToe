@@ -100,8 +100,29 @@ const nextAiTurn = () => {
       min="1"
       max="10"
       class="slider"
-      id="speed"
       v-model="moveSpeed"
     />
   </div>
 </template>
+
+<style>
+.slider {
+  appearance: none;
+  height: 1px;
+  width: 100px;
+  margin-bottom: 3px;
+  margin-left: 8px;
+  background: #d3d3d3;
+  outline: none;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 0;
+  border-width: 1px;
+  border-color: white;
+  background: black;
+  cursor: pointer;
+}
+</style>
