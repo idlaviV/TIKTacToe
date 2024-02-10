@@ -92,13 +92,13 @@ watch(winner, goToEvaluation)
     <MainScreenMoves />
     <br /><br />
     <!-- Display winner -->
-    <h2 v-show="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
-    <h2 v-show="winner === 1 || winner === 2" class="text-4xl mb-8">
-      Spieler {{ winner }} hat gewonnen!
+    <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
+    <h2 v-if="winner === 1 || winner === 2" class="text-4xl mb-8">
+      Spieler {{ winner }} gewinnt!
     </h2>
     <div v-if="winner !== null">
       <v-btn class="my-2 mx-2 bg-white" v-show="!wasEvalApplied" @click="startEval"> Belohnung anwenden </v-btn>
-      <v-btn class="my-2 mx-2 bg-white" v-show="!wasEvalApplied" @click="skipEval"> Überspringen </v-btn>
+      <v-btn class="my-2 mx-2" variant="outlined" v-show="!wasEvalApplied" @click="skipEval"> Überspringen </v-btn>
       <v-btn class="my-2 mx-2 bg-white" v-show="wasEvalApplied" @click="finishEvaluation"> Weiter </v-btn>
     </div>
   </v-card>

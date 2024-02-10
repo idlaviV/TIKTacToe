@@ -34,14 +34,10 @@ const select1 = ref(0)
 const select2 = ref(1)
 </script>
 
-<!-- The StartScreen offers the selection of the players for the next game. -->
+<!-- The StartScreen offers the selectiöon of the players for the next game. -->
 <template>
-  <v-card class="bg-black" id="startScreen" align="center">
+  <v-card class="bg-black" align="center">
     <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
-
-    <div id="settingsButton">
-      <SettingsPopover />
-    </div>
 
     <v-card class="playerSelection bg-black">
       <div>
@@ -67,15 +63,6 @@ const select2 = ref(1)
 </template>
 
 <style>
-#startScreen {
-  position: relative;
-}
-
-#settingsButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
 
 .playerSelection {
   max-width: 300px;

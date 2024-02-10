@@ -1,38 +1,49 @@
 <script setup lang="ts">
 import { computed, ref, type Ref } from 'vue';
-import LeftPanel from './components/LeftPanel.vue'
-import RightPanel from './components/RightPanel.vue'
 import StartScreen from './components/StartScreen.vue'
 import AISelectionPanel from './components/AISelectionPanel.vue'
 import MainScreen from './components/MainScreen.vue'
 import GraphPanel from './components/GraphPanel.vue'
 import { useDisplay } from 'vuetify'
 import { getGuiState, type GuiState } from './logic/GuiState';
+import SettingsPopover from './components/SettingsPopover.vue';
 
 const guiState: Ref<GuiState> = getGuiState()
 const mobile = useDisplay().smAndDown
 
 const window = ref(0)
-const length = ref(2)
 </script>
 
 <template>
   <main>
     <v-container v-show="guiState === 'start'">
-      <v-window
-        v-model="window"
-        show-arrows
-      >
-      <template v-slot:next="{ props }">
-        <v-btn variant="outlined" @click="props.onClick">
-          Zu den KIs >
-        </v-btn>
-      </template>
-      <template v-slot:prev="{ props }">
-        <v-btn variant="outlined" @click="props.onClick">
-          &lt; Zurück
-        </v-btn>
-      </template>
+      <v-window v-model="window">
+        <v-layout>
+          <v-bottom-navigation
+            v-model="window"
+            class="bg-black"
+            color=white
+            horizontal
+          >
+            <v-btn width="120">
+              <v-icon>mdi-nintendo-game-boy</v-icon>
+
+              Spiel
+            </v-btn>
+
+            <v-btn width="120">
+              <v-icon>mdi-robot</v-icon>
+
+              KIs
+            </v-btn>
+
+            <v-btn width="120">
+              <v-icon>mdi-wrench</v-icon>
+
+              Einstellungen
+            </v-btn>
+          </v-bottom-navigation>
+        </v-layout>
         <v-window-item>
           <v-container>
             <StartScreen/>
@@ -41,24 +52,14 @@ const length = ref(2)
         <v-window-item>
           <AISelectionPanel />
         </v-window-item>
+        <v-window-item>
+          <SettingsPopover />
+        </v-window-item>
       </v-window>
     </v-container>
 
     <v-container v-show="guiState !== 'start'">
-      <v-window v-if="mobile"
-        v-model="window"
-        show-arrows
-      >
-      <template v-slot:next="{ props }">
-        <v-btn variant="outlined" @click="props.onClick">
-          Zum Graph >
-        </v-btn>
-      </template>
-      <template v-slot:prev="{ props }">
-        <v-btn variant="outlined" @click="props.onClick">
-          &lt; Zurück
-        </v-btn>
-      </template>
+      <v-window v-if="mobile" v-model="window">
         <v-window-item>
           <v-container>
             <MainScreen/>
