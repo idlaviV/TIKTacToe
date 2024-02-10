@@ -31,7 +31,7 @@ const finishEvaluation = () => {
 
 const changeVisibility = () => {
   if (winner !== null) {
-    document.getElementById('playerOnTurnDisplay')?.classList.toggle('invisible')
+    document.getElementById('playerDisplay')?.classList.toggle('invisible')
   }
 }
 
@@ -52,13 +52,8 @@ const goToEvaluation = () => {
 
 const changePlayerDisplay = () => {
   if (winner.value === null) {
-    if (playerOnTurn.value === 1) {
-      document.getElementById('player1Display')?.classList.add('font-bold')
-      document.getElementById('player2Display')?.classList.remove('font-bold')
-    } else {
-      document.getElementById('player1Display')?.classList.remove('font-bold')
-      document.getElementById('player2Display')?.classList.add('font-bold')
-    }
+    document.getElementById('player1Display')?.classList.toggle('font-bold')
+    document.getElementById('player2Display')?.classList.toggle('font-bold')
   } else {
     document.getElementById('player1Display')?.classList.remove('font-bold')
     document.getElementById('player2Display')?.classList.remove('font-bold')
@@ -80,9 +75,9 @@ watch(winner, goToEvaluation)
     </div>
 
     <v-col align="center">
-      <v-card class="pixelify text-xl bg-black playerDisplay" align="center">
-        <div class="text-left text-pink-500 playerOnTurn" id="player1Display">X {{ player1Name }}</div>
-        <div class="text-left text-blue-500" id="player2Display">O {{ player2Name }}</div>
+      <v-card class="text-xl bg-black playerDisplay" align="center">
+        <div id="player1Display" class="text-left text-pink-500 font-bold">X {{ player1Name }}</div>
+        <div id="player2Display" class="text-left text-blue-500">O {{ player2Name }}</div>
       </v-card>
     </v-col>
     <!-- The current gameboard -->
@@ -115,7 +110,7 @@ watch(winner, goToEvaluation)
 }
 
 .playerDisplay {
-  max-width: 250px;
+  max-width: 210px;
 }
 
 .invisible {

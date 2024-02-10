@@ -13,7 +13,7 @@ describe('PlayerListExport', () => {
     expect(players.value).toEqual([
       { player: 'Mensch', index: 0 },
       { player: 'KI-Elimination', index: 1 },
-      { player: 'KI-Fehlerrückführung', index: 2 },
+      { player: 'KI-Rückführung', index: 2 },
       { player: 'KI-Elimination v2.0', index: 3 }
     ])
   })
@@ -28,7 +28,7 @@ describe('PlayerListExport', () => {
     expect(players.value).toEqual([
       { player: 'Mensch', index: 0 },
       { player: 'KI-Elimination', index: 1 },
-      { player: 'KI-Fehlerrückführung', index: 2 },
+      { player: 'KI-Rückführung', index: 2 },
       { player: 'KI-Elimination v2.0', index: 3 },
       { player: 'myAI', index: 4 }
     ])
