@@ -92,6 +92,18 @@ body {
   font-family: 'Pixelify Sans', sans-serif;
 }
 
+.v-btn {
+  border-radius: 0px!important;
+}
+
+.v-card {
+  border-radius: 0px!important;
+}
+
+.v-overlay {
+  border-radius: 0px!important;
+}
+
 .bigarcade {
   font-family: "8_big_arcade";
 }

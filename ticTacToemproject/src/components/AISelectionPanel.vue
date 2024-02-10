@@ -25,7 +25,7 @@ const getAIs = computed(() => {
  */
 const aiOptions = [
   { title: 'Elimination', index: 0 },
-  { title: 'Rückführung', index: 1 },
+  { title: 'Fehlerrückführung', index: 1 },
   { title: 'Elimination v2.0', index: 2 }
 ]
 /**
@@ -88,11 +88,11 @@ const rail = ref(true)
           <v-text-field v-model="drawDiff" label="Bei Unentschieden" />
           <v-text-field v-model="loseDiff" label="Bei Verlieren" />
           <v-col class="text-center">
-            <v-btn v-on:click="saveSettings()"> Speichern </v-btn>
+            <v-btn class="bg-white" v-on:click="saveSettings()"> Speichern </v-btn>
           </v-col>
         </div>
         <v-col class="text-center">
-          <v-btn color="red" v-on:click="areAISettingsShown = false">Schließen</v-btn>
+          <v-btn variant="outlined" color="red" v-on:click="areAISettingsShown = false">Schließen</v-btn>
         </v-col>
       </v-card>
     </v-overlay>
@@ -106,16 +106,19 @@ const rail = ref(true)
             <v-btn
               v-on:click="showSettingsOfAI(item.player)"
               size="x-small"
-              icon="mdi-wrench"
+              class="mx-2"
+              icon="mdi-magnify"
               variant="outlined"
             ></v-btn>
-            <v-btn variant="outlined" v-on:click="resetAiWeights(item.index)">Zurücksetzen</v-btn>
+            &nbsp;
+            <v-btn variant="outlined" v-on:click="resetAiWeights(item.index)">RESET</v-btn>
           </template>
         </v-list-item>
       </template>
     </v-virtual-scroll>
-    <v-divider></v-divider>
+    <v-divider class="border-opacity-100"></v-divider>
     <v-card-title>Neue KI erzeugen</v-card-title>
+    <v-card class="bg-black my-2 mx-2">
     <v-select
       label="Wähle einen KI-Typ"
       v-model="selectedAIOption"
@@ -124,8 +127,9 @@ const rail = ref(true)
       item-value="index"
     />
     <v-text-field v-model="aiName" label="Wähle einen Namen für die KI" />
-    <v-btn variant="outlined" v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)">
+    <v-btn class="bg-white" v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)">
       Erstelle eine neue KI
     </v-btn>
+    </v-card>
   </v-card>
 </template>

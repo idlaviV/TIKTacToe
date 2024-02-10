@@ -86,9 +86,14 @@ const nextAiTurn = () => {
     <PlayButton variant="outlined" :auto-play="autoPlay" :disabled="movesDisabled" @update:auto-play="toggleAutoPlay">
     </PlayButton>
     <!-- This button triggers the next AI turn, if possible-->
-    <v-btn variant="outlined" :disabled="movesDisabled" @click="nextAiTurn">
-      <i class="material-icons"> skip_next </i>
-    </v-btn>
+    <v-btn
+      v-on:click="nextAiTurn"
+      :disabled="movesDisabled"
+      size="x-small"
+      class="mx-2"
+      icon="mdi-skip-next"
+      variant="outlined"
+    ></v-btn>
     <input
       :disabled="movesDisabled"
       type="range"
