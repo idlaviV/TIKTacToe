@@ -54,8 +54,6 @@ watch(isPlayer2Graph, (value) => {
     config.value = value ? initializeConfig('player2Graph') : initializeConfig('player1Graph')
   }
 })
-
-
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->

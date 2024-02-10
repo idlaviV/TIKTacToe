@@ -106,7 +106,7 @@ watch(useDigitalFont, setFont)
         </v-window-item>
       </v-window>
       
-      <v-window v-if="!mobile" v-model="window">
+      <v-window v-else="!mobile" v-model="window">
         <v-layout>
           <v-bottom-navigation
             v-model="window"
@@ -114,7 +114,7 @@ watch(useDigitalFont, setFont)
             color=white
             horizontal
           >
-            <v-btn width="300px">
+            <v-btn width="240px">
               <div>
                 <v-icon class="mx-1">mdi-nintendo-game-boy</v-icon>
                 <v-icon class="mx-1">mdi-graph</v-icon>
