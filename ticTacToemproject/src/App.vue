@@ -37,18 +37,19 @@ watch(useDigitalFont, setFont)
             class="bg-black"
             color=white
             horizontal
+            grow
           >
-            <v-btn width="120">
+            <v-btn>
               <v-icon>mdi-nintendo-game-boy</v-icon>
               Spiel
             </v-btn>
 
-            <v-btn width="120">
+            <v-btn>
               <v-icon>mdi-robot</v-icon>
               KIs
             </v-btn>
 
-            <v-btn width="120">
+            <v-btn>
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -76,18 +77,19 @@ watch(useDigitalFont, setFont)
             class="bg-black"
             color=white
             horizontal
+            grow
           >
-            <v-btn width="120px">
+            <v-btn>
               <v-icon>mdi-nintendo-game-boy</v-icon>
               Spiel
             </v-btn>
 
-            <v-btn width="120px">
+            <v-btn>
               <v-icon>mdi-graph</v-icon>
               Graph
             </v-btn>
 
-            <v-btn width="120px">
+            <v-btn>
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -113,8 +115,9 @@ watch(useDigitalFont, setFont)
             class="bg-black"
             color=white
             horizontal
+            grow
           >
-            <v-btn width="240px">
+            <v-btn>
               <div>
                 <v-icon class="mx-1">mdi-nintendo-game-boy</v-icon>
                 <v-icon class="mx-1">mdi-graph</v-icon>
@@ -122,7 +125,7 @@ watch(useDigitalFont, setFont)
               Spiel und Graph
             </v-btn>
 
-            <v-btn width="120px">
+            <v-btn>
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -175,6 +178,10 @@ html {
 
 .tictactoe {
   font-size: 49px;
+}
+
+.disable-events {
+  pointer-events: none
 }
 
 @font-face {
