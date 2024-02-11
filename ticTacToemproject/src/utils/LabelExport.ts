@@ -18,10 +18,9 @@ export const labelExport: Ref<Labels> = ref({})
  * Updates the labels of the edges in the graphExport. The labels are the weights of the edges,
  * for the currently active aIs. If a player is not an AI, the label is an empty string.
  */
-export function updateLabels(): void {
+export function updateLabels(edges: TTTEdges = graphExport.value.edges): void {
   const settings: GameSettings = GameHandler.getInstance().getSettings()
   const players: [Player, Player] = [settings.getPlayer(1), settings.getPlayer(2)]
-  const edges: TTTEdges = graphExport.value.edges
 
   for (const edge in edges) {
     if (labelExport.value[edge] === undefined) {
@@ -34,9 +33,10 @@ export function updateLabels(): void {
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
         const label: number = aI.getVertexMap(source).get(target)!
-        if (labelExport.value[edge][i] !== label.toString()) {
-          labelExport.value[edge][i] = label.toString()
-        }
+
+        labelExport.value[edge][i] = label.toString()
+      } else {
+        labelExport.value[edge][i] = ''
       }
     }
   }

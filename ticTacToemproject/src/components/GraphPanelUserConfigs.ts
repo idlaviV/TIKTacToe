@@ -1,5 +1,6 @@
+import type { TTTEdge } from '@/utils/Graph'
 import { getLabelToShow } from '@/utils/LabelExport'
-import { defineConfigs, type Edge, type UserConfigs } from 'v-network-graph'
+import { defineConfigs, type UserConfigs } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 
 export const currentGraphType: Ref<GraphType> = ref('simpleGraph')
@@ -31,7 +32,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
     },
     edge: {
       normal: {
-        dasharray: (edge) => getDash(edge, graphType),
+        dasharray: (edge) => getDash(edge as TTTEdge, graphType),
         color: '#aaa',
         width: 2
       },
@@ -44,7 +45,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
         }
       },
       label: {
-        color: (edge) => getLabelColor(edge, graphType),
+        color: (edge) => getLabelColor(edge as TTTEdge, graphType),
         fontSize: 15,
         background: {
           visible: false
@@ -56,14 +57,14 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
   return configs
 }
 
-function getDash(edge: Edge, graphType: GraphType) {
+function getDash(edge: TTTEdge, graphType: GraphType) {
   const dashed = '4'
   const continuous = '0'
 
-  return getLabelToShow(edge.source + '#' + edge.target, graphType) === '0' ? dashed : continuous
+  return getLabelToShow(edge.id, graphType) === '0' ? dashed : continuous
 }
 
-function getLabelColor(edge: Edge, graphType: GraphType) {
+function getLabelColor(edge: TTTEdge, graphType: GraphType) {
   const simpleColor = '#aaa'
   const player1Color = '#ec4899'
   const player2Color = '#3b82f6'

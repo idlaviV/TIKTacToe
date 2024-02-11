@@ -107,7 +107,6 @@ export class AIPlayer extends Player {
    * If no argument is passed, the current configuration of the game is used
    * @returns map of weights
    */
-  // private
   getVertexMap(normalForm?: number): Map<NormalForm, number> {
     if (normalForm === undefined) {
       normalForm = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
