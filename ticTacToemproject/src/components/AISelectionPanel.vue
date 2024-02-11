@@ -92,7 +92,9 @@ const rail = ref(true)
           </v-col>
         </div>
         <v-col class="text-center">
-          <v-btn variant="outlined" color="red" v-on:click="areAISettingsShown = false">Schließen</v-btn>
+          <v-btn variant="outlined" color="red" v-on:click="areAISettingsShown = false"
+            >Schließen</v-btn
+          >
         </v-col>
       </v-card>
     </v-overlay>
@@ -119,17 +121,20 @@ const rail = ref(true)
     <v-divider class="border-opacity-100"></v-divider>
     <v-card-title>Neue KI erzeugen</v-card-title>
     <v-card class="bg-black my-2 mx-2">
-    <v-select
-      label="Wähle einen KI-Typ"
-      v-model="selectedAIOption"
-      :items="aiOptions"
-      item-title="title"
-      item-value="index"
-    />
-    <v-text-field v-model="aiName" label="Wähle einen Namen für die KI" />
-    <v-btn class="bg-white" v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)">
-      Erstelle eine neue KI
-    </v-btn>
+      <v-select
+        label="Wähle einen KI-Typ"
+        v-model="selectedAIOption"
+        :items="aiOptions"
+        item-title="title"
+        item-value="index"
+      />
+      <v-text-field v-model="aiName" label="Wähle einen Namen für die KI" />
+      <v-btn
+        class="bg-white"
+        v-on:click="GameHandler.getInstance().createAI(selectedAIOption, aiName)"
+      >
+        Erstelle eine neue KI
+      </v-btn>
     </v-card>
   </v-card>
 </template>

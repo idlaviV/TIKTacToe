@@ -83,7 +83,12 @@ const nextAiTurn = () => {
 <template>
   <div>
     <!-- The PlayButton toggles auto play. -->
-    <PlayButton variant="outlined" :auto-play="autoPlay" :disabled="movesDisabled" @update:auto-play="toggleAutoPlay">
+    <PlayButton
+      variant="outlined"
+      :auto-play="autoPlay"
+      :disabled="movesDisabled"
+      @update:auto-play="toggleAutoPlay"
+    >
     </PlayButton>
     <!-- This button triggers the next AI turn, if possible-->
     <v-btn

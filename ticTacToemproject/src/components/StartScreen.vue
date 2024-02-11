@@ -63,7 +63,6 @@ const select2 = ref(1)
 </template>
 
 <style>
-
 .playerSelection {
   max-width: 300px;
   justify-self: center;
