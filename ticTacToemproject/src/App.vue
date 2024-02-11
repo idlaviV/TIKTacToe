@@ -134,10 +134,6 @@ watch(useDigitalFont, setFont)
 </template>
 
 <style>
-.tictactoe {
-  font-size: 49px;
-}
-
 .disable-events {
   pointer-events: none;
 }
