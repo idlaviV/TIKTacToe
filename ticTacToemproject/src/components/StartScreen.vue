@@ -3,7 +3,6 @@ import { GameHandler } from '@/logic/GameHandler'
 import { nextGuiState } from '@/logic/GuiState'
 import { initializeHistory } from '@/utils/GraphExport'
 import { players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
-import SettingsPopover from './SettingsPopover.vue'
 import { ref, type Ref } from 'vue'
 
 /**

@@ -41,3 +41,7 @@ html {
 .tictactoe {
   font-size: 49px;
 }
+
+.invisible {
+  visibility: hidden;
+}

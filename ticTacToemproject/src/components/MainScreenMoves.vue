@@ -122,6 +122,18 @@ const nextAiTurn = () => {
 }
 
 .slider::-moz-range-thumb {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 0;
+  border-width: 1px;
+  border-color: white;
+  background: black;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
   width: 15px;
   height: 15px;
   border-radius: 0;

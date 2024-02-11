@@ -3,7 +3,6 @@ import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
-import SettingsPopover from './SettingsPopover.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 import { getGuiState, nextGuiState, skipEvaluation } from '@/logic/GuiState'
 import { ref, watch } from 'vue'
@@ -71,7 +70,7 @@ watch(winner, goToEvaluation)
 
 <!-- The main screen contains the gameboard and main controls. -->
 <template>
-  <v-card class="bg-black" id="mainScreen" align="center">
+  <v-card class="bg-black" align="center">
     <!-- Caption and prompt for next turn -->
     <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
@@ -104,21 +103,7 @@ watch(winner, goToEvaluation)
   </v-card>
 </template>
 <style>
-#mainScreen {
-  position: relative;
-}
-
-#settingsButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
 .playerDisplay {
   max-width: 210px;
-}
-
-.invisible {
-  visibility: hidden;
 }
 </style>

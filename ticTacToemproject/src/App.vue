@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, type Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import StartScreen from './components/StartScreen.vue'
 import AISelectionPanel from './components/AISelectionPanel.vue'
 import MainScreen from './components/MainScreen.vue'
 import GraphPanel from './components/GraphPanel.vue'
 import { getGuiState, type GuiState, useDigitalFont } from './logic/GuiState'
-import SettingsPopover from './components/SettingsPopover.vue'
+import Settings from './components/Settings.vue'
 import { watch } from 'vue'
 import type _default from 'v-network-graph/lib/components/VNetworkGraph.vue.js'
 import { useDisplay } from 'vuetify'
@@ -57,7 +57,7 @@ watch(useDigitalFont, setFont)
           <AISelectionPanel />
         </v-window-item>
         <v-window-item>
-          <SettingsPopover />
+          <Settings />
         </v-window-item>
       </v-window>
     </v-container>
@@ -91,7 +91,7 @@ watch(useDigitalFont, setFont)
           <GraphPanel />
         </v-window-item>
         <v-window-item>
-          <SettingsPopover />
+          <Settings />
         </v-window-item>
       </v-window>
 
@@ -125,7 +125,7 @@ watch(useDigitalFont, setFont)
           </v-container>
         </v-window-item>
         <v-window-item>
-          <SettingsPopover />
+          <Settings />
         </v-window-item>
       </v-window>
     </v-container>

@@ -120,7 +120,7 @@ const rail = ref(true)
     </v-virtual-scroll>
     <v-divider class="border-opacity-100"></v-divider>
     <v-card-title>Neue KI erzeugen</v-card-title>
-    <v-card class="bg-black my-2 mx-2">
+    <v-card class="bg-black my-2 mx-2 text-center">
       <v-select
         label="Wähle einen KI-Typ"
         v-model="selectedAIOption"
