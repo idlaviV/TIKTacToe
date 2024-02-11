@@ -39,17 +39,17 @@ watch(useDigitalFont, setFont)
             horizontal
             grow
           >
-            <v-btn>
+            <v-btn :class="`${ window === 0 ? 'disable-events' : ''}`">
               <v-icon>mdi-nintendo-game-boy</v-icon>
               Spiel
             </v-btn>
 
-            <v-btn>
+            <v-btn :class="`${ window === 1 ? 'disable-events' : ''}`">
               <v-icon>mdi-robot</v-icon>
               KIs
             </v-btn>
 
-            <v-btn>
+            <v-btn :class="`${ window === 2 ? 'disable-events' : ''}`">
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -79,17 +79,17 @@ watch(useDigitalFont, setFont)
             horizontal
             grow
           >
-            <v-btn>
+            <v-btn :class="`${ window === 0 ? 'disable-events' : ''}`">
               <v-icon>mdi-nintendo-game-boy</v-icon>
               Spiel
             </v-btn>
 
-            <v-btn>
+            <v-btn :class="`${ window === 1 ? 'disable-events' : ''}`">
               <v-icon>mdi-graph</v-icon>
               Graph
             </v-btn>
 
-            <v-btn>
+            <v-btn :class="`${ window === 2 ? 'disable-events' : ''}`">
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -117,7 +117,7 @@ watch(useDigitalFont, setFont)
             horizontal
             grow
           >
-            <v-btn>
+            <v-btn :class="`${ window === 0 ? 'disable-events' : ''}`">
               <div>
                 <v-icon class="mx-1">mdi-nintendo-game-boy</v-icon>
                 <v-icon class="mx-1">mdi-graph</v-icon>
@@ -125,7 +125,7 @@ watch(useDigitalFont, setFont)
               Spiel und Graph
             </v-btn>
 
-            <v-btn>
+            <v-btn :class="`${ window === 1 ? 'disable-events' : ''}`">
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -148,6 +148,7 @@ watch(useDigitalFont, setFont)
         </v-window-item>
       </v-window>
     </v-container>
+    <v-card height="50px" class="bg-black"></v-card>
   </main>
 </template>
 
