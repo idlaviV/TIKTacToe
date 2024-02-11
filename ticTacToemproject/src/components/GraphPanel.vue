@@ -68,17 +68,9 @@ watch(isPlayer2Graph, (value) => {
       :layouts="layouts"
       :configs="config"
     >
-      <template v-if="useDigitalFont" #edge-label="{ edgeId, ...slotProps }">
+      <template #edge-label="{ edgeId, ...slotProps }">
         <v-edge-label
-          class="dogica text-xs"
-          vertical-align="above"
-          :text="getLabelToShow(edgeId, graphType.value)"
-          v-bind="slotProps"
-        />
-      </template>
-      <template v-else #edge-label="{ edgeId, ...slotProps }">
-        <v-edge-label
-          class="text-xl"
+          :class="`${useDigitalFont === true ? 'dogica text-s' : 'text-xl'}`"
           vertical-align="above"
           :text="getLabelToShow(edgeId, graphType.value)"
           v-bind="slotProps"
