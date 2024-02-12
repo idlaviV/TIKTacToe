@@ -4,6 +4,7 @@ import { GameHandler } from './GameHandler'
 
 export const skipStartScreen = ref(false)
 export const skipEvaluationScreen = ref(false)
+export const useDigitalFont = ref(true)
 /**
  * The state of the GUI
  * 'start' for player selection,

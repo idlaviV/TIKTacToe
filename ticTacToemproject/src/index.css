@@ -1,3 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: '8_big_arcade';
+  src: url('./assets/fonts/8_bit_arcade/8-bit Arcade In.ttf');
+}
+
+@font-face {
+  font-family: 'dogica';
+  src: url('./assets/fonts/dogica/TTF/dogica.ttf');
+}
+
+html {
+  background-color: black;
+}
+
+.v-btn {
+  border-radius: 0px !important;
+}
+
+.v-card {
+  border-radius: 0px !important;
+}
+
+.v-overlay {
+  border-radius: 0px !important;
+}
+
+.bigarcade {
+  font-family: '8_big_arcade';
+}
+
+.dogica {
+  font-family: 'dogica';
+}
+
+.tictactoe {
+  font-size: 49px;
+}
+
+.invisible {
+  visibility: hidden;
+}

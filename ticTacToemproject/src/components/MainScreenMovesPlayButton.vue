@@ -9,10 +9,20 @@ const toggleAutoplay = () => {
 
 <!-- This button toggles auto play. The depicted icon changes accordingly. -->
 <template>
-  <v-btn @click="toggleAutoplay">
-    <i class="material-icons">
-      <span v-if="autoPlay">pause</span>
-      <span v-else>play_arrow</span>
-    </i>
-  </v-btn>
+  <v-btn
+    v-if="autoPlay"
+    v-on:click="toggleAutoplay"
+    size="x-small"
+    class="mx-2"
+    icon="mdi-pause"
+    variant="outlined"
+  ></v-btn>
+  <v-btn
+    v-else
+    v-on:click="toggleAutoplay"
+    size="x-small"
+    class="mx-2"
+    icon="mdi-play"
+    variant="outlined"
+  ></v-btn>
 </template>

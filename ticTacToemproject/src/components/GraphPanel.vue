@@ -8,7 +8,7 @@ import {
 import GraphPanelNode from './GraphPanelNode.vue'
 import { currentGraphType, initializeConfig } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { getGuiState } from '@/logic/GuiState'
+import { getGuiState, useDigitalFont } from '@/logic/GuiState'
 import { computed, ref, watch } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
@@ -70,6 +70,7 @@ watch(isPlayer2Graph, (value) => {
     >
       <template #edge-label="{ edgeId, ...slotProps }">
         <v-edge-label
+          :class="`${useDigitalFont === true ? 'dogica text-s' : 'text-xl'}`"
           vertical-align="above"
           :text="getLabelToShow(edgeId, graphType.value)"
           v-bind="slotProps"
@@ -102,16 +103,10 @@ watch(isPlayer2Graph, (value) => {
   z-index: 10;
 }
 
-#graph {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .graph {
   width: 100%;
   height: 100%;
   border: 1px solid #38373d;
-  height: 90vh;
+  height: 81vh;
 }
 </style>

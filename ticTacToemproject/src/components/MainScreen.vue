@@ -3,7 +3,6 @@ import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
-import SettingsPopover from './SettingsPopover.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 import { getGuiState, nextGuiState } from '@/logic/GuiState'
 import { watch } from 'vue'
@@ -15,7 +14,7 @@ const playerOnTurn = gameHandler.getPlayerOnTurn()
 //deprecated
 const changeVisibility = () => {
   if (winner !== null) {
-    document.getElementById('playerOnTurnDisplay')?.classList.toggle('invisible')
+    document.getElementById('playerDisplay')?.classList.toggle('invisible')
   }
 }
 
@@ -48,24 +47,14 @@ watch(winner, goToEvaluation)
 
 <!-- The main screen contains the gameboard and main controls. -->
 <template>
-  <div id="mainScreen">
+  <v-card class="bg-black" align="center">
     <!-- Caption and prompt for next turn -->
-    <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
-
-    <div id="settingsButton">
-      <SettingsPopover />
-    </div>
+    <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
     <v-col align="center">
-      <v-card class="text-left pa-2 ma-2 playersCard">
-        <v-row class="text-pink-500 font-bold" id="player1Display">
-          <v-col cols="2" class="text-center">X</v-col>
-          <v-col>{{ player1Name }}</v-col>
-        </v-row>
-        <v-row class="text-blue-500" id="player2Display">
-          <v-col cols="2" class="text-center">O</v-col>
-          <v-col>{{ player2Name }}</v-col>
-        </v-row>
+      <v-card class="text-xl bg-black playerDisplay" align="center">
+        <div id="player1Display" class="text-left text-pink-500 font-bold">X {{ player1Name }}</div>
+        <div id="player2Display" class="text-left text-blue-500">O {{ player2Name }}</div>
       </v-card>
     </v-col>
     <!-- The current gameboard -->
@@ -75,33 +64,23 @@ watch(winner, goToEvaluation)
     <MainScreenMoves />
     <br /><br />
     <!-- Display winner -->
-    <h2 v-show="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
-    <h2 v-show="winner === 1 || winner === 2" class="text-4xl mb-8">
-      Spieler {{ winner }} hat gewonnen!
-    </h2>
+    <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
+    <h2 v-if="winner === 1 || winner === 2" class="text-4xl mb-8">Spieler {{ winner }} gewinnt!</h2>
     <div v-if="winner !== null">
-      <v-btn v-show="getGuiState().value === 'evaluation'" @click="nextGuiState()"> Belohnung anwenden </v-btn>
-      <v-btn v-show="getGuiState().value === 'evaluation'" @click="nextGuiState(true)"> Überspringen </v-btn>
-      <v-btn v-show="getGuiState().value === 'postevaluation'" @click="nextGuiState()"> Weiter </v-btn>
+      <v-btn class="my-2 mx-2 bg-white" v-show="getGuiState().value === 'evaluation'" @click="nextGuiState()">
+        Belohnung anwenden
+      </v-btn>
+      <v-btn class="my-2 mx-2" variant="outlined" v-show="getGuiState().value === 'evaluation'" @click="nextGuiState(true)">
+        Überspringen
+      </v-btn>
+      <v-btn class="my-2 mx-2 bg-white" v-show="getGuiState().value === 'postevaluation'" @click="nextGuiState()">
+        Weiter
+      </v-btn>
     </div>
-  </div>
+  </v-card>
 </template>
 <style>
-.playersCard {
-  width: 220px;
-}
-
-#mainScreen {
-  position: relative;
-}
-
-#settingsButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.invisible {
-  visibility: hidden;
+.playerDisplay {
+  max-width: 210px;
 }
 </style>
