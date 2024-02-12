@@ -18,7 +18,7 @@ export class BackpropagationPolicy implements EvaluationPolicy {
   winDiff: number
   drawDiff: number
   loseDiff: number
-  readonly bound: number = 1000
+  readonly diffBound: number = 1000
 
   constructor(winDiff: number = 3, drawDiff: number = 1, loseDiff: number = -1) {
     this.validateDiffs(winDiff, drawDiff, loseDiff)
@@ -60,12 +60,11 @@ export class BackpropagationPolicy implements EvaluationPolicy {
    *          Else: return diff
    */
   private sanitizeDiffValue(diff: number) {
-    const maxDiff = 1000
     if (Number.isInteger(diff)) {
-      if (diff > maxDiff) {
-        return maxDiff
-      } else if (diff < -maxDiff) {
-        return -maxDiff
+      if (diff > this.diffBound) {
+        return this.diffBound
+      } else if (diff < -this.diffBound) {
+        return -this.diffBound
       } else {
         return diff
       }
@@ -134,8 +133,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
       throw new Error('loseDiff ' + drawDiff + ' is illegal')
     }
     if (
-      Math.max(winDiff, drawDiff, loseDiff) > this.bound &&
-      Math.min(winDiff, drawDiff, loseDiff) < -this.bound
+      Math.max(winDiff, drawDiff, loseDiff) > this.diffBound &&
+      Math.min(winDiff, drawDiff, loseDiff) < -this.diffBound
     ) {
       throw new Error('Diffs (' + winDiff + ',' + drawDiff + ',' + loseDiff + ') out of bound!')
     }
