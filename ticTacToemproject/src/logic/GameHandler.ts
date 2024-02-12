@@ -14,6 +14,7 @@ import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
 import { EliminationPolicyImproved } from './EliminationPolicyImproved'
 import { updateLabels } from '@/utils/LabelExport'
+import type { TTTEdges } from '@/utils/Graph'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -88,13 +89,14 @@ export class GameHandler {
     }
     this.registerGamesInStats()
     if (applyPolicy) {
+      let changedWeights: TTTEdges = {}
       this.settings.getPlayer(1).isAI()
-        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        ? changedWeights = { ...(this.settings.getPlayer(1) as AIPlayer).applyPolicy() }
         : null
       this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
-        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+        ? changedWeights = { ...(this.settings.getPlayer(2) as AIPlayer).applyPolicy() }
         : null
-      updateLabels()
+      updateLabels(changedWeights)
     }
   }
 

@@ -1,4 +1,4 @@
-import type { TTTEdge } from '@/utils/Graph'
+import type { TTTEdges } from '@/utils/Graph'
 import type { AIPlayer } from './AIPlayer'
 import type { GameBoard } from './GameBoard'
 
@@ -21,5 +21,5 @@ export interface EvaluationPolicy {
    * @param aI The AIPlayer to whom the policy is applied
    * @param history The history of the game
    */
-  applyPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdge[]
+  applyPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdges
 }

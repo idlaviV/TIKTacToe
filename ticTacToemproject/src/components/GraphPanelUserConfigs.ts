@@ -1,5 +1,7 @@
+import { GameBoard, getGameBoardFromCode } from '@/logic/GameBoard'
+import { GameHandler } from '@/logic/GameHandler'
 import type { TTTEdge } from '@/utils/Graph'
-import { getLabelToShow } from '@/utils/LabelExport'
+import { getLabelToShow, labelExport } from '@/utils/LabelExport'
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 
@@ -34,7 +36,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
       normal: {
         dasharray: (edge) => getDash(edge as TTTEdge, graphType),
         color: '#aaa',
-        width: 2
+        width: (edge) => getHighlighted(edge as TTTEdge, graphType),
       },
       margin: 4,
       marker: {
@@ -45,7 +47,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
         }
       },
       label: {
-        color: (edge) => getLabelColor(edge as TTTEdge, graphType),
+        color: (edge) => getLabelColor(edge as TTTEdge, graphType, labelExport.value[(edge as TTTEdge).id]),
         fontSize: 15,
         background: {
           visible: false
@@ -57,6 +59,15 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
   return configs
 }
 
+function getHighlighted(edge: TTTEdge, graphType: GraphType): number {
+  const handler = GameHandler.getInstance()
+  if (graphType !== 'gameGraph') {
+    return handler.getGBHandler().history.includes(getGameBoardFromCode(edge.numTarget)) ? 5 : 2
+  } else {
+    return 2
+  }
+}
+
 function getDash(edge: TTTEdge, graphType: GraphType) {
   const dashed = '4'
   const continuous = '0'
@@ -64,10 +75,11 @@ function getDash(edge: TTTEdge, graphType: GraphType) {
   return getLabelToShow(edge.id, graphType) === '0' ? dashed : continuous
 }
 
-function getLabelColor(edge: TTTEdge, graphType: GraphType) {
+function getLabelColor(edge: TTTEdge, graphType: GraphType, labels: [string, string]): string {
   const simpleColor = '#aaa'
   const player1Color = '#ec4899'
   const player2Color = '#3b82f6'
+  const changed = '#47f352'
 
   if (graphType === 'simpleGraph') {
     return simpleColor

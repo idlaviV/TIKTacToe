@@ -67,7 +67,7 @@ export class TTTEdge implements Edge {
     id: string,
     height: number,
     numSource: number,
-    numTarget: number
+    numTarget: number,
   ) {
     this.source = source
     this.target = target
