@@ -53,7 +53,7 @@ function showSettingsOfAI(playerName: string) {
 }
 
 function saveSettings() {
-  (aIPlayer.value!.policy as BackpropagationPolicy).setDiffs(
+  ;(aIPlayer.value!.policy as BackpropagationPolicy).setDiffs(
     Number(winDiff.value),
     Number(drawDiff.value),
     Number(loseDiff.value)

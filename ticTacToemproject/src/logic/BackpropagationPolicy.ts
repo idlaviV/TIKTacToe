@@ -11,7 +11,7 @@ import { drawStatus } from './WinnerStatus'
  */
 export class BackpropagationPolicy implements EvaluationPolicy {
   /**
-   * The three parameters are the values that are added to weights of an AI if a game was 
+   * The three parameters are the values that are added to weights of an AI if a game was
    * won, drawn or lost, respectively.
    * They are supposed to be integers and their maximum absolute value is bounded.
    */
@@ -21,13 +21,13 @@ export class BackpropagationPolicy implements EvaluationPolicy {
   readonly bound: number = 1000
 
   constructor(winDiff: number = 3, drawDiff: number = 1, loseDiff: number = -1) {
-    this.validateDiffs(winDiff, drawDiff, loseDiff)    
+    this.validateDiffs(winDiff, drawDiff, loseDiff)
     this.winDiff = winDiff
     this.drawDiff = drawDiff
     this.loseDiff = loseDiff
   }
 
-    /**
+  /**
    * Sets the values that are added to the weights of the AI.
    * If the value is not an int, it is not set.
    * If the value is higher than 1000 or lower than -1000, it will be set to 1000/-1000.
@@ -51,7 +51,7 @@ export class BackpropagationPolicy implements EvaluationPolicy {
     }
   }
 
-/**
+  /**
    * Checks, if the value is valid for a diff value.
    * @param diff the value to be validated
    * @returns If the value is no int: return NaN
@@ -59,20 +59,20 @@ export class BackpropagationPolicy implements EvaluationPolicy {
    *          If the value is lower than -1000: return -1000
    *          Else: return diff
    */
-private sanitizeDiffValue(diff: number) {
-  const maxDiff = 1000
-  if (Number.isInteger(diff)) {
-    if (diff > maxDiff) {
-      return maxDiff
-    } else if (diff < -maxDiff) {
-      return -maxDiff
+  private sanitizeDiffValue(diff: number) {
+    const maxDiff = 1000
+    if (Number.isInteger(diff)) {
+      if (diff > maxDiff) {
+        return maxDiff
+      } else if (diff < -maxDiff) {
+        return -maxDiff
+      } else {
+        return diff
+      }
     } else {
-      return diff
+      return NaN
     }
-  } else {
-    return NaN
   }
-}
 
   /**
    * @inheritdoc
@@ -123,7 +123,7 @@ private sanitizeDiffValue(diff: number) {
     }
   }
 
-  private validateDiffs(winDiff:number, drawDiff:number, loseDiff:number) {
+  private validateDiffs(winDiff: number, drawDiff: number, loseDiff: number) {
     if (isNaN(this.sanitizeDiffValue(winDiff))) {
       throw new Error('winDiff ' + winDiff + ' is illegal')
     }
@@ -133,10 +133,11 @@ private sanitizeDiffValue(diff: number) {
     if (isNaN(this.sanitizeDiffValue(drawDiff))) {
       throw new Error('loseDiff ' + drawDiff + ' is illegal')
     }
-    if(Math.max(winDiff, drawDiff, loseDiff) > this.bound && Math.min(winDiff, drawDiff, loseDiff) < -this.bound) {
+    if (
+      Math.max(winDiff, drawDiff, loseDiff) > this.bound &&
+      Math.min(winDiff, drawDiff, loseDiff) < -this.bound
+    ) {
       throw new Error('Diffs (' + winDiff + ',' + drawDiff + ',' + loseDiff + ') out of bound!')
     }
   }
-
-  
 }
