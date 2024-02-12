@@ -7,7 +7,6 @@ import GraphPanel from './components/GraphPanel.vue'
 import { getGuiState, type GuiState, useDigitalFont } from './logic/GuiState'
 import Settings from './components/Settings.vue'
 import { watch } from 'vue'
-import type _default from 'v-network-graph/lib/components/VNetworkGraph.vue.js'
 import { useDisplay } from 'vuetify'
 
 const guiState: Ref<GuiState> = getGuiState()
@@ -95,7 +94,7 @@ watch(useDigitalFont, setFont)
         </v-window-item>
       </v-window>
 
-      <v-window v-else="!mobile" v-model="window">
+      <v-window v-else v-model="window">
         <v-layout>
           <v-bottom-navigation v-model="window" class="bg-black" color="white" horizontal grow>
             <v-btn :class="`${window === 0 ? 'disable-events' : ''}`">

@@ -60,9 +60,6 @@ function saveSettings() {
   )
   areAISettingsShown.value = false
 }
-
-const drawer = ref(true)
-const rail = ref(true)
 </script>
 
 <!-- The AISelectionPanel contains a list of all existing AIs and the option to create new AIs,
@@ -81,7 +78,7 @@ const rail = ref(true)
 
         <div v-if="aIPlayer!.policy instanceof BackpropagationPolicy">
           <br />
-          <v-divider></v-divider>
+          <v-divider />
           <br />
           <div class="text-center font-bold">Wie soll belohnt werden?</div>
           <br />
