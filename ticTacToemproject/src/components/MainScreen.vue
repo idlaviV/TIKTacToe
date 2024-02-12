@@ -79,20 +79,18 @@ watch(winner, goToEvaluation)
       <SettingsPopover />
     </div>
 
-    <div class="my-3">
-      <v-row no-gutters align="center" id="player1Display" class="text-pink-500 font-bold">
-        <v-col />
-        <v-col cols="0">X</v-col>
-        <v-col cols="6" class="text-left">{{ player1Name }}</v-col>
-        <v-col />
-      </v-row>
-      <v-row no-gutters align="center" id="player2Display" class="text-blue-500">
-        <v-col />
-        <v-col cols="0">O</v-col>
-        <v-col cols="6" class="text-left">{{ player2Name }}</v-col>
-        <v-col />
-      </v-row>
-    </div>
+    <v-col align="center">
+      <v-card class="text-left pa-2 ma-2 playersCard">
+        <v-row class="text-pink-500 font-bold" id="player1Display">
+          <v-col cols="2" class="text-center">X</v-col>
+          <v-col>{{ player1Name }}</v-col>
+        </v-row>
+        <v-row class="text-blue-500" id="player2Display">
+          <v-col cols="2" class="text-center">O</v-col>
+          <v-col>{{ player2Name }}</v-col>
+        </v-row>
+      </v-card>
+    </v-col>
     <!-- The current gameboard -->
     <MainScreenBoard />
 
@@ -113,7 +111,7 @@ watch(winner, goToEvaluation)
 </template>
 <style>
 .playersCard {
-  width: 200px;
+  width: 220px;
 }
 
 #mainScreen {
