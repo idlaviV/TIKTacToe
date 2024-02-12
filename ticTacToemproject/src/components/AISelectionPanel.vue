@@ -58,6 +58,7 @@ function saveSettings() {
     Number(drawDiff.value),
     Number(loseDiff.value)
   )
+  areAISettingsShown.value = false
 }
 </script>
 
