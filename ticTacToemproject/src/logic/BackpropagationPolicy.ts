@@ -1,4 +1,4 @@
-import type { TTTEdge, TTTEdges } from '@/utils/Graph'
+import type { TTTEdges } from '@/utils/Graph'
 import type { AIPlayer } from './AIPlayer'
 import type { NormalForm } from './Codes'
 import type { EvaluationPolicy } from './EvaluationPolicy'
@@ -95,10 +95,10 @@ export class BackpropagationPolicy implements EvaluationPolicy {
    * @override
    */
   applyPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdges {
-    const winner = GameHandler.getInstance().getWinner()
+    const winner = GameHandler.getInstance().getWinner().value
     const changedWeights: TTTEdges = {}
 
-    if (winner.value !== null) {
+    if (winner !== null) {
       let possibleMoves: Map<NormalForm, number>
       let nextMove: NormalForm
       let weightChanged: boolean
@@ -106,9 +106,9 @@ export class BackpropagationPolicy implements EvaluationPolicy {
         possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
         nextMove = history[index].getNormalForm()
 
-        if (winner.value === drawStatus) {
+        if (winner === drawStatus) {
           weightChanged = this.setWeights(possibleMoves, this.drawDiff, nextMove)
-        } else if (winner.value === 1) {
+        } else if (winner === 1) {
           weightChanged = this.setWeights(
             possibleMoves,
             index % 2 === 1 ? this.winDiff : this.loseDiff,

@@ -1,7 +1,7 @@
 import { getGameBoardFromCode } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import type { TTTEdge } from '@/utils/Graph'
-import { getLabelToShow, labelExport } from '@/utils/LabelExport'
+import { getLabelToShow } from '@/utils/LabelExport'
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 

@@ -1,7 +1,13 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { resetGameHandler } from './TestUtil'
 import { expect, beforeEach, describe, test } from 'vitest'
-import { getGuiState, nextGuiState, setGuiState, skipEvaluationScreen, skipStartScreen } from '@/logic/GuiState'
+import {
+  getGuiState,
+  nextGuiState,
+  setGuiState,
+  skipEvaluationScreen,
+  skipStartScreen
+} from '@/logic/GuiState'
 import { resetHistory } from '@/utils/GraphExport'
 
 beforeEach(() => {

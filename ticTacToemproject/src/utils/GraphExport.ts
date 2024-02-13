@@ -22,7 +22,7 @@ export const graphExport: Ref<GraphExport> = ref(new GraphExport())
  */
 export function initializeHistory() {
   if (graphExport.value.activeNodeCode !== 'NotInitialized') {
-    throw new Error("History is already initialized.")
+    throw new Error('History is already initialized.')
   }
   const graph: GraphExport = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()

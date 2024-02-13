@@ -75,31 +75,31 @@ describe('updateLabel', () => {
   test('first Player is AI', () => {
     settings.setPlayers(aI, new UserPlayer())
     updateLabels()
-    expect(labelExport.value['0#1']).toEqual(['8', ''])
-    expect(labelExport.value['0#10']).toEqual(['8', ''])
-    expect(labelExport.value['0#10000']).toEqual(['8', ''])
-    expect(labelExport.value['1#21']).toEqual(['7', ''])
-    expect(labelExport.value['1#102']).toEqual(['7', ''])
+    expect(labelExport.value['0#1']).toEqual(['9', ''])
+    expect(labelExport.value['0#10']).toEqual(['9', ''])
+    expect(labelExport.value['0#10000']).toEqual(['9', ''])
+    expect(labelExport.value['1#21']).toEqual(['8', ''])
+    expect(labelExport.value['1#102']).toEqual(['8', ''])
   })
 
   test('second Player is AI', () => {
     settings.setPlayers(new UserPlayer(), aI)
     updateLabels()
-    expect(labelExport.value['0#1']).toEqual(['', '8'])
-    expect(labelExport.value['0#10']).toEqual(['', '8'])
-    expect(labelExport.value['0#10000']).toEqual(['', '8'])
-    expect(labelExport.value['1#21']).toEqual(['', '7'])
-    expect(labelExport.value['1#102']).toEqual(['', '7'])
+    expect(labelExport.value['0#1']).toEqual(['', '9'])
+    expect(labelExport.value['0#10']).toEqual(['', '9'])
+    expect(labelExport.value['0#10000']).toEqual(['', '9'])
+    expect(labelExport.value['1#21']).toEqual(['', '8'])
+    expect(labelExport.value['1#102']).toEqual(['', '8'])
   })
 
   test('both Players are AI', () => {
     settings.setPlayers(aI, new AIPlayer(new EliminationPolicySimple()))
     updateLabels()
-    expect(labelExport.value['0#1']).toEqual(['8', '1'])
-    expect(labelExport.value['0#10']).toEqual(['8', '1'])
-    expect(labelExport.value['0#10000']).toEqual(['8', '1'])
-    expect(labelExport.value['1#21']).toEqual(['7', '1'])
-    expect(labelExport.value['1#102']).toEqual(['7', '1'])
+    expect(labelExport.value['0#1']).toEqual(['9', '1'])
+    expect(labelExport.value['0#10']).toEqual(['9', '1'])
+    expect(labelExport.value['0#10000']).toEqual(['9', '1'])
+    expect(labelExport.value['1#21']).toEqual(['8', '1'])
+    expect(labelExport.value['1#102']).toEqual(['8', '1'])
   })
 
   test('both Players are human', () => {
@@ -115,26 +115,26 @@ describe('updateLabel', () => {
 
 describe('getLabelToShow backpropagation ai as player One', () => {
   beforeEach(() => {
-    labelExport.value['0#1'] = ['8', '']
-    labelExport.value['0#10'] = ['8', '']
-    labelExport.value['0#10000'] = ['8', '']
-    labelExport.value['1#21'] = ['7', '']
-    labelExport.value['1#102'] = ['7', '']
+    labelExport.value['0#1'] = ['9', '']
+    labelExport.value['0#10'] = ['9', '']
+    labelExport.value['0#10000'] = ['9', '']
+    labelExport.value['1#21'] = ['8', '']
+    labelExport.value['1#102'] = ['8', '']
     settings.setPlayers(new AIPlayer(new BackpropagationPolicy()), new UserPlayer())
   })
   test('gameGraph', () => {
-    expect(getLabelToShow('0#1', 'gameGraph')).toEqual('8')
-    expect(getLabelToShow('0#10', 'gameGraph')).toEqual('8')
-    expect(getLabelToShow('0#10000', 'gameGraph')).toEqual('8')
+    expect(getLabelToShow('0#1', 'gameGraph')).toEqual('9')
+    expect(getLabelToShow('0#10', 'gameGraph')).toEqual('9')
+    expect(getLabelToShow('0#10000', 'gameGraph')).toEqual('9')
     expect(getLabelToShow('1#21', 'gameGraph')).toEqual('')
     expect(getLabelToShow('1#102', 'gameGraph')).toEqual('')
   })
   test('player1Graph', () => {
-    expect(getLabelToShow('0#1', 'player1Graph')).toEqual('8')
-    expect(getLabelToShow('0#10', 'player1Graph')).toEqual('8')
-    expect(getLabelToShow('0#10000', 'player1Graph')).toEqual('8')
-    expect(getLabelToShow('1#21', 'player1Graph')).toEqual('7')
-    expect(getLabelToShow('1#102', 'player1Graph')).toEqual('7')
+    expect(getLabelToShow('0#1', 'player1Graph')).toEqual('9')
+    expect(getLabelToShow('0#10', 'player1Graph')).toEqual('9')
+    expect(getLabelToShow('0#10000', 'player1Graph')).toEqual('9')
+    expect(getLabelToShow('1#21', 'player1Graph')).toEqual('8')
+    expect(getLabelToShow('1#102', 'player1Graph')).toEqual('8')
   })
   test('player2Graph', () => {
     expect(getLabelToShow('0#1', 'player2Graph')).toEqual('')

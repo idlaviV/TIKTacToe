@@ -67,13 +67,26 @@ watch(winner, goToEvaluation)
     <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
     <h2 v-if="winner === 1 || winner === 2" class="text-4xl mb-8">Spieler {{ winner }} gewinnt!</h2>
     <div v-if="winner !== null">
-      <v-btn class="my-2 mx-2 bg-white" v-show="getGuiState().value === 'evaluation'" @click="nextGuiState()">
+      <v-btn
+        class="my-2 mx-2 bg-white"
+        v-show="getGuiState().value === 'evaluation'"
+        @click="nextGuiState()"
+      >
         Belohnung anwenden
       </v-btn>
-      <v-btn class="my-2 mx-2" variant="outlined" v-show="getGuiState().value === 'evaluation'" @click="nextGuiState(true)">
+      <v-btn
+        class="my-2 mx-2"
+        variant="outlined"
+        v-show="getGuiState().value === 'evaluation'"
+        @click="nextGuiState(true)"
+      >
         Überspringen
       </v-btn>
-      <v-btn class="my-2 mx-2 bg-white" v-show="getGuiState().value === 'postevaluation'" @click="nextGuiState()">
+      <v-btn
+        class="my-2 mx-2 bg-white"
+        v-show="getGuiState().value === 'postevaluation'"
+        @click="nextGuiState()"
+      >
         Weiter
       </v-btn>
     </div>
