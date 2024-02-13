@@ -91,14 +91,15 @@ function getLabelColor(edge: TTTEdge): string {
     return changedColor
   }
 
-  if (graphType === 'simpleGraph') {
-    return simpleColor
-  } else if (graphType === 'player1Graph') {
-    return player1Color
-  } else if (graphType === 'player2Graph') {
-    return player2Color
-  } else {
-    return edge.height % 2 === 0 ? player1Color : player2Color
+  switch (graphType) {
+    case 'gameGraph':
+      return edge.height % 2 === 0 ? player1Color : player2Color
+    case 'player1Graph':
+      return player1Color
+    case 'player2Graph':
+      return player2Color
+    default:
+      return simpleColor
   }
 }
 
