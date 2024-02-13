@@ -73,7 +73,7 @@ const config = graphPanelUserConfigs
         />
       </template>
       <template #override-node="{ nodeId }">
-        <GraphPanelNode :node="graphExport.nodes[nodeId]" />
+        <GraphPanelNode :state="graphExport.nodes[nodeId].boardState" />
       </template>
     </v-network-graph>
     <div
