@@ -5,16 +5,15 @@ import {
   type VNetworkGraphInstance,
 } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
-import { currentGraphType, graphPanelUserConfigs, setCurrentGraphType } from '@/components/GraphPanelUserConfigs'
+import { currentGraphType, graphPanelUserConfigs, isPlayer2Graph, setCurrentGraphType } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { getGuiState, useDigitalFont, type GuiState } from '@/logic/GuiState'
-import { computed, ref, watch } from 'vue'
+import { getGuiState, useDigitalFont } from '@/logic/GuiState'
+import { computed, ref } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
 
-const handler = GameHandler.getInstance()
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
   if (guiDisable.value === 'standard') {
@@ -23,18 +22,14 @@ const nodesForDisplay = computed(() => {
     return {}
   }
 })
+
 const edgesForDisplay = computed(() => {
   return graphExport.value.edges
 })
+
 const graphType = computed(() => {
-  return currentGraphType
-})
-const graph = ref<VNetworkGraphInstance>()
-const isPlayer2Graph = ref<boolean>(false)
-const config = graphPanelUserConfigs
-
-
-const updateGraphType = (guiState:GuiState) =>{
+  const guiState = getGuiState().value
+  const handler = GameHandler.getInstance()
   if (guiState === 'game') {
     setCurrentGraphType('gameGraph')
   } else if (guiState === 'evaluation' || guiState ==='postevaluation') {
@@ -48,15 +43,13 @@ const updateGraphType = (guiState:GuiState) =>{
         : setCurrentGraphType('player2Graph')
     }
   }
-}
-updateGraphType(getGuiState().value)
-watch(getGuiState(), updateGraphType)
-
-watch(isPlayer2Graph, (value) => {
-  if ((getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') && handler.getNumberOfAIs() === 2) {
-    value ? setCurrentGraphType('player2Graph') : setCurrentGraphType('player1Graph')
-  }
+  return currentGraphType
 })
+
+const graph = ref<VNetworkGraphInstance>()
+
+const config = graphPanelUserConfigs
+
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
