@@ -13,7 +13,6 @@ const window = ref(0)
 const mobile = useDisplay().smAndDown
 
 document.body.style.fontFamily = 'Pixelify Sans'
-
 </script>
 
 <template>
@@ -127,5 +126,4 @@ document.body.style.fontFamily = 'Pixelify Sans'
 .disable-events {
   pointer-events: none;
 }
-
 </style>

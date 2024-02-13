@@ -53,7 +53,7 @@ export const graphPanelUserConfigs: UserConfigs = defineConfigs({
 
 export const isPlayer2Graph = ref<boolean>(false)
 
-export function setCurrentGraphType(graphType: GraphType):void {
+export function setCurrentGraphType(graphType: GraphType): void {
   currentGraphType.value = graphType
 }
 

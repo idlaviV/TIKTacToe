@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {
-  VNetworkGraph,
-  VEdgeLabel,
-  type VNetworkGraphInstance,
-} from 'v-network-graph'
+import { VNetworkGraph, VEdgeLabel, type VNetworkGraphInstance } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
-import { currentGraphType, graphPanelUserConfigs, isPlayer2Graph, setCurrentGraphType } from '@/components/GraphPanelUserConfigs'
+import {
+  currentGraphType,
+  graphPanelUserConfigs,
+  isPlayer2Graph,
+  setCurrentGraphType
+} from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { getGuiState, useDigitalFont } from '@/logic/GuiState'
 import { computed, ref } from 'vue'
@@ -32,7 +33,7 @@ const graphType = computed(() => {
   const handler = GameHandler.getInstance()
   if (guiState === 'game') {
     setCurrentGraphType('gameGraph')
-  } else if (guiState === 'evaluation' || guiState ==='postevaluation') {
+  } else if (guiState === 'evaluation' || guiState === 'postevaluation') {
     if (handler.getNumberOfAIs() === 2) {
       isPlayer2Graph.value
         ? setCurrentGraphType('player2Graph')
@@ -49,7 +50,6 @@ const graphType = computed(() => {
 const graph = ref<VNetworkGraphInstance>()
 
 const config = graphPanelUserConfigs
-
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
@@ -78,7 +78,8 @@ const config = graphPanelUserConfigs
     </v-network-graph>
     <div
       v-if="
-        (getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') && GameHandler.getInstance().getNumberOfAIs() === 2
+        (getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') &&
+        GameHandler.getInstance().getNumberOfAIs() === 2
       "
       id="labelSwitch"
     >
