@@ -1,4 +1,4 @@
-import { GameBoard, getGameBoardFromCode } from '@/logic/GameBoard'
+import { getGameBoardFromCode } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import type { TTTEdge } from '@/utils/Graph'
 import { getLabelToShow, labelExport } from '@/utils/LabelExport'
@@ -36,7 +36,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
       normal: {
         dasharray: (edge) => getDash(edge as TTTEdge, graphType),
         color: '#aaa',
-        width: (edge) => getHighlighted(edge as TTTEdge, graphType),
+        width: (edge) => getHighlighted(edge as TTTEdge, graphType)
       },
       margin: 4,
       marker: {
@@ -47,7 +47,7 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
         }
       },
       label: {
-        color: (edge) => getLabelColor(edge as TTTEdge, graphType, labelExport.value[(edge as TTTEdge).id]),
+        color: (edge) => getLabelColor(edge as TTTEdge, graphType),
         fontSize: 15,
         background: {
           visible: false
@@ -60,9 +60,12 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
 }
 
 function getHighlighted(edge: TTTEdge, graphType: GraphType): number {
-  const handler = GameHandler.getInstance()
+  const history = GameHandler.getInstance().getGBHandler().history
   if (graphType !== 'gameGraph') {
-    return handler.getGBHandler().history.includes(getGameBoardFromCode(edge.numTarget)) ? 5 : 2
+    return history.includes(getGameBoardFromCode(edge.numTarget)) &&
+      history.includes(getGameBoardFromCode(edge.numSource))
+      ? 5
+      : 2
   } else {
     return 2
   }
@@ -75,11 +78,18 @@ function getDash(edge: TTTEdge, graphType: GraphType) {
   return getLabelToShow(edge.id, graphType) === '0' ? dashed : continuous
 }
 
-function getLabelColor(edge: TTTEdge, graphType: GraphType, labels: [string, string]): string {
+function getLabelColor(edge: TTTEdge, graphType: GraphType): string {
   const simpleColor = '#aaa'
   const player1Color = '#ec4899'
   const player2Color = '#3b82f6'
-  const changed = '#47f352'
+  const historyColor = '#ff3131'
+  const changedColor = '#47f352'
+
+  if (getHighlighted(edge, graphType) !== 2 && graphType !== 'gameGraph') {
+    return historyColor
+  } else if (edge.changed) {
+    return changedColor
+  }
 
   if (graphType === 'simpleGraph') {
     return simpleColor

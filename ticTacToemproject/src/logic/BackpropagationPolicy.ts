@@ -54,13 +54,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
     if (winner.value !== null) {
       let possibleMoves: Map<NormalForm, number>
       let nextMove: NormalForm
-      let currentEdge: TTTEdge
       let weightChanged: boolean
       for (let index = history.length - 1; index > 0; index--) {
-        currentEdge =
-          graphExport.value.edges[
-            history[index - 1].getNormalForm() + '#' + history[index].getNormalForm()
-          ]
         possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
         nextMove = history[index].getNormalForm()
 
@@ -81,7 +76,9 @@ export class BackpropagationPolicy implements EvaluationPolicy {
         }
 
         if (weightChanged) {
-          changedWeights[currentEdge.id] = currentEdge
+          const edgeId: string = history[index - 1].getNormalForm() + '#' + nextMove
+          graphExport.value.edges[edgeId].changed = true
+          changedWeights[edgeId] = graphExport.value.edges[edgeId]
         }
       }
     }

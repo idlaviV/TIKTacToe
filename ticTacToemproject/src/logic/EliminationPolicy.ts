@@ -4,6 +4,7 @@ import type { EvaluationPolicy } from './EvaluationPolicy'
 import type { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
+import { graphExport } from '@/utils/GraphExport'
 
 export abstract class EliminationPolicy implements EvaluationPolicy {
   /**
@@ -47,7 +48,8 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
         edgeStart = history[index - 2].getNormalForm()
         edgeEnd = history[index - 1].getNormalForm()
         edgeId = edgeStart + '#' + edgeEnd
-        changedWeights[edgeId] = new TTTEdge(edgeStart.toString(), edgeEnd.toString(), edgeId, 0, edgeStart, edgeEnd)
+        graphExport.value.edges[edgeId].changed = true
+        changedWeights[edgeId] = graphExport.value.edges[edgeId]
       }
     }
     return changedWeights
