@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VNetworkGraph, VEdgeLabel, type VNetworkGraphInstance } from 'v-network-graph'
+import { VNetworkGraph, VEdgeLabel, type VNetworkGraphInstance, type EventHandlers } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import {
   currentGraphType,
@@ -9,7 +9,7 @@ import {
 } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
 import { getGuiState, useDigitalFont } from '@/logic/GuiState'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
@@ -50,10 +50,48 @@ const graphType = computed(() => {
 const graph = ref<VNetworkGraphInstance>()
 
 const config = graphPanelUserConfigs
+
+
+const tooltip = ref<HTMLDivElement>()
+  const targetNodeId = ref<string>("")
+const tooltipOpacity = ref(0) // 0 or 1
+const tooltipPos = ref({ left: "0px", top: "0px" })
+
+const targetNodePos = computed(() => {
+  const nodePos = layouts.value.nodes[targetNodeId.value]
+  return nodePos || { x: 0, y: 0 }
+})
+
+watch(
+  () => [targetNodePos.value, tooltipOpacity.value],
+  () => {
+    if (!graph.value || !tooltip.value) return
+
+    // translate coordinates: SVG -> DOM
+    const domPoint = graph.value.translateFromSvgToDomCoordinates(targetNodePos.value)
+    // calculates top-left position of the tooltip.
+    tooltipPos.value = {
+      left: domPoint.x - tooltip.value.offsetWidth / 2 + "px",
+      top: domPoint.y - 50 - tooltip.value.offsetHeight - 10 + "px",
+    }
+  },
+  { deep: true }
+)
+
+const eventHandlers: EventHandlers = {
+  "node:pointerover": ({ node }) => {
+    targetNodeId.value = node
+    tooltipOpacity.value = 1 // show
+  },
+  "node:pointerout": () => {
+    tooltipOpacity.value = 0 // hide
+  },
+}
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
 <template>
+    <div class="tooltip-wrapper">
   <div class="graphPanel">
     <v-network-graph
       ref="graph"
@@ -63,6 +101,7 @@ const config = graphPanelUserConfigs
       :edges="edgesForDisplay"
       :layouts="layouts"
       :configs="config"
+      :event-handlers="eventHandlers"
     >
       <template #edge-label="{ edgeId, ...slotProps }">
         <v-edge-label
@@ -86,6 +125,22 @@ const config = graphPanelUserConfigs
       <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
     </div>
   </div>
+  <!--tooltip-->
+  <div
+      ref="tooltip"
+      class="tooltip"
+      :style="{ ...tooltipPos, opacity: tooltipOpacity }"
+    >
+    
+      <v-card v-if="targetNodeId !==''">
+        <div v-for="x in graphExport.nodes[targetNodeId].alternatives" v-bind:key="x.toString()">
+          <GraphPanelNode :state="x" />
+        </div>
+        
+      </v-card>
+      
+    </div>
+</div>
 </template>
 
 <style>
@@ -105,5 +160,16 @@ const config = graphPanelUserConfigs
   height: 100%;
   border: 1px solid #38373d;
   height: 81vh;
+}
+
+.tooltip{
+  position:absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.tooltip-wrapper{
+  position: relative;
 }
 </style>
