@@ -1,5 +1,6 @@
-import { getGameBoardFromCode } from '@/logic/GameBoard'
+import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
+import { getGuiState } from '@/logic/GuiState'
 import type { TTTEdge } from '@/utils/Graph'
 import { getLabelToShow } from '@/utils/LabelExport'
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
@@ -60,12 +61,8 @@ export function initializeConfig(graphType: GraphType): UserConfigs {
 }
 
 function getHighlighted(edge: TTTEdge, graphType: GraphType): number {
-  const history = GameHandler.getInstance().getGBHandler().history
   if (graphType !== 'gameGraph') {
-    return history.includes(getGameBoardFromCode(edge.numTarget)) &&
-      history.includes(getGameBoardFromCode(edge.numSource))
-      ? 5
-      : 2
+    return isPartOfHistory(edge.numSource, edge.numTarget) ? 5 : 2
   } else {
     return 2
   }
@@ -85,9 +82,9 @@ function getLabelColor(edge: TTTEdge, graphType: GraphType): string {
   const historyColor = '#ff3131'
   const changedColor = '#47f352'
 
-  if (getHighlighted(edge, graphType) !== 2 && graphType !== 'gameGraph') {
+  if (getGuiState().value === 'evaluation' && isPartOfHistory(edge.numSource, edge.numTarget)) {
     return historyColor
-  } else if (edge.changed) {
+  } else if (getGuiState().value === 'postevaluation' && edge.changed) {
     return changedColor
   }
 
@@ -100,4 +97,14 @@ function getLabelColor(edge: TTTEdge, graphType: GraphType): string {
   } else {
     return edge.height % 2 === 0 ? player1Color : player2Color
   }
+}
+
+function isPartOfHistory(source: number, target: number): boolean {
+  const history: GameBoard[] = GameHandler.getInstance().getGBHandler().getHistory()
+  for (let i = 0; i < history.length - 1; i++) {
+    if (history[i].getNormalForm() === source && history[i + 1].getNormalForm() === target) {
+      return true
+    }
+  }
+  return false
 }

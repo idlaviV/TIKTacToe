@@ -129,6 +129,7 @@ export class BackpropagationPolicy implements EvaluationPolicy {
         }
       }
     }
+    console.log('changedWeights', changedWeights)
     return changedWeights
   }
 
