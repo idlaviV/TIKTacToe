@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { skipEvaluationScreen, skipStartScreen, useDigitalFont } from '@/logic/GuiState'
-import { ref } from 'vue'
 
-const menu = ref(false)
+
+
+const setFont = () => {
+  console.log("Ping")
+  if (useDigitalFont.value) {
+    document.body.style.fontFamily = 'Pixelify Sans'
+    console.log("Now: Pixel")
+  } else {
+    document.body.style.fontFamily = ''
+    console.log("Now:Plain")
+  }
+}
 </script>
 
 <template>
@@ -11,7 +21,7 @@ const menu = ref(false)
       <v-card-title>Einstellungen</v-card-title>
       <v-checkbox-btn label="Automatische Belohnung" v-model="skipEvaluationScreen"></v-checkbox-btn>
       <v-checkbox-btn label="Start überspringen" v-model="skipStartScreen"></v-checkbox-btn>
-      <v-switch class="mx-2" v-model="useDigitalFont" label="Benutze digital Font"></v-switch>
+      <v-switch class="mx-2" v-model="useDigitalFont" label="Benutze digital Font" @update:model-value="setFont"></v-switch>
     </div>
   </v-card>
 </template>
