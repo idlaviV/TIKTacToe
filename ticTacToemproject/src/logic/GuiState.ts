@@ -11,7 +11,7 @@ export const useDigitalFont = ref(true)
  * 'game' for the game itself,
  * 'evaluation' for the application of the evaluation strategy.
  */
-export type GuiState = 'start' | 'game' | 'evaluation' |'postevaluation'
+export type GuiState = 'start' | 'game' | 'evaluation' | 'postevaluation'
 const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
@@ -45,7 +45,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
     case 'evaluation':
       GameHandler.getInstance().performEndOfGameActions(!skipEvaluationOnce)
       state.value = 'postevaluation'
-      if(!skipEvaluationScreen.value && !skipEvaluationOnce) {
+      if (!skipEvaluationScreen.value && !skipEvaluationOnce) {
         break
       }
     /* falls through */

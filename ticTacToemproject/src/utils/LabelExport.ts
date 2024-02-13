@@ -48,6 +48,7 @@ export function updateLabels(edges: TTTEdges = graphExport.value.edges): void {
  * @param graphType The current graph type
  */
 export function getLabelToShow(edgeID: string, graphType: GraphType): string {
+  console.log('getLabelToShow')
   const handler: GameHandler = GameHandler.getInstance()
   const currentLabels: [string, string] = labelExport.value[edgeID]
   switch (graphType) {
