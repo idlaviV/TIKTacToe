@@ -36,7 +36,7 @@ export class GameHandler {
   possiblePlayers: Player[] = [
     this.humanPlayer,
     new AIPlayer(new EliminationPolicySimple(), 'KI-Elimination'),
-    new AIPlayer(new BackpropagationPolicy(), 'KI-Fehlerrückführung'),
+    new AIPlayer(new BackpropagationPolicy(), 'KI-Rückführung'),
     new AIPlayer(new EliminationPolicyImproved(), 'KI-Elimination v2.0')
   ]
 

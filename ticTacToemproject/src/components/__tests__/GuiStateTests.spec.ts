@@ -1,12 +1,14 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { resetGameHandler } from './TestUtil'
 import { expect, beforeEach, describe, test } from 'vitest'
-import { getGuiState, nextGuiState, setGuiState, skipEvaluation, skipStart } from '@/logic/GuiState'
+import { getGuiState, nextGuiState, setGuiState, skipEvaluationScreen, skipStartScreen } from '@/logic/GuiState'
+import { resetHistory } from '@/utils/GraphExport'
 
 beforeEach(() => {
   GameHandler.getInstance()
   resetGameHandler()
   resetGuiState()
+  resetHistory()
 })
 
 describe('nextGuiState', () => {
@@ -17,20 +19,39 @@ describe('nextGuiState', () => {
     nextGuiState()
     expect(getGuiState().value).toEqual('evaluation')
     nextGuiState()
+    expect(getGuiState().value).toEqual('postevaluation')
+    nextGuiState()
     expect(getGuiState().value).toEqual('start')
   })
-  test('skip start', () => {
-    skipStart.value = true
+  test('no skips, but simulate "Überspringen"-click, so postevaluation is skipped once', () => {
+    expect(getGuiState().value).toEqual('start')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('game')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('evaluation')
+    nextGuiState(true)
     expect(getGuiState().value).toEqual('start')
     nextGuiState()
     expect(getGuiState().value).toEqual('game')
     nextGuiState()
     expect(getGuiState().value).toEqual('evaluation')
     nextGuiState()
+    expect(getGuiState().value).toEqual('postevaluation')
+  })
+  test('skip start', () => {
+    skipStartScreen.value = true
+    expect(getGuiState().value).toEqual('start')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('game')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('evaluation')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('postevaluation')
+    nextGuiState()
     expect(getGuiState().value).toEqual('game')
   })
   test('skip evaluation', () => {
-    skipEvaluation.value = true
+    skipEvaluationScreen.value = true
     expect(getGuiState().value).toEqual('start')
     nextGuiState()
     expect(getGuiState().value).toEqual('game')
@@ -40,8 +61,8 @@ describe('nextGuiState', () => {
     expect(getGuiState().value).toEqual('game')
   })
   test('skip both', () => {
-    skipEvaluation.value = true
-    skipStart.value = true
+    skipEvaluationScreen.value = true
+    skipStartScreen.value = true
     expect(getGuiState().value).toEqual('start')
     nextGuiState()
     expect(getGuiState().value).toEqual('game')
@@ -54,6 +75,6 @@ describe('nextGuiState', () => {
 
 function resetGuiState() {
   setGuiState('start')
-  skipEvaluation.value = false
-  skipStart.value = false
+  skipEvaluationScreen.value = false
+  skipStartScreen.value = false
 }

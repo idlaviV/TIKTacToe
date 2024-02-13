@@ -111,9 +111,8 @@ describe('reset history', () => {
     updateHistory(gameBoard1)
     updateHistory(gameBoard10)
     resetHistory()
-    expect(Object.keys(graphExport.value.nodes).length).toEqual(4)
-    checkNode(nodes['0'], '0', new GameBoard().state, 0)
-    expect(Object.keys(graphExport.value.edges).length).toEqual(3)
+    expect(Object.keys(graphExport.value.nodes).length).toEqual(0)
+    expect(Object.keys(graphExport.value.edges).length).toEqual(0)
   })
 })
 

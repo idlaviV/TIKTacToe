@@ -8,7 +8,7 @@ import {
 import GraphPanelNode from './GraphPanelNode.vue'
 import { currentGraphType, initializeConfig } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { getGuiState } from '@/logic/GuiState'
+import { getGuiState, useDigitalFont } from '@/logic/GuiState'
 import { computed, ref, watch } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
@@ -37,7 +37,7 @@ const config = ref<UserConfigs>(initializeConfig('simpleGraph'))
 watch(getGuiState(), (guiState) => {
   if (guiState === 'game') {
     config.value = initializeConfig('gameGraph')
-  } else if (guiState === 'evaluation') {
+  } else if (guiState === 'evaluation' || guiState ==='postevaluation') {
     if (handler.getNumberOfAIs() === 2) {
       config.value = isPlayer2Graph.value
         ? initializeConfig('player2Graph')
@@ -50,7 +50,7 @@ watch(getGuiState(), (guiState) => {
   }
 })
 watch(isPlayer2Graph, (value) => {
-  if (getGuiState().value === 'evaluation' && handler.getNumberOfAIs() === 2) {
+  if ((getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') && handler.getNumberOfAIs() === 2) {
     config.value = value ? initializeConfig('player2Graph') : initializeConfig('player1Graph')
   }
 })
@@ -70,6 +70,7 @@ watch(isPlayer2Graph, (value) => {
     >
       <template #edge-label="{ edgeId, ...slotProps }">
         <v-edge-label
+          :class="`${useDigitalFont === true ? 'dogica text-s' : 'text-xl'}`"
           vertical-align="above"
           :text="getLabelToShow(edgeId, graphType.value)"
           v-bind="slotProps"
@@ -81,7 +82,7 @@ watch(isPlayer2Graph, (value) => {
     </v-network-graph>
     <div
       v-if="
-        getGuiState().value === 'evaluation' && GameHandler.getInstance().getNumberOfAIs() === 2
+        (getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') && GameHandler.getInstance().getNumberOfAIs() === 2
       "
       id="labelSwitch"
     >
@@ -102,16 +103,10 @@ watch(isPlayer2Graph, (value) => {
   z-index: 10;
 }
 
-#graph {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .graph {
   width: 100%;
   height: 100%;
   border: 1px solid #38373d;
-  height: 90vh;
+  height: 81vh;
 }
 </style>

@@ -1,14 +1,17 @@
+import { initializeHistory } from '@/utils/GraphExport'
 import { ref, type Ref } from 'vue'
+import { GameHandler } from './GameHandler'
 
-export const skipStart = ref(false)
-export const skipEvaluation = ref(false)
+export const skipStartScreen = ref(false)
+export const skipEvaluationScreen = ref(false)
+export const useDigitalFont = ref(true)
 /**
  * The state of the GUI
  * 'start' for player selection,
  * 'game' for the game itself,
  * 'evaluation' for the application of the evaluation strategy.
  */
-export type GuiState = 'start' | 'game' | 'evaluation'
+export type GuiState = 'start' | 'game' | 'evaluation' |'postevaluation'
 const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
@@ -28,24 +31,37 @@ export function setGuiState(newState: GuiState): void {
 /**
  * Switches to the next GUI state.
  * If we skip this state, we immediatly switch to the next one.
+ * Performs the necessary actions for the transition.
+ * @param skipEvaluationOnce if true, the evaluation is not performed and postevaluation is skipped.
  */
-export function nextGuiState() {
+export function nextGuiState(skipEvaluationOnce: boolean = false) {
   switch (state.value) {
     case 'game':
       state.value = 'evaluation'
-      if (!skipEvaluation.value) {
+      if (!skipEvaluationScreen.value) {
         break
       }
     /* falls through */
     case 'evaluation':
+      GameHandler.getInstance().performEndOfGameActions(!skipEvaluationOnce)
+      state.value = 'postevaluation'
+      if(!skipEvaluationScreen.value && !skipEvaluationOnce) {
+        break
+      }
+    /* falls through */
+    case 'postevaluation':
       state.value = 'start'
-      if (!skipStart.value) {
+      GameHandler.getInstance().resetGame()
+      if (!skipStartScreen.value) {
         break
       }
     /* falls through */
     case 'start':
+      initializeHistory()
+    /* falls through */
     default:
       state.value = 'game'
       break
   }
+  console.log('New state: ' + state.value)
 }

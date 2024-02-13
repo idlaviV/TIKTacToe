@@ -1,20 +1,14 @@
 <script setup lang="ts">
 import { GameHandler } from '@/logic/GameHandler'
 import { nextGuiState } from '@/logic/GuiState'
-import { initializeHistory } from '@/utils/GraphExport'
 import { players, type PlayersExport, updatePlayerList } from '@/utils/PlayerListExport'
-import SettingsPopover from './SettingsPopover.vue'
 import { ref, type Ref } from 'vue'
 
 /**
  * @description Starts the game and updates the gui state.
  */
 function startGame() {
-  console.log('Start game with')
-  console.log('Player 1: %s', items.value.find((item) => item.index === select1.value)?.player)
-  console.log('Player 2: %s', items.value.find((item) => item.index === select2.value)?.player)
   GameHandler.getInstance().setPlayers(select1.value, select2.value)
-  initializeHistory()
   nextGuiState()
 }
 
@@ -34,18 +28,12 @@ const select1 = ref(0)
 const select2 = ref(1)
 </script>
 
-<!-- The StartScreen offers the selection of the players for the next game. -->
+<!-- The StartScreen offers the selectiöon of the players for the next game. -->
 <template>
-  <div id="startScreen">
-    <h1 class="text-3xl font-bold uppercase">Tic Tac Toe</h1>
+  <v-card class="bg-black" align="center">
+    <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
-    <div id="settingsButton">
-      <SettingsPopover />
-    </div>
-
-    <v-container>
-      <h2>Spielerauswahl</h2>
-
+    <v-card class="playerSelection bg-black">
       <div>
         <v-select
           label="Spieler 1 wählen"
@@ -63,19 +51,14 @@ const select2 = ref(1)
           item-value="index"
         />
       </div>
-    </v-container>
-    <v-btn v-on:click="startGame">Spiel starten</v-btn>
-  </div>
+    </v-card>
+    <v-btn v-on:click="startGame" class="bg-white">Spiel starten</v-btn>
+  </v-card>
 </template>
 
 <style>
-#startScreen {
-  position: relative;
-}
-
-#settingsButton {
-  position: absolute;
-  top: 0;
-  right: 0;
+.playerSelection {
+  max-width: 300px;
+  justify-self: center;
 }
 </style>
