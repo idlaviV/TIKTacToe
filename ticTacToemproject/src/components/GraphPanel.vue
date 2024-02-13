@@ -8,7 +8,7 @@ import {
 import GraphPanelNode from './GraphPanelNode.vue'
 import { currentGraphType, initializeConfig } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { getGuiState, useDigitalFont } from '@/logic/GuiState'
+import { getGuiState, useDigitalFont, type GuiState } from '@/logic/GuiState'
 import { computed, ref, watch } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
@@ -34,7 +34,8 @@ const graph = ref<VNetworkGraphInstance>()
 const isPlayer2Graph = ref<boolean>(false)
 const config = ref<UserConfigs>(initializeConfig('simpleGraph'))
 
-watch(getGuiState(), (guiState) => {
+
+const setConfig = (guiState:GuiState) =>{
   if (guiState === 'game') {
     config.value = initializeConfig('gameGraph')
   } else if (guiState === 'evaluation' || guiState ==='postevaluation') {
@@ -48,7 +49,10 @@ watch(getGuiState(), (guiState) => {
         : initializeConfig('player2Graph')
     }
   }
-})
+}
+setConfig(getGuiState().value)
+watch(getGuiState(), setConfig)
+
 watch(isPlayer2Graph, (value) => {
   if ((getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') && handler.getNumberOfAIs() === 2) {
     config.value = value ? initializeConfig('player2Graph') : initializeConfig('player1Graph')
