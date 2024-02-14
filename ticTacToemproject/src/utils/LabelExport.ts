@@ -10,7 +10,7 @@ import type { TTTEdges } from './Graph'
 /**
  * This class holds the labels for the edges, by their id, as a tupel of two weights.
  */
-export type Labels = Record<string, [string, string]>
+export type Labels = Record<string, Label>
 
 export const labelExport: Ref<Labels> = ref({})
 
@@ -18,13 +18,13 @@ export const labelExport: Ref<Labels> = ref({})
  * Updates the labels of the edges in the graphExport. The labels are the weights of the edges,
  * for the currently active aIs. If a player is not an AI, the label is an empty string.
  */
-export function updateLabels(edges: TTTEdges = graphExport.value.edges): void {
+export function updateLabels(edges: TTTEdges = graphExport.value.edges, isAfterEval: boolean = false): void {
   const settings: GameSettings = GameHandler.getInstance().getSettings()
   const players: [Player, Player] = [settings.getPlayer(1), settings.getPlayer(2)]
 
   for (const edge in edges) {
     if (labelExport.value[edge] === undefined) {
-      labelExport.value[edge] = ['', '']
+      labelExport.value[edge] = new Label()
     }
 
     for (let i = 0; i < players.length; i++) {
@@ -34,9 +34,9 @@ export function updateLabels(edges: TTTEdges = graphExport.value.edges): void {
         const target: number = edges[edge].numTarget
         const label: number = aI.getVertexMap(source).get(target)!
 
-        labelExport.value[edge][i] = label.toString()
+        labelExport.value[edge].setLabel(i, label.toString(), isAfterEval)
       } else {
-        labelExport.value[edge][i] = ''
+        labelExport.value[edge].setLabel(i, '')
       }
     }
   }
@@ -49,7 +49,7 @@ export function updateLabels(edges: TTTEdges = graphExport.value.edges): void {
  */
 export function getLabelToShow(edgeID: string, graphType: GraphType): string {
   const handler: GameHandler = GameHandler.getInstance()
-  const currentLabels: [string, string] = labelExport.value[edgeID]
+  const currentLabels: string[] = labelExport.value[edgeID].labels
   switch (graphType) {
     case 'gameGraph':
       if (handler.getNumberOfAIs() === 0) {
@@ -60,10 +60,32 @@ export function getLabelToShow(edgeID: string, graphType: GraphType): string {
           : currentLabels[1]
       }
     case 'player1Graph':
-      return labelExport.value[edgeID][0]
+      return currentLabels[0]
     case 'player2Graph':
-      return labelExport.value[edgeID][1]
+      return currentLabels[1]
     default:
       return ''
+  }
+}
+
+export class Label {
+  labels: string[]
+  label1Changed: boolean = false
+  label2Changed: boolean = false
+
+  constructor(labels: string[] = ['', '']) {
+    this.labels = labels
+  }
+
+  setLabel(index: number, label: string, changed: boolean = false): void {
+    if (index < 1 || index > this.labels.length) {
+      throw new Error('Index out of bounds')
+    }
+    this.labels[index - 1] = label
+    if (index === 1) {
+      this.label1Changed = changed
+    } else if (index === 2) {
+      this.label2Changed = changed
+    }
   }
 }

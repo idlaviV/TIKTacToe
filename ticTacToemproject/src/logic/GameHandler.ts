@@ -96,7 +96,7 @@ export class GameHandler {
       this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
         ? Object.assign(changedWeights, (this.settings.getPlayer(2) as AIPlayer).applyPolicy())
         : null
-      updateLabels(changedWeights)
+      updateLabels(changedWeights, true)
     }
   }
 
