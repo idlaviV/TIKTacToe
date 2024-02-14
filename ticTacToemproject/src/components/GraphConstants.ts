@@ -15,9 +15,9 @@ export const yOffsetText: number = -rectSize + 5.5
 export const gridSize: number = 3 * rectSize
 export const tooltipPadding: number = 3
 export const viewBoxAttributes: string = [
-    -gridSize/2 - tooltipPadding, 
-    -gridSize/2 - tooltipPadding, 
-    gridSize + 2*tooltipPadding, 
-    gridSize + 2*tooltipPadding
-].join(" ")
+  -gridSize / 2 - tooltipPadding,
+  -gridSize / 2 - tooltipPadding,
+  gridSize + 2 * tooltipPadding,
+  gridSize + 2 * tooltipPadding
+].join(' ')
 export const tootipSize = gridSize
