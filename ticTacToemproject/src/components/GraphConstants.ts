@@ -20,4 +20,4 @@ export const viewBoxAttributes: string = [
   gridSize + 2 * tooltipPadding,
   gridSize + 2 * tooltipPadding
 ].join(' ')
-export const tootipSize = gridSize
+export const tooltipSize = gridSize

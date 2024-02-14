@@ -19,7 +19,7 @@ import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
-import { viewBoxAttributes, tootipSize } from './GraphConstants'
+import { viewBoxAttributes, tooltipSize } from './GraphConstants'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -75,9 +75,11 @@ watch(
     // translate coordinates: SVG -> DOM
     const domPoint = graph.value.translateFromSvgToDomCoordinates(targetNodePos.value)
     // calculates top-left position of the tooltip.
+    const altCount:number = nodesForDisplay.value[targetNodeId.value].alternatives.length
+    const tooltipWidth:number = altCount * tooltipSize -25
     tooltipPos.value = {
-      left: domPoint.x - tooltip.value.offsetWidth / 2 + 'px',
-      top: domPoint.y + 100 - tooltip.value.offsetHeight + 'px'
+      left: domPoint.x - tooltipWidth / 2 + 'px',
+      top: domPoint.y +120 - tooltipSize + 'px'
     }
   },
   { deep: true }
@@ -137,7 +139,7 @@ const eventHandlers: EventHandlers = {
           v-for="alt in graphExport.nodes[targetNodeId].alternatives"
           v-bind:key="alt.toString()"
         >
-          <svg :width="tootipSize" :height="tootipSize" :viewBox="viewBoxAttributes">
+          <svg :width="tooltipSize" :height="tooltipSize" :viewBox="viewBoxAttributes">
             <GraphPanelNode :state="alt" />
           </svg>
         </div>
