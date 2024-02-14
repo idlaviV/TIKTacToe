@@ -8,7 +8,7 @@ import {
   setCurrentGraphType
 } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { getGuiState, registerCleaningTaskPreGame, useDigitalFont } from '@/logic/GuiState'
+import { getGuiState, registerCleaningTaskPreStart, useDigitalFont } from '@/logic/GuiState'
 import { computed, ref } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
@@ -50,11 +50,14 @@ const graphType = computed(() => {
 const graph = ref<VNetworkGraphInstance>()
 
 const resetPan = ()=>{
-  //TODO
-  console.log("Reset Pan")
+  graph.value?.panTo({x:0, y:0})
+  const size = graph.value?.getSizes()
+  const x = size?.width!/2
+  const y = size?.height!/2
+  graph.value?.panBy({x: x, y:y} )
 }
 
-registerCleaningTaskPreGame(resetPan)
+registerCleaningTaskPreStart(resetPan)
 
 const config = graphPanelUserConfigs
 </script>

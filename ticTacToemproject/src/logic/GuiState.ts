@@ -16,21 +16,20 @@ const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
 export const guiDisable: Ref<GuiDisable> = ref('standard')
-const cleaningTasksPreGame : (()=>void)[] = []
+const cleaningTasksPreStart : (()=>void)[] = []
 
 /**
- * Register a new task. It will be called on all subsequent transitions to gui-state 'game'
+ * Register a new task. It will be called on all subsequent transitions from gui-state 'post-evaluation'
  * @param foo a method which can be called without arguments
  */
-export function registerCleaningTaskPreGame(foo:(()=>void)) {
-  cleaningTasksPreGame.push(foo)
+export function registerCleaningTaskPreStart(foo:(()=>void)) {
+  cleaningTasksPreStart.push(foo)
 }
 
-/**
- * Perform registered tasks before entering gui-state 'game'
- */  
-function performCleaningTasksPreGame() {
-  for (const task of cleaningTasksPreGame) {
+
+
+function performCleaningTasksPreStart() {
+  for (const task of cleaningTasksPreStart) {
     task()
   }
 }
@@ -69,6 +68,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
       }
     /* falls through */
     case 'postevaluation':
+      performCleaningTasksPreStart()
       state.value = 'start'
       GameHandler.getInstance().resetGame()
       if (!skipStartScreen.value) {
@@ -79,7 +79,6 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
       initializeHistory()
     /* falls through */
     default:
-      performCleaningTasksPreGame()
       state.value = 'game'
       break
   }
