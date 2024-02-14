@@ -22,11 +22,9 @@ export class AIPlayer extends Player {
    */
   randomizer: Randomizer = new Randomizer()
   policy: EvaluationPolicy
-  name: string
 
   constructor(policy: EvaluationPolicy, name: string = 'AI') {
-    super()
-    this.name = name
+    super(name)
     this.policy = policy
   }
 
@@ -80,7 +78,7 @@ export class AIPlayer extends Player {
    * This would be a->1, b->3, c->4, d->4 and e->7.
    * @returns The entries of the array specify a child node and the corresponding index.
    */
-  prepareWeightedEntries(): { code: number; index: number }[] {
+  private prepareWeightedEntries(): { code: number; index: number }[] {
     const vertexMap: Map<number, number> = this.getVertexMap()
     const weightedEntries = new Array()
     let sum: number = 0
@@ -107,8 +105,7 @@ export class AIPlayer extends Player {
    * If no argument is passed, the current configuration of the game is used
    * @returns map of weights
    */
-  // private
-  getVertexMap(normalForm?: number): Map<NormalForm, number> {
+  getVertexMap(normalForm?: NormalForm): Map<NormalForm, number> {
     if (normalForm === undefined) {
       normalForm = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
     }
