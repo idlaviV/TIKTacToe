@@ -14,6 +14,7 @@ import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
+import { viewBoxAttributes, tootipSize } from './GraphConstants'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -132,12 +133,17 @@ const eventHandlers: EventHandlers = {
       :style="{ ...tooltipPos, opacity: tooltipOpacity }"
     >
     
-      <v-card v-if="targetNodeId !==''">
+      <v-row v-if="targetNodeId !==''">
+        
         <div v-for="x in graphExport.nodes[targetNodeId].alternatives" v-bind:key="x.toString()">
-          <GraphPanelNode :state="x" />
+          <svg
+            :width="tootipSize"
+            :height="tootipSize"
+            :viewBox="viewBoxAttributes"
+          ><GraphPanelNode :state="x" /></svg>
         </div>
         
-      </v-card>
+      </v-row>
       
     </div>
 </div>
