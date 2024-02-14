@@ -16,6 +16,25 @@ const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
 export const guiDisable: Ref<GuiDisable> = ref('standard')
+const cleaningTasksPreGame : (()=>void)[] = []
+
+/**
+ * Register a new task. It will be called on all subsequent transitions to gui-state 'game'
+ * @param foo a method which can be called without arguments
+ */
+export function registerCleaningTaskPreGame(foo:(()=>void)) {
+  cleaningTasksPreGame.push(foo)
+}
+
+/**
+ * Perform registered tasks before entering gui-state 'game'
+ */  
+function performCleaningTasksPreGame() {
+  for (const task of cleaningTasksPreGame) {
+    task()
+  }
+}
+
 
 export function getGuiState(): Ref<GuiState> {
   return state
@@ -60,6 +79,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
       initializeHistory()
     /* falls through */
     default:
+      performCleaningTasksPreGame()
       state.value = 'game'
       break
   }
