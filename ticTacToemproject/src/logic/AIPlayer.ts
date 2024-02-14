@@ -145,6 +145,10 @@ export class AIPlayer extends Player {
   getName(): string {
     return this.name
   }
+
+  getPolicy(): EvaluationPolicy {
+    return this.policy
+  }
 }
 
 function getHeight(code: GameBoardCode): number {

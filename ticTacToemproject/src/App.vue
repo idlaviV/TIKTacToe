@@ -4,25 +4,15 @@ import StartScreen from './components/StartScreen.vue'
 import AISelectionPanel from './components/AISelectionPanel.vue'
 import MainScreen from './components/MainScreen.vue'
 import GraphPanel from './components/GraphPanel.vue'
-import { getGuiState, type GuiState, useDigitalFont } from './logic/GuiState'
+import { getGuiState, type GuiState } from './logic/GuiState'
 import SettingsPanel from './components/SettingsPanel.vue'
-import { watch } from 'vue'
 import { useDisplay } from 'vuetify'
 
 const guiState: Ref<GuiState> = getGuiState()
 const window = ref(0)
 const mobile = useDisplay().smAndDown
 
-function setFont() {
-  if (useDigitalFont.value) {
-    document.body.style.fontFamily = 'Pixelify Sans'
-  } else {
-    document.body.style.fontFamily = ''
-  }
-}
-setFont()
-
-watch(useDigitalFont, setFont)
+document.body.style.fontFamily = 'Pixelify Sans'
 </script>
 
 <template>

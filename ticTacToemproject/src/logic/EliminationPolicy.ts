@@ -1,4 +1,4 @@
-import { TTTEdge, type TTTEdges } from '@/utils/Graph'
+import type { TTTEdges } from '@/utils/Graph'
 import type { AIPlayer } from './AIPlayer'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import type { GameBoard } from './GameBoard'
@@ -48,7 +48,7 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
         edgeStart = history[index - 2].getNormalForm()
         edgeEnd = history[index - 1].getNormalForm()
         edgeId = edgeStart + '#' + edgeEnd
-        graphExport.value.edges[edgeId].changed = true
+        graphExport.value.edges[edgeId].changedBy = this
         changedWeights[edgeId] = graphExport.value.edges[edgeId]
       }
     }

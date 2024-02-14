@@ -33,15 +33,15 @@ beforeEach(() => {
 
 describe('getInitialWeight', () => {
   test('returns expected values', () => {
-    expect(policy.getInitialWeight(0)).toBe(8)
-    expect(policy.getInitialWeight(1)).toBe(7)
-    expect(policy.getInitialWeight(2)).toBe(6)
-    expect(policy.getInitialWeight(3)).toBe(5)
-    expect(policy.getInitialWeight(4)).toBe(4)
-    expect(policy.getInitialWeight(5)).toBe(3)
-    expect(policy.getInitialWeight(6)).toBe(2)
-    expect(policy.getInitialWeight(7)).toBe(1)
-    expect(policy.getInitialWeight(8)).toBe(0)
+    expect(policy.getInitialWeight(0)).toBe(9)
+    expect(policy.getInitialWeight(1)).toBe(8)
+    expect(policy.getInitialWeight(2)).toBe(7)
+    expect(policy.getInitialWeight(3)).toBe(6)
+    expect(policy.getInitialWeight(4)).toBe(5)
+    expect(policy.getInitialWeight(5)).toBe(4)
+    expect(policy.getInitialWeight(6)).toBe(3)
+    expect(policy.getInitialWeight(7)).toBe(2)
+    expect(policy.getInitialWeight(8)).toBe(1)
   })
 
   test('throws error for invalid input', () => {
