@@ -2,7 +2,7 @@ import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { getGuiState } from '@/logic/GuiState'
 import type { TTTEdge } from '@/utils/Graph'
-import { getLabelToShow } from '@/utils/LabelExport'
+import { getLabelToShow, labelExport } from '@/utils/LabelExport'
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
 
@@ -82,13 +82,18 @@ function getLabelColor(edge: TTTEdge): string {
   const player2Color = '#3b82f6'
   const historyColor = '#ff3131'
   const changedColor = '#47f352'
-  
+
   const graphType = currentGraphType.value
 
   if (getGuiState().value === 'evaluation' && isPartOfHistory(edge.numSource, edge.numTarget)) {
     return historyColor
-  } else if (getGuiState().value === 'postevaluation' && edge.changed) {
-    return changedColor
+  } else if (getGuiState().value === 'postevaluation') {
+    if (
+      (labelExport.value[edge.id].label1Changed && graphType === 'player1Graph') ||
+      (labelExport.value[edge.id].label2Changed && graphType === 'player2Graph')
+    ) {
+      return changedColor
+    }
   }
 
   switch (graphType) {

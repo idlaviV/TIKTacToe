@@ -48,7 +48,6 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
         edgeStart = history[index - 2].getNormalForm()
         edgeEnd = history[index - 1].getNormalForm()
         edgeId = edgeStart + '#' + edgeEnd
-        graphExport.value.edges[edgeId].changedBy = this
         changedWeights[edgeId] = graphExport.value.edges[edgeId]
       }
     }

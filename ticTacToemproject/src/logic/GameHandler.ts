@@ -89,14 +89,17 @@ export class GameHandler {
     }
     this.registerGamesInStats()
     if (applyPolicy) {
-      const changedWeights: TTTEdges = {}
-      this.settings.getPlayer(1).isAI()
-        ? Object.assign(changedWeights, (this.settings.getPlayer(1) as AIPlayer).applyPolicy())
-        : null
-      this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
-        ? Object.assign(changedWeights, (this.settings.getPlayer(2) as AIPlayer).applyPolicy())
-        : null
-      updateLabels(changedWeights, true)
+      let changedWeights: TTTEdges
+      changedWeights = this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : {}
+      updateLabels(changedWeights, 1)
+      changedWeights =
+        this.settings.getPlayer(2).isAI() &&
+        this.settings.getPlayer(2) !== this.settings.getPlayer(1)
+          ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+          : {}
+      updateLabels(changedWeights, 2)
     }
   }
 

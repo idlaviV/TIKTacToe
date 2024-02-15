@@ -124,7 +124,6 @@ export class BackpropagationPolicy implements EvaluationPolicy {
 
         if (weightChanged) {
           const edgeId: string = history[index - 1].getNormalForm() + '#' + nextMove
-          graphExport.value.edges[edgeId].changed = true
           changedWeights[edgeId] = graphExport.value.edges[edgeId]
         }
       }
