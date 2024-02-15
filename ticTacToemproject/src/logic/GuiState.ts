@@ -16,24 +16,21 @@ const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
 export const guiDisable: Ref<GuiDisable> = ref('standard')
-const cleaningTasksPreStart : (()=>void)[] = []
+const cleaningTasksPreStart: (() => void)[] = []
 
 /**
  * Register a new task. It will be called on all subsequent transitions from gui-state 'post-evaluation'
  * @param foo a method which can be called without arguments
  */
-export function registerCleaningTaskPreStart(foo:(()=>void)) {
+export function registerCleaningTaskPreStart(foo: () => void) {
   cleaningTasksPreStart.push(foo)
 }
-
-
 
 function performCleaningTasksPreStart() {
   for (const task of cleaningTasksPreStart) {
     task()
   }
 }
-
 
 export function getGuiState(): Ref<GuiState> {
   return state
