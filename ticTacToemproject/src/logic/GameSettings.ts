@@ -29,10 +29,15 @@ export class GameSettings {
   }
 
   getPlayer(playerNumber: PlayerNumber): Player {
-    if (playerNumber == 1) {
-      return this.player1
-    } else {
-      return this.player2
+    switch (playerNumber) {
+      case 1:
+        return this.player1
+      
+      case 2:
+        return this.player2
+      
+      default:
+        throw new Error('Invalid player number')
     }
   }
 }
