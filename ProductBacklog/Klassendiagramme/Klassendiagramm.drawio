@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="LtpKRm_itNa-HTUQHWI9" name="Page-1">
-        <mxGraphModel dx="1236" dy="-563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="2486" dy="-232" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -571,7 +571,7 @@
                 <mxCell id="156" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="155" vertex="1">
                     <mxGeometry y="40" width="280" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="174" value="modifyWeighs(AIPlayer, GameBoard[], number):&#10;void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2" parent="155" vertex="1">
+                <mxCell id="174" value="modifyWeights(AIPlayer, GameBoard[], number):&#10;void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2" parent="155" vertex="1">
                     <mxGeometry y="48" width="280" height="42" as="geometry"/>
                 </mxCell>
                 <mxCell id="157" value="BackPropagationPolicy" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
@@ -589,7 +589,7 @@
                 <mxCell id="161" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="157" vertex="1">
                     <mxGeometry y="104" width="230" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="184" value="setDiffs(number, number, number): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="157">
+                <mxCell id="184" value="setDiffs(number, number, number): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="157" vertex="1">
                     <mxGeometry y="112" width="230" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="162" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;elbow=vertical;" parent="1" source="155" target="151" edge="1">
@@ -707,7 +707,7 @@
                         <mxPoint x="39" y="10" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="185" value="" style="endArrow=open;endFill=1;endSize=12;html=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="2" target="130">
+                <mxCell id="185" value="" style="endArrow=open;endFill=1;endSize=12;html=1;edgeStyle=orthogonalEdgeStyle;" parent="1" source="2" target="130" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="-130" y="1880" as="sourcePoint"/>
                         <mxPoint x="30" y="1880" as="targetPoint"/>
@@ -717,7 +717,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="186" value="humanPlayer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="185">
+                <mxCell id="186" value="humanPlayer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="185" vertex="1" connectable="0">
                     <mxGeometry x="-0.9356" y="1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
