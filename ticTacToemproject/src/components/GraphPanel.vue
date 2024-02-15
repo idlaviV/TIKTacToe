@@ -50,11 +50,16 @@ const graphType = computed(() => {
 const graph = ref<VNetworkGraphInstance>()
 
 const resetPan = ()=>{
-  graph.value?.panTo({x:0, y:0})
   const size = graph.value?.getSizes()
-  const x = size?.width!/2
-  const y = size?.height!/2
-  graph.value?.panBy({x: x, y:y} )
+  if (size !== undefined && size.width !==0 && size.height!==0) {
+    graph.value?.panTo({x:0, y:0})
+    const x = size?.width!/2
+    const y = size?.height!/2
+    graph.value?.panBy({x: x, y:y} )
+  }
+  
+  
+  
 }
 
 registerCleaningTaskPreStart(resetPan)
