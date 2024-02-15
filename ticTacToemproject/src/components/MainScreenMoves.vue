@@ -2,18 +2,14 @@
 import { GameHandler } from '@/logic/GameHandler'
 import PlayButton from './MainScreenMovesPlayButton.vue'
 import { ref, watch, type Ref } from 'vue'
-import { getGuiState, guiDisable } from '@/logic/GuiState'
+import { getGuiState , updateGuiDisable} from '@/logic/GuiState'
+import { setAutoPlay, getAutoPlay, toggleAutoPlay, getMoveSpeed } from '@/logic/AutoPlayTimer';
 
 const gameHandler = GameHandler.getInstance()
-const autoPlay = ref(false)
-let timer: ReturnType<typeof setTimeout>
+const moveSpeed: Ref<number> = getMoveSpeed()
 const movesDisabled: Ref<boolean> = ref(false)
-const moveSpeed = ref(2)
 
-const toggleAutoPlay = () => {
-  autoPlay.value = !autoPlay.value
-  updateGuiDisable()
-}
+
 
 const updateMoveButtonDiable = () => {
   movesDisabled.value = gameHandler.getNumberOfAIs() == 0
@@ -21,60 +17,18 @@ const updateMoveButtonDiable = () => {
 
 watch(getGuiState(), (guiState) => {
   if (guiState == 'game') {
-    startAutoPlayLoop()
     updateMoveButtonDiable()
-  } else {
-    clearTimeout(timer)
-    updateGuiDisable()
   }
 })
 
-const updateGuiDisable = () => {
-  if (
-    getGuiState().value == 'game' &&
-    gameHandler.getNumberOfAIs() == 2 &&
-    autoPlay.value &&
-    moveSpeed.value > 8
-  ) {
-    guiDisable.value = 'reduced'
-  } else {
-    guiDisable.value = 'standard'
-  }
-}
 
-const startAutoPlayLoop = (immediateTurn = false) => {
-  if (immediateTurn && autoPlay.value) {
-    gameHandler.performAiTurn()
-  }
-  updateGuiDisable()
-
-  clearTimeout(timer)
-  timer = setTimeout(() => {
-    if (autoPlay.value) {
-      startAutoPlayLoop(true)
-    }
-  }, calculateTimeout())
-}
-
-const calculateTimeout = () => {
-  if (moveSpeed.value == 9) {
-    return 50
-  }
-  if (moveSpeed.value == 10) {
-    return 5
-  }
-  return 2000 / moveSpeed.value
-}
-
-watch(autoPlay, startAutoPlayLoop)
 
 /**
  * @description Informs the model, that the user wants to trigger the next AI turn.
  * Deactivates auto play.
  */
 const nextAiTurn = () => {
-  autoPlay.value = false
-  updateGuiDisable()
+  setAutoPlay(false)
   gameHandler.performAiTurn()
 }
 </script>
@@ -85,7 +39,7 @@ const nextAiTurn = () => {
     <!-- The PlayButton toggles auto play. -->
     <PlayButton
       variant="outlined"
-      :auto-play="autoPlay"
+      :auto-play="getAutoPlay().value"
       :disabled="movesDisabled"
       @update:auto-play="toggleAutoPlay"
     >
@@ -106,6 +60,7 @@ const nextAiTurn = () => {
       max="10"
       class="slider"
       v-model="moveSpeed"
+      :on-input="updateGuiDisable()"
     />
   </div>
 </template>
