@@ -5,11 +5,8 @@ import { Player } from './Player'
  * He triggers moves via the GUI.
  */
 export class UserPlayer extends Player {
-  name: string
-
   constructor(name: string = 'Human') {
-    super()
-    this.name = name
+    super(name)
   }
 
   getName(): string {

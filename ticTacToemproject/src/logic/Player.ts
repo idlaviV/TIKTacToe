@@ -3,6 +3,8 @@
  * AIPlayers and UserPlayers are possible.
  */
 export abstract class Player {
+  name: string
+
   /**
    * @returns Is this player an AI?
    */
@@ -22,6 +24,10 @@ export abstract class Player {
   losses: number = 0
   draws: number = 0
   games: number = 0
+
+  constructor(name: string) {
+    this.name = name
+  }
 
   getStats() {
     return { wins: this.wins, losses: this.losses, draws: this.draws, games: this.games }
