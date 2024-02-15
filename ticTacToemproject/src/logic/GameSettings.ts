@@ -32,10 +32,10 @@ export class GameSettings {
     switch (playerNumber) {
       case 1:
         return this.player1
-      
+
       case 2:
         return this.player2
-      
+
       default:
         throw new Error('Invalid player number')
     }
