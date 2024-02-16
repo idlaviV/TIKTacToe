@@ -4,6 +4,10 @@ import { overlayNodeId, tooltip, tooltipOpacity, tooltipPos } from '@/utils/Grap
 import { viewBoxAttributes, tooltipSize } from './GraphConstants'
 import { graphExport } from '@/utils/GraphExport'
 </script>
+
+<!-- This component is an overlay for the GraphPanel, related to a node of the graph.
+      It shows all move possibilites corresponding to the node in a row.
+-->
 <template>
   <div ref="tooltip" class="tooltip" :style="{ ...tooltipPos, opacity: tooltipOpacity }">
     <v-row v-if="overlayNodeId !== ''" no-gutters>

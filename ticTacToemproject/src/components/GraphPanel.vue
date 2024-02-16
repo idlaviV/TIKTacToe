@@ -57,6 +57,9 @@ const graphType = computed(() => {
 
 const graph = ref<VNetworkGraphInstance>()
 
+/**
+ * Center the GraphPanel on position (0,0).
+ */
 const resetPan = () => {
   const size = graph.value?.getSizes()
   if (size !== undefined && size.width !== 0 && size.height !== 0) {
@@ -71,6 +74,9 @@ registerCleaningTaskPreStart(resetPan)
 
 const config = graphPanelUserConfigs
 
+/**
+ * Calculate the position of the tooltip when it should be shown.
+ */
 watch(
   () => [targetNodePos.value, tooltipOpacity.value],
   () => {
@@ -116,19 +122,19 @@ watch(
       >
         <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
       </div>
-    </div>
-    <!--tooltip-->
+      <!--tooltip-->
     <GraphAlternativeTooltip />
-  </div>
-  <div id="resetPan">
     <v-btn
+      id="resetPan"
       icon="mdi-move-resize"
       size="x-small"
       class="mx-2"
       variant="outlined"
       v-on:click="resetPan()"
     ></v-btn>
+    </div>
   </div>
+  
 </template>
 
 <style>
@@ -145,8 +151,8 @@ watch(
 
 #resetPan {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 0px;
+  right: 0px;
   z-index: 10;
 }
 
