@@ -19,7 +19,7 @@ import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
-import { viewBoxAttributes, tooltipSize } from './GraphConstants'
+import { viewBoxAttributes, tooltipSize, tooltipOffset } from './GraphConstants'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -88,10 +88,10 @@ watch(
     const domPoint = graph.value.translateFromSvgToDomCoordinates(targetNodePos.value)
     // calculates top-left position of the tooltip.
     const altCount:number = nodesForDisplay.value[targetNodeId.value].alternatives.length
-    const tooltipWidth:number = altCount * tooltipSize -25
+    const tooltipWidth:number = altCount * (tooltipSize)
     tooltipPos.value = {
-      left: domPoint.x - tooltipWidth / 2 + 'px',
-      top: domPoint.y +120 - tooltipSize + 'px'
+      left: domPoint.x  - tooltipWidth/2 +  'px',
+      top: domPoint.y + tooltipOffset + 'px'
     }
   },
   { deep: true }
@@ -160,14 +160,6 @@ const eventHandlers: EventHandlers = {
       
       </v-row>
     </div>
-    <div id="resetPan">
-      <v-btn
-        icon="mdi-move-resize"
-        size="x-small"
-        class="mx-2"
-        variant="outlined"
-        v-on:click="resetPan()"
-      ></v-btn>
     </div>
     <div id="resetPan">
       <v-btn
@@ -178,7 +170,6 @@ const eventHandlers: EventHandlers = {
         v-on:click="resetPan()"
       ></v-btn>
     </div>
-  </div>
 </template>
 
 <style>
