@@ -22,11 +22,9 @@ export class AIPlayer extends Player {
    */
   randomizer: Randomizer = new Randomizer()
   policy: EvaluationPolicy
-  name: string
 
   constructor(policy: EvaluationPolicy, name: string = 'AI') {
-    super()
-    this.name = name
+    super(name)
     this.policy = policy
   }
 
@@ -107,8 +105,7 @@ export class AIPlayer extends Player {
    * If no argument is passed, the current configuration of the game is used
    * @returns map of weights
    */
-  // private
-  getVertexMap(normalForm?: number): Map<NormalForm, number> {
+  getVertexMap(normalForm?: NormalForm): Map<NormalForm, number> {
     if (normalForm === undefined) {
       normalForm = GameHandler.getInstance().getGBHandler().getGameBoard().getNormalForm()
     }

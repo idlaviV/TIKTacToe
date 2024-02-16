@@ -1,4 +1,4 @@
-import type { GameBoardCode } from './Codes'
+import type { GameBoardCode, NormalForm } from './Codes'
 import { symbol, type FieldType } from './FieldType'
 import { IsomorphismGroup } from './IsomorphismGroup'
 import type { PlayerNumber } from './PlayerNumber'
@@ -9,7 +9,7 @@ import type { PlayerNumber } from './PlayerNumber'
 export class GameBoard {
   state: FieldType[][]
   code: GameBoardCode = -1
-  normalForm: number = -1
+  normalForm: NormalForm = -1
 
   /**
    * Creates a new gameboard. It defaults to an empty gameboard, where all fields are 0.
@@ -57,7 +57,7 @@ export class GameBoard {
    * Returns the normal form of the gameboard and calculates it if it has not been calculated yet.
    * @returns the normal form of the gameboard
    */
-  getNormalForm(): number {
+  getNormalForm(): NormalForm {
     if (this.normalForm == -1) {
       this.normalForm = IsomorphismGroup.getNormalFormOfGameBoard(this)
     }

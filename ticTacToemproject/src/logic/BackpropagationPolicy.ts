@@ -133,7 +133,7 @@ export class BackpropagationPolicy implements EvaluationPolicy {
       throw new Error('loseDiff ' + drawDiff + ' is illegal')
     }
     if (
-      Math.max(winDiff, drawDiff, loseDiff) > this.diffBound &&
+      Math.max(winDiff, drawDiff, loseDiff) > this.diffBound ||
       Math.min(winDiff, drawDiff, loseDiff) < -this.diffBound
     ) {
       throw new Error('Diffs (' + winDiff + ',' + drawDiff + ',' + loseDiff + ') out of bound!')
