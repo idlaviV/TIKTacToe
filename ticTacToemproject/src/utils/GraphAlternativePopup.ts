@@ -3,6 +3,7 @@ import { layouts } from './useGraphLayout'
 import type { EventHandlers, FixablePosition } from 'v-network-graph'
 import { tooltipOffset, tooltipSize } from '@/components/GraphConstants'
 import { graphExport } from './GraphExport'
+import { registerCleaningTaskPreStart } from '@/logic/GuiState'
 
 export const tooltip = ref<HTMLDivElement>()
 
@@ -54,3 +55,11 @@ tooltipPos.value = {
   top: domPoint.y + tooltipOffset + 'px'
 }
 }
+
+function cleanPopupsBeforeStart() {
+  fixedNodeId.value = ''
+  targetNodeId.value = ''
+  tooltipOpacity.value = 0
+}
+
+registerCleaningTaskPreStart(cleanPopupsBeforeStart)
