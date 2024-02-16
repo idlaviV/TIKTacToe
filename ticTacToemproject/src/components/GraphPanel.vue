@@ -20,7 +20,14 @@ import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
 import { viewBoxAttributes, tooltipSize, tooltipOffset } from './GraphConstants'
-import { fixedNodeId, overlayNodeId, targetNodeId, targetNodePos, tooltip, tooltipOpacity, tooltipPos } from '@/utils/GraphAlternativePopup'
+import {
+  eventHandlers,
+  overlayNodeId,
+  targetNodePos,
+  tooltip,
+  tooltipOpacity,
+  tooltipPos
+} from '@/utils/GraphAlternativePopup'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -70,9 +77,6 @@ registerCleaningTaskPreStart(resetPan)
 
 const config = graphPanelUserConfigs
 
-
-
-
 watch(
   () => [targetNodePos.value, tooltipOpacity.value],
   () => {
@@ -91,27 +95,7 @@ watch(
   { deep: true }
 )
 
-const eventHandlers: EventHandlers = {
-  'node:pointerover': ({ node }) => {
-    targetNodeId.value = node
-    tooltipOpacity.value = 1 // show
-  },
-  'node:pointerout': () => {
-    if (fixedNodeId.value == '') {
-      tooltipOpacity.value = 0 // hide
-    }
-    targetNodeId.value = ''
-  },
-  'node:click': ({ node }) => {
-    if (fixedNodeId.value === node) {
-      fixedNodeId.value = ''
-      tooltipOpacity.value = 0 // hide
-    } else {
-      fixedNodeId.value = node
-      tooltipOpacity.value = 1 // hide
-    }
-  }
-}
+
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
@@ -159,8 +143,9 @@ const eventHandlers: EventHandlers = {
         >
           <v-card>
             <svg :width="tooltipSize" :height="tooltipSize" :viewBox="viewBoxAttributes">
-              <GraphPanelNode :state="alt" /></svg
-          ></v-card>
+              <GraphPanelNode :state="alt" />
+            </svg>
+          </v-card>
         </v-col>
       </v-row>
     </div>
