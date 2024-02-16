@@ -8,7 +8,7 @@ import {
   setCurrentGraphType
 } from '@/components/GraphPanelUserConfigs'
 import { graphExport } from '@/utils/GraphExport'
-import { getGuiState, useDigitalFont } from '@/logic/GuiState'
+import { getGuiState, registerCleaningTaskPreStart, useDigitalFont } from '@/logic/GuiState'
 import { computed, ref } from 'vue'
 import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
@@ -49,6 +49,18 @@ const graphType = computed(() => {
 
 const graph = ref<VNetworkGraphInstance>()
 
+const resetPan = () => {
+  const size = graph.value?.getSizes()
+  if (size !== undefined && size.width !== 0 && size.height !== 0) {
+    graph.value?.panTo({ x: 0, y: 0 })
+    const x = size?.width! / 2
+    const y = size?.height! / 2
+    graph.value?.panBy({ x: x, y: y })
+  }
+}
+
+registerCleaningTaskPreStart(resetPan)
+
 const config = graphPanelUserConfigs
 </script>
 
@@ -85,6 +97,15 @@ const config = graphPanelUserConfigs
     >
       <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
     </div>
+    <div id="resetPan">
+      <v-btn
+        icon="mdi-move-resize"
+        size="x-small"
+        class="mx-2"
+        variant="outlined"
+        v-on:click="resetPan()"
+      ></v-btn>
+    </div>
   </div>
 </template>
 
@@ -97,6 +118,13 @@ const config = graphPanelUserConfigs
   position: absolute;
   top: 0;
   left: 20px;
+  z-index: 10;
+}
+
+#resetPan {
+  position: absolute;
+  top: 0;
+  right: 0;
   z-index: 10;
 }
 
