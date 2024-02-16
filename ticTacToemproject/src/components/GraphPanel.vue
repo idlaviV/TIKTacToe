@@ -126,7 +126,7 @@ watch(
     <GraphAlternativeTooltip />
     <v-btn
       id="resetPan"
-      icon="mdi-move-resize"
+      icon="mdi-image-filter-center-focus-weak"
       size="x-small"
       class="mx-2"
       variant="outlined"
