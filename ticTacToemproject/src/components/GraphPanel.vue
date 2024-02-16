@@ -99,7 +99,7 @@ const config = graphPanelUserConfigs
     </div>
     <div id="resetPan">
       <v-btn
-        icon="mdi-move-resize"
+        icon="mdi-image-filter-center-focus-weak"
         size="x-small"
         class="mx-2"
         variant="outlined"
