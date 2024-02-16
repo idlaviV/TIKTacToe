@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  VNetworkGraph,
-  VEdgeLabel,
-  type VNetworkGraphInstance,
-} from 'v-network-graph'
+import { VNetworkGraph, VEdgeLabel, type VNetworkGraphInstance } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import {
   currentGraphType,
@@ -19,11 +15,11 @@ import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
 import {
-calculatePosition,
+  calculatePosition,
   eventHandlers,
   targetNodePos,
   tooltip,
-  tooltipOpacity,
+  tooltipOpacity
 } from '@/utils/GraphAlternativePopup'
 import GraphAlternativeTooltip from './GraphAlternativeTooltip.vue'
 
@@ -83,8 +79,6 @@ watch(
   },
   { deep: true }
 )
-
-
 </script>
 
 <!-- The GraphPanel contains the visualization of the game history and the next possible moves. -->
@@ -124,7 +118,7 @@ watch(
       </div>
     </div>
     <!--tooltip-->
-    <GraphAlternativeTooltip/>
+    <GraphAlternativeTooltip />
   </div>
   <div id="resetPan">
     <v-btn

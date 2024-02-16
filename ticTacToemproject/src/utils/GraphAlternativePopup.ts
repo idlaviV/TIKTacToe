@@ -46,14 +46,14 @@ export const eventHandlers: EventHandlers = {
   }
 }
 
-export function calculatePosition(domPoint:FixablePosition) {
-// calculates top-left position of the tooltip.
-const altCount: number = graphExport.value.nodes[overlayNodeId.value].alternatives.length
-const tooltipWidth: number = altCount * tooltipSize
-tooltipPos.value = {
-  left: domPoint.x - tooltipWidth / 2 + 'px',
-  top: domPoint.y + tooltipOffset + 'px'
-}
+export function calculatePosition(domPoint: FixablePosition) {
+  // calculates top-left position of the tooltip.
+  const altCount: number = graphExport.value.nodes[overlayNodeId.value].alternatives.length
+  const tooltipWidth: number = altCount * tooltipSize
+  tooltipPos.value = {
+    left: domPoint.x - tooltipWidth / 2 + 'px',
+    top: domPoint.y + tooltipOffset + 'px'
+  }
 }
 
 function cleanPopupsBeforeStart() {
