@@ -134,15 +134,18 @@ const eventHandlers: EventHandlers = {
     </div>
     <!--tooltip-->
     <div ref="tooltip" class="tooltip" :style="{ ...tooltipPos, opacity: tooltipOpacity }">
-      <v-row v-if="targetNodeId !== ''">
-        <div
+      <v-row v-if="targetNodeId !== ''" no-gutters>
+        <v-col
+          
           v-for="alt in graphExport.nodes[targetNodeId].alternatives"
           v-bind:key="alt.toString()"
         >
+        <v-card>
           <svg :width="tooltipSize" :height="tooltipSize" :viewBox="viewBoxAttributes">
             <GraphPanelNode :state="alt" />
-          </svg>
-        </div>
+          </svg></v-card>
+        </v-col>
+      
       </v-row>
     </div>
   </div>
