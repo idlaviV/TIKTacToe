@@ -16,12 +16,11 @@ document.body.style.fontFamily = 'Pixelify Sans'
 /**
  * Navigate selection from mobile-graph to desktop-game
  */
- watch(mobile, ()=>{
+watch(mobile, () => {
   if (window.value == 1 && !mobile.value && guiState.value !== 'start') {
     window.value = 0
   }
 })
-
 </script>
 
 <template>
@@ -29,18 +28,25 @@ document.body.style.fontFamily = 'Pixelify Sans'
     <v-container v-show="guiState === 'start'">
       <v-window v-model="window">
         <v-layout>
-          <v-bottom-navigation v-model="window" class="bg-black" color="white" horizontal grow>
-            <v-btn value="0" :class="`${window == 0 ? 'disable-events' : ''}`">
+          <v-bottom-navigation
+            v-model="window"
+            class="bg-black"
+            color="white"
+            horizontal
+            grow
+            mandatory
+          >
+            <v-btn value="0">
               <v-icon>mdi-nintendo-game-boy</v-icon>
               Spiel
             </v-btn>
 
-            <v-btn value="1" :class="`${window == 1 ? 'disable-events' : ''}`">
+            <v-btn value="1">
               <v-icon>mdi-robot</v-icon>
               KIs
             </v-btn>
 
-            <v-btn value="2" :class="`${window == 2 ? 'disable-events' : ''}`">
+            <v-btn value="2">
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -63,18 +69,25 @@ document.body.style.fontFamily = 'Pixelify Sans'
     <v-container v-show="guiState !== 'start'">
       <v-window v-if="mobile" v-model="window">
         <v-layout>
-          <v-bottom-navigation v-model="window" class="bg-black" color="white" horizontal grow>
-            <v-btn value="0" :class="`${window == 0 ? 'disable-events' : ''}`">
+          <v-bottom-navigation
+            v-model="window"
+            class="bg-black"
+            color="white"
+            horizontal
+            grow
+            mandatory
+          >
+            <v-btn value="0">
               <v-icon>mdi-nintendo-game-boy</v-icon>
               Spiel
             </v-btn>
 
-            <v-btn value="1" :class="`${window == 1 ? 'disable-events' : ''}`">
+            <v-btn value="1">
               <v-icon>mdi-graph</v-icon>
               Graph
             </v-btn>
 
-            <v-btn value="2" :class="`${window == 2 ? 'disable-events' : ''}`">
+            <v-btn value="2">
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -95,8 +108,15 @@ document.body.style.fontFamily = 'Pixelify Sans'
 
       <v-window v-else v-model="window">
         <v-layout>
-          <v-bottom-navigation v-model="window" class="bg-black" color="white" horizontal grow>
-            <v-btn value="0" :class="`${window == 0 ? 'disable-events' : ''}`">
+          <v-bottom-navigation
+            v-model="window"
+            class="bg-black"
+            color="white"
+            horizontal
+            grow
+            mandatory
+          >
+            <v-btn value="0">
               <div>
                 <v-icon class="mx-1">mdi-nintendo-game-boy</v-icon>
                 <v-icon class="mx-1">mdi-graph</v-icon>
@@ -104,7 +124,7 @@ document.body.style.fontFamily = 'Pixelify Sans'
               Spiel und Graph
             </v-btn>
 
-            <v-btn value="2" :class="`${window == 2 ? 'disable-events' : ''}`">
+            <v-btn value="2">
               <v-icon>mdi-wrench</v-icon>
               Einstellungen
             </v-btn>
@@ -131,8 +151,4 @@ document.body.style.fontFamily = 'Pixelify Sans'
   </main>
 </template>
 
-<style>
-.disable-events {
-  pointer-events: none;
-}
-</style>
+<style></style>
