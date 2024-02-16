@@ -104,6 +104,9 @@ const eventHandlers: EventHandlers = {
   },
   'node:pointerout': () => {
     tooltipOpacity.value = 0 // hide
+  },
+  'node:pointerdown':()=>{
+    tooltipOpacity.value = 0 // hide
   }
 }
 </script>
