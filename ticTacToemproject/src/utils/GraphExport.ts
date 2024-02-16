@@ -27,7 +27,9 @@ export function initializeHistory() {
   const graph: GraphExport = graphExport.value
   const gameBoard: GameBoard = GameHandler.getInstance().getGBHandler().getGameBoard()
   const newCode: number = gameBoard.getCode()
-  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level, false, [gameBoard.clone()])
+  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level, false, [
+    gameBoard.clone()
+  ])
   graph.nodes[newCode.toString()] = newNode
   graph.activeNodeCode = newCode.toString()
   graph.activeNodeCodeNum = newCode
@@ -47,7 +49,13 @@ export function updateHistory(gameBoard: GameBoard) {
   const newCodeString: string = newCode.toString()
   const oldAlternatives = graph.nodes[newCodeString].alternatives
   deleteChild(newCodeString, graph)
-  const newNode: TTTNode = new TTTNode(gameBoard.getCode(), gameBoard.state, graph.level, false, oldAlternatives)
+  const newNode: TTTNode = new TTTNode(
+    gameBoard.getCode(),
+    gameBoard.state,
+    graph.level,
+    false,
+    oldAlternatives
+  )
   graph.nodes[newCodeString] = newNode
   const key: string = graph.activeNodeCode + '#' + newCode
   const height: number = graph.level - 1
