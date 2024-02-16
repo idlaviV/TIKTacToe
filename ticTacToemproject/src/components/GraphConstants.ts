@@ -12,7 +12,7 @@ export const yOffsetRect: number = -1.5 * rectSize
 export const xOffsetText: number = -rectSize
 export const yOffsetText: number = -rectSize + 5.5
 //Size of whole field
-export const gridSize: number = 3 * (rectSize)
+export const gridSize: number = 3 * rectSize
 export const tooltipPadding: number = 3
 export const viewBoxAttributes: string = [
   -gridSize / 2 - tooltipPadding,

@@ -74,7 +74,7 @@ const targetNodeId = ref<string>('')
 const fixedNodeId = ref<string>('')
 const tooltipOpacity = ref(0) // 0 or 1
 const tooltipPos = ref({ left: '0px', top: '0px' })
-const overlayNodeId = computed(()=>{
+const overlayNodeId = computed(() => {
   if (targetNodeId.value === '') {
     return fixedNodeId.value
   } else {
@@ -90,52 +90,40 @@ const targetNodePos = computed(() => {
 watch(
   () => [targetNodePos.value, tooltipOpacity.value],
   () => {
-    if (!graph.value || !tooltip.value || tooltipOpacity.value ==0) return
+    if (!graph.value || !tooltip.value || tooltipOpacity.value == 0) return
 
     // translate coordinates: SVG -> DOM
     const domPoint = graph.value.translateFromSvgToDomCoordinates(targetNodePos.value)
     // calculates top-left position of the tooltip.
-    const altCount:number = nodesForDisplay.value[overlayNodeId.value].alternatives.length
-    const tooltipWidth:number = altCount * (tooltipSize)
+    const altCount: number = nodesForDisplay.value[overlayNodeId.value].alternatives.length
+    const tooltipWidth: number = altCount * tooltipSize
     tooltipPos.value = {
-      left: domPoint.x  - tooltipWidth/2 +  'px',
+      left: domPoint.x - tooltipWidth / 2 + 'px',
       top: domPoint.y + tooltipOffset + 'px'
     }
   },
   { deep: true }
 )
 
-const logOverlay = ()=>{
-  console.log(
-      "Fixed: " + fixedNodeId.value 
-    + " Target: " + targetNodeId.value 
-    + " Overlay: " + overlayNodeId.value 
-    + " Opacity: " + tooltipOpacity.value
-    )
-}
-
 const eventHandlers: EventHandlers = {
   'node:pointerover': ({ node }) => {
     targetNodeId.value = node
     tooltipOpacity.value = 1 // show
-    logOverlay()
   },
   'node:pointerout': () => {
     if (fixedNodeId.value == '') {
       tooltipOpacity.value = 0 // hide
     }
     targetNodeId.value = ''
-    logOverlay()
   },
-  'node:click':({ node })=>{
-    if(fixedNodeId.value === node) {
+  'node:click': ({ node }) => {
+    if (fixedNodeId.value === node) {
       fixedNodeId.value = ''
       tooltipOpacity.value = 0 // hide
     } else {
       fixedNodeId.value = node
       tooltipOpacity.value = 1 // hide
     }
-    logOverlay()
   }
 }
 </script>
@@ -180,28 +168,26 @@ const eventHandlers: EventHandlers = {
     <div ref="tooltip" class="tooltip" :style="{ ...tooltipPos, opacity: tooltipOpacity }">
       <v-row v-if="overlayNodeId !== ''" no-gutters>
         <v-col
-          
           v-for="alt in graphExport.nodes[overlayNodeId].alternatives"
           v-bind:key="alt.toString()"
         >
-        <v-card>
-          <svg :width="tooltipSize" :height="tooltipSize" :viewBox="viewBoxAttributes">
-            <GraphPanelNode :state="alt" />
-          </svg></v-card>
+          <v-card>
+            <svg :width="tooltipSize" :height="tooltipSize" :viewBox="viewBoxAttributes">
+              <GraphPanelNode :state="alt" /></svg
+          ></v-card>
         </v-col>
-      
       </v-row>
     </div>
-    </div>
-    <div id="resetPan">
-      <v-btn
-        icon="mdi-move-resize"
-        size="x-small"
-        class="mx-2"
-        variant="outlined"
-        v-on:click="resetPan()"
-      ></v-btn>
-    </div>
+  </div>
+  <div id="resetPan">
+    <v-btn
+      icon="mdi-move-resize"
+      size="x-small"
+      class="mx-2"
+      variant="outlined"
+      v-on:click="resetPan()"
+    ></v-btn>
+  </div>
 </template>
 
 <style>
