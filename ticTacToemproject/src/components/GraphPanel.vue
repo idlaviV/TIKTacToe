@@ -3,7 +3,6 @@ import {
   VNetworkGraph,
   VEdgeLabel,
   type VNetworkGraphInstance,
-  type EventHandlers
 } from 'v-network-graph'
 import GraphPanelNode from './GraphPanelNode.vue'
 import {
@@ -19,15 +18,14 @@ import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
-import { viewBoxAttributes, tooltipSize, tooltipOffset } from './GraphConstants'
 import {
+calculatePosition,
   eventHandlers,
-  overlayNodeId,
   targetNodePos,
   tooltip,
   tooltipOpacity,
-  tooltipPos
 } from '@/utils/GraphAlternativePopup'
+import GraphAlternativeTooltip from './GraphAlternativeTooltip.vue'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -81,16 +79,7 @@ watch(
   () => [targetNodePos.value, tooltipOpacity.value],
   () => {
     if (!graph.value || !tooltip.value || tooltipOpacity.value == 0) return
-
-    // translate coordinates: SVG -> DOM
-    const domPoint = graph.value.translateFromSvgToDomCoordinates(targetNodePos.value)
-    // calculates top-left position of the tooltip.
-    const altCount: number = nodesForDisplay.value[overlayNodeId.value].alternatives.length
-    const tooltipWidth: number = altCount * tooltipSize
-    tooltipPos.value = {
-      left: domPoint.x - tooltipWidth / 2 + 'px',
-      top: domPoint.y + tooltipOffset + 'px'
-    }
+    calculatePosition(graph.value.translateFromSvgToDomCoordinates(targetNodePos.value))
   },
   { deep: true }
 )
@@ -135,20 +124,7 @@ watch(
       </div>
     </div>
     <!--tooltip-->
-    <div ref="tooltip" class="tooltip" :style="{ ...tooltipPos, opacity: tooltipOpacity }">
-      <v-row v-if="overlayNodeId !== ''" no-gutters>
-        <v-col
-          v-for="alt in graphExport.nodes[overlayNodeId].alternatives"
-          v-bind:key="alt.toString()"
-        >
-          <v-card>
-            <svg :width="tooltipSize" :height="tooltipSize" :viewBox="viewBoxAttributes">
-              <GraphPanelNode :state="alt" />
-            </svg>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
+    <GraphAlternativeTooltip/>
   </div>
   <div id="resetPan">
     <v-btn

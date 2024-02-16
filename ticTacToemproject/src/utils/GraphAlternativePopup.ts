@@ -1,6 +1,8 @@
 import { computed, ref } from 'vue'
 import { layouts } from './useGraphLayout'
-import type { EventHandlers } from 'v-network-graph'
+import type { EventHandlers, FixablePosition } from 'v-network-graph'
+import { tooltipOffset, tooltipSize } from '@/components/GraphConstants'
+import { graphExport } from './GraphExport'
 
 export const tooltip = ref<HTMLDivElement>()
 
@@ -41,4 +43,14 @@ export const eventHandlers: EventHandlers = {
       tooltipOpacity.value = 1 // hide
     }
   }
+}
+
+export function calculatePosition(domPoint:FixablePosition) {
+// calculates top-left position of the tooltip.
+const altCount: number = graphExport.value.nodes[overlayNodeId.value].alternatives.length
+const tooltipWidth: number = altCount * tooltipSize
+tooltipPos.value = {
+  left: domPoint.x - tooltipWidth / 2 + 'px',
+  top: domPoint.y + tooltipOffset + 'px'
+}
 }
