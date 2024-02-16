@@ -71,23 +71,31 @@ const config = graphPanelUserConfigs
 
 const tooltip = ref<HTMLDivElement>()
 const targetNodeId = ref<string>('')
+const fixedNodeId = ref<string>('')
 const tooltipOpacity = ref(0) // 0 or 1
 const tooltipPos = ref({ left: '0px', top: '0px' })
+const overlayNodeId = computed(()=>{
+  if (targetNodeId.value === '') {
+    return fixedNodeId.value
+  } else {
+    return targetNodeId.value
+  }
+})
 
 const targetNodePos = computed(() => {
-  const nodePos = layouts.value.nodes[targetNodeId.value]
+  const nodePos = layouts.value.nodes[overlayNodeId.value]
   return nodePos || { x: 0, y: 0 }
 })
 
 watch(
   () => [targetNodePos.value, tooltipOpacity.value],
   () => {
-    if (!graph.value || !tooltip.value) return
+    if (!graph.value || !tooltip.value || tooltipOpacity.value ==0) return
 
     // translate coordinates: SVG -> DOM
     const domPoint = graph.value.translateFromSvgToDomCoordinates(targetNodePos.value)
     // calculates top-left position of the tooltip.
-    const altCount:number = nodesForDisplay.value[targetNodeId.value].alternatives.length
+    const altCount:number = nodesForDisplay.value[overlayNodeId.value].alternatives.length
     const tooltipWidth:number = altCount * (tooltipSize)
     tooltipPos.value = {
       left: domPoint.x  - tooltipWidth/2 +  'px',
@@ -97,16 +105,37 @@ watch(
   { deep: true }
 )
 
+const logOverlay = ()=>{
+  console.log(
+      "Fixed: " + fixedNodeId.value 
+    + " Target: " + targetNodeId.value 
+    + " Overlay: " + overlayNodeId.value 
+    + " Opacity: " + tooltipOpacity.value
+    )
+}
+
 const eventHandlers: EventHandlers = {
   'node:pointerover': ({ node }) => {
     targetNodeId.value = node
     tooltipOpacity.value = 1 // show
+    logOverlay()
   },
   'node:pointerout': () => {
-    tooltipOpacity.value = 0 // hide
+    if (fixedNodeId.value == '') {
+      tooltipOpacity.value = 0 // hide
+    }
+    targetNodeId.value = ''
+    logOverlay()
   },
-  'node:pointerdown':()=>{
-    tooltipOpacity.value = 0 // hide
+  'node:click':({ node })=>{
+    if(fixedNodeId.value === node) {
+      fixedNodeId.value = ''
+      tooltipOpacity.value = 0 // hide
+    } else {
+      fixedNodeId.value = node
+      tooltipOpacity.value = 1 // hide
+    }
+    logOverlay()
   }
 }
 </script>
@@ -149,10 +178,10 @@ const eventHandlers: EventHandlers = {
     </div>
     <!--tooltip-->
     <div ref="tooltip" class="tooltip" :style="{ ...tooltipPos, opacity: tooltipOpacity }">
-      <v-row v-if="targetNodeId !== ''" no-gutters>
+      <v-row v-if="overlayNodeId !== ''" no-gutters>
         <v-col
           
-          v-for="alt in graphExport.nodes[targetNodeId].alternatives"
+          v-for="alt in graphExport.nodes[overlayNodeId].alternatives"
           v-bind:key="alt.toString()"
         >
         <v-card>
