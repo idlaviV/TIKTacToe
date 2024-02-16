@@ -20,6 +20,7 @@ import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
 import { viewBoxAttributes, tooltipSize, tooltipOffset } from './GraphConstants'
+import { fixedNodeId, overlayNodeId, targetNodeId, targetNodePos, tooltip, tooltipOpacity, tooltipPos } from '@/utils/GraphAlternativePopup'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -69,23 +70,8 @@ registerCleaningTaskPreStart(resetPan)
 
 const config = graphPanelUserConfigs
 
-const tooltip = ref<HTMLDivElement>()
-const targetNodeId = ref<string>('')
-const fixedNodeId = ref<string>('')
-const tooltipOpacity = ref(0) // 0 or 1
-const tooltipPos = ref({ left: '0px', top: '0px' })
-const overlayNodeId = computed(() => {
-  if (targetNodeId.value === '') {
-    return fixedNodeId.value
-  } else {
-    return targetNodeId.value
-  }
-})
 
-const targetNodePos = computed(() => {
-  const nodePos = layouts.value.nodes[overlayNodeId.value]
-  return nodePos || { x: 0, y: 0 }
-})
+
 
 watch(
   () => [targetNodePos.value, tooltipOpacity.value],
