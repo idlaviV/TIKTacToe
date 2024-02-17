@@ -6,6 +6,7 @@ import type { TTTEdge } from '@/utils/Graph'
 import { getLabelToShow, labelExport } from '@/utils/LabelExport'
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
 import { type Ref, ref } from 'vue'
+import { continuous, dashed, highlightedWidth, normalWidth } from './GraphConstants'
 
 export const currentGraphType: Ref<GraphType> = ref('simpleGraph')
 
@@ -35,7 +36,7 @@ export const graphPanelUserConfigs: UserConfigs = defineConfigs({
   edge: {
     normal: {
       dasharray: (edge) => getDash(edge as TTTEdge),
-      color: '#aaa',
+      color: Colors.simpleColor,
       width: (edge) => getHighlighted(edge as TTTEdge)
     },
     margin: 4,
@@ -56,7 +57,7 @@ export const graphPanelUserConfigs: UserConfigs = defineConfigs({
     selectable: false,
     hover: {
       dasharray: (edge) => getDash(edge as TTTEdge),
-      color: '#aaa',
+      color: Colors.simpleColor,
       width: (edge) => getHighlighted(edge as TTTEdge)
     }
   }
@@ -73,8 +74,7 @@ export function setCurrentGraphType(graphType: GraphType): void {
  * @param edge The edge to get the highlighted width for
  */
 function getHighlighted(edge: TTTEdge): number {
-  const normalWidth: number = 2
-  const highlightedWidth: number = 5
+
   if (currentGraphType.value !== 'gameGraph') {
     return isPartOfHistory(edge.numSource, edge.numTarget) ? highlightedWidth : normalWidth
   } else {
@@ -82,14 +82,13 @@ function getHighlighted(edge: TTTEdge): number {
   }
 }
 
+
+
 /**
  * This method returns the dash for the edge, depending on wether the label is 0 or not.
  * @param edge The edge to get the dash for
  */
 function getDash(edge: TTTEdge) {
-  const dashed = '4'
-  const continuous = '0'
-
   return getLabelToShow(edge.id, currentGraphType.value) === '0' ? dashed : continuous
 }
 
