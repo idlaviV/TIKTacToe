@@ -1,6 +1,7 @@
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { getGuiState } from '@/logic/GuiState'
+import * as Colors from '@/utils/Colors'
 import type { TTTEdge } from '@/utils/Graph'
 import { getLabelToShow, labelExport } from '@/utils/LabelExport'
 import { defineConfigs, type UserConfigs } from 'v-network-graph'
@@ -97,39 +98,28 @@ function getDash(edge: TTTEdge) {
  * @param edge The edge to get the label color for
  */
 function getLabelColor(edge: TTTEdge): string {
-  // grey
-  const simpleColor = '#aaa'
-  // pink
-  const player1Color = '#ec4899'
-  // blue
-  const player2Color = '#3b82f6'
-  // orange
-  const historyColor = '#ffa500'
-  // green
-  const changedColor = '#47f352'
-
   const graphType = currentGraphType.value
 
   if (getGuiState().value === 'evaluation' && isPartOfHistory(edge.numSource, edge.numTarget)) {
-    return historyColor
+    return Colors.historyColor
   } else if (getGuiState().value === 'postevaluation') {
     if (
       (labelExport.value[edge.id].label1Changed && graphType === 'player1Graph') ||
       (labelExport.value[edge.id].label2Changed && graphType === 'player2Graph')
     ) {
-      return changedColor
+      return  Colors.changedColor
     }
   }
 
   switch (graphType) {
     case 'gameGraph':
-      return edge.height % 2 === 0 ? player1Color : player2Color
+      return edge.height % 2 === 0 ?  Colors.player1Color :  Colors.player2Color
     case 'player1Graph':
-      return player1Color
+      return  Colors.player1Color
     case 'player2Graph':
-      return player2Color
+      return  Colors.player2Color
     default:
-      return simpleColor
+      return  Colors.simpleColor
   }
 }
 
