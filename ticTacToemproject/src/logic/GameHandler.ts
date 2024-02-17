@@ -89,18 +89,24 @@ export class GameHandler {
     }
     this.registerGamesInStats()
     if (applyPolicy) {
-      let changedWeights: TTTEdges
-      changedWeights = this.settings.getPlayer(1).isAI()
-        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
-        : {}
-      updateLabels(changedWeights, 0)
-      changedWeights =
-        this.settings.getPlayer(2).isAI() &&
-        this.settings.getPlayer(2) !== this.settings.getPlayer(1)
-          ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
-          : {}
-      updateLabels(changedWeights, 1)
+      this.applyPolicies()
     }
+  }
+
+  /**
+   * Apply the policies of the AIs and updates the labels in the labelExport.
+   */
+  private applyPolicies() {
+    let changedWeights: TTTEdges
+    changedWeights = this.settings.getPlayer(1).isAI()
+      ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+      : {}
+    updateLabels(changedWeights, 0)
+    changedWeights =
+      this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
+        ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
+        : {}
+    updateLabels(changedWeights, 1)
   }
 
   private registerGamesInStats() {

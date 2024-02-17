@@ -17,8 +17,9 @@ export const labelExport: Ref<Labels> = ref({})
 /**
  * Updates the labels of the edges in the graphExport. The labels are the weights of the edges,
  * for the currently active aIs. If a player is not an AI, the label is an empty string.
- * @param edges The edges to be updated, if not given, the edges of the graphExport are used
- * @param changedBy The index of the player that changed the labels, when evoket after an evaluation policy
+ * @param edges The edges to be updated. If not given, the edges of the graphExport are used,
+ * i.e. the labels of all edges currently visible in the graph are updated.
+ * @param changedBy The index of the player that changed the labels, when evoked after an evaluation policy
  */
 export function updateLabels(
   edges: TTTEdges = graphExport.value.edges,
@@ -33,13 +34,14 @@ export function updateLabels(
     }
 
     for (let i = 0; i < players.length; i++) {
+      // Update the label if this is initialization (changedBy === -1) or if the player is an ai and the corresponding weight was changed
       if ((changedBy === -1 || (changedBy !== -1 && i === changedBy)) && players[i].isAI()) {
         const aI = players[i] as AIPlayer
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
-        const label: number = aI.getVertexMap(source).get(target)!
-        labelExport.value[edge].setLabel(i, label.toString(), changedBy === i)
-      } else if (changedBy === -1) {
+        const newLabel: number = aI.getVertexMap(source).get(target)!
+        labelExport.value[edge].setLabel(i, newLabel.toString(), changedBy === i)
+      } else if (!players[i].isAI()) {
         labelExport.value[edge].setLabel(i, '')
       }
     }
@@ -77,7 +79,7 @@ export function getLabelToShow(edgeID: string, graphType: GraphType): string {
  * This class represents the labels of an edge.
  */
 export class Label {
-  // The labels of the edge
+  // The labels of the edge. Contains two entries, the label for player 1 and player 2.
   labels: string[]
   // Whether the first label has changed due to an evaluation policy
   label1Changed: boolean = false
