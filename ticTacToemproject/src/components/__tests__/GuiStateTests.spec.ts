@@ -1,6 +1,6 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { resetGameHandler } from './TestUtil'
-import { expect, beforeEach, describe, test, vi } from 'vitest'
+import { expect, beforeEach, describe, test } from 'vitest'
 import {
   getGuiState,
   nextGuiState,
