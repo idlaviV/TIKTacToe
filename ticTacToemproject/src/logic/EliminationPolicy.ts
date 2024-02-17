@@ -93,10 +93,13 @@ export class EliminationPolicySimple extends EliminationPolicy {
     const lastMoveTarget = history[index - 1].getNormalForm()
     const edgeId: string = lastMoveSource + '#' + lastMoveTarget
     const changedWeights: TTTEdges = {}
-    changedWeights[edgeId] = graphExport.value.edges[edgeId]
 
     const map = aI.getVertexMap(lastMoveSource)
+    const preChangeWeight = map.get(lastMoveTarget)!
     map.set(lastMoveTarget, 0)
+    if (preChangeWeight !== 0) {
+      changedWeights[edgeId] = graphExport.value.edges[edgeId]
+    }
     return changedWeights
   }
 }
