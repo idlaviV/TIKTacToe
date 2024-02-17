@@ -99,12 +99,12 @@ export class BackpropagationPolicy implements EvaluationPolicy {
     const changedWeights: TTTEdges = {}
 
     if (winner !== null) {
-      let possibleMoves: Map<NormalForm, number>
-      let nextMove: NormalForm
-      let weightChanged: boolean
       for (let index = history.length - 1; index > 0; index--) {
-        possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
-        nextMove = history[index].getNormalForm()
+        let weightChanged: boolean
+        const possibleMoves: Map<NormalForm, number> = aI.getVertexMap(
+          history[index - 1].getNormalForm()
+        )
+        const nextMove: NormalForm = history[index].getNormalForm()
 
         if (winner === drawStatus) {
           weightChanged = this.setWeights(possibleMoves, this.drawDiff, nextMove)
