@@ -2,14 +2,12 @@
 import { GameHandler } from '@/logic/GameHandler'
 import PlayButton from './MainScreenMovesPlayButton.vue'
 import { ref, watch, type Ref } from 'vue'
-import { getGuiState , updateGuiDisable} from '@/logic/GuiState'
-import { setAutoPlay, getAutoPlay, toggleAutoPlay, getMoveSpeed } from '@/logic/AutoPlayTimer';
+import { getGuiState, updateGuiDisable } from '@/logic/GuiState'
+import { setAutoPlay, getAutoPlay, toggleAutoPlay, getMoveSpeed } from '@/logic/AutoPlayTimer'
 
 const gameHandler = GameHandler.getInstance()
 const moveSpeed: Ref<number> = getMoveSpeed()
 const movesDisabled: Ref<boolean> = ref(false)
-
-
 
 const updateMoveButtonDiable = () => {
   movesDisabled.value = gameHandler.getNumberOfAIs() == 0
@@ -20,8 +18,6 @@ watch(getGuiState(), (guiState) => {
     updateMoveButtonDiable()
   }
 })
-
-
 
 /**
  * @description Informs the model, that the user wants to trigger the next AI turn.

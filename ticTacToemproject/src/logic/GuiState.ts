@@ -34,10 +34,12 @@ function performCleaningTasksPreStart() {
 }
 
 export function updateGuiDisable() {
-  if (getGuiState().value == 'game' &&
-  GameHandler.getInstance().getNumberOfAIs() == 2 &&
-  getAutoPlay().value &&
-  getMoveSpeed().value > 8) {
+  if (
+    getGuiState().value == 'game' &&
+    GameHandler.getInstance().getNumberOfAIs() == 2 &&
+    getAutoPlay().value &&
+    getMoveSpeed().value > 8
+  ) {
     guiDisable.value = 'reduced'
   } else {
     guiDisable.value = 'standard'
