@@ -219,7 +219,7 @@ describe('apply Policy with artificial examples', () => {
 describe('applyPolicy with integrated realistic examples',()=>{
   beforeEach(beforeSetUpRealisticExample2)
   
-  test('dummey',()=>{
+  test('applyPolicies with gamehandler',()=>{
     handler.performEndOfGameActions(true)
     const ai : AIPlayer = handler.getPossiblePlayers()[3] as AIPlayer
     expect(ai.weights.get(0)?.get(10000)).toEqual(1)
