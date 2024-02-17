@@ -17,7 +17,7 @@ beforeEach(() => {
   resetHistory()
 })
 
-describe('nextGuiState', () => {
+describe('nextGuiState with AIs', () => {
   test('no skips', () => {
     expect(getGuiState().value).toEqual('start')
     nextGuiState()
@@ -78,6 +78,44 @@ describe('nextGuiState', () => {
     expect(getGuiState().value).toEqual('game')
   })
 })
+
+describe('nextGuiState with humans only', () => {
+  beforeEach(()=>{
+    GameHandler.getInstance().setPlayers(0, 0)
+  })
+  test('no skips', () => {
+    expect(getGuiState().value).toEqual('start')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('game')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('postevaluation')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('start')
+  })
+  test('skip start', () => {
+    skipStartScreen.value = true
+    expect(getGuiState().value).toEqual('start')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('game')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('postevaluation')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('game')
+  })
+  test('skip evaluation still shows post-evaluation in human-only game', () => {
+    skipEvaluationScreen.value = true
+    expect(getGuiState().value).toEqual('start')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('game')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('postevaluation')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('start')
+    nextGuiState()
+    expect(getGuiState().value).toEqual('game')
+  })
+  })
+
 
 function resetGuiState() {
   setGuiState('start')
