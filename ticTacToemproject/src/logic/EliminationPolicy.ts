@@ -37,18 +37,11 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
     const handler: GameHandler = GameHandler.getInstance()
     const winner = handler.getWinner().value
 
-    const changedWeights: TTTEdges = {}
-    let edgeStart: number
-    let edgeEnd: number
-    let edgeId: string
+    let changedWeights: TTTEdges = {}
 
     for (let index = history.length - 1; index > 1; index--) {
       if (this.checkIfLoosePosition(aI, history, index, winner)) {
-        this.modifyWeights(aI, history, index)
-        edgeStart = history[index - 2].getNormalForm()
-        edgeEnd = history[index - 1].getNormalForm()
-        edgeId = edgeStart + '#' + edgeEnd
-        changedWeights[edgeId] = graphExport.value.edges[edgeId]
+        changedWeights = this.modifyWeights(aI, history, index)
       }
     }
     return changedWeights
@@ -81,7 +74,7 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
    * @param history The history of the played game.
    * @param index The index of the losing position to be considered.
    */
-  abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): void
+  abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): TTTEdges
 }
 
 /**
@@ -94,9 +87,12 @@ export class EliminationPolicySimple extends EliminationPolicy {
    * @inheritdoc
    * @override
    */
-  modifyWeights(aI: AIPlayer, history: GameBoard[], index: number): void {
-    const map = aI.getVertexMap(history[index - 2].getNormalForm())
-    map.set(history[index - 1].getNormalForm(), 0)
+  modifyWeights(aI: AIPlayer, history: GameBoard[], index: number): TTTEdges {
+    const lastMoveSource = history[index - 2].getNormalForm()
+    const lastMoveTarget = history[index - 1].getNormalForm()
+    const map = aI.getVertexMap(lastMoveSource)
+    map.set(lastMoveTarget, 0)
+    return graphExport.value.edges[lastMoveSource + '#' + lastMoveTarget]
   }
 }
 

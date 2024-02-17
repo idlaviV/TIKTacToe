@@ -51,6 +51,12 @@ export const graphPanelUserConfigs: UserConfigs = defineConfigs({
       background: {
         visible: false
       }
+    },
+    selectable: false,
+    hover: {
+      dasharray: (edge) => getDash(edge as TTTEdge),
+      color: '#aaa',
+      width: (edge) => getHighlighted(edge as TTTEdge)
     }
   }
 })

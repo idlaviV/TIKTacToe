@@ -6,6 +6,7 @@ import { Player } from '@/logic/Player'
 import { graphExport } from '@/utils/GraphExport'
 import { type Ref, ref } from 'vue'
 import type { TTTEdges } from './Graph'
+import { getGuiState } from '@/logic/GuiState'
 
 /**
  * This class holds the labels for the edges, by their id, as a tupel of two weights.
@@ -36,7 +37,11 @@ export function updateLabels(
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
         const label: number = aI.getVertexMap(source).get(target)!
-
+        if (getGuiState().value === 'evaluation') {
+          console.log('edges ' + edges)
+          console.log('edgeSource ' + edges[edge].source + ' edgeTarget ' + edges[edge].target)
+          console.log('label ' + label)
+        }
         labelExport.value[edge].setLabel(i, label.toString(), changedBy === i)
       } else {
         labelExport.value[edge].setLabel(i, '')
