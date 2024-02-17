@@ -1,8 +1,7 @@
 # KIT Tac Toe
-Luis Zeyer, Jonas Stelzer, Leonid Grau
+
 Teamprojekt im Wintersemester 2023/24
 am Karlsruher Institut für Technologie (KIT)
-betreut von Annika Vielsack
 
 Die App „KIT Tac Toe“ soll einen Beitrag für den sanften Einstieg in das Thema KI
 leisten. Schülerinnen und Schüler können mit wenigen Klicks ein regelbasiertes Expertensystem
@@ -21,6 +20,7 @@ nachvollzogen und können diese als „Gedächtnis“ des Systems benennen, welc
 den Lernprozess abbildet.
 
 ## Releases
+
 * [Abschluss Sprint "Anforderung"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v0.1-anforderung)
 * [Abschluss Sprint "Entwurf"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v1.0-entwurf)
 * [Abschluss Sprint "Qualitätskontrolle"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v2.0-qualitaetskontrolle)
@@ -44,9 +44,30 @@ npm install
 npm run dev
 ```
 
-
 ### Unit Tests mit [Vitest](https://vitest.dev/) ausführen
 
 ```sh
 npm run test:unit
 ```
+
+Extra Informationen über coverage der Tests
+
+```sh
+npm run coverage
+```
+
+## Hosting auf Servern
+
+### Bauen für Produktion
+
+Im Unterordner `ticTacToemprojekt` kann
+
+```sh
+npm run build
+```
+
+ausgeführt werden, um das Projekt für die Produktion und das Laden auf Server zu bauen.
+
+### Lage der Dateien
+
+Das gebuildete Projekt, das dann auf einen Server gelegt werden kann liegt danach in './ticTacToemproject/dist'.
