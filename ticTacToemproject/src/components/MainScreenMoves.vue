@@ -60,7 +60,7 @@ const nextAiTurn = () => {
       max="10"
       class="slider"
       v-model="moveSpeed"
-      :on-input="updateGuiDisable()"
+      v-on:change="updateGuiDisable()"
     />
   </div>
 </template>
