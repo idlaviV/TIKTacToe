@@ -67,14 +67,24 @@ export function setCurrentGraphType(graphType: GraphType): void {
   currentGraphType.value = graphType
 }
 
+/**
+ * This method returns the width of the edge, depending on the current graph type and if the edge is part of the history.
+ * @param edge The edge to get the highlighted width for
+ */
 function getHighlighted(edge: TTTEdge): number {
+  const normalWidth: number = 2
+  const highlightedWidth: number = 5
   if (currentGraphType.value !== 'gameGraph') {
-    return isPartOfHistory(edge.numSource, edge.numTarget) ? 5 : 2
+    return isPartOfHistory(edge.numSource, edge.numTarget) ? highlightedWidth : normalWidth
   } else {
-    return 2
+    return normalWidth
   }
 }
 
+/**
+ * This method returns the dash for the edge, depending on wether the label is 0 or not.
+ * @param edge The edge to get the dash for
+ */
 function getDash(edge: TTTEdge) {
   const dashed = '4'
   const continuous = '0'
@@ -82,11 +92,20 @@ function getDash(edge: TTTEdge) {
   return getLabelToShow(edge.id, currentGraphType.value) === '0' ? dashed : continuous
 }
 
+/**
+ * This method returns the color for the label of the edge.
+ * @param edge The edge to get the label color for
+ */
 function getLabelColor(edge: TTTEdge): string {
+  // grey
   const simpleColor = '#aaa'
+  // pink
   const player1Color = '#ec4899'
+  // blue
   const player2Color = '#3b82f6'
-  const historyColor = '#ff3131'
+  // orange
+  const historyColor = '#ffa500'
+  // green
   const changedColor = '#47f352'
 
   const graphType = currentGraphType.value
@@ -114,6 +133,11 @@ function getLabelColor(edge: TTTEdge): string {
   }
 }
 
+/**
+ * This method checks if the edge with the given source and target is part of the history.
+ * @param source The source of the edge
+ * @param target The target of the edge
+ */
 function isPartOfHistory(source: number, target: number): boolean {
   const history: GameBoard[] = GameHandler.getInstance().getGBHandler().getHistory()
   for (let i = 0; i < history.length - 1; i++) {

@@ -20,6 +20,7 @@ export interface EvaluationPolicy {
    * This method applies the chosen policy to the given AIPlayer.
    * @param aI The AIPlayer to whom the policy is applied
    * @param history The history of the game
+   * @returns The changed weights of the edges in the graph
    */
   applyPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdges
 }

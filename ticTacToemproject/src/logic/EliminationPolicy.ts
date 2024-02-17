@@ -73,6 +73,7 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
    * @param aI The weights of the AIPlayer to be modified.
    * @param history The history of the played game.
    * @param index The index of the losing position to be considered.
+   * @returns The modified weights.
    */
   abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): TTTEdges
 }

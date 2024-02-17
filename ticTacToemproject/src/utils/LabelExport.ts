@@ -6,7 +6,6 @@ import { Player } from '@/logic/Player'
 import { graphExport } from '@/utils/GraphExport'
 import { type Ref, ref } from 'vue'
 import type { TTTEdges } from './Graph'
-import { getGuiState } from '@/logic/GuiState'
 
 /**
  * This class holds the labels for the edges, by their id, as a tupel of two weights.
@@ -18,6 +17,8 @@ export const labelExport: Ref<Labels> = ref({})
 /**
  * Updates the labels of the edges in the graphExport. The labels are the weights of the edges,
  * for the currently active aIs. If a player is not an AI, the label is an empty string.
+ * @param edges The edges to be updated, if not given, the edges of the graphExport are used
+ * @param changedBy The index of the player that changed the labels, when evoket after an evaluation policy
  */
 export function updateLabels(
   edges: TTTEdges = graphExport.value.edges,
@@ -32,17 +33,13 @@ export function updateLabels(
     }
 
     for (let i = 0; i < players.length; i++) {
-      if (players[i].isAI()) {
+      if ((changedBy !== -1 && i === changedBy) || changedBy === -1 && players[i].isAI()) {
         const aI = players[i] as AIPlayer
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
         const label: number = aI.getVertexMap(source).get(target)!
-        if (getGuiState().value === 'evaluation' && changedBy !== i) {
-          console.log('edgeSource ' + edges[edge].source + ' edgeTarget ' + edges[edge].target)
-          console.log('label ' + label)
-        }
         labelExport.value[edge].setLabel(i, label.toString(), changedBy === i)
-      } else {
+      } else if (changedBy === -1) {
         labelExport.value[edge].setLabel(i, '')
       }
     }
@@ -53,6 +50,7 @@ export function updateLabels(
  * Calculates the label to show for the edge with the given id, depending on the current graph type.
  * @param edgeID The id of the edge for the label
  * @param graphType The current graph type
+ * @returns The label to show for the edge
  */
 export function getLabelToShow(edgeID: string, graphType: GraphType): string {
   const handler: GameHandler = GameHandler.getInstance()
@@ -75,15 +73,27 @@ export function getLabelToShow(edgeID: string, graphType: GraphType): string {
   }
 }
 
+/**
+ * This class represents the labels of an edge.
+ */
 export class Label {
+  // The labels of the edge
   labels: string[]
+  // Whether the first label has changed due to an evaluation policy
   label1Changed: boolean = false
+  // Whether the second label has changed due to an evaluation policy
   label2Changed: boolean = false
 
   constructor(labels: string[] = ['', '']) {
     this.labels = labels
   }
 
+  /**
+   * Sets the label of the given index to the given value.
+   * @param index The index of the label to set
+   * @param label The value to set the label to
+   * @param changed Whether the label has changed due to an evaluation policy
+   */
   setLabel(index: number, label: string, changed: boolean = false): void {
     if (index < 0 || index > this.labels.length) {
       throw new Error('Index out of bounds')
