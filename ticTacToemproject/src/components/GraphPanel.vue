@@ -14,6 +14,7 @@ import { getLabelToShow } from '@/utils/LabelExport'
 import * as Layout from '@/utils/useGraphLayout'
 import { guiDisable } from '@/logic/GuiState'
 import { GameHandler } from '@/logic/GameHandler'
+import GraphWeightToggle from './GraphWeightToggle.vue'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -95,7 +96,7 @@ const config = graphPanelUserConfigs
       "
       id="labelSwitch"
     >
-      <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
+    <GraphWeightToggle/>
     </div>
     <div id="resetPan">
       <v-btn
