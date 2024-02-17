@@ -30,12 +30,21 @@ den Lernprozess abbildet.
 
 Eine Stelle an der das Projekt gehostet ist, ist auf dem [Server des Lehr-Lern-Labors der Fachschaft Informatik](https://files.lehr-lern-labor.info/tictactoe) des KITs.
 
+Nach dem Start des Programmes können im erscheinenden Bildschirm verschiedene (untrainierte) KIs oder menschliche Spieler ausgewählt und ein Spiel gestartet werden.
+Im Menu am unteren Bildschirmrand kann zu anderen Bildschirmen gewechselt werden.
+Auf dem Bildschirm KIs können Statistiken einzelner KIs angezeigt werden, neue KIs erzeugt und bestehende KIs verändert oder zurückgesetzt werden.
+In dem finalen Bildschirm nahmens Einstellungen finden sich Möglichkeiten den Ablauf des Spieles zu verkürzen und die Font der Website zu einer klassischeren Font abzuändern.  
+Nach Spielbeginn sind die Einstellungen weiterhin zu finden.
+Initial wird das Spielfeld und der Spielgraph angezeigt (bei kleinen Bildschirmen wird der Graph auf einen extra Bildschirm ausgelagert).  
+Nach dem Beenden eines Spiels können die KIs, die das Spiel gespielt haben belohnt werden, oder das Spiel ohne zu Belohnen beendet werden.
+Nach dem Belohnen der KIs werden die Gewichte der KI, welche sich geändert haben durch eine grüne Färbung hervorgehoben.
+
 ## Voraussetzungen
 
 Um das Projekt aus dem Code aus diesem Repository auszuführen muss
 
-* [Node.js](https://nodejs.org/en/download) (^v.20.11.1)
-* [Vue3](https://vuejs.org/guide/quick-start.html) (^v.3.3)
+* [Node.js](https://nodejs.org/en/download) (^v 20.11.1)
+* [Vue3](https://vuejs.org/guide/quick-start.html) (^v 3.3)
 
 installiert sein.
 
@@ -83,11 +92,4 @@ ausgeführt werden, um das Projekt für die Produktion und das Laden auf Server 
 
 ### Lage der Dateien
 
-Das gebaute Projekt, das dann auf einen Server gelegt werden kann liegt danach in './ticTacToemproject/dist'.
-
-## Releases
-
-* [Abschluss Sprint "Anforderung"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v0.1-anforderung)
-* [Abschluss Sprint "Entwurf"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v1.0-entwurf)
-* [Abschluss Sprint "Qualitätskontrolle"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v2.0-qualitaetskontrolle)
-* [Abschluss Sprint "Projektabschluss"](https://github.com/idlaviV/ticTacToeamprojekt/releases/tag/v3.0-projektabschluss)
+Das gebaute Projekt, das dann auf einen Server gelegt werden kann liegt danach im ['dist' Ordner](../ticTacToeamprojekt/ticTacToemproject/dist/index.html).
