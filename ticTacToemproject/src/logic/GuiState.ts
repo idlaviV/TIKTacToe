@@ -65,7 +65,7 @@ export function setGuiState(newState: GuiState): void {
  * @param skipEvaluationOnce if true, the evaluation is not performed and postevaluation is skipped.
  */
 export function nextGuiState(skipEvaluationOnce: boolean = false) {
-  const isHumanGame : boolean = GameHandler.getInstance().getNumberOfAIs() == 0
+  const isHumanGame: boolean = GameHandler.getInstance().getNumberOfAIs() == 0
   switch (state.value) {
     case 'game':
       state.value = 'evaluation'
@@ -76,7 +76,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
     case 'evaluation':
       GameHandler.getInstance().performEndOfGameActions(!skipEvaluationOnce)
       state.value = 'postevaluation'
-      if (!skipEvaluationScreen.value && !skipEvaluationOnce || isHumanGame) {
+      if ((!skipEvaluationScreen.value && !skipEvaluationOnce) || isHumanGame) {
         break
       }
     /* falls through */

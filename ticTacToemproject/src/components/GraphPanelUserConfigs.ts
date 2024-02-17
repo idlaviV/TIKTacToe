@@ -74,15 +74,12 @@ export function setCurrentGraphType(graphType: GraphType): void {
  * @param edge The edge to get the highlighted width for
  */
 function getHighlighted(edge: TTTEdge): number {
-
   if (currentGraphType.value !== 'gameGraph') {
     return isPartOfHistory(edge.numSource, edge.numTarget) ? highlightedWidth : normalWidth
   } else {
     return normalWidth
   }
 }
-
-
 
 /**
  * This method returns the dash for the edge, depending on wether the label is 0 or not.
@@ -106,19 +103,19 @@ function getLabelColor(edge: TTTEdge): string {
       (labelExport.value[edge.id].label1Changed && graphType === 'player1Graph') ||
       (labelExport.value[edge.id].label2Changed && graphType === 'player2Graph')
     ) {
-      return  Colors.changedColor
+      return Colors.changedColor
     }
   }
 
   switch (graphType) {
     case 'gameGraph':
-      return edge.height % 2 === 0 ?  Colors.player1Color :  Colors.player2Color
+      return edge.height % 2 === 0 ? Colors.player1Color : Colors.player2Color
     case 'player1Graph':
-      return  Colors.player1Color
+      return Colors.player1Color
     case 'player2Graph':
-      return  Colors.player2Color
+      return Colors.player2Color
     default:
-      return  Colors.simpleColor
+      return Colors.simpleColor
   }
 }
 
