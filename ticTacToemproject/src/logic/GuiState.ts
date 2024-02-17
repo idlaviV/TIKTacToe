@@ -1,6 +1,7 @@
 import { initializeHistory } from '@/utils/GraphExport'
 import { ref, type Ref } from 'vue'
 import { GameHandler } from './GameHandler'
+import { getAutoPlay, getMoveSpeed } from './AutoPlayTimer'
 
 export const skipStartScreen = ref(false)
 export const skipEvaluationScreen = ref(false)
@@ -30,6 +31,20 @@ function performCleaningTasksPreStart() {
   for (const task of cleaningTasksPreStart) {
     task()
   }
+}
+
+export function updateGuiDisable() {
+  if (
+    getGuiState().value == 'game' &&
+    GameHandler.getInstance().getNumberOfAIs() == 2 &&
+    getAutoPlay().value &&
+    getMoveSpeed().value > 8
+  ) {
+    guiDisable.value = 'reduced'
+  } else {
+    guiDisable.value = 'standard'
+  }
+  //console.log("new guiDisable: " + guiDisable.value)
 }
 
 export function getGuiState(): Ref<GuiState> {
@@ -79,5 +94,4 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
       state.value = 'game'
       break
   }
-  console.log('New state: ' + state.value)
 }
