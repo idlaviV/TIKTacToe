@@ -60,8 +60,6 @@ export class TTTEdge implements Edge {
   numSource: NormalForm
   // The code of the target node of the edge.
   numTarget: NormalForm
-  // Whether the edge has been changed by an EvaluationPolicy.
-  changed?: boolean = false
 
   constructor(
     source: string,
@@ -69,8 +67,7 @@ export class TTTEdge implements Edge {
     id: string,
     height: number,
     numSource: number,
-    numTarget: number,
-    changed: boolean = false
+    numTarget: number
   ) {
     this.source = source
     this.target = target
@@ -78,6 +75,5 @@ export class TTTEdge implements Edge {
     this.height = height
     this.numSource = numSource
     this.numTarget = numTarget
-    this.changed = changed
   }
 }

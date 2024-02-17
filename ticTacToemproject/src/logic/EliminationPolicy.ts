@@ -91,9 +91,12 @@ export class EliminationPolicySimple extends EliminationPolicy {
     const lastMoveSource = history[index - 2].getNormalForm()
     const lastMoveTarget = history[index - 1].getNormalForm()
     const edgeId: string = lastMoveSource + '#' + lastMoveTarget
+    const changedWeights: TTTEdges = {}
+    changedWeights[edgeId] = graphExport.value.edges[edgeId]
+
     const map = aI.getVertexMap(lastMoveSource)
     map.set(lastMoveTarget, 0)
-    return { edgeId: graphExport.value.edges[edgeId] }
+    return changedWeights
   }
 }
 
