@@ -33,7 +33,7 @@ export function updateLabels(
     }
 
     for (let i = 0; i < players.length; i++) {
-      if ((changedBy !== -1 && i === changedBy) || changedBy === -1 && players[i].isAI()) {
+      if ((changedBy === -1 || (changedBy !== -1 && i === changedBy)) && players[i].isAI()) {
         const aI = players[i] as AIPlayer
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
