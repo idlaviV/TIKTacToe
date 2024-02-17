@@ -37,8 +37,7 @@ export function updateLabels(
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
         const label: number = aI.getVertexMap(source).get(target)!
-        if (getGuiState().value === 'evaluation') {
-          console.log('edges ' + edges)
+        if (getGuiState().value === 'evaluation' && changedBy !== i) {
           console.log('edgeSource ' + edges[edge].source + ' edgeTarget ' + edges[edge].target)
           console.log('label ' + label)
         }

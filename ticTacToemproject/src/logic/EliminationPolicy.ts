@@ -90,9 +90,10 @@ export class EliminationPolicySimple extends EliminationPolicy {
   modifyWeights(aI: AIPlayer, history: GameBoard[], index: number): TTTEdges {
     const lastMoveSource = history[index - 2].getNormalForm()
     const lastMoveTarget = history[index - 1].getNormalForm()
+    const edgeId: string = lastMoveSource + '#' + lastMoveTarget
     const map = aI.getVertexMap(lastMoveSource)
     map.set(lastMoveTarget, 0)
-    return graphExport.value.edges[lastMoveSource + '#' + lastMoveTarget]
+    return { edgeId: graphExport.value.edges[edgeId] }
   }
 }
 
