@@ -13,10 +13,10 @@ export type GraphType = 'simpleGraph' | 'gameGraph' | 'player1Graph' | 'player2G
 export const graphPanelUserConfigs: UserConfigs = defineConfigs({
   view: {
     panEnabled: true,
-    zoomEnabled: true, //for debugging purposes @todo
+    zoomEnabled: true,
     scalingObjects: true,
     autoPanAndZoomOnLoad: 'center-zero',
-    autoPanOnResize: false
+    autoPanOnResize: true
   },
   node: {
     selectable: false,
