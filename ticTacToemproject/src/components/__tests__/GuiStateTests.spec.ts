@@ -80,7 +80,7 @@ describe('nextGuiState with AIs', () => {
 })
 
 describe('nextGuiState with humans only', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     GameHandler.getInstance().setPlayers(0, 0)
   })
   test('no skips', () => {
@@ -114,8 +114,7 @@ describe('nextGuiState with humans only', () => {
     nextGuiState()
     expect(getGuiState().value).toEqual('game')
   })
-  })
-
+})
 
 function resetGuiState() {
   setGuiState('start')
