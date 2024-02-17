@@ -41,7 +41,7 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
 
     for (let index = history.length - 1; index > 1; index--) {
       if (this.checkIfLoosePosition(aI, history, index, winner)) {
-        changedWeights = this.modifyWeights(aI, history, index)
+        changedWeights = { ...changedWeights, ...this.modifyWeights(aI, history, index) }        
       }
     }
     return changedWeights

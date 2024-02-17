@@ -20,19 +20,26 @@ export class EliminationPolicyImproved extends EliminationPolicy {
     const lastMoveSource = history[index - 2].getNormalForm()
     const lastMoveTarget = history[index - 1].getNormalForm()
     const penultimateOptions = aI.getVertexMap(lastMoveSource)
+    let preChangeWeight: number = penultimateOptions.get(lastMoveTarget)!
+
     penultimateOptions.set(lastMoveTarget, 0)
 
-    changedEdges[lastMoveSource + '#' + lastMoveTarget] =
-      graphExport.value.edges[lastMoveSource + '#' + lastMoveTarget]
+    if (preChangeWeight !== 0) {
+      changedEdges[lastMoveSource + '#' + lastMoveTarget] =
+        graphExport.value.edges[lastMoveSource + '#' + lastMoveTarget]
+    }
 
     const lastOptions = aI.getVertexMap(lastMoveTarget)
     const winningMove = history[index].getNormalForm()
     if (lastOptions.get(winningMove) !== 0) {
       lastOptions.forEach((_weight, move) => {
+        preChangeWeight = lastOptions.get(move)!
         if (move !== winningMove) {
           lastOptions.set(move, 0)
-          changedEdges[lastMoveTarget + '#' + move] =
-            graphExport.value.edges[lastMoveTarget + '#' + move]
+          if (preChangeWeight !== 0) {
+            changedEdges[lastMoveTarget + '#' + move] =
+              graphExport.value.edges[lastMoveTarget + '#' + move]
+          }
         }
       })
     }
