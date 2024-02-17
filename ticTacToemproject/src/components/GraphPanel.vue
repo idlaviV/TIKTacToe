@@ -123,18 +123,17 @@ watch(
         <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
       </div>
       <!--tooltip-->
-    <GraphAlternativeTooltip />
-    <v-btn
-      id="resetPan"
-      icon="mdi-image-filter-center-focus-weak"
-      size="x-small"
-      class="mx-2"
-      variant="outlined"
-      v-on:click="resetPan()"
-    ></v-btn>
+      <GraphAlternativeTooltip />
+      <v-btn
+        id="resetPan"
+        icon="mdi-image-filter-center-focus-weak"
+        size="x-small"
+        class="mx-2"
+        variant="outlined"
+        v-on:click="resetPan()"
+      ></v-btn>
     </div>
   </div>
-  
 </template>
 
 <style>
