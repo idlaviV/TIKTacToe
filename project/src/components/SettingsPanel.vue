@@ -17,13 +17,19 @@ const setFont = () => {
       <v-checkbox-btn
         label="Automatische Belohnung"
         v-model="skipEvaluationScreen"
+        alt="Wechsle automatische Belohnung ein/aus"
       ></v-checkbox-btn>
-      <v-checkbox-btn label="Start überspringen" v-model="skipStartScreen"></v-checkbox-btn>
+      <v-checkbox-btn
+        label="Start überspringen"
+        v-model="skipStartScreen"
+        alt="Wechsle start überspringen ein/aus"
+      ></v-checkbox-btn>
       <v-switch
         class="mx-2"
         v-model="useDigitalFont"
         label="Benutze digitale Schriftart"
         @update:model-value="setFont"
+        alt="Wechsle Schriftart"
       ></v-switch>
     </div>
   </v-card>

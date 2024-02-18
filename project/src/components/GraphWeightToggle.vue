@@ -5,7 +5,12 @@ import { isPlayer2Graph } from '@/components/GraphPanelUserConfigs'
   <v-row no-gutters>
     <v-col><p class="text-pink-500 font-bold text-2xl">X</p></v-col>
     <v-col cols="auto"
-      ><v-switch class="-my-3 mx-1" v-model="isPlayer2Graph" id="myswitch"></v-switch
+      ><v-switch
+        class="-my-3 mx-1"
+        v-model="isPlayer2Graph"
+        id="myswitch"
+        alt="Wechsle KI die angezeigt wird"
+      ></v-switch
     ></v-col>
     <v-col><p class="text-blue-500 font-bold text-2xl">O</p></v-col>
   </v-row>

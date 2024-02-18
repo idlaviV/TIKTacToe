@@ -165,6 +165,7 @@ function saveSettings() {
               class="mx-2"
               icon="mdi-magnify"
               variant="outlined"
+              alt="Einstellungen der KI anzeigen"
             ></v-btn>
             &nbsp;
             <v-btn variant="outlined" v-on:click="resetAiWeights(item.index)">RESET</v-btn>

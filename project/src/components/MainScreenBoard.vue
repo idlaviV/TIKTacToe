@@ -27,6 +27,7 @@ const MakeMove = (x: number, y: number) => {
         :class="`border-2 border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${
           cell === 1 ? 'text-pink-500' : 'text-blue-500'
         }`"
+        alt="Spielfeld"
       >
         <!-- Render proper symbol for player -->
         {{ symbol(cell) }}

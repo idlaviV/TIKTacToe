@@ -11,18 +11,20 @@ const toggleAutoplay = () => {
 <template>
   <v-btn
     v-if="autoPlay"
-    v-on:click="toggleAutoplay"
+    @click="toggleAutoplay"
     size="x-small"
     class="mx-2"
     icon="mdi-pause"
     variant="outlined"
+    alt="Auto play stoppen"
   ></v-btn>
   <v-btn
     v-else
-    v-on:click="toggleAutoplay"
+    @click="toggleAutoplay"
     size="x-small"
     class="mx-2"
     icon="mdi-play"
     variant="outlined"
+    alt="Auto play starten"
   ></v-btn>
 </template>

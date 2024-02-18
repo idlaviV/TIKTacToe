@@ -42,12 +42,13 @@ const nextAiTurn = () => {
     </PlayButton>
     <!-- This button triggers the next AI turn, if possible-->
     <v-btn
-      v-on:click="nextAiTurn"
+      @click="nextAiTurn"
       :disabled="movesDisabled"
       size="x-small"
       class="mx-2"
       icon="mdi-skip-next"
       variant="outlined"
+      alt="Nächster KI-Zug"
     ></v-btn>
     <input
       :disabled="movesDisabled"
@@ -56,7 +57,8 @@ const nextAiTurn = () => {
       max="10"
       class="slider"
       v-model="moveSpeed"
-      v-on:change="updateGuiDisable()"
+      @change="updateGuiDisable()"
+      alt="Zuggeschwindigkeit"
     />
   </div>
 </template>

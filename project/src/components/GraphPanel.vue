@@ -134,7 +134,8 @@ watch(
         density="compact"
         class="mx-2 bg-black border"
         variant="text"
-        v-on:click="resetPan()"
+        @click="resetPan()"
+        alt="Graph zentrieren"
       ></v-btn>
     </div>
   </div>
