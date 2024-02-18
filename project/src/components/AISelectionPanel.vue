@@ -154,7 +154,10 @@ function saveSettings() {
       <template v-slot:default="{ item }">
         <v-list-item :title="item.player">
           <template v-slot:prepend>
-            <i class="material-symbols-outlined mx-2"> smart_toy </i>
+            <div>
+              <v-icon icon="mdi-robot" color="white" />
+              &nbsp;
+            </div>
           </template>
           <template v-slot:append>
             <v-btn
