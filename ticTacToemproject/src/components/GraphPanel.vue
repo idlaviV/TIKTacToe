@@ -127,9 +127,10 @@ watch(
       <v-btn
         id="resetPan"
         icon="mdi-image-filter-center-focus-weak"
-        size="x-small"
+        size="x-large"
+        density="compact"
         class="mx-2"
-        variant="outlined"
+        variant="text"
         v-on:click="resetPan()"
       ></v-btn>
     </div>
@@ -150,8 +151,8 @@ watch(
 
 #resetPan {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 4px;
+  right: -4px;
   z-index: 10;
 }
 
@@ -159,7 +160,7 @@ watch(
   width: 100%;
   height: 100%;
   border: 1px solid #38373d;
-  height: 81vh;
+  height: 70vh;
 }
 
 .tooltip {
