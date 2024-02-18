@@ -71,10 +71,17 @@ function saveSettings() {
     <v-overlay v-model="areAISettingsShown" class="justify-center">
       <v-card class="pa-4 ma-4">
         <v-card-title class="text-center">{{ aIPlayer!.getName() }}</v-card-title>
-        <div class="text-left">Spiele: {{ aIPlayer!.getStats().games }}</div>
-        <div class="text-left">Gewonnen: {{ aIPlayer!.getStats().wins }}</div>
-        <div class="text-left">Unentschieden: {{ aIPlayer!.getStats().draws }}</div>
-        <div class="text-left">Verloren: {{ aIPlayer!.getStats().losses }}</div>
+        <div class="text-left inline">Spiele: </div>
+        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().games }}</div>
+        <br />
+        <div class="text-left inline">Gewonnen: </div>
+        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().wins }}</div>
+        <br />
+        <div class="text-left inline">Unentschieden: </div>
+        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().draws }}</div>
+        <br />
+        <div class="text-left inline">Verloren: </div>
+        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().losses }}</div>
 
         <div v-if="aIPlayer!.policy instanceof BackpropagationPolicy">
           <br />
@@ -82,9 +89,9 @@ function saveSettings() {
           <br />
           <div class="text-center font-bold">Wie soll belohnt werden?</div>
           <br />
-          <v-text-field v-model="winDiff" label="Bei Gewinn" />
-          <v-text-field v-model="drawDiff" label="Bei Unentschieden" />
-          <v-text-field v-model="loseDiff" label="Bei Verlieren" />
+          <v-text-field class="dogica text-xl" v-model="winDiff" label="Gewinnen" />
+          <v-text-field class="dogica text-xl" v-model="drawDiff" label="Unentschieden" />
+          <v-text-field class="dogica text-xl" v-model="loseDiff" label="Verlieren" />
           <v-col class="text-center">
             <v-btn class="bg-white" v-on:click="saveSettings()"> Speichern </v-btn>
           </v-col>
