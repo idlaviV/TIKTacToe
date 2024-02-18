@@ -13,7 +13,7 @@ const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
 const changePlayerDisplay = () => {
-  if (winner.value === null) {
+  if (winner.value === null && (getMoveSpeed().value < 10 || !getAutoPlay().value)) {
     if (playerOnTurn.value === 1) {
       document.getElementById('player1Display')?.classList.add('font-bold')
       document.getElementById('player2Display')?.classList.remove('font-bold')
