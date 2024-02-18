@@ -74,7 +74,7 @@ function saveSettings() {
           {{ aIPlayer!.getName() }}<br />
           <div class="text-base">({{ aIPlayer?.getTypeName() }})</div>
         </v-card-title>
-        <div class="text-left inline">Spiele:</div>
+        <div class="text-left inline">Spiele:&nbsp;</div>
         <div
           class="text-left inline"
           :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
@@ -82,7 +82,7 @@ function saveSettings() {
           {{ aIPlayer!.getStats().games }}
         </div>
         <br />
-        <div class="text-left inline">Gewonnen:</div>
+        <div class="text-left inline">Gewonnen:&nbsp;</div>
         <div
           class="text-left inline"
           :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
@@ -90,7 +90,7 @@ function saveSettings() {
           {{ aIPlayer!.getStats().wins }}
         </div>
         <br />
-        <div class="text-left inline">Unentschieden:</div>
+        <div class="text-left inline">Unentschieden:&nbsp;</div>
         <div
           class="text-left inline"
           :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
@@ -98,7 +98,7 @@ function saveSettings() {
           {{ aIPlayer!.getStats().draws }}
         </div>
         <br />
-        <div class="text-left inline">Verloren:</div>
+        <div class="text-left inline">Verloren:&nbsp;</div>
         <div
           class="text-left inline"
           :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
