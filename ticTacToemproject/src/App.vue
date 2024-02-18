@@ -11,13 +11,12 @@ const guiState: Ref<GuiState> = getGuiState()
 const window = ref(0)
 
 document.body.style.fontFamily = 'Pixelify Sans'
-
 </script>
 
 <template>
   <main>
     <v-container v-show="guiState === 'start'">
-      <v-window :touch="{left: undefined, right: undefined}" v-model="window">
+      <v-window :touch="{ left: undefined, right: undefined }" v-model="window">
         <v-layout>
           <v-bottom-navigation
             v-model="window"
@@ -58,7 +57,7 @@ document.body.style.fontFamily = 'Pixelify Sans'
     </v-container>
 
     <v-container v-show="guiState !== 'start'">
-      <v-window :touch="{left: undefined, right: undefined}" v-model="window">
+      <v-window :touch="{ left: undefined, right: undefined }" v-model="window">
         <v-layout>
           <v-bottom-navigation
             v-model="window"
@@ -104,13 +103,14 @@ document.body.style.fontFamily = 'Pixelify Sans'
 </template>
 
 <style>
-html, body {
+html,
+body {
   overflow: hidden;
-  overscroll-behavior:none;
+  overscroll-behavior: none;
 }
 
 @media screen and (pointer: coarse) {
-  @supports (-webkit-backdrop-filter: blur(1px)) and (overscroll-behavior-y: none)  {
+  @supports (-webkit-backdrop-filter: blur(1px)) and (overscroll-behavior-y: none) {
     html {
       min-height: 100.1%;
       overscroll-behavior-y: none;
