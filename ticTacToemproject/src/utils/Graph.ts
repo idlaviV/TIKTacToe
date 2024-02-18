@@ -1,4 +1,4 @@
-import type { GameBoardCode } from '@/logic/Codes'
+import type { GameBoardCode, NormalForm } from '@/logic/Codes'
 import type { FieldType } from '@/logic/FieldType'
 import type { Edge, Edges, Node, Nodes } from 'v-network-graph'
 
@@ -57,9 +57,9 @@ export class TTTEdge implements Edge {
   // The height of the edge in the graph.
   height: number
   // The code of the source node of the edge.
-  numSource: number
+  numSource: NormalForm
   // The code of the target node of the edge.
-  numTarget: number
+  numTarget: NormalForm
 
   constructor(
     source: string,

@@ -1,9 +1,11 @@
+import type { TTTEdges } from '@/utils/Graph'
 import type { AIPlayer } from './AIPlayer'
 import type { NormalForm } from './Codes'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import type { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
 import { drawStatus } from './WinnerStatus'
+import { graphExport } from '@/utils/GraphExport'
 
 /**
  * This class implements the {@link EvaluationPolicy} interface.
@@ -79,7 +81,7 @@ export class BackpropagationPolicy implements EvaluationPolicy {
    */
   getInitialWeight(height: number): number {
     if (0 <= height && height <= 8) {
-      return 8 - height
+      return 9 - height
     } else {
       throw new Error('Height must be between 0 and 8')
     }
@@ -92,34 +94,54 @@ export class BackpropagationPolicy implements EvaluationPolicy {
    * @inheritdoc
    * @override
    */
-  applyPolicy(aI: AIPlayer, history: GameBoard[]): void {
-    const winner = GameHandler.getInstance().getWinner()
+  applyPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdges {
+    const winner = GameHandler.getInstance().getWinner().value
+    const changedWeights: TTTEdges = {}
 
-    if (winner.value === null) {
-      return
-    } else {
-      let possibleMoves: Map<NormalForm, number>
-      let nextMove: NormalForm
+    if (winner !== null) {
       for (let index = history.length - 1; index > 0; index--) {
-        possibleMoves = aI.getVertexMap(history[index - 1].getNormalForm())
-        nextMove = history[index].getNormalForm()
+        let weightChanged: boolean
+        const possibleMoves: Map<NormalForm, number> = aI.getVertexMap(
+          history[index - 1].getNormalForm()
+        )
+        const nextMove: NormalForm = history[index].getNormalForm()
 
-        if (winner.value === drawStatus) {
-          this.setWeights(possibleMoves, this.drawDiff, nextMove)
-        } else if (winner.value === 1) {
-          this.setWeights(possibleMoves, index % 2 === 1 ? this.winDiff : this.loseDiff, nextMove)
+        if (winner === drawStatus) {
+          weightChanged = this.setWeights(possibleMoves, this.drawDiff, nextMove)
+        } else if (winner === 1) {
+          weightChanged = this.setWeights(
+            possibleMoves,
+            index % 2 === 1 ? this.winDiff : this.loseDiff,
+            nextMove
+          )
         } else {
-          this.setWeights(possibleMoves, index % 2 === 0 ? this.winDiff : this.loseDiff, nextMove)
+          weightChanged = this.setWeights(
+            possibleMoves,
+            index % 2 === 0 ? this.winDiff : this.loseDiff,
+            nextMove
+          )
+        }
+
+        if (weightChanged) {
+          const edgeId: string = history[index - 1].getNormalForm() + '#' + nextMove
+          changedWeights[edgeId] = graphExport.value.edges[edgeId]
         }
       }
     }
+    return changedWeights
   }
 
-  private setWeights(possibleMoves: Map<NormalForm, number>, diff: number, move: NormalForm): void {
+  private setWeights(
+    possibleMoves: Map<NormalForm, number>,
+    diff: number,
+    move: NormalForm
+  ): boolean {
+    const originalWeight: number = possibleMoves.get(move)!
     possibleMoves.set(move, possibleMoves.get(move)! + diff)
     if (possibleMoves.get(move)! < 0) {
       possibleMoves.set(move, 0)
     }
+    return originalWeight !== possibleMoves.get(move)
   }
 
   private validateDiffs(winDiff: number, drawDiff: number, loseDiff: number) {
@@ -129,8 +151,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
     if (isNaN(this.sanitizeDiffValue(drawDiff))) {
       throw new Error('drawDiff ' + drawDiff + ' is illegal')
     }
-    if (isNaN(this.sanitizeDiffValue(drawDiff))) {
-      throw new Error('loseDiff ' + drawDiff + ' is illegal')
+    if (isNaN(this.sanitizeDiffValue(loseDiff))) {
+      throw new Error('loseDiff ' + loseDiff + ' is illegal')
     }
     if (
       Math.max(winDiff, drawDiff, loseDiff) > this.diffBound ||

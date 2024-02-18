@@ -1,6 +1,6 @@
 import { GameBoard, getGameBoardFromCode } from './GameBoard'
 import type { NormalForm } from './Codes'
-import { Graph, TTTNode } from '@/utils/Graph'
+import { Graph, TTTEdge, TTTNode } from '@/utils/Graph'
 import { getPossibleNextNormalForms } from './GameBoardHandler'
 /**
  * @Note This file is not used in the current version of the app.
@@ -59,14 +59,14 @@ export class GraphBuilder {
     const firstCode = normalFormParent
     const secondCode = normalFormChild
     const edgeKey: string = firstCode + '#' + secondCode
-    configurationGraphExport.edges[edgeKey] = {
-      source: firstCode.toString(),
-      target: secondCode.toString(),
-      id: edgeKey,
-      height: this.level,
-      numSource: firstCode,
-      numTarget: secondCode
-    }
+    configurationGraphExport.edges[edgeKey] = new TTTEdge(
+      firstCode.toString(),
+      secondCode.toString(),
+      edgeKey,
+      this.level,
+      firstCode,
+      secondCode
+    )
   }
 
   private initializeGraph() {

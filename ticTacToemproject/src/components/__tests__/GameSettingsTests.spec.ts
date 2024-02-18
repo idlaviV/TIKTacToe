@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { debugRandomizerFactory, resetGameHandler } from './TestUtil'
 import { GameSettings } from '@/logic/GameSettings'
 import { UserPlayer } from '@/logic/UserPlayer'
-import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicySimple'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
 vi.mock('@/utils/GraphExport', () => {
   return {

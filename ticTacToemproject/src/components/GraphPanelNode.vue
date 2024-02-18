@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import GraphPanelNodeField from './GraphPanelNodeField.vue'
-import type { TTTNode } from '@/utils/Graph'
+import type { FieldType } from '@/logic/FieldType'
 
 /**
  * @param node The node that this component should visualize.
  */
-const props = defineProps<{ node: TTTNode }>()
+const props = defineProps<{ state: FieldType[][] }>()
 const range = [0, 1, 2]
 const state = computed(() => {
-  return props.node.boardState
+  return props.state
 })
 </script>
 

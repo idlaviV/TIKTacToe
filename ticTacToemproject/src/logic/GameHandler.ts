@@ -7,13 +7,16 @@ import { AIPlayer } from './AIPlayer'
 import { UserPlayer } from './UserPlayer'
 import type { GameBoardWithPrevMove } from './Moves'
 import { ref, type Ref } from 'vue'
-import { EliminationPolicySimple } from './EliminationPolicy'
+import { EliminationPolicySimple } from './EliminationPolicySimple'
 import type { Player } from './Player'
 import { updatePlayerList } from '@/utils/PlayerListExport'
 import { resetHistory, updateHistory } from '@/utils/GraphExport'
 import { BackpropagationPolicy } from './BackpropagationPolicy'
 import { EliminationPolicyImproved } from './EliminationPolicyImproved'
 import { updateLabels } from '@/utils/LabelExport'
+import type { TTTEdges } from '@/utils/Graph'
+import { nextGuiState, skipEvaluationScreen } from './GuiState'
+import { resetTimer } from './AutoPlayTimer'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -64,7 +67,6 @@ export class GameHandler {
   performTurn(x: number, y: number) {
     if (this.winner.value == null) {
       this.gBHandler.move(x, y, this.playerOnTurn.value)
-      this.winner.value = this.gBHandler.calculateWinner()
       this.performEndOfTurnActions()
     }
   }
@@ -73,8 +75,15 @@ export class GameHandler {
    * Performs the actions that have to be done at the end of a gameturn.
    */
   performEndOfTurnActions() {
+    this.winner.value = this.gBHandler.calculateWinner()
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
     updateHistory(this.gBHandler.getGameBoard())
+    if (
+      this.winner.value !== null &&
+      (!skipEvaluationScreen.value || this.getNumberOfAIs() === 0)
+    ) {
+      nextGuiState()
+    }
   }
 
   /**
@@ -88,14 +97,24 @@ export class GameHandler {
     }
     this.registerGamesInStats()
     if (applyPolicy) {
-      this.settings.getPlayer(1).isAI()
-        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
-        : null
+      this.applyPolicies()
+    }
+  }
+
+  /**
+   * Apply the policies of the AIs and updates the labels in the labelExport.
+   */
+  private applyPolicies() {
+    let changedWeights: TTTEdges
+    changedWeights = this.settings.getPlayer(1).isAI()
+      ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+      : {}
+    updateLabels(changedWeights, 0)
+    changedWeights =
       this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
         ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
-        : null
-      updateLabels()
-    }
+        : {}
+    updateLabels(changedWeights, 1)
   }
 
   private registerGamesInStats() {
@@ -135,6 +154,7 @@ export class GameHandler {
     try {
       if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
         this.performTurn(x, y)
+        resetTimer()
       }
     } catch (e: unknown) {
       if (e instanceof MoveError) {

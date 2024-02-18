@@ -1,6 +1,7 @@
 import { initializeHistory } from '@/utils/GraphExport'
 import { ref, type Ref } from 'vue'
 import { GameHandler } from './GameHandler'
+import { getAutoPlay, getMoveSpeed } from './AutoPlayTimer'
 
 export const skipStartScreen = ref(false)
 export const skipEvaluationScreen = ref(false)
@@ -16,7 +17,7 @@ const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
 export const guiDisable: Ref<GuiDisable> = ref('standard')
-const cleaningTasksPreStart: (() => void)[] = []
+export const cleaningTasksPreStart: (() => void)[] = []
 
 /**
  * Register a new task. It will be called on all subsequent transitions from gui-state 'post-evaluation'
@@ -26,9 +27,24 @@ export function registerCleaningTaskPreStart(foo: () => void) {
   cleaningTasksPreStart.push(foo)
 }
 
-function performCleaningTasksPreStart() {
+export function performCleaningTasksPreStart() {
   for (const task of cleaningTasksPreStart) {
     task()
+  }
+}
+
+export function updateGuiDisable() {
+  if (
+    getGuiState().value == 'game' &&
+    GameHandler.getInstance().getNumberOfAIs() == 2 &&
+    getAutoPlay().value &&
+    getMoveSpeed().value > 8
+  ) {
+    guiDisable.value = 'reduced'
+  } else {
+    if (!(getAutoPlay().value && getMoveSpeed().value === 10)) {
+      guiDisable.value = 'standard'
+    }
   }
 }
 
@@ -50,17 +66,19 @@ export function setGuiState(newState: GuiState): void {
  * @param skipEvaluationOnce if true, the evaluation is not performed and postevaluation is skipped.
  */
 export function nextGuiState(skipEvaluationOnce: boolean = false) {
+  const isHumanGame: boolean = GameHandler.getInstance().getNumberOfAIs() == 0
   switch (state.value) {
     case 'game':
       state.value = 'evaluation'
-      if (!skipEvaluationScreen.value) {
+      updateGuiDisable()
+      if (!skipEvaluationScreen.value && !isHumanGame) {
         break
       }
     /* falls through */
     case 'evaluation':
       GameHandler.getInstance().performEndOfGameActions(!skipEvaluationOnce)
       state.value = 'postevaluation'
-      if (!skipEvaluationScreen.value && !skipEvaluationOnce) {
+      if ((!skipEvaluationScreen.value && !skipEvaluationOnce) || isHumanGame) {
         break
       }
     /* falls through */
@@ -77,7 +95,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
     /* falls through */
     default:
       state.value = 'game'
+      updateGuiDisable()
       break
   }
-  console.log('New state: ' + state.value)
 }

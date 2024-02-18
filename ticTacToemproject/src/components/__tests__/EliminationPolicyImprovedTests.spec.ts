@@ -5,8 +5,9 @@ import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'
 import { beforeEach, describe, expect, test } from 'vitest'
 import { getWeightClone } from './TestUtil'
+import { nextGuiState } from '@/logic/GuiState'
 
-const handler = GameHandler.getInstance()
+let handler = GameHandler.getInstance()
 const weights = new Map()
 
 let policy: EliminationPolicyImproved
@@ -215,6 +216,33 @@ describe('apply Policy with artificial examples', () => {
   })
 })
 
+describe('applyPolicy with integrated realistic examples', () => {
+  beforeEach(beforeSetUpRealisticExample2)
+
+  test('applyPolicies with gamehandler', () => {
+    handler.performEndOfGameActions(true)
+    const ai: AIPlayer = handler.getPossiblePlayers()[3] as AIPlayer
+    expect(ai.weights.get(0)?.get(10000)).toEqual(1)
+    const board7: GameBoard = new GameBoard([
+      [2, 0, 0],
+      [2, 1, 2],
+      [1, 1, 1]
+    ])
+    const board6: GameBoard = new GameBoard([
+      [2, 0, 0],
+      [2, 1, 2],
+      [0, 1, 1]
+    ])
+    const board5: GameBoard = new GameBoard([
+      [2, 0, 0],
+      [0, 1, 2],
+      [0, 1, 1]
+    ])
+    expect(ai.weights.get(board6.getNormalForm())?.get(board7.getNormalForm())).toEqual(1)
+    expect(ai.weights.get(board5.getNormalForm())?.get(board6.getNormalForm())).toEqual(0)
+  })
+})
+
 function beforeSetUpRealisticExample() {
   weights.set(
     0,
@@ -276,6 +304,21 @@ function beforeSetUpRealisticExample() {
   ]
   aI.weights = weights
   handler.getGBHandler().gameBoard.value = history[history.length - 1]
+}
+
+function beforeSetUpRealisticExample2() {
+  GameHandler.getInstance().destroySingleton()
+  handler = GameHandler.getInstance()
+  handler.createAI(2, 'testAi')
+  handler.setPlayers(3, 1)
+  nextGuiState()
+  handler.performTurn(1, 1)
+  handler.performTurn(0, 0)
+  handler.performTurn(2, 2)
+  handler.performTurn(1, 2)
+  handler.performTurn(2, 1)
+  handler.performTurn(1, 0)
+  handler.performTurn(2, 0)
 }
 
 function beforeSetupArtificialExample() {
