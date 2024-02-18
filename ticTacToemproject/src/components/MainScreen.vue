@@ -4,8 +4,9 @@ import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
-import { getGuiState, nextGuiState } from '@/logic/GuiState'
+import { getGuiState, nextGuiState, skipEvaluationScreen } from '@/logic/GuiState'
 import { watch } from 'vue'
+import { getAutoPlay, getMoveSpeed } from '@/logic/AutoPlayTimer'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
@@ -48,9 +49,12 @@ watch(playerOnTurn, changePlayerDisplay)
     <MainScreenMoves />
     <br /><br />
     <!-- Display winner -->
-    <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
-    <h2 v-if="winner === 1 || winner === 2" class="text-4xl mb-8">Spieler {{ winner }} gewinnt!</h2>
-    <div v-if="winner !== null">
+    <div v-if="winner !== null ">
+    <!-- Don't show winner status on max speed autoplay-->
+    <span v-if = "(getMoveSpeed().value <10 || !getAutoPlay().value || !skipEvaluationScreen)">
+      <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
+      <h2 v-if="winner === 1 || winner === 2" class="text-4xl mb-8">Spieler {{ winner }} gewinnt!</h2>
+    </span>
       <v-btn
         class="my-2 mx-2 bg-white"
         v-show="getGuiState().value === 'evaluation'"
