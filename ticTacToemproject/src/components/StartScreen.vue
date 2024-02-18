@@ -31,7 +31,7 @@ const select2 = ref(1)
 const showHelp = ref(false)
 </script>
 
-<!-- The StartScreen offers the selectiöon of the players for the next game. -->
+<!-- The StartScreen offers the selection of the players for the next game. -->
 <template>
   <v-card class="bg-black" align="center">
     <h1 class="tictactoe bigarcade inline">Tic Tac Toe</h1>
