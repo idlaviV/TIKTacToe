@@ -8,6 +8,8 @@
 \usetikzlibrary{shapes.misc, positioning, shapes.multipart}
 \usepackage{placeins}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
 
 
 \titlehead{Wintersemester 2023/24}
@@ -30,7 +32,7 @@ Die Person, die die App benutzt, wird "`Nutzer"' genannt.
 \subsection{KI-Elimination}
 Die einfache Eliminationsstrategie ist eine Evaluationsstrategie, welche den KIs aus \TicTacToe{} nativ zugeordnet werden kann.
 
-Beim Erzeugen der KI sind die Gewichte der KI vollständig auf "`1"' gesetzt (siehe \ref{eliminationPrä}).
+Beim Erzeugen der KI sind die Gewichte der KI vollständig auf "`1"' gesetzt (siehe Abbildung \ref{eliminationPrä}).
 
 Bei dieser wird am Ende eines Spiels das Gewicht des letzten Zuges des Verlierers (egal ob die KI verloren hat oder nicht) auf \glqq{}0\grqq{} gesetzt.
 In Abbildung \ref{eliminationPost} kann die Änderung für ein typisches erstes Spiel nachvollzogen werden.
@@ -59,24 +61,25 @@ Falls es ein Unentschieden gab, werden keine Gewichte geändert.
 \label{elimination1}
 \end{figure}
 
-Angenommen wir haben ein Spiel zwischen einem Menschen (X) und einer EliminationsKI (O).
+Angenommen wir haben ein Spiel zwischen einem Menschen (X) und einer Eliminations-KI (O).
 Der menschliche Spieler ist zuerst am Zug.
 Die Gewichte der KI könnten wie in Abbildung \ref{eliminationPrä} aussehen.
 
-Wird in diesem Fall die Belohnung der EliminationsKI durchgeführt, wird zuerst die vorletzte hervorgehobene 1 auf 0 gesetzt, da dies den letzten Zug des Verlierers beschreibt.
+Wird in diesem Fall die Belohnung der Eliminations-KI durchgeführt, wird zuerst die vorletzte hervorgehobene 1 auf 0 gesetzt, da dies den letzten Zug des Verlierers beschreibt.
 Denn der Verlierer hat damit dem Gegner erlaubt einen Zug zu machen, welcher diesen gewinnen lässt.
-Das Ergebnis davon ist in \ref{eliminationPost} zu sehen.
-Nach einigen Spielen könnten die Gewichte aussehen wie in \ref{elimination1}
+Das Ergebnis davon ist in Abb.~\ref{eliminationPost} zu sehen.
+Nach einigen Spielen könnten die Gewichte aussehen wie in Abbildung \ref{elimination1}.
 Dort wurde überprüft, ob es Spielzustände gibt, von denen aus es nur 0-Gewichte gibt. Da die vorletzte 1 zu einer 0 geändert wurde, sind von dem Spielzustand darüber nur Züge mit Gewicht 0 möglich. Aus diesem Grund wird die vorhergehende 1 auch auf 0 gesetzt. Denn falls der grüne Zug von einem Spieler gespielt wird, kann sein Gegner mit einem Zug antworten, sodass dem Spieler nur noch Züge, welche mit 0 markiert sind bleiben.
 
 Hinweis: Angenommen, die Rollen wären bei gleichem Spielverlauf vertauscht, die KI hätte also das Zeichen X, sie hätte angefangen zu spielen und hätte gegen den Menschen gewonnen, würden sich die Gewichte der KI genauso ändern, da sie auch von den Zügen des Gegners lernt.
-\pagebreak
+\FloatBarrier
+\newpage
 
 \subsection{KI-Elimination v2.0}
 Die verbesserte Eliminationsstrategie ist eine Evaluationsstrategie, welche den KIs aus \TicTacToe{} nativ zugeordnet werden kann.
 
 Sie wird für Verlustzüge und Unentschieden gleich belohnt wie die einfache Eliminationsstrategie.
-Für Züge die zu einem Gewinn geführt haben werden zusätzlich alle anderen Züge von dem vorletzten Knoten auf 0 gesetzt. (Siehe \ref{elimination2})
+Für Züge die zu einem Gewinn geführt haben werden zusätzlich alle anderen Züge von dem vorletzten Knoten auf 0 gesetzt. (Siehe Abb.~\ref{elimination2})
 
 \begin{figure}[htb]
 \includegraphics[width = \linewidth]{elimination2.png}
@@ -84,8 +87,8 @@ Für Züge die zu einem Gewinn geführt haben werden zusätzlich alle anderen Z�
 \label{elimination2}
 \end{figure}
 
-\pagebreak
-
+\FloatBarrier
+\newpage
 \subsection{KI-Rückführung}
 Die Rückführungsstrategie ist eine Evaluationsstrategie, welche den KIs aus \TicTacToe{} nativ zugeordnet werden kann.
 
@@ -98,8 +101,8 @@ Die Gewichte werden jedoch niemals negativ.
 Am Ende eines Spiels werden alle Gewichte der Kanten die tatsächlich gespielt wurden (hervorgehoben und orange) mit den vorgegebenen Vorschriften verändert (siehe \ref{rückführungPost}).
 
 \begin{figure}[htb]
-\includegraphics{rückführungEinstellungen.png}
-\caption{Die Einstellungen für RückführungsKIs}
+\centering\includegraphics{rückführungEinstellungen.png}
+\caption{Die Einstellungen für Rückführungs-KIs}
 \label{rückführungEinstellungen}
 \end{figure}
 
