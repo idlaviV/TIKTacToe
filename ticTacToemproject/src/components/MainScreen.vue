@@ -31,7 +31,7 @@ watch(playerOnTurn, changePlayerDisplay)
 
 <!-- The main screen contains the gameboard and main controls. -->
 <template>
-  <v-card class="bg-black" align="center">
+  <v-card class="bg-black -my-8" align="center">
     <!-- Caption and prompt for next turn -->
     <h1 class="tictactoe bigarcade">Tic Tac Toe</h1>
 
@@ -57,7 +57,7 @@ watch(playerOnTurn, changePlayerDisplay)
         v-show="getGuiState().value === 'evaluation'"
         @click="nextGuiState()"
       >
-        Belohnung anwenden
+        Belohnen
       </v-btn>
       <v-btn
         class="my-2 mx-2"
