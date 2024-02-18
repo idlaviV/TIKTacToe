@@ -136,7 +136,7 @@ function isPartOfHistory(source: number, target: number): boolean {
 
 export const configsExplainGraph = defineConfigs({
   view: {
-    panEnabled: true,
+    panEnabled: false,
     zoomEnabled: false,
     scalingObjects: true,
     autoPanAndZoomOnLoad: 'center-zero',
