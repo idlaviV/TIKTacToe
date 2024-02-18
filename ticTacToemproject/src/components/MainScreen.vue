@@ -11,11 +11,7 @@ const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
-const goToEvaluation = () => {
-  if (winner.value !== null && getGuiState().value === 'game') {
-    nextGuiState()
-  }
-}
+
 
 const changePlayerDisplay = () => {
   if (winner.value === null) {
@@ -33,7 +29,6 @@ const changePlayerDisplay = () => {
 }
 
 watch(playerOnTurn, changePlayerDisplay)
-watch(winner, goToEvaluation)
 </script>
 
 <!-- The main screen contains the gameboard and main controls. -->

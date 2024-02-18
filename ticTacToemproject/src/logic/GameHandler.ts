@@ -15,6 +15,8 @@ import { BackpropagationPolicy } from './BackpropagationPolicy'
 import { EliminationPolicyImproved } from './EliminationPolicyImproved'
 import { updateLabels } from '@/utils/LabelExport'
 import type { TTTEdges } from '@/utils/Graph'
+import { nextGuiState, skipEvaluationScreen } from './GuiState'
+import { resetTimer } from './AutoPlayTimer'
 
 /**
  * This class handles the overall game. It is a singleton class.
@@ -65,7 +67,6 @@ export class GameHandler {
   performTurn(x: number, y: number) {
     if (this.winner.value == null) {
       this.gBHandler.move(x, y, this.playerOnTurn.value)
-      this.winner.value = this.gBHandler.calculateWinner()
       this.performEndOfTurnActions()
     }
   }
@@ -74,8 +75,12 @@ export class GameHandler {
    * Performs the actions that have to be done at the end of a gameturn.
    */
   performEndOfTurnActions() {
+    this.winner.value = this.gBHandler.calculateWinner()
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
     updateHistory(this.gBHandler.getGameBoard())
+    if (this.winner.value !== null && !skipEvaluationScreen.value) {
+      nextGuiState()
+    }
   }
 
   /**
@@ -146,6 +151,7 @@ export class GameHandler {
     try {
       if (!this.settings.getPlayer(this.playerOnTurn.value).isAI()) {
         this.performTurn(x, y)
+        resetTimer()
       }
     } catch (e: unknown) {
       if (e instanceof MoveError) {
