@@ -1,5 +1,5 @@
 import { AIPlayer } from '@/logic/AIPlayer'
-import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicySimple'
 import { GameBoard } from '@/logic/GameBoard'
 import { GameHandler } from '@/logic/GameHandler'
 import { drawStatus } from '@/logic/WinnerStatus'

@@ -151,8 +151,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
     if (isNaN(this.sanitizeDiffValue(drawDiff))) {
       throw new Error('drawDiff ' + drawDiff + ' is illegal')
     }
-    if (isNaN(this.sanitizeDiffValue(drawDiff))) {
-      throw new Error('loseDiff ' + drawDiff + ' is illegal')
+    if (isNaN(this.sanitizeDiffValue(loseDiff))) {
+      throw new Error('loseDiff ' + loseDiff + ' is illegal')
     }
     if (
       Math.max(winDiff, drawDiff, loseDiff) > this.diffBound ||

@@ -3,8 +3,7 @@ import { beforeEach, describe, expect, test, vi, type MockInstance } from 'vites
 import { gameBoardDraw, gameBoardWinPlayer1, resetGameHandler } from './TestUtil'
 import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
-import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
-import * as Gui from '@/logic/GuiState'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicySimple'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 vi.mock('@/utils/GraphExport', () => {
   return {
@@ -152,7 +151,6 @@ describe('getPossibleNextPositions', () => {
 })
 
 describe('performEndOfGameActions', () => {
-  let stateSpy: any
   test('should apply policy to both AIs', () => {
     handler.settings.player1 = new AIPlayer(new EliminationPolicySimple(), 'KI 1')
     handler.settings.player2 = new AIPlayer(new EliminationPolicySimple(), 'KI 2')

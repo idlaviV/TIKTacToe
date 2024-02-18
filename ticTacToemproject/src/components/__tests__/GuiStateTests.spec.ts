@@ -1,12 +1,15 @@
 import { GameHandler } from '@/logic/GameHandler'
 import { resetGameHandler } from './TestUtil'
-import { expect, beforeEach, describe, test } from 'vitest'
+import { expect, beforeEach, describe, test, vi } from 'vitest'
 import {
+  cleaningTasksPreStart,
   getGuiState,
   nextGuiState,
+  performCleaningTasksPreStart,
+  registerCleaningTaskPreStart,
   setGuiState,
   skipEvaluationScreen,
-  skipStartScreen
+  skipStartScreen,
 } from '@/logic/GuiState'
 import { resetHistory } from '@/utils/GraphExport'
 
@@ -113,6 +116,26 @@ describe('nextGuiState with humans only', () => {
     expect(getGuiState().value).toEqual('start')
     nextGuiState()
     expect(getGuiState().value).toEqual('game')
+  })
+})
+
+describe('cleaningTaskPreStart', () => {
+  beforeEach(() => {
+    cleaningTasksPreStart.length = 0
+  })
+  test('register test method', () => {
+    registerCleaningTaskPreStart(() => {
+      console.log('resetPan')
+    })
+    expect(cleaningTasksPreStart.length).toEqual(1)
+    expect(cleaningTasksPreStart[0]).not.toBeNull()
+  })
+
+  test('perform test method', () => {
+    const resetPan = vi.fn()
+    cleaningTasksPreStart.push(resetPan)
+    performCleaningTasksPreStart()
+    expect(resetPan).toHaveBeenCalled()
   })
 })
 

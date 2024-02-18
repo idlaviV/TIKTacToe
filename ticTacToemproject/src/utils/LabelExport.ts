@@ -5,7 +5,7 @@ import type { GameSettings } from '@/logic/GameSettings'
 import { Player } from '@/logic/Player'
 import { graphExport } from '@/utils/GraphExport'
 import { type Ref, ref } from 'vue'
-import type { TTTEdge, TTTEdges } from './Graph'
+import type { TTTEdges } from './Graph'
 
 /**
  * This class holds the labels for the edges, by their id, as a tupel of two weights.
@@ -62,13 +62,6 @@ export function getLabelToShow(edgeID: string, graphType: GraphType): string {
       if (handler.getNumberOfAIs() === 0) {
         return ''
       } else {
-        if (graphExport.value.edges[edgeID] === undefined) {
-          console.log('Edge not found in graphExport: ' + edgeID)
-          console.log('All edges:')
-          for (const edge in graphExport.value.edges) {
-            console.log(edge)
-          }
-        }
         return graphExport.value.edges[edgeID].height % 2 === 0
           ? currentLabels[0]
           : currentLabels[1]

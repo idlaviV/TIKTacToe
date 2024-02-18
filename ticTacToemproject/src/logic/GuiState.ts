@@ -17,7 +17,7 @@ const state: Ref<GuiState> = ref('start')
 
 export type GuiDisable = 'standard' | 'reduced'
 export const guiDisable: Ref<GuiDisable> = ref('standard')
-const cleaningTasksPreStart: (() => void)[] = []
+export const cleaningTasksPreStart: (() => void)[] = []
 
 /**
  * Register a new task. It will be called on all subsequent transitions from gui-state 'post-evaluation'
@@ -27,7 +27,7 @@ export function registerCleaningTaskPreStart(foo: () => void) {
   cleaningTasksPreStart.push(foo)
 }
 
-function performCleaningTasksPreStart() {
+export function performCleaningTasksPreStart() {
   for (const task of cleaningTasksPreStart) {
     task()
   }
@@ -42,9 +42,10 @@ export function updateGuiDisable() {
   ) {
     guiDisable.value = 'reduced'
   } else {
-    guiDisable.value = 'standard'
+    if (!(getAutoPlay().value && getMoveSpeed().value === 10)) {
+      guiDisable.value = 'standard'
+    }
   }
-  //console.log("new guiDisable: " + guiDisable.value)
 }
 
 export function getGuiState(): Ref<GuiState> {
@@ -69,6 +70,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
   switch (state.value) {
     case 'game':
       state.value = 'evaluation'
+      updateGuiDisable()
       if (!skipEvaluationScreen.value && !isHumanGame) {
         break
       }
@@ -93,6 +95,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
     /* falls through */
     default:
       state.value = 'game'
+      updateGuiDisable()
       break
   }
 }
