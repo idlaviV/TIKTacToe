@@ -22,6 +22,7 @@ import {
   tooltipOpacity
 } from '@/utils/GraphAlternativePopup'
 import GraphAlternativeTooltip from './GraphAlternativeTooltip.vue'
+import GraphWeightToggle from './GraphWeightToggle.vue'
 
 const layouts = Layout.layouts
 const nodesForDisplay = computed(() => {
@@ -120,7 +121,9 @@ watch(
         "
         id="labelSwitch"
       >
-        <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
+        <v-card max-height="50px" class="bg-black border px-4 py-2">
+          <GraphWeightToggle />
+        </v-card>
       </div>
       <!--tooltip-->
       <GraphAlternativeTooltip />
@@ -129,7 +132,7 @@ watch(
         icon="mdi-image-filter-center-focus-weak"
         size="x-large"
         density="compact"
-        class="mx-2"
+        class="mx-2 bg-black border"
         variant="text"
         v-on:click="resetPan()"
       ></v-btn>
@@ -144,15 +147,15 @@ watch(
 
 #labelSwitch {
   position: absolute;
-  top: 0;
-  left: 20px;
+  top: 5px;
+  left: 5px;
   z-index: 10;
 }
 
 #resetPan {
   position: absolute;
-  top: 4px;
-  right: -4px;
+  top: 5px;
+  right: -3px;
   z-index: 10;
 }
 

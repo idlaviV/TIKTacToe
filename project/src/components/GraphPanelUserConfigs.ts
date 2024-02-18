@@ -133,3 +133,66 @@ function isPartOfHistory(source: number, target: number): boolean {
   }
   return false
 }
+
+export const configsExplainGraph = defineConfigs({
+  view: {
+    panEnabled: false,
+    zoomEnabled: false,
+    scalingObjects: true,
+    autoPanAndZoomOnLoad: 'center-zero',
+    autoPanOnResize: true
+  },
+  node: {
+    selectable: false,
+    draggable: false,
+    normal: {
+      type: 'rect',
+      borderRadius: 0,
+      width: 65,
+      height: 65
+    },
+    label: {
+      visible: false
+    }
+  },
+  edge: {
+    normal: {
+      dasharray: (edge) => {
+        if (edge.id === '0#1') {
+          return dashed
+        } else {
+          return continuous
+        }
+      },
+      color: Colors.simpleColor,
+      width: () => normalWidth
+    },
+    margin: 4,
+    marker: {
+      target: {
+        type: 'arrow',
+        width: 4,
+        height: 4
+      }
+    },
+    label: {
+      color: () => Colors.player2Color,
+      fontSize: 15,
+      background: {
+        visible: false
+      }
+    },
+    selectable: false,
+    hover: {
+      dasharray: (edge) => {
+        if (edge.id === '0#1') {
+          return dashed
+        } else {
+          return continuous
+        }
+      },
+      color: Colors.simpleColor,
+      width: () => normalWidth
+    }
+  }
+})
