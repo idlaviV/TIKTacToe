@@ -143,7 +143,6 @@ export function getActiveNodeCode(): string {
 /**
  * Resets the history.
  * The passed gameboard is set as the first game state of the new history.
- * @param gameBoard The first game state of the new history
  */
 export function resetHistory() {
   graphExport.value = new GraphExport()

@@ -1,8 +1,10 @@
+import type { TTTEdges } from '@/utils/Graph'
 import type { AIPlayer } from './AIPlayer'
 import type { EvaluationPolicy } from './EvaluationPolicy'
 import type { GameBoard } from './GameBoard'
 import { GameHandler } from './GameHandler'
 import { drawStatus, type WinnerStatus } from './WinnerStatus'
+import { graphExport } from '@/utils/GraphExport'
 
 export abstract class EliminationPolicy implements EvaluationPolicy {
   /**
@@ -19,26 +21,30 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
    * @inheritdoc
    * @override
    */
-  applyPolicy(aI: AIPlayer, history: GameBoard[]): void {
+  applyPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdges {
     const handler: GameHandler = GameHandler.getInstance()
     const winner = handler.getWinner().value
-
     if (winner !== null) {
-      this.applyWinningPolicy(aI, history)
+      return this.applyWinningPolicy(aI, history)
     }
+    return {}
   }
 
   /**
    * Apply the policy to the AIPlayer.
    */
-  private applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): void {
+  private applyWinningPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdges {
     const handler: GameHandler = GameHandler.getInstance()
     const winner = handler.getWinner().value
+
+    let changedWeights: TTTEdges = {}
+
     for (let index = history.length - 1; index > 1; index--) {
       if (this.checkIfLoosePosition(aI, history, index, winner)) {
-        this.modifyWeights(aI, history, index)
+        changedWeights = { ...changedWeights, ...this.modifyWeights(aI, history, index) }
       }
     }
+    return changedWeights
   }
 
   /**
@@ -67,8 +73,9 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
    * @param aI The weights of the AIPlayer to be modified.
    * @param history The history of the played game.
    * @param index The index of the losing position to be considered.
+   * @returns The modified weights.
    */
-  abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): void
+  abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): TTTEdges
 }
 
 /**
@@ -81,9 +88,19 @@ export class EliminationPolicySimple extends EliminationPolicy {
    * @inheritdoc
    * @override
    */
-  modifyWeights(aI: AIPlayer, history: GameBoard[], index: number): void {
-    const map = aI.getVertexMap(history[index - 2].getNormalForm())
-    map.set(history[index - 1].getNormalForm(), 0)
+  modifyWeights(aI: AIPlayer, history: GameBoard[], index: number): TTTEdges {
+    const lastMoveSource = history[index - 2].getNormalForm()
+    const lastMoveTarget = history[index - 1].getNormalForm()
+    const edgeId: string = lastMoveSource + '#' + lastMoveTarget
+    const changedWeights: TTTEdges = {}
+
+    const map = aI.getVertexMap(lastMoveSource)
+    const preChangeWeight = map.get(lastMoveTarget)!
+    map.set(lastMoveTarget, 0)
+    if (preChangeWeight !== 0) {
+      changedWeights[edgeId] = graphExport.value.edges[edgeId]
+    }
+    return changedWeights
   }
 }
 

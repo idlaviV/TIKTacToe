@@ -113,6 +113,10 @@ export class GameBoardHandler {
   getGameBoardExport() {
     return this.gameBoard
   }
+
+  getHistory(): GameBoard[] {
+    return this.history
+  }
 }
 
 /**

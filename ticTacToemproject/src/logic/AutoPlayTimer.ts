@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { GameHandler } from './GameHandler'
-import { getGuiState, updateGuiDisable } from './GuiState'
+import { getGuiState, nextGuiState, updateGuiDisable } from './GuiState'
 
 const autoPlay = ref(false)
 let timer: ReturnType<typeof setTimeout>
@@ -8,6 +8,9 @@ const moveSpeed = ref(2)
 
 export function timerRunsOut() {
   timer = setTimeout(timerRunsOut, calculateTimeout())
+  if (getGuiState().value === 'game' && GameHandler.getInstance().getWinner().value !== null) {
+    nextGuiState()
+  }
   if (autoPlay.value && getGuiState().value == 'game') {
     GameHandler.getInstance().performAiTurn()
   }

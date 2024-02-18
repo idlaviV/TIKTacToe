@@ -11,21 +11,6 @@ const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
-//deprecated
-const changeVisibility = () => {
-  if (winner !== null) {
-    document.getElementById('playerDisplay')?.classList.toggle('invisible')
-  }
-}
-
-watch(winner, changeVisibility)
-
-const goToEvaluation = () => {
-  if (winner.value !== null && getGuiState().value === 'game') {
-    nextGuiState()
-  }
-}
-
 const changePlayerDisplay = () => {
   if (winner.value === null) {
     if (playerOnTurn.value === 1) {
@@ -42,7 +27,6 @@ const changePlayerDisplay = () => {
 }
 
 watch(playerOnTurn, changePlayerDisplay)
-watch(winner, goToEvaluation)
 </script>
 
 <!-- The main screen contains the gameboard and main controls. -->

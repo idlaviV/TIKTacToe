@@ -5,6 +5,7 @@ import { getPossibleNextNormalForms } from './GameBoardHandler'
 import type { GameBoardWithPrevMove } from './Moves'
 import { Player } from './Player'
 import { Randomizer } from './Randomizer'
+import type { TTTEdges } from '@/utils/Graph'
 
 /**
  * This class represents an AI player.
@@ -131,8 +132,8 @@ export class AIPlayer extends Player {
     }
   }
 
-  applyPolicy(): void {
-    this.policy.applyPolicy(this, GameHandler.getInstance().getGBHandler().history)
+  applyPolicy(): TTTEdges {
+    return this.policy.applyPolicy(this, GameHandler.getInstance().getGBHandler().history)
   }
 
   resetWeights(): void {

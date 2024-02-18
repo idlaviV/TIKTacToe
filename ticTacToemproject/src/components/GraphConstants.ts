@@ -23,3 +23,15 @@ export const viewBoxAttributes: string = [
 export const tooltipSize = gridSize + tooltipPadding
 const relativeTooltipOffset = 1.5
 export const tooltipOffset = (relativeTooltipOffset * gridSize) / 2
+
+/**
+ * Control density of the edges in the graph.
+ */
+export const dashed = '4'
+export const continuous = '0'
+
+/**
+ * Control the width of the edges in the graph.
+ */
+export const normalWidth: number = 2
+export const highlightedWidth: number = 5
