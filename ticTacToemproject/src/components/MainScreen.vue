@@ -11,21 +11,6 @@ const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
-//deprecated
-const changeVisibility = () => {
-  if (winner !== null) {
-    document.getElementById('playerDisplay')?.classList.toggle('invisible')
-  }
-}
-
-watch(winner, changeVisibility)
-
-const goToEvaluation = () => {
-  if (winner.value !== null && getGuiState().value === 'game') {
-    nextGuiState()
-  }
-}
-
 const changePlayerDisplay = () => {
   if (winner.value === null) {
     if (playerOnTurn.value === 1) {
@@ -42,7 +27,6 @@ const changePlayerDisplay = () => {
 }
 
 watch(playerOnTurn, changePlayerDisplay)
-watch(winner, goToEvaluation)
 </script>
 
 <!-- The main screen contains the gameboard and main controls. -->
@@ -65,7 +49,8 @@ watch(winner, goToEvaluation)
     <br /><br />
     <!-- Display winner -->
     <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
-    <h2 v-if="winner === 1 || winner === 2" class="text-4xl mb-8">Spieler {{ winner }} gewinnt!</h2>
+    <h2 v-if="winner === 1" class="text-4xl text-pink-500 mb-8">X gewinnt!</h2>
+    <h2 v-if="winner === 2" class="text-4xl text-blue-500 mb-8">O gewinnt!</h2>
     <div v-if="winner !== null">
       <v-btn
         class="my-2 mx-2 bg-white"
