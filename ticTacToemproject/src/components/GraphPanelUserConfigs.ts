@@ -157,7 +157,13 @@ export const configsExplainGraph = defineConfigs({
   },
   edge: {
     normal: {
-      dasharray: (edge) => {if (edge.id === '0#1'){return dashed} else {return continuous}},
+      dasharray: (edge) => {
+        if (edge.id === '0#1') {
+          return dashed
+        } else {
+          return continuous
+        }
+      },
       color: Colors.simpleColor,
       width: () => normalWidth
     },
@@ -178,7 +184,13 @@ export const configsExplainGraph = defineConfigs({
     },
     selectable: false,
     hover: {
-      dasharray: (edge) => {if (edge.id === '0#1'){return dashed} else {return continuous}},
+      dasharray: (edge) => {
+        if (edge.id === '0#1') {
+          return dashed
+        } else {
+          return continuous
+        }
+      },
       color: Colors.simpleColor,
       width: () => normalWidth
     }
