@@ -25,7 +25,7 @@ const setFont = () => {
       <v-switch
         class="mx-2"
         v-model="useDigitalFont"
-        label="Benutze digital Font"
+        label="Benutze digitale Schriftart"
         @update:model-value="setFont"
       ></v-switch>
     </div>
