@@ -51,7 +51,7 @@ watch(playerOnTurn, changePlayerDisplay)
     <!-- Display winner -->
     <div v-if="winner !== null">
       <!-- Don't show winner status on high speed autoplay-->
-      <span v-if="getMoveSpeed().value < 9 || !skipEvaluationScreen">
+      <span v-if="getMoveSpeed().value < 9 || !skipEvaluationScreen || gameHandler.getNumberOfAIs() < 2">
         <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
         <h2 v-if="winner === 1" class="text-3xl text-pink-500 mb-8">Spieler 1 gewinnt!</h2>
         <h2 v-if="winner === 2" class="text-3xl text-blue-500 mb-8">Spieler 2 gewinnt!</h2>
