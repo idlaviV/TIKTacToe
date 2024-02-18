@@ -110,17 +110,16 @@ export class GameHandler {
       changedWeights = this.settings.getPlayer(1).isAI()
         ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
         : {}
-        updateLabels(changedWeights, 0, true)
+      updateLabels(changedWeights, 0, true)
     } else {
-    changedWeights = this.settings.getPlayer(1).isAI()
-      ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
-      : {}
-    updateLabels(changedWeights, 0)
-    changedWeights =
-      this.settings.getPlayer(2).isAI()
+      changedWeights = this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : {}
+      updateLabels(changedWeights, 0)
+      changedWeights = this.settings.getPlayer(2).isAI()
         ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
         : {}
-    updateLabels(changedWeights, 1)
+      updateLabels(changedWeights, 1)
     }
   }
 
@@ -251,7 +250,7 @@ export class GameHandler {
     return count
   }
 
-  arePlayersTheSame():boolean {
+  arePlayersTheSame(): boolean {
     return this.settings.getPlayer(1) === this.settings.getPlayer(2)
   }
 
