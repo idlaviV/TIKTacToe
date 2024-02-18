@@ -4,6 +4,7 @@ import StartScreen from './components/StartScreen.vue'
 import AISelectionPanel from './components/AISelectionPanel.vue'
 import MainScreen from './components/MainScreen.vue'
 import GraphPanel from './components/GraphPanel.vue'
+import ExplainScreen from './components/ExplainScreen.vue'
 import { getGuiState, type GuiState } from './logic/GuiState'
 import SettingsPanel from './components/SettingsPanel.vue'
 import { useDisplay } from 'vuetify'
@@ -55,6 +56,7 @@ watch(mobile, () => {
         <v-window-item value="0">
           <v-container>
             <StartScreen />
+            <ExplainScreen />
           </v-container>
         </v-window-item>
         <v-window-item value="1">
