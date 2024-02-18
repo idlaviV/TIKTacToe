@@ -9,7 +9,7 @@ import { isPlayer2Graph } from '@/components/GraphPanelUserConfigs'
         class="-my-3 mx-1"
         v-model="isPlayer2Graph"
         id="myswitch"
-        alt="Wechsle KI die angezeigt wird"
+        alt="Wechsle KI, deren Gewichte angezeigt werden"
       ></v-switch
     ></v-col>
     <v-col><p class="text-blue-500 font-bold text-2xl">O</p></v-col>
