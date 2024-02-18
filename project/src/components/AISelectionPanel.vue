@@ -22,7 +22,6 @@ const getAIs = computed(() => {
 
 /**
  * All possible AI options
- * @todo aiOptions should be pulled from backend somehow?
  */
 const aiOptions = [
   { title: 'Elimination', index: 0 },

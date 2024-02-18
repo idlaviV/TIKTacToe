@@ -2,13 +2,10 @@
 import { skipEvaluationScreen, skipStartScreen, useDigitalFont } from '@/logic/GuiState'
 
 const setFont = () => {
-  console.log('Ping')
   if (useDigitalFont.value) {
     document.body.style.fontFamily = 'Pixelify Sans'
-    console.log('Now: Pixel')
   } else {
     document.body.style.fontFamily = ''
-    console.log('Now:Plain')
   }
 }
 </script>
