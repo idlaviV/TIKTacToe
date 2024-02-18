@@ -61,10 +61,6 @@ function saveSettings() {
   )
   areAISettingsShown.value = false
 }
-
-function itemTitleOfAI(player: {player: string;index: number;type: string;}) {
-  return player.player + " (" + player.type + ")"
-}
 </script>
 
 <!-- The AISelectionPanel contains a list of all existing AIs and the option to create new AIs,
@@ -75,7 +71,10 @@ function itemTitleOfAI(player: {player: string;index: number;type: string;}) {
     <v-card-title>KI-Übersichtsfenster</v-card-title>
     <v-overlay v-model="areAISettingsShown" class="justify-center">
       <v-card class="pa-4 ma-4">
-        <v-card-title class="text-center">{{ aIPlayer!.getName() }} </v-card-title>
+        <v-card-title class="text-center">
+          {{ aIPlayer!.getName() }}<br/>
+          <div class="text-base">({{ aIPlayer?.getTypeName() }})</div>
+        </v-card-title>
         <div class="text-left inline">Spiele: </div>
         <div
           class="text-left inline"
@@ -156,7 +155,7 @@ function itemTitleOfAI(player: {player: string;index: number;type: string;}) {
     </v-overlay>
     <v-virtual-scroll :items="getAIs" height="220">
       <template v-slot:default="{ item }">
-        <v-list-item :title="itemTitleOfAI(item)">
+        <v-list-item :title="item.player">
           <template v-slot:prepend>
             <i class="material-symbols-outlined mx-2"> smart_toy </i>
           </template>
