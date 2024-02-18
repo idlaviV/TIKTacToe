@@ -24,9 +24,11 @@ const MakeMove = (x: number, y: number) => {
         v-for="(cell, y) in row"
         :key="y"
         @click="MakeMove(x, y)"
+        @keydown.enter="MakeMove(x, y)"
         :class="`border-2 border-white w-20 h-20 hover:bg-gray-700 flex items-center justify-center text-4xl cursor-pointer ${
           cell === 1 ? 'text-pink-500' : 'text-blue-500'
         }`"
+        tabindex="0"
       >
         <!-- Render proper symbol for player -->
         {{ symbol(cell) }}
