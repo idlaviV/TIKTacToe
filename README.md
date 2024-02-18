@@ -1,9 +1,9 @@
-# KIT Tac Toe
+# TIK Tac Toe
 
 Teamprojekt im Wintersemester 2023/24
 am Karlsruher Institut für Technologie (KIT)
 
-Die App „KIT Tac Toe“ soll einen Beitrag für den sanften Einstieg in das Thema KI
+Die App „TIK Tac Toe“ soll einen Beitrag für den sanften Einstieg in das Thema KI
 leisten. Schülerinnen und Schüler können mit wenigen Klicks ein regelbasiertes Expertensystem
 erkunden, das nach und nach das Spiel „Tic Tac Toe“ erlernt. Dabei können
 die Schülerinnen und Schüler die Entscheidungen des Expertensystems schrittweise nachvollziehen
