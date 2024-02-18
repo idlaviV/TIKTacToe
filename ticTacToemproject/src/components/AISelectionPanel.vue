@@ -105,22 +105,22 @@ function saveSettings() {
           <br />
           <v-text-field :class="`${useDigitalFont === true ? 'dogica' : 'text-lg'}`" v-model="winDiff">
           <template v-slot:label>
-            <span class="pixelify">Gewinnen</span>
+            <span :class="`${useDigitalFont === true? 'pixelify':'text-xs'}`">Gewinnen</span>
           </template>
           </v-text-field>
 
           <v-text-field :class="`${useDigitalFont === true ? 'dogica' : 'text-lg'}`" v-model="drawDiff">
             <template v-slot:label>
-            <span class="pixelify">Unentschieden</span>
+            <span :class="`${useDigitalFont === true? 'pixelify':'text-xs'}`">Unentschieden</span>
           </template>
           </v-text-field>
 
           <v-text-field :class="`${useDigitalFont === true ? 'dogica' : 'text-lg'}`" v-model="loseDiff">
             <template v-slot:label>
-            <span class="pixelify">Verlieren</span>
+            <span :class="`${useDigitalFont === true? 'pixelify':'text-xs'}`">Verlieren</span>
           </template>
           </v-text-field> 
-          
+
           <v-col class="text-center">
             <v-btn class="bg-white" v-on:click="saveSettings()"> Speichern </v-btn>
           </v-col>
@@ -172,3 +172,9 @@ function saveSettings() {
     </v-card>
   </v-card>
 </template>
+
+<style>
+.pixelify {
+  font-family: 'Pixelify Sans';
+}
+</style>
