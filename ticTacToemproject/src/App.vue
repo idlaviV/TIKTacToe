@@ -26,7 +26,7 @@ watch(mobile, () => {
 <template>
   <main>
     <v-container v-show="guiState === 'start'">
-      <v-window v-model="window">
+      <v-window :touch="{left: undefined, right: undefined}" v-model="window">
         <v-layout>
           <v-bottom-navigation
             v-model="window"
@@ -67,7 +67,7 @@ watch(mobile, () => {
     </v-container>
 
     <v-container v-show="guiState !== 'start'">
-      <v-window v-model="window">
+      <v-window :touch="{left: undefined, right: undefined}" v-model="window">
         <v-layout>
           <v-bottom-navigation
             v-model="window"
