@@ -269,6 +269,27 @@ describe('perform turn on complicated board', () => {
   })
 })
 
+describe('initializeWeights', () => {
+  test('initializeWeights', () => {
+    player.initializeWeights(0)
+    expect(player.weights.get(0)?.size).toEqual(3)
+    expect(player.weights.get(0)?.get(1)).toEqual(1)
+    expect(player.weights.get(0)?.get(10)).toEqual(1)
+    expect(player.weights.get(0)?.get(10000)).toEqual(1)
+  })
+
+  test('initializeWeights with existing weights', () => {
+    player.getVertexMap(0).set(1, 0)
+    player.getVertexMap(0).set(10, 0)
+    player.getVertexMap(0).set(10000, 0)
+    player.initializeWeights(0)
+    expect(player.weights.get(0)?.size).toEqual(3)
+    expect(player.weights.get(0)?.get(1)).toEqual(0)
+    expect(player.weights.get(0)?.get(10)).toEqual(0)
+    expect(player.weights.get(0)?.get(10000)).toEqual(0)
+  })
+})
+
 describe('applyPolicy', () => {
   test('eliminationPolicy', () => {
     const policySpy = vi.spyOn(policy, 'applyPolicy')

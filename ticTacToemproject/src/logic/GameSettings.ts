@@ -35,9 +35,6 @@ export class GameSettings {
 
       case 2:
         return this.player2
-
-      default:
-        throw new Error('Invalid player number')
     }
   }
 }

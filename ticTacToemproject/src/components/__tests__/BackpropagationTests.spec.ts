@@ -32,6 +32,56 @@ beforeEach(() => {
   aI = new AIPlayer(policy)
 })
 
+describe('constructor', () => {
+  test('initializes diffs correctly', () => {
+    expect(policy.winDiff).toBe(3)
+    expect(policy.drawDiff).toBe(1)
+    expect(policy.loseDiff).toBe(-1)
+  })
+
+  test('initialize diffs with invalid inputs', () => {
+    expect(() => new BackpropagationPolicy(NaN, 1, -1)).toThrow(new Error('winDiff ' + NaN + ' is illegal'))
+    expect(() => new BackpropagationPolicy(3, NaN, -1)).toThrow(new Error('drawDiff ' + NaN + ' is illegal'))
+    expect(() => new BackpropagationPolicy(3, 1, NaN)).toThrow(new Error('loseDiff ' + NaN + ' is illegal'))
+
+    expect(() => new BackpropagationPolicy(1.2, 1, -1)).toThrow(new Error('winDiff ' + 1.2 + ' is illegal'))
+    expect(() => new BackpropagationPolicy(3, 1.2, -1)).toThrow(new Error('drawDiff ' + 1.2 + ' is illegal'))
+    expect(() => new BackpropagationPolicy(3, 1, 1.2)).toThrow(new Error('loseDiff ' + 1.2 + ' is illegal'))
+
+    expect(() => new BackpropagationPolicy(1001, -1001, 1001)).toThrow(new Error('Diffs (' + 1001 + ',' + -1001 + ',' + 1001 + ') out of bound!'))
+  })
+})
+
+describe('setDiffs', () => {
+  test('sets diffs correctly', () => {
+    policy.setDiffs(1, 2, 3)
+    expect(policy.winDiff).toBe(1)
+    expect(policy.drawDiff).toBe(2)
+    expect(policy.loseDiff).toBe(3)
+  })
+
+  test('invalid inputs', () => {
+    policy.setDiffs(NaN, 1, -1)
+    expect(policy.winDiff).toBe(3)
+    policy.setDiffs(3, NaN, -1)
+    expect(policy.drawDiff).toBe(1)
+    policy.setDiffs(3, 1, NaN)
+    expect(policy.loseDiff).toBe(-1)
+
+    policy.setDiffs(1.2, 1, -1)
+    expect(policy.winDiff).toBe(3)
+    policy.setDiffs(3, 1.2, -1)
+    expect(policy.drawDiff).toBe(1)
+    policy.setDiffs(3, 1, 1.2)
+    expect(policy.loseDiff).toBe(-1)
+
+    policy.setDiffs(1001, -1001, 1001)
+    expect(policy.winDiff).toBe(1000)
+    expect(policy.drawDiff).toBe(-1000)
+    expect(policy.loseDiff).toBe(1000)
+  })
+})
+
 describe('getInitialWeight', () => {
   test('returns expected values', () => {
     expect(policy.getInitialWeight(0)).toBe(9)
