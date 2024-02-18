@@ -29,7 +29,7 @@ const texty: number = gc.yOffsetText + y * gc.rectSize
     :height="gc.rectSize"
     style="fill-opacity: 0; stroke-width: 0.5; stroke: white"
   />
-  <text class="pixelify" text-anchor="middle" style="fill: white">
+  <text text-anchor="middle" style="fill: white">
     <tspan :x="textx" :y="texty">{{ label }}</tspan>
   </text>
 </template>
