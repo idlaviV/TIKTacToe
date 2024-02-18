@@ -18,9 +18,6 @@ export function updatePlayerList() {
   const possiblePlayers: Player[] = GameHandler.getInstance().getPossiblePlayers()
   players.value = []
   for (const player of possiblePlayers) {
-    players.value.push({
-      player: player.getName(),
-      index: possiblePlayers.indexOf(player)
-    })
+    players.value.push({ player: player.getName(), index: possiblePlayers.indexOf(player) })
   }
 }
