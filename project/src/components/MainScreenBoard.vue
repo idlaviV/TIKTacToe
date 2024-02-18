@@ -13,6 +13,10 @@ const gameBoard = gameHandler.getGBHandler().getGameBoardExport()
 const MakeMove = (x: number, y: number) => {
   gameHandler.performTurnFromUserInput(x, y)
 }
+
+function gameField (x: number, y: number) {
+  return "Spielfeld" + x + "," + y
+}
 </script>
 
 <!-- The MainScreenBoard visualizes the state of the gameboard. -->
@@ -29,7 +33,7 @@ const MakeMove = (x: number, y: number) => {
           cell === 1 ? 'text-pink-500' : 'text-blue-500'
         }`"
         tabindex="0"
-        alt="Spielfeld"
+        :alt="gameField(x, y)"
       >
         <!-- Render proper symbol for player -->
         {{ symbol(cell) }}
