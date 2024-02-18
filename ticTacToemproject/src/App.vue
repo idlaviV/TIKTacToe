@@ -1,26 +1,17 @@
 <script setup lang="ts">
-import { ref, watch, type Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import StartScreen from './components/StartScreen.vue'
 import AISelectionPanel from './components/AISelectionPanel.vue'
 import MainScreen from './components/MainScreen.vue'
 import GraphPanel from './components/GraphPanel.vue'
 import { getGuiState, type GuiState } from './logic/GuiState'
 import SettingsPanel from './components/SettingsPanel.vue'
-import { useDisplay } from 'vuetify'
 
 const guiState: Ref<GuiState> = getGuiState()
 const window = ref(0)
-const mobile = useDisplay().smAndDown
 
 document.body.style.fontFamily = 'Pixelify Sans'
-/**
- * Navigate selection from mobile-graph to desktop-game
- */
-watch(mobile, () => {
-  if (window.value == 1 && !mobile.value && guiState.value !== 'start') {
-    window.value = 0
-  }
-})
+
 </script>
 
 <template>
