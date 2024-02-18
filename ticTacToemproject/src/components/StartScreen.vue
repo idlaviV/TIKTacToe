@@ -34,7 +34,7 @@ const showHelp = ref(false)
 <!-- The StartScreen offers the selection of the players for the next game. -->
 <template>
   <v-card class="bg-black" align="center">
-    <h1 class="tictactoe bigarcade inline">Tic Tac Toe</h1>
+    <h1 class="tictactoe bigarcade inline">TIK Tac Toe</h1>
 
     <v-card class="playerSelection bg-black">
       <div>
