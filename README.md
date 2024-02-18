@@ -31,6 +31,7 @@ den Lernprozess abbildet.
 Eine Stelle an der das Projekt gehostet ist, ist auf dem [Server des Lehr-Lern-Labors der Fachschaft Informatik](https://files.lehr-lern-labor.info/tictactoe) des KITs.
 
 Nach dem Start des Programmes können im erscheinenden Bildschirm verschiedene (untrainierte) KIs oder menschliche Spieler ausgewählt und ein Spiel gestartet werden.
+Außerdem sind einige Infos zum Spielen des Spiels als "Was ist das hier?" Fenster vorzufinden.
 Im Menu am unteren Bildschirmrand kann zu anderen Bildschirmen gewechselt werden.
 Auf dem Bildschirm KIs können Statistiken einzelner KIs angezeigt werden, neue KIs erzeugt und bestehende KIs verändert oder zurückgesetzt werden.
 In dem finalen Bildschirm nahmens Einstellungen finden sich Möglichkeiten den Ablauf des Spieles zu verkürzen und die Font der Website zu einer klassischeren Font abzuändern.  
