@@ -11,7 +11,7 @@ import {
   gameBoard21,
   resetGameHandler
 } from './TestUtil'
-import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicySimple'
 import type { EvaluationPolicy } from '@/logic/EvaluationPolicy'
 import { maxFromAI, debugRandomizerFactory } from './TestUtil'
 
@@ -358,5 +358,34 @@ describe('prepareWeightedEntries', () => {
     expect(weightedEntries.length).toEqual(2)
     expect(weightedEntries[0]).toEqual({ code: 1, index: 1 })
     expect(weightedEntries[1]).toEqual({ code: 2, index: 2 })
+  })
+})
+
+describe('getVertexMap', () => {
+  test('undefined', () => {
+    const weights = new Map()
+    weights.set(1, 1)
+    weights.set(10, 1)
+    weights.set(10000, 1)
+    expect(player.getVertexMap(undefined)).toEqual(weights)
+  })
+
+  test('uninitialized normal form', () => {
+    const weights = new Map()
+    weights.set(1, 1)
+    weights.set(10, 1)
+    weights.set(10000, 1)
+    expect(player.getVertexMap(0)).toEqual(weights)
+  })
+
+  test('initialized normal form', () => {
+    const weights = new Map()
+    weights.set(1, 0)
+    weights.set(10, 0)
+    weights.set(10000, 0)
+    player.getVertexMap(0).set(1, 0)
+    player.getVertexMap(0).set(10, 0)
+    player.getVertexMap(0).set(10000, 0)
+    expect(player.getVertexMap(0)).toEqual(weights)
   })
 })
