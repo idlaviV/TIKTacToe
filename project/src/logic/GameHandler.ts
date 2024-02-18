@@ -244,6 +244,10 @@ export class GameHandler {
     return count
   }
 
+  arePlayersTheSame():boolean {
+    return this.settings.getPlayer(1) === this.settings.getPlayer(2)
+  }
+
   getGBHandler(): GameBoardHandler {
     return this.gBHandler
   }

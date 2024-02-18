@@ -117,7 +117,7 @@ watch(
       <div
         v-if="
           (getGuiState().value === 'evaluation' || getGuiState().value === 'postevaluation') &&
-          GameHandler.getInstance().getNumberOfAIs() === 2
+          GameHandler.getInstance().getNumberOfAIs() === 2 && !GameHandler.getInstance().arePlayersTheSame()
         "
         id="labelSwitch"
       >
