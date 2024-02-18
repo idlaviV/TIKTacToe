@@ -72,19 +72,19 @@ wie sich unterschiedliche Belohnungsstrategien auf das Lernverhalten der KI ausw
 	\begin{itemize}
 		\item[S100] Automatisches Ziehen der KI kann an- und abgewählt werden.
 		\item[S110] Ist das automatische Ziehen deaktiviert, so gibt es die Möglichkeit einzelne Züge der KI auszulösen.
-		\item[\textcolor{red}{S201}] Es gibt auch die Möglichkeit, zwei KIs, oder zwei Nutzer, als Spieler auszuwählen.
-		\item[\textcolor{red}{S210}] Eine KI kann auch gegen sich selbst spielen.
+		\item[S201] Es gibt auch die Möglichkeit, zwei KIs, oder zwei Nutzer, als Spieler auszuwählen.
+		\item[S210] Eine KI kann auch gegen sich selbst spielen.
 		\item[S300] Die Zuggeschwindigkeit der KI kann festgelegt werden. 
 		\item[S400] Der Nutzer kann einstellen, dass nach Beenden eines Spiels automatisch das nächste Spiel mit den gleichen Einstellungen gestartet wird.
 		\item[S500] Zwischen zwei Spielen besteht die Möglichkeit, die Gewichte der trainierte(n) KI(s) einzeln zurückzusetzen.
-		\item[\textcolor{red}{S601}] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte durch die Belohnungsstrategie angepasst werden können.
-		\item[\textcolor{red}{S605}] Bei der Initialisierung einer KI wird die Belohnungsstrategie vom Nutzer ausgewählt.
-		\item[\textcolor{red}{S611}] Eine Belohnungsstrategie ist die Elimination des letzten Zuges des Verlierers. Falls aus einem Zustand nur Verlustzüge möglich sind, so wird auch der Zug vor diesem Zustand eliminiert.
+		\item[S601] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte durch die Belohnungsstrategie angepasst werden können.
+		\item[S605] Bei der Initialisierung einer KI wird die Belohnungsstrategie vom Nutzer ausgewählt.
+		\item[S611] Eine Belohnungsstrategie ist die Elimination des letzten Zuges des Verlierers. Falls aus einem Zustand nur Verlustzüge möglich sind, so wird auch der Zug vor diesem Zustand eliminiert.
 		\item[S620] Eine Belohnungsstrategie ist Fehlerrückführung.
 				Für Gewinnen, Unentschieden und Verlust werden die Gewichte der ausgeführten Züge individuell angepasst.
-		\item[\textcolor{red}{S625}] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte der Belohnungsstrategie Fehlerrückführung vom Nutzer angepasst werden können.
+		\item[S625] Es gibt eine Ansicht, in der am Ende des Spiels die Gewichte der Belohnungsstrategie Fehlerrückführung vom Nutzer angepasst werden können.
 		\item[S630] Der Nutzer kann auswählen, dass die konfigurierte Belohnungsstrategie in Zukunft automatisch angewendet wird.
-		\item[\textcolor{red}{S701}] Während der Auswahl der Belohnungsstrategie wird der Spielverlauf mit alternativen Optionen als Graph angezeigt.
+		\item[S701] Während der Auswahl der Belohnungsstrategie wird der Spielverlauf mit alternativen Optionen als Graph angezeigt.
 	\end{itemize}
 
 \subsection{Kann-Kriterien}
@@ -161,24 +161,15 @@ Wir vereinbaren die folgenden Regeln für unsere Zusammenarbeit:
 	\item Im Graph-Interface werden auch nur die Äquivalenzklassen angezeigt und nicht alle möglichen 9 Kinder.
 	\item Wir wollen nicht erkennen können, ob die aktuelle Spielsituation zwingend zu Unentschieden führt.
 	\item In der Visualisierung des Graphen ist die Rolle der Iso-Klasse nicht austauschbar.
-	\item Vorerst implementieren wir kein Event-Handling für die User-Player.
+	\item Wir implementieren kein Event-Handling für die User-Player.
 	\item Der Graph wird nur lazy aus GameBoards berechnet und nicht als eigenes Objekt gespeichert.
-	\item Der Nutzer kann im Belohnungsbildschirm die Parameter der Belohnungsstrategie anpassen. Die Belohnungsstrategie selbst wird beim Generieren der KI festgelegt.
+	\item Der Nutzer kann die Parameter der Rückführungs-Belohnungsstrategie anpassen. Die Belohnungsstrategie selbst wird beim Generieren der KI festgelegt.
 	\item Die initialen Gewichte der KI hängen von der Belohnungsstrategie und der Höhe des Zuges im Graphen ab.
 	\item Der Nutzer erstellt die KIs.
+	\item Die Gewichte werden an den Kanten des Graphen visualisiert und zwar als absolute Zahlen.
+	\item Wir versuchen nicht den gesamten Graphen zu visualisieren, weil er zu groß ist.
+	\item Beim Hovern über Graphknoten werden die alternativen Spielsituationen angezeigt.
 \end{itemize}
-
-\section{Offene Fragen}
-\begin{itemize}
-	\item Wo werden die Gewichte im Baum visualisiert? An den Kanten oder Knoten?
-	\item Kann der gesamte Graph der Gewichte überhaupt sinnvoll und kompakt visualisiert werden?
-	\item Wird in der Graphvisualisierung in den Knoten der aktuelle Spielstand abgebildet, oder sein Äquivalenzklassenvertreter, oder ein Cluster an Spielständen (nur beim hovern)?
-	\item Werden die Gewichte in absoluten Zahlen, oder in Wahrscheinlichkeiten angezeigt? Sollte es umschaltbar sein?
-	\item Was machen wir mit mobilen Geräten? Wie einfach ist die Website auf einem Tablet o.ä. bedienbar zu machen?
-	\item Wie exklusiv sind unsere GameBoard-Objekte und unsere GameBoardEquivClasses?
-	\item Wie wird der aktuelle Spieler angezeigt?
-\end{itemize}
-
 
 \section{Projektplanung}%Verteilung der Scrum-Master-Tätigkeit
 \begin{tabular}{lcc}
