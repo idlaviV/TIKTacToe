@@ -178,7 +178,7 @@ export const configsExplainGraph = defineConfigs({
     },
     selectable: false,
     hover: {
-      dasharray: () => continuous,
+      dasharray: (edge) => {if (edge.id === '0#1'){return dashed} else {return continuous}},
       color: Colors.simpleColor,
       width: () => normalWidth
     }
