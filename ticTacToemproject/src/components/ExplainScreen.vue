@@ -75,7 +75,7 @@ const layouts = {
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-row>
-          <v-col cols="6" class="text-lg">
+          <v-col cols="12" md="7" lg="8" class="text-lg">
             <p>
               Dies ist eine Umsetzung des klassischen Spiels Tic Tac Toe in einer Webanwendung. Du
               kannst gegen einen Freund oder gegen eine KI spielen.
@@ -94,12 +94,11 @@ const layouts = {
               KIs gegeneinander trainieren lassen.
             </p>
           </v-col>
-          <v-col>
+          <v-col cols="12" md="5" lg="4" align="center">
             <div>
               <v-network-graph
                 ref="graph"
-                id="graph"
-                class="graph"
+                class="explainGraph"
                 :nodes="nodes"
                 :edges="edges"
                 :layouts="layouts"
@@ -123,3 +122,12 @@ const layouts = {
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
+
+<style>
+.explainGraph {
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  border: 1px solid #38373d;
+}
+</style>
