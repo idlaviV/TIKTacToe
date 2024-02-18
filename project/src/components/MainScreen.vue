@@ -34,7 +34,7 @@ watch(playerOnTurn, changePlayerDisplay)
 <template>
   <v-card class="bg-black -my-8" align="center">
     <!-- Caption and prompt for next turn -->
-    <h1 class="tictactoe bigarcade inline flipHorizontal">TIK</h1>
+    <h1 class="tictactoe bigarcade inline flipHorizontal">KIT</h1>
     <h1 class="tictactoe bigarcade inline">&nbsp;Tac Toe</h1>
 
     <v-col align="center">
