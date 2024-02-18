@@ -92,9 +92,7 @@ export class GameHandler {
    */
   performEndOfGameActions(applyPolicy: boolean) {
     this.gameCount++
-    if (this.gameCount % 100 == 0) {
-      console.log(this.gameCount + ' ' + Date.now())
-    }
+
     this.registerGamesInStats()
     if (applyPolicy) {
       this.applyPolicies()
