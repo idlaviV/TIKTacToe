@@ -4,6 +4,7 @@ import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 import { GameHandler } from '@/logic/GameHandler'
 import { players } from '@/utils/PlayerListExport'
 import { computed, ref } from 'vue'
+import { useDigitalFont } from '@/logic/GuiState'
 
 const aIs = players
 const areAISettingsShown = ref(false)
@@ -72,16 +73,29 @@ function saveSettings() {
       <v-card class="pa-4 ma-4">
         <v-card-title class="text-center">{{ aIPlayer!.getName() }}</v-card-title>
         <div class="text-left inline">Spiele: </div>
-        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().games }}</div>
+        <div 
+          class="text-left inline"
+          :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
+          >{{ aIPlayer!.getStats().games }}
+      </div>
         <br />
         <div class="text-left inline">Gewonnen: </div>
-        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().wins }}</div>
+        <div 
+          class="text-left inline"
+          :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
+          >{{ aIPlayer!.getStats().wins }}</div>
         <br />
         <div class="text-left inline">Unentschieden: </div>
-        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().draws }}</div>
+        <div 
+          class="text-left inline"
+          :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
+          >{{ aIPlayer!.getStats().draws }}</div>
         <br />
         <div class="text-left inline">Verloren: </div>
-        <div class="text-left text-xs dogica inline">{{ aIPlayer!.getStats().losses }}</div>
+        <div 
+          class="text-left inline"
+          :class="`${useDigitalFont === true ? 'dogica text-xs' : 'text-lg'}`"
+          >{{ aIPlayer!.getStats().losses }}</div>
 
         <div v-if="aIPlayer!.policy instanceof BackpropagationPolicy">
           <br />
@@ -89,9 +103,24 @@ function saveSettings() {
           <br />
           <div class="text-center font-bold">Wie soll belohnt werden?</div>
           <br />
-          <v-text-field class="dogica text-xl" v-model="winDiff" label="Gewinnen" />
-          <v-text-field class="dogica text-xl" v-model="drawDiff" label="Unentschieden" />
-          <v-text-field class="dogica text-xl" v-model="loseDiff" label="Verlieren" />
+          <v-text-field :class="`${useDigitalFont === true ? 'dogica' : 'text-lg'}`" v-model="winDiff">
+          <template v-slot:label>
+            <span class="pixelify">Gewinnen</span>
+          </template>
+          </v-text-field>
+
+          <v-text-field :class="`${useDigitalFont === true ? 'dogica' : 'text-lg'}`" v-model="drawDiff">
+            <template v-slot:label>
+            <span class="pixelify">Unentschieden</span>
+          </template>
+          </v-text-field>
+
+          <v-text-field :class="`${useDigitalFont === true ? 'dogica' : 'text-lg'}`" v-model="loseDiff">
+            <template v-slot:label>
+            <span class="pixelify">Verlieren</span>
+          </template>
+          </v-text-field> 
+          
           <v-col class="text-center">
             <v-btn class="bg-white" v-on:click="saveSettings()"> Speichern </v-btn>
           </v-col>
