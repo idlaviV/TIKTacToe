@@ -28,7 +28,7 @@ den Lernprozess abbildet.
 
 ## Infos zur Nutzung des Projektes
 
-Eine Stelle an der das Projekt gehostet ist, ist auf dem [Server des Lehr-Lern-Labors der Fachschaft Informatik](https://files.lehr-lern-labor.info/tictactoe) des KITs.
+Das Projekt ist auf dem [Server des Lehr-Lern-Labors der Fakultät für Informatik](https://files.lehr-lern-labor.info/tictactoe) des KITs gehostet und auffindbar.
 
 Nach dem Start des Programmes können im erscheinenden Bildschirm verschiedene (untrainierte) KIs oder menschliche Spieler ausgewählt und ein Spiel gestartet werden.
 Außerdem sind einige Infos zum Spielen des Spiels als "Was ist das hier?" Fenster vorzufinden.
@@ -42,7 +42,7 @@ Nach dem Belohnen der KIs werden die Gewichte der KI, welche sich geändert habe
 
 ## Voraussetzungen
 
-Um das Projekt aus dem Code aus diesem Repository auszuführen muss
+Um das Projekt aus dem Code zu kompilieren und auszuführen muss
 
 * [Node.js](https://nodejs.org/en/download) (^v 20.11.1)
 * [Vue3](https://vuejs.org/guide/quick-start.html) (^v 3.3)
@@ -53,7 +53,7 @@ installiert sein.
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (Vetur deaktivieren) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-Die folgenden Befehle müssen im Unterordner `ticTacToemproject` ausgeführt werden.
+Die folgenden Befehle müssen im Unterordner `project` ausgeführt werden.
 
 ### Projekt-Setup
 
@@ -83,14 +83,14 @@ npm run coverage
 
 ### Bauen für Produktion
 
-Im Unterordner `ticTacToemprojekt` kann
+Im Unterordner `project` kann
 
 ```sh
 npm run build
 ```
 
-ausgeführt werden, um das Projekt für die Produktion und das Laden auf Server zu bauen.
+ausgeführt werden, um das Projekt für die Produktion und das Laden auf einen Server zu bauen.
 
 ### Lage der Dateien
 
-Das gebaute Projekt, das dann auf einen Server gelegt werden kann liegt danach im ['dist' Ordner](../ticTacToeamprojekt/ticTacToemproject/dist/index.html).
+Das gebaute Projekt, das dann auf einen Server gelegt werden kann, liegt danach im ['dist' Ordner](../ticTacToeamprojekt/ticTacToemproject/dist/index.html).
