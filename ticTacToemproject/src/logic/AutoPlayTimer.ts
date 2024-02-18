@@ -5,11 +5,22 @@ import { getGuiState, nextGuiState, updateGuiDisable } from './GuiState'
 const autoPlay = ref(false)
 let timer: ReturnType<typeof setTimeout>
 const moveSpeed = ref(2)
+let lastTimerActivated = false
 
 export function timerRunsOut() {
   timer = setTimeout(timerRunsOut, calculateTimeout())
-  if (getGuiState().value === 'game' && GameHandler.getInstance().getWinner().value !== null) {
-    nextGuiState()
+  if (getGuiState().value === 'game' && GameHandler.getInstance().getWinner().value !== null && !lastTimerActivated) {
+    if (moveSpeed.value == 10) {
+      nextGuiState()
+      return
+    } else {
+    lastTimerActivated = true
+    setTimeout(()=>{
+      if (getGuiState().value === 'game'&& GameHandler.getInstance().getWinner().value !== null)
+      {nextGuiState()
+      lastTimerActivated = false}
+    }, 2* calculateTimeout())
+  }
   }
   if (autoPlay.value && getGuiState().value == 'game') {
     GameHandler.getInstance().performAiTurn()
