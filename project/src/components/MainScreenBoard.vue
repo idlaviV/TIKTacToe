@@ -15,7 +15,7 @@ const MakeMove = (x: number, y: number) => {
 }
 
 function gameField (x: number, y: number) {
-  return "Spielfeld" + x + "," + y
+  return "Spielfeld (" + x + "," + y +")"
 }
 </script>
 
