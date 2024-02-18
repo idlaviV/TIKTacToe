@@ -11,8 +11,6 @@ const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
-
-
 const changePlayerDisplay = () => {
   if (winner.value === null) {
     if (playerOnTurn.value === 1) {

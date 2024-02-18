@@ -78,7 +78,10 @@ export class GameHandler {
     this.winner.value = this.gBHandler.calculateWinner()
     this.playerOnTurn.value = this.playerOnTurn.value === 1 ? 2 : 1
     updateHistory(this.gBHandler.getGameBoard())
-    if (this.winner.value !== null && (!skipEvaluationScreen.value || this.getNumberOfAIs() === 0)) {
+    if (
+      this.winner.value !== null &&
+      (!skipEvaluationScreen.value || this.getNumberOfAIs() === 0)
+    ) {
       nextGuiState()
     }
   }
