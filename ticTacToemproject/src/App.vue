@@ -103,4 +103,18 @@ document.body.style.fontFamily = 'Pixelify Sans'
   </main>
 </template>
 
-<style></style>
+<style>
+html, body {
+  overflow: hidden;
+  overscroll-behavior:none;
+}
+
+@media screen and (pointer: coarse) {
+  @supports (-webkit-backdrop-filter: blur(1px)) and (overscroll-behavior-y: none)  {
+    html {
+      min-height: 100.1%;
+      overscroll-behavior-y: none;
+    }
+  }
+}
+</style>
