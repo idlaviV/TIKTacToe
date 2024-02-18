@@ -50,11 +50,13 @@ const layouts = {
         <p>
         Die KI speichert für jeden möglichen Zug eine Zahl.
         Je größer die Zahl, desto wahrscheinlicher ist es, dass die KI diesen Zug ausführt.
-        Zum Beispiel wird die KI in der Situation oben den rechten Zug doppelt so wahrscheinlich ausführen als den mittleren Zug.
+        Zum Beispiel wird die KI in der angezeigten Situation den rechten Zug doppelt so wahrscheinlich ausführen als den mittleren Zug.
         Nach jedem Spiel analysiert die KI die gespielten Züge und passt diese Zahlen an.
     </p>
     <p>
         Es gibt drei verschiedene Arten von KIs zur Auswahl. Jede von ihnen lernt unterschiedlich.
+        Zu Beginn ist die KI sehr schlecht, aber sie wird mit der Zeit lernen, wenn du sie trainierst.
+        Du kannst entweder selbst gegen eine KI spielen oder KIs gegeneinander trainieren lassen.
     </p>
 </v-col>
 <v-col>
