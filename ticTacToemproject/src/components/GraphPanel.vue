@@ -120,7 +120,9 @@ watch(
         "
         id="labelSwitch"
       >
-        <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
+        <v-card max-height="60px" class="bg-black px-2">
+          <v-switch v-model="isPlayer2Graph" label="Wechsle KI"></v-switch>
+        </v-card>
       </div>
       <!--tooltip-->
       <GraphAlternativeTooltip />
@@ -129,7 +131,7 @@ watch(
         icon="mdi-image-filter-center-focus-weak"
         size="x-large"
         density="compact"
-        class="mx-2"
+        class="mx-2 bg-black"
         variant="text"
         v-on:click="resetPan()"
       ></v-btn>
@@ -144,7 +146,7 @@ watch(
 
 #labelSwitch {
   position: absolute;
-  top: 0;
+  top: 1px;
   left: 20px;
   z-index: 10;
 }
