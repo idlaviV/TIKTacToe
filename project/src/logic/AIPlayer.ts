@@ -144,7 +144,7 @@ export class AIPlayer extends Player {
     return this.name
   }
 
-  getTypeName():string {
+  getTypeName(): string {
     return this.policy.getName()
   }
 }
