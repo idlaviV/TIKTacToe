@@ -9,7 +9,6 @@ export type FieldType = PlayerNumber | 0
  *    3 -> empty field
  * @param field The FieldType to be converted to a symbol
  * @returns the corresponding symbol
- * @throws an error if the field is neither 1, 2 nor 0
  */
 export function symbol(field: FieldType): string {
   switch (field) {
