@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, test, vi, type MockInstance } from 'vites
 import { gameBoardDraw, gameBoardWinPlayer1, resetGameHandler } from './TestUtil'
 import { GameBoard } from '@/logic/GameBoard'
 import { AIPlayer } from '@/logic/AIPlayer'
-import { EliminationPolicySimple } from '@/logic/EliminationPolicy'
+import { EliminationPolicySimple } from '@/logic/EliminationPolicySimple'
 import { BackpropagationPolicy } from '@/logic/BackpropagationPolicy'
 vi.mock('@/utils/GraphExport', () => {
   return {

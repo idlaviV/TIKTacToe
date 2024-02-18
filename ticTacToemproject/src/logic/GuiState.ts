@@ -44,7 +44,6 @@ export function updateGuiDisable() {
   } else {
     guiDisable.value = 'standard'
   }
-
 }
 
 export function getGuiState(): Ref<GuiState> {

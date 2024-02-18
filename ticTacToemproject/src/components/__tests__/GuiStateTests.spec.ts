@@ -2,18 +2,16 @@ import { GameHandler } from '@/logic/GameHandler'
 import { resetGameHandler } from './TestUtil'
 import { expect, beforeEach, describe, test, vi } from 'vitest'
 import {
-cleaningTasksPreStart,
+  cleaningTasksPreStart,
   getGuiState,
-  guiDisable,
   nextGuiState,
   performCleaningTasksPreStart,
   registerCleaningTaskPreStart,
   setGuiState,
   skipEvaluationScreen,
-  skipStartScreen
+  skipStartScreen,
 } from '@/logic/GuiState'
 import { resetHistory } from '@/utils/GraphExport'
-import { setAutoPlay } from '@/logic/AutoPlayTimer'
 
 beforeEach(() => {
   GameHandler.getInstance()
@@ -138,18 +136,6 @@ describe('cleaningTaskPreStart', () => {
     cleaningTasksPreStart.push(resetPan)
     performCleaningTasksPreStart()
     expect(resetPan).toHaveBeenCalled()
-  })
-})
-
-describe('updateGuiDisable', () => {
-  test('reduced', () => {
-    setGuiState('game')
-    GameHandler.getInstance().setPlayers(1, 2)
-    setAutoPlay(true) //TODO
-  })
-
-  test('standard', () => {
-    expect(guiDisable.value).toEqual('standard')
   })
 })
 

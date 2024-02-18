@@ -12,7 +12,7 @@ export type FieldType = PlayerNumber | 0
  * @throws an error if the field is neither 1, 2 nor 0
  */
 export function symbol(field: FieldType): string {
-  switch(field) {
+  switch (field) {
     case 1:
       return 'X'
     case 2:

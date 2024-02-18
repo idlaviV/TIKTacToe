@@ -40,15 +40,29 @@ describe('constructor', () => {
   })
 
   test('initialize diffs with invalid inputs', () => {
-    expect(() => new BackpropagationPolicy(NaN, 1, -1)).toThrow(new Error('winDiff ' + NaN + ' is illegal'))
-    expect(() => new BackpropagationPolicy(3, NaN, -1)).toThrow(new Error('drawDiff ' + NaN + ' is illegal'))
-    expect(() => new BackpropagationPolicy(3, 1, NaN)).toThrow(new Error('loseDiff ' + NaN + ' is illegal'))
+    expect(() => new BackpropagationPolicy(NaN, 1, -1)).toThrow(
+      new Error('winDiff ' + NaN + ' is illegal')
+    )
+    expect(() => new BackpropagationPolicy(3, NaN, -1)).toThrow(
+      new Error('drawDiff ' + NaN + ' is illegal')
+    )
+    expect(() => new BackpropagationPolicy(3, 1, NaN)).toThrow(
+      new Error('loseDiff ' + NaN + ' is illegal')
+    )
 
-    expect(() => new BackpropagationPolicy(1.2, 1, -1)).toThrow(new Error('winDiff ' + 1.2 + ' is illegal'))
-    expect(() => new BackpropagationPolicy(3, 1.2, -1)).toThrow(new Error('drawDiff ' + 1.2 + ' is illegal'))
-    expect(() => new BackpropagationPolicy(3, 1, 1.2)).toThrow(new Error('loseDiff ' + 1.2 + ' is illegal'))
+    expect(() => new BackpropagationPolicy(1.2, 1, -1)).toThrow(
+      new Error('winDiff ' + 1.2 + ' is illegal')
+    )
+    expect(() => new BackpropagationPolicy(3, 1.2, -1)).toThrow(
+      new Error('drawDiff ' + 1.2 + ' is illegal')
+    )
+    expect(() => new BackpropagationPolicy(3, 1, 1.2)).toThrow(
+      new Error('loseDiff ' + 1.2 + ' is illegal')
+    )
 
-    expect(() => new BackpropagationPolicy(1001, -1001, 1001)).toThrow(new Error('Diffs (' + 1001 + ',' + -1001 + ',' + 1001 + ') out of bound!'))
+    expect(() => new BackpropagationPolicy(1001, -1001, 1001)).toThrow(
+      new Error('Diffs (' + 1001 + ',' + -1001 + ',' + 1001 + ') out of bound!')
+    )
   })
 })
 
