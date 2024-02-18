@@ -20,6 +20,8 @@ export abstract class Player {
    */
   abstract getName(): string
 
+  abstract getTypeName(): string
+
   wins: number = 0
   losses: number = 0
   draws: number = 0

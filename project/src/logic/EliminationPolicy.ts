@@ -75,6 +75,11 @@ export abstract class EliminationPolicy implements EvaluationPolicy {
    * @returns The modified weights.
    */
   abstract modifyWeights(ai: AIPlayer, history: GameBoard[], index: number): TTTEdges
+
+  /**
+   * @inheritdoc
+   */
+  abstract getName(): string
 }
 
 /**

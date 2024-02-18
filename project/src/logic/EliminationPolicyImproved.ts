@@ -45,4 +45,8 @@ export class EliminationPolicyImproved extends EliminationPolicy {
     }
     return changedEdges
   }
+
+  getName(): string {
+    return 'Elimination v2.0'
+  }
 }
