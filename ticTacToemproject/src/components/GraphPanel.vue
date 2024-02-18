@@ -121,8 +121,8 @@ watch(
         "
         id="labelSwitch"
       >
-        <v-card max-height="32px" class="bg-black px-2">
-          <GraphWeightToggle/>
+        <v-card max-height="50px" class="bg-black border px-4 py-2">
+          <GraphWeightToggle />
         </v-card>
       </div>
       <!--tooltip-->
@@ -132,7 +132,7 @@ watch(
         icon="mdi-image-filter-center-focus-weak"
         size="x-large"
         density="compact"
-        class="mx-2 bg-black"
+        class="mx-2 bg-black border"
         variant="text"
         v-on:click="resetPan()"
       ></v-btn>
@@ -147,15 +147,15 @@ watch(
 
 #labelSwitch {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 5px;
+  left: 5px;
   z-index: 10;
 }
 
 #resetPan {
   position: absolute;
-  top: 4px;
-  right: -4px;
+  top: 5px;
+  right: -3px;
   z-index: 10;
 }
 

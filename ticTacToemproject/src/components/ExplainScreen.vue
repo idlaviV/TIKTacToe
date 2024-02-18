@@ -3,8 +3,12 @@ import { VNetworkGraph, VEdgeLabel } from 'v-network-graph'
 import { useDigitalFont } from '@/logic/GuiState'
 import GraphPanelNode from './GraphPanelNode.vue'
 import { configsExplainGraph } from '@/components/GraphPanelUserConfigs'
-import {explainNodes, explainLabels, explainEdges, explainLayouts} from '@/utils/ExplainScreenData'
-
+import {
+  explainNodes,
+  explainLabels,
+  explainEdges,
+  explainLayouts
+} from '@/utils/ExplainScreenData'
 </script>
 <template>
   <v-card class="text-left ma-4 pa-4">
@@ -20,17 +24,17 @@ import {explainNodes, explainLabels, explainEdges, explainLayouts} from '@/utils
         <br />
         <p>
           Die KI speichert für jeden möglichen Zug eine Zahl. Je größer die Zahl, desto
-          wahrscheinlicher ist es, dass die KI diesen Zug ausführt. Zum Beispiel wird die KI in
-          der angezeigten Situation den rechten Zug doppelt so wahrscheinlich ausführen als den
+          wahrscheinlicher ist es, dass die KI diesen Zug ausführt. Zum Beispiel wird die KI in der
+          angezeigten Situation den rechten Zug doppelt so wahrscheinlich ausführen als den
           mittleren Zug. Nach jedem Spiel analysiert die KI die gespielten Züge und passt diese
           Zahlen an.
         </p>
         <br />
         <p>
-          Es gibt drei verschiedene Arten von KIs zur Auswahl. Jede von ihnen lernt
-          unterschiedlich. Zu Beginn ist die KI sehr schlecht, aber sie wird mit der Zeit
-          lernen, wenn du sie trainierst. Du kannst entweder selbst gegen eine KI spielen oder
-          KIs gegeneinander trainieren lassen.
+          Es gibt drei verschiedene Arten von KIs zur Auswahl. Jede von ihnen lernt unterschiedlich.
+          Zu Beginn ist die KI sehr schlecht, aber sie wird mit der Zeit lernen, wenn du sie
+          trainierst. Du kannst entweder selbst gegen eine KI spielen oder KIs gegeneinander
+          trainieren lassen.
         </p>
       </v-col>
       <v-col cols="12" md="5" lg="4" align="center">

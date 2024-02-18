@@ -57,10 +57,15 @@ const showHelp = ref(false)
     </v-card>
     <v-card class="playerSelection bg-black">
       <v-btn v-on:click="startGame" class="bg-white">Spiel starten</v-btn>
-      <v-btn id="help" v-bind:variant="showHelp === true ? 'outlined' : 'tonal'" @click="showHelp = !showHelp">?</v-btn>
+      <v-btn
+        id="help"
+        v-bind:variant="showHelp === true ? 'outlined' : 'tonal'"
+        @click="showHelp = !showHelp"
+        >?</v-btn
+      >
     </v-card>
     <br />
-    <ExplainScreen v-if="showHelp"/>
+    <ExplainScreen v-if="showHelp" />
   </v-card>
   <br />
 </template>

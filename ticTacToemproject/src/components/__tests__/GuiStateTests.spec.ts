@@ -9,7 +9,7 @@ import {
   registerCleaningTaskPreStart,
   setGuiState,
   skipEvaluationScreen,
-  skipStartScreen,
+  skipStartScreen
 } from '@/logic/GuiState'
 import { resetHistory } from '@/utils/GraphExport'
 
