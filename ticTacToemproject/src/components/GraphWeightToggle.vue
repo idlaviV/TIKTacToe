@@ -2,23 +2,19 @@
 import { isPlayer2Graph } from '@/components/GraphPanelUserConfigs'
 </script>
 <template>
-    <v-row>
-        <div class="d-flex text-xl">
-            <p class="mr1 my-auto text-pink-500 font-bold">X</p>
-            <v-switch 
+    <v-row no-gutters>
+        <v-col ><p class=" text-pink-500 font-bold text-2xl">X</p></v-col>
+        <v-col cols="auto"><v-switch class="-my-3 mx-1"
                 v-model="isPlayer2Graph"
-                 class="switch-center"
-                 id="myswitch" ></v-switch>
-            <p class="mx-auto my-auto text-blue-500 font-bold">O</p>
-        </div>
+                 id="myswitch" ></v-switch></v-col>
+        <v-col ><p class="text-blue-500 font-bold text-2xl">O</p></v-col>
+            
+    
     </v-row>
     
 </template>
 <style>
-.switch-center {
-  display: flex;
-  justify-content: center;
-}
+
 
 
 </style>

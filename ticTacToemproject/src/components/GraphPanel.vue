@@ -121,7 +121,7 @@ watch(
         "
         id="labelSwitch"
       >
-        <v-card max-height="60px" class="bg-black px-2">
+        <v-card max-height="32px" class="bg-black px-2">
           <GraphWeightToggle/>
         </v-card>
       </div>
@@ -147,8 +147,8 @@ watch(
 
 #labelSwitch {
   position: absolute;
-  top: 1px;
-  left: 20px;
+  top: 10px;
+  left: 10px;
   z-index: 10;
 }
 
