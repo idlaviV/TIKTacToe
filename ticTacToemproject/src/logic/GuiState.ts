@@ -42,8 +42,8 @@ export function updateGuiDisable() {
   ) {
     guiDisable.value = 'reduced'
   } else {
-    if(!(getAutoPlay().value && getMoveSpeed().value === 10)){
-    guiDisable.value = 'standard'
+    if (!(getAutoPlay().value && getMoveSpeed().value === 10)) {
+      guiDisable.value = 'standard'
     }
   }
   //console.log("new guiDisable: " + guiDisable.value)

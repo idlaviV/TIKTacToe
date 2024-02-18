@@ -49,13 +49,13 @@ watch(playerOnTurn, changePlayerDisplay)
     <MainScreenMoves />
     <br /><br />
     <!-- Display winner -->
-    <div v-if="winner !== null ">
-    <!-- Don't show winner status on max speed autoplay-->
-    <span v-if = "(getMoveSpeed().value <9  || !skipEvaluationScreen)">
-      <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
-      <h2 v-if="winner === 1" class="text-4xl text-pink-500 mb-8">X gewinnt!</h2>
-      <h2 v-if="winner === 2" class="text-4xl text-blue-500 mb-8">O gewinnt!</h2>
-    </span>
+    <div v-if="winner !== null">
+      <!-- Don't show winner status on high speed autoplay-->
+      <span v-if="getMoveSpeed().value < 9 || !skipEvaluationScreen">
+        <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
+        <h2 v-if="winner === 1" class="text-4xl text-pink-500 mb-8">X gewinnt!</h2>
+        <h2 v-if="winner === 2" class="text-4xl text-blue-500 mb-8">O gewinnt!</h2>
+      </span>
       <v-btn
         class="my-2 mx-2 bg-white"
         v-show="getGuiState().value === 'evaluation'"
