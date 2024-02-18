@@ -13,7 +13,7 @@ Brute-Force-Ansatzes sowie der Rückführung.
 
 Das Produkt erlaubt einen Einsatz im Unterricht nach einer Heranführung
 durch die Lehrkraft. Wir gehen davon aus, dass den SuS die Hexapawn-Variante
-HER bereits bekannt ist. Im Webinterface von „TI K Tac Toe“ können die SuS den Entscheidungsbaum
+HER bereits bekannt ist. Im Webinterface von „TIK Tac Toe“ können die SuS den Entscheidungsbaum
 der KI erkunden, selbst gegen sie spielen oder zwei KIs gegeneinander
 trainieren lassen. Am Ende einer Lerneinheit haben die SuS das Konzept von Gewichtsfunktionen
 nachvollzogen und können diese als „Gedächtnis“ des Systems benennen, welches
@@ -33,12 +33,12 @@ Das Projekt ist auf dem [Server des Lehr-Lern-Labors der Fakultät für Informat
 Nach dem Start des Programmes können im erscheinenden Bildschirm verschiedene (untrainierte) KIs oder menschliche Spieler ausgewählt und ein Spiel gestartet werden.
 Außerdem sind einige Infos zum Spielen des Spiels als "Was ist das hier?" Fenster vorzufinden.
 Im Menu am unteren Bildschirmrand kann zu anderen Bildschirmen gewechselt werden.
-Auf dem Bildschirm KIs können Statistiken einzelner KIs angezeigt werden, neue KIs erzeugt und bestehende KIs verändert oder zurückgesetzt werden.
-In dem finalen Bildschirm nahmens Einstellungen finden sich Möglichkeiten den Ablauf des Spieles zu verkürzen und die Font der Website zu einer klassischeren Font abzuändern.  
+Auf dem Bildschirm *KIs* können Statistiken einzelner KIs angezeigt werden, neue KIs erzeugt und bestehende KIs verändert oder zurückgesetzt werden.
+Im dritten Bildschirm (_Einstellungen_) finden sich Möglichkeiten den Ablauf des Spieles zu verkürzen und die Font der Website zu einem klassischeren Font abzuändern.  
 Nach Spielbeginn sind die Einstellungen weiterhin zu finden.
-Initial wird das Spielfeld und der Spielgraph angezeigt (bei kleinen Bildschirmen wird der Graph auf einen extra Bildschirm ausgelagert).  
-Nach dem Beenden eines Spiels können die KIs, die das Spiel gespielt haben belohnt werden, oder das Spiel ohne zu Belohnen beendet werden.
-Nach dem Belohnen der KIs werden die Gewichte der KI, welche sich geändert haben durch eine grüne Färbung hervorgehoben.
+Initial wird das Spielfeld und der Spielgraph angezeigt.  
+Nach Beenden eines Spiels können die KIs, die das Spiel gespielt haben, belohnt werden oder das Spiel ohne zu Belohnen beendet werden.
+Falls die Belohnungsoption gewählt wurde werden die Gewichte der KIs, welche sich geändert haben, durch eine grüne Farbe hervorgehoben.
 
 ## Voraussetzungen
 
@@ -73,7 +73,7 @@ npm run dev
 npm run test:unit
 ```
 
-Extra Informationen über coverage der Tests
+Zusätzliche Informationen zur Testabdeckung
 
 ```sh
 npm run coverage
@@ -93,4 +93,4 @@ ausgeführt werden, um das Projekt für die Produktion und das Laden auf einen S
 
 ### Lage der Dateien
 
-Das gebaute Projekt, das dann auf einen Server gelegt werden kann, liegt danach im ['dist' Ordner](../ticTacToeamprojekt/ticTacToemproject/dist/index.html).
+Das gebaute Projekt, welches dann auf einen Server gelegt werden kann, liegt danach im ['dist' Ordner](../ticTacToeamprojekt/ticTacToemproject/dist/index.html).
