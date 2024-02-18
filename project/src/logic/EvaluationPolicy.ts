@@ -23,4 +23,9 @@ export interface EvaluationPolicy {
    * @returns The changed weights of the edges in the graph
    */
   applyPolicy(aI: AIPlayer, history: GameBoard[]): TTTEdges
+
+  /**
+   * The name of this policy type for display purposes.
+   */
+  getName(): string
 }

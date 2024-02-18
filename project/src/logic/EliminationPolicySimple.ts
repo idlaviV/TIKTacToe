@@ -28,4 +28,8 @@ export class EliminationPolicySimple extends EliminationPolicy {
     }
     return changedWeights
   }
+
+  getName(): string {
+    return 'Elimination'
+  }
 }

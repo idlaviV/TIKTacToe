@@ -14,7 +14,7 @@
 
 \titlehead{Wintersemester 2023/24}
 \title{\TicTacToe}
-\subtitle{Dokumentation}
+\subtitle{Dokumentation der Evaluationsstrategien}
 \date{Stand: \today}
 \author{Jonas, Luis, Leonid}
 
@@ -28,8 +28,7 @@ Es sind aber immer Spielerinnen und Spieler und Nutzerinnen und Nutzer aller Ges
 
 "`Spieler"' meint im Folgenden immer die Entität, die eine der beiden Positionen im Spiel Tic-Tac-Toe (Kreuz oder Kreis) übernommen hat.
 Die Person, die die App benutzt, wird "`Nutzer"' genannt.
-\section{Dokumentation der Evaluationsstrategien}
-\subsection{KI-Elimination}
+\section{KI-Elimination}
 Die einfache Eliminationsstrategie ist eine Evaluationsstrategie, welche den KIs aus \TicTacToe{} nativ zugeordnet werden kann.
 
 Beim Erzeugen der KI sind die Gewichte der KI vollständig auf "`1"' gesetzt (siehe Abbildung \ref{eliminationPrä}).
@@ -75,11 +74,15 @@ Hinweis: Angenommen, die Rollen wären bei gleichem Spielverlauf vertauscht, die
 \FloatBarrier
 \newpage
 
-\subsection{KI-Elimination v2.0}
+\section{KI-Elimination v2.0}
 Die verbesserte Eliminationsstrategie ist eine Evaluationsstrategie, welche den KIs aus \TicTacToe{} nativ zugeordnet werden kann.
 
 Sie wird für Verlustzüge und Unentschieden gleich belohnt wie die einfache Eliminationsstrategie.
-Für Züge die zu einem Gewinn geführt haben werden zusätzlich alle anderen Züge von dem vorletzten Knoten auf 0 gesetzt. (Siehe Abb.~\ref{elimination2})
+Allerdings berücksichtigt sie zusätzlich \emph{Gewinnzüge}.
+Ein Gewinnzug ist ein Zug, der (aus Sicht der KI) den Gegner dazu zwingt, einen Zug zu wählen, der mit "`0"' gewichtet ist.
+Einen solchen Gewinnzug wählt die verbesserte Eliminations-KI immer aus und setzt dafür alle Alternativen zum Gewinnzug auf Gewicht 0.
+In Abbildung \ref{elimination2} ist beispielsweise der letzte Zug ein Gewinnzug, daher werden die beiden anderen Züge auf 0 gesetzt.
+Es ist zu beachten, dass dies auch einen anderen Gewinnzug löscht.
 
 \begin{figure}[htb]
 \includegraphics[width = \linewidth]{elimination2.png}
@@ -89,16 +92,16 @@ Für Züge die zu einem Gewinn geführt haben werden zusätzlich alle anderen Z�
 
 \FloatBarrier
 \newpage
-\subsection{KI-Rückführung}
+\section{KI-Rückführung}
 Die Rückführungsstrategie ist eine Evaluationsstrategie, welche den KIs aus \TicTacToe{} nativ zugeordnet werden kann.
 
-Beim Erzeugen der KI sind die Gewichte der KI auf "`\(9-\textrm{H\"ohe}\)"' gesetzt (siehe \ref{rückführungPrä}).
+Beim Erzeugen der KI sind die Gewichte der KI auf "`\(9-\textrm{H\"ohe}\)"' gesetzt (siehe Abb.~\ref{rückführungPrä}).
 
 Es kann manuell gesetzt werden, welche Zahlen bei Gewinn, Verlust und Unentschieden auf die bestehenden Gewichte der KI addiert werden (diese dürfen auch negativ sein).
-Siehe \ref{rückführungEinstellungen}.
+Das entsprechende Menü ist in Abbildung \ref{rückführungEinstellungen} zu sehen.
 Die Gewichte werden jedoch niemals negativ.
 
-Am Ende eines Spiels werden alle Gewichte der Kanten die tatsächlich gespielt wurden (hervorgehoben und orange) mit den vorgegebenen Vorschriften verändert (siehe \ref{rückführungPost}).
+Am Ende eines Spiels werden alle Gewichte der Kanten, die tatsächlich gespielt wurden (hervorgehoben und orange in Abbildung \ref{rückführungPrä}), mit den vorgegebenen Vorschriften verändert (siehe Abb.~\ref{rückführungPost}).
 
 \begin{figure}[htb]
 \centering\includegraphics{rückführungEinstellungen.png}

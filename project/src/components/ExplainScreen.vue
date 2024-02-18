@@ -36,6 +36,8 @@ import {
           trainierst. Du kannst entweder selbst gegen eine KI spielen oder KIs gegeneinander
           trainieren lassen.
         </p>
+        <br />
+        <p>Viel Erfolg!</p>
       </v-col>
       <v-col cols="12" md="5" lg="4" align="center">
         <div>

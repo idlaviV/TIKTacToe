@@ -22,11 +22,10 @@ const getAIs = computed(() => {
 
 /**
  * All possible AI options
- * @todo aiOptions should be pulled from backend somehow?
  */
 const aiOptions = [
   { title: 'Elimination', index: 0 },
-  { title: 'Fehlerrückführung', index: 1 },
+  { title: 'Rückführung', index: 1 },
   { title: 'Elimination v2.0', index: 2 }
 ]
 /**
@@ -71,7 +70,10 @@ function saveSettings() {
     <v-card-title>KI-Übersichtsfenster</v-card-title>
     <v-overlay v-model="areAISettingsShown" class="justify-center">
       <v-card class="pa-4 ma-4">
-        <v-card-title class="text-center">{{ aIPlayer!.getName() }}</v-card-title>
+        <v-card-title class="text-center">
+          {{ aIPlayer!.getName() }}<br />
+          <div class="text-base">({{ aIPlayer?.getTypeName() }})</div>
+        </v-card-title>
         <div class="text-left inline">Spiele:</div>
         <div
           class="text-left inline"

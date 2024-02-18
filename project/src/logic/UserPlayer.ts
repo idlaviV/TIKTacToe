@@ -18,4 +18,7 @@ export class UserPlayer extends Player {
   makeMove(): void {
     //do nothing
   }
+  getTypeName(): string {
+    return 'Mensch'
+  }
 }

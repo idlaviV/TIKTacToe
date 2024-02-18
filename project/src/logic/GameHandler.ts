@@ -92,9 +92,7 @@ export class GameHandler {
    */
   performEndOfGameActions(applyPolicy: boolean) {
     this.gameCount++
-    if (this.gameCount % 100 == 0) {
-      console.log(this.gameCount + ' ' + Date.now())
-    }
+
     this.registerGamesInStats()
     if (applyPolicy) {
       this.applyPolicies()
@@ -106,15 +104,21 @@ export class GameHandler {
    */
   private applyPolicies() {
     let changedWeights: TTTEdges
-    changedWeights = this.settings.getPlayer(1).isAI()
-      ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
-      : {}
-    updateLabels(changedWeights, 0)
-    changedWeights =
-      this.settings.getPlayer(2).isAI() && this.settings.getPlayer(2) !== this.settings.getPlayer(1)
+    if (this.settings.getPlayer(2) === this.settings.getPlayer(1)) {
+      changedWeights = this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : {}
+      updateLabels(changedWeights, 0, true)
+    } else {
+      changedWeights = this.settings.getPlayer(1).isAI()
+        ? (this.settings.getPlayer(1) as AIPlayer).applyPolicy()
+        : {}
+      updateLabels(changedWeights, 0)
+      changedWeights = this.settings.getPlayer(2).isAI()
         ? (this.settings.getPlayer(2) as AIPlayer).applyPolicy()
         : {}
-    updateLabels(changedWeights, 1)
+      updateLabels(changedWeights, 1)
+    }
   }
 
   private registerGamesInStats() {
@@ -242,6 +246,10 @@ export class GameHandler {
     if (this.settings.getPlayer(1).isAI()) count++
     if (this.settings.getPlayer(2).isAI()) count++
     return count
+  }
+
+  arePlayersTheSame(): boolean {
+    return this.settings.getPlayer(1) === this.settings.getPlayer(2)
   }
 
   getGBHandler(): GameBoardHandler {

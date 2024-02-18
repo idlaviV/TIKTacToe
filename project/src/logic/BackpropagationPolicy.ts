@@ -161,4 +161,8 @@ export class BackpropagationPolicy implements EvaluationPolicy {
       throw new Error('Diffs (' + winDiff + ',' + drawDiff + ',' + loseDiff + ') out of bound!')
     }
   }
+
+  getName(): string {
+    return 'Rückführung'
+  }
 }

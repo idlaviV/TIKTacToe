@@ -143,6 +143,10 @@ export class AIPlayer extends Player {
   getName(): string {
     return this.name
   }
+
+  getTypeName(): string {
+    return this.policy.getName()
+  }
 }
 
 function getHeight(code: GameBoardCode): number {

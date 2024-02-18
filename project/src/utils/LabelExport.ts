@@ -23,7 +23,8 @@ export const labelExport: Ref<Labels> = ref({})
  */
 export function updateLabels(
   edges: TTTEdges = graphExport.value.edges,
-  changedBy: number = -1
+  changedBy: number = -1,
+  modifyBothSlots: boolean = false
 ): void {
   const settings: GameSettings = GameHandler.getInstance().getSettings()
   const players: [Player, Player] = [settings.getPlayer(1), settings.getPlayer(2)]
@@ -35,12 +36,15 @@ export function updateLabels(
 
     for (let i = 0; i < players.length; i++) {
       // Update the label if this is initialization (changedBy === -1) or if the player is an ai and the corresponding weight was changed
-      if ((changedBy === -1 || (changedBy !== -1 && i === changedBy)) && players[i].isAI()) {
+      if (
+        (changedBy === -1 || (changedBy !== -1 && (i === changedBy || modifyBothSlots))) &&
+        players[i].isAI()
+      ) {
         const aI = players[i] as AIPlayer
         const source: number = edges[edge].numSource
         const target: number = edges[edge].numTarget
         const newLabel: number = aI.getVertexMap(source).get(target)!
-        labelExport.value[edge].setLabel(i, newLabel.toString(), changedBy === i)
+        labelExport.value[edge].setLabel(i, newLabel.toString(), changedBy === i || modifyBothSlots)
       } else if (!players[i].isAI()) {
         labelExport.value[edge].setLabel(i, '')
       }
