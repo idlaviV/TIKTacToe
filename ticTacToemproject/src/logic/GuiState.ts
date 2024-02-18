@@ -42,7 +42,9 @@ export function updateGuiDisable() {
   ) {
     guiDisable.value = 'reduced'
   } else {
-    guiDisable.value = 'standard'
+    if (!(getAutoPlay().value && getMoveSpeed().value === 10)) {
+      guiDisable.value = 'standard'
+    }
   }
 }
 
@@ -68,6 +70,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
   switch (state.value) {
     case 'game':
       state.value = 'evaluation'
+      updateGuiDisable()
       if (!skipEvaluationScreen.value && !isHumanGame) {
         break
       }
@@ -92,6 +95,7 @@ export function nextGuiState(skipEvaluationOnce: boolean = false) {
     /* falls through */
     default:
       state.value = 'game'
+      updateGuiDisable()
       break
   }
 }

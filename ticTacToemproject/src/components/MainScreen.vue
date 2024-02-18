@@ -4,15 +4,16 @@ import { drawStatus } from '@/logic/WinnerStatus'
 import MainScreenBoard from './MainScreenBoard.vue'
 import MainScreenMoves from './MainScreenMoves.vue'
 import { player1Name, player2Name } from '@/utils/ActivePlayerExport'
-import { getGuiState, nextGuiState } from '@/logic/GuiState'
+import { getGuiState, nextGuiState, skipEvaluationScreen } from '@/logic/GuiState'
 import { watch } from 'vue'
+import { getAutoPlay, getMoveSpeed } from '@/logic/AutoPlayTimer'
 
 const gameHandler: GameHandler = GameHandler.getInstance()
 const winner = gameHandler.getWinner()
 const playerOnTurn = gameHandler.getPlayerOnTurn()
 
 const changePlayerDisplay = () => {
-  if (winner.value === null) {
+  if (winner.value === null && (getMoveSpeed().value < 10 || !getAutoPlay().value)) {
     if (playerOnTurn.value === 1) {
       document.getElementById('player1Display')?.classList.add('font-bold')
       document.getElementById('player2Display')?.classList.remove('font-bold')
@@ -48,10 +49,13 @@ watch(playerOnTurn, changePlayerDisplay)
     <MainScreenMoves />
     <br /><br />
     <!-- Display winner -->
-    <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
-    <h2 v-if="winner === 1" class="text-4xl text-pink-500 mb-8">X gewinnt!</h2>
-    <h2 v-if="winner === 2" class="text-4xl text-blue-500 mb-8">O gewinnt!</h2>
     <div v-if="winner !== null">
+      <!-- Don't show winner status on high speed autoplay-->
+      <span v-if="getMoveSpeed().value < 9 || !skipEvaluationScreen">
+        <h2 v-if="winner === drawStatus" class="text-4xl mb-8">Unentschieden!</h2>
+        <h2 v-if="winner === 1" class="text-4xl text-pink-500 mb-8">X gewinnt!</h2>
+        <h2 v-if="winner === 2" class="text-4xl text-blue-500 mb-8">O gewinnt!</h2>
+      </span>
       <v-btn
         class="my-2 mx-2 bg-white"
         v-show="getGuiState().value === 'evaluation'"
