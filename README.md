@@ -28,7 +28,7 @@ den Lernprozess abbildet.
 
 ## Infos zur Nutzung des Projektes
 
-Das Projekt ist auf dem [Server des Lehr-Lern-Labors der Fakultät für Informatik](https://files.lehr-lern-labor.info/tictactoe) des KITs gehostet und auffindbar.
+Das Projekt ist auf dem [Server des Lehr-Lern-Labors der Fakultät für Informatik](https://files.lehr-lern-labor.info/tiktactoe) des KITs gehostet und auffindbar.
 
 Nach dem Start des Programmes können im erscheinenden Bildschirm verschiedene (untrainierte) KIs oder menschliche Spieler ausgewählt und ein Spiel gestartet werden.
 Außerdem sind einige Infos zum Spielen des Spiels als "Was ist das hier?" Fenster vorzufinden.
